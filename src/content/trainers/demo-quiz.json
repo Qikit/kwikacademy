@@ -1,0 +1,12 @@
+{
+  "course": "demo",
+  "lesson": "demo-intro",
+  "title": "Демо-тест",
+  "description": "Проверка движка Quiz.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      { "prompt": "2 + 2 = ?", "options": ["3", "4", "5"], "correctIndex": 1, "explain": "Арифметика." }
+    ]
+  }
+}

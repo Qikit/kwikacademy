@@ -1,0 +1,11 @@
+{
+  "title": "Демо-курс",
+  "subtitle": "Проверка движков",
+  "description": "Технический курс-рыба для проверки уроков и тренажёров.",
+  "glyph": "★",
+  "gradient": "aurora",
+  "order": 0,
+  "accent": "light",
+  "estimatedHours": 1,
+  "tags": ["demo"]
+}

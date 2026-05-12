@@ -68,11 +68,57 @@ const flashData = z.object({
 });
 const clozeData = z.object({
   type: z.literal('cloze'),
-  items: z.array(z.object({ text: z.string(), answers: z.array(z.string()).min(1) })).min(1),
+  items: z
+    .array(
+      z.object({
+        text: z.string(),
+        answers: z.array(z.string()).min(1),
+        explain: z.string().optional(),
+        hint: z.string().optional(),
+      }),
+    )
+    .min(1),
 });
 const matchData = z.object({
   type: z.literal('match'),
-  pairs: z.array(z.object({ left: z.string(), right: z.string() })).min(2),
+  pairs: z
+    .array(z.object({ left: z.string(), right: z.string(), explain: z.string().optional() }))
+    .min(2),
+});
+const categorizeData = z.object({
+  type: z.literal('categorize'),
+  categories: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        label: z.string().min(1),
+      }),
+    )
+    .min(2)
+    .max(4),
+  items: z
+    .array(
+      z.object({
+        text: z.string().min(1),
+        category: z.string().min(1),
+        explain: z.string().optional(),
+      }),
+    )
+    .min(10),
+});
+const orderingData = z.object({
+  type: z.literal('ordering'),
+  items: z
+    .array(
+      z.object({
+        words: z.array(z.string().min(1)).min(3),
+        answer: z.array(z.string().min(1)).min(3),
+        hint: z.string().optional(),
+        translation: z.string().optional(),
+        explain: z.string().optional(),
+      }),
+    )
+    .min(6),
 });
 
 const trainers = defineCollection({
@@ -82,7 +128,14 @@ const trainers = defineCollection({
     lesson: z.string().optional(),
     title: z.string(),
     description: z.string().default(''),
-    data: z.discriminatedUnion('type', [quizData, flashData, clozeData, matchData]),
+    data: z.discriminatedUnion('type', [
+      quizData,
+      flashData,
+      clozeData,
+      matchData,
+      categorizeData,
+      orderingData,
+    ]),
   }),
 });
 

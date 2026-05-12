@@ -34,3 +34,40 @@ export function scoreMatch(
   for (const k of keys) if (picked[k] === correct[k]) score++;
   return { score, total: keys.length };
 }
+
+export interface CategorizeItem {
+  text: string;
+  category: string;
+}
+
+/** Categorize: each item correct when userAnswer matches expected category. */
+export function scoreCategorize(
+  items: CategorizeItem[],
+  userAnswers: Map<string, string>,
+): ScoreResult {
+  let score = 0;
+  for (const item of items) {
+    if (userAnswers.get(item.text) === item.category) score++;
+  }
+  return { score, total: items.length };
+}
+
+export interface OrderingItem {
+  words: string[];
+  answer: string[];
+}
+
+/** Ordering: each item correct when assembled sequence matches answer (normalized). */
+export function scoreOrdering(
+  items: OrderingItem[],
+  userAnswers: Map<number, string[]>,
+): ScoreResult {
+  let score = 0;
+  for (let i = 0; i < items.length; i++) {
+    const exp = items[i].answer;
+    const got = userAnswers.get(i) ?? [];
+    const ok = exp.length === got.length && exp.every((w, j) => norm(w) === norm(got[j] ?? ''));
+    if (ok) score++;
+  }
+  return { score, total: items.length };
+}

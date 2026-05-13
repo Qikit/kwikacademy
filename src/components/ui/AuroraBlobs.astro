@@ -1,0 +1,70 @@
+---
+---
+
+<div class="blobs" aria-hidden="true">
+  <span class="b b1"></span>
+  <span class="b b2"></span>
+  <span class="b b3"></span>
+</div>
+
+<style>
+  .blobs {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .b {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    will-change: transform;
+  }
+  .b1 {
+    width: 34vw;
+    height: 34vw;
+    background: radial-gradient(circle, #9db8ff, transparent 70%);
+    top: -8vw;
+    right: 6vw;
+    animation: drift1 18s ease-in-out infinite;
+  }
+  .b2 {
+    width: 30vw;
+    height: 30vw;
+    background: radial-gradient(circle, #d7a8ff, transparent 70%);
+    bottom: -10vw;
+    left: 12vw;
+    animation: drift2 22s ease-in-out infinite;
+  }
+  .b3 {
+    width: 24vw;
+    height: 24vw;
+    background: radial-gradient(circle, #ffc2e8, transparent 70%);
+    top: 30vh;
+    left: -6vw;
+    animation: drift1 26s ease-in-out infinite reverse;
+  }
+  @keyframes drift1 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(4vw, 3vh) scale(1.12);
+    }
+  }
+  @keyframes drift2 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-3vw, -4vh) scale(1.08);
+    }
+  }
+  :global(:root[data-theme='dark']) .b {
+    opacity: 0.35;
+  }
+</style>

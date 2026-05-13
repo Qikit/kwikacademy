@@ -1,0 +1,41 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'glass';
+}
+const { href, variant = 'primary' } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag href={href} class={`btn ${variant}`}><slot /></Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: var(--r-full);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  .primary {
+    color: #fff;
+    background: var(--grad-blue-purple);
+    box-shadow: 0 10px 24px -10px rgba(124, 108, 240, 0.6);
+  }
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+  }
+</style>

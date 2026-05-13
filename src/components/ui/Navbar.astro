@@ -1,0 +1,61 @@
+---
+import ThemeToggle from './ThemeToggle.tsx';
+import { withBase } from '../../lib/url';
+
+const links = [
+  { href: withBase('/topics'), label: 'Темы' },
+  { href: withBase('/progress'), label: 'Прогресс' },
+  { href: withBase('/about'), label: 'О проекте' },
+];
+---
+
+<header class="bar">
+  <a class="logo" href={withBase('/')}>KwikAcademy</a>
+  <nav class="pill">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </nav>
+  <ThemeToggle client:load />
+</header>
+
+<style>
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px clamp(16px, 4vw, 40px);
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .pill {
+    display: flex;
+    gap: 4px;
+    padding: 6px;
+    border-radius: var(--r-full);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+  }
+  .pill a {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--r-full);
+    color: var(--text-2);
+    transition: color 0.2s, background 0.2s;
+  }
+  .pill a:hover {
+    color: var(--c-purple);
+  }
+  @media (max-width: 560px) {
+    .pill a {
+      padding: 8px 11px;
+    }
+  }
+</style>

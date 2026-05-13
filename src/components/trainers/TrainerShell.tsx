@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { ArrowLeft, ArrowRight, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, RotateCcw, X } from 'lucide-react';
 import { createStore } from '../../lib/progress/store';
 
 export interface TrainerNav {
@@ -8,11 +8,21 @@ export interface TrainerNav {
   courseTrainerSlugs: string[];
 }
 
+export interface ReviewItem {
+  prompt: ReactNode;
+  userAnswer: ReactNode;
+  correctAnswer: ReactNode;
+  correct: boolean;
+  explain?: ReactNode;
+}
+
 export interface ShellRenderProps {
   index: number;
   total: number;
   next: () => void;
-  finish: (score: number) => void;
+  prev: () => void;
+  canGoBack: boolean;
+  finish: (score: number, review?: ReviewItem[]) => void;
 }
 
 export default function TrainerShell({
@@ -28,6 +38,7 @@ export default function TrainerShell({
 }) {
   const [index, setIndex] = useState(0);
   const [finished, setFinished] = useState<null | number>(null);
+  const [review, setReview] = useState<ReviewItem[]>([]);
   const [courseDone, setCourseDone] = useState(0);
 
   const courseTotal = nav?.courseTrainerSlugs.length ?? 0;
@@ -44,32 +55,24 @@ export default function TrainerShell({
     setIndex((i) => Math.min(i + 1, total - 1));
   }
 
-  function finish(score: number) {
+  function prev() {
+    setIndex((i) => Math.max(i - 1, 0));
+  }
+
+  function finish(score: number, reviewItems?: ReviewItem[]) {
     setFinished(score);
+    setReview(reviewItems ?? []);
     createStore().recordTrainerResult({ trainerSlug: slug, score, total, completedAt: Date.now() });
   }
 
   function restart() {
     setIndex(0);
     setFinished(null);
+    setReview([]);
   }
 
   return (
     <div className="kc-trainer">
-      {courseTotal > 0 && (
-        <div className="kc-course-trk">
-          <div className="kc-course-trk-head">
-            <span>Тренажёры курса</span>
-            <span>
-              {courseDone} / {courseTotal}
-            </span>
-          </div>
-          <div className="kc-trk">
-            <i style={{ width: `${(courseDone / courseTotal) * 100}%` }} />
-          </div>
-        </div>
-      )}
-
       {finished !== null ? (
         <div className="kc-trainer-result">
           <div className="kc-pct-big">{Math.round((finished / total) * 100)}%</div>
@@ -91,13 +94,51 @@ export default function TrainerShell({
               </a>
             )}
           </div>
+
+          {review.length > 0 && (
+            <div className="kc-review">
+              <h3 className="kc-review-title">Разбор ответов</h3>
+              <ol className="kc-review-list">
+                {review.map((r, i) => (
+                  <li key={i} className={`kc-review-item ${r.correct ? 'is-ok' : 'is-no'}`}>
+                    <div className="kc-review-head">
+                      <span className="kc-review-num">{i + 1}</span>
+                      <span className="kc-review-mark" aria-hidden="true">
+                        {r.correct ? <Check size={14} /> : <X size={14} />}
+                      </span>
+                      <span className="kc-review-status">
+                        {r.correct ? 'Верно' : 'Ошибка'}
+                      </span>
+                    </div>
+                    <div className="kc-review-prompt">{r.prompt}</div>
+                    <div className="kc-review-row">
+                      <span className="kc-review-tag">Твой ответ</span>
+                      <span className="kc-review-val">{r.userAnswer}</span>
+                    </div>
+                    {!r.correct && (
+                      <div className="kc-review-row">
+                        <span className="kc-review-tag kc-review-tag-ok">Правильно</span>
+                        <span className="kc-review-val kc-review-val-ok">{r.correctAnswer}</span>
+                      </div>
+                    )}
+                    {r.explain && <div className="kc-review-explain">{r.explain}</div>}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
       ) : (
         <>
-          <div className="kc-trk kc-q-trk">
+          <div className="kc-trk kc-q-trk" aria-label="Прогресс тренажёра">
             <i style={{ width: `${(index / total) * 100}%` }} />
           </div>
-          {children({ index, total, next, finish })}
+          {courseTotal > 0 && (
+            <div className="kc-course-inline">
+              Тренажёры курса: {courseDone} / {courseTotal}
+            </div>
+          )}
+          {children({ index, total, next, prev, canGoBack: index > 0, finish })}
         </>
       )}
     </div>

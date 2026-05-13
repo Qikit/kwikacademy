@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TrainerShell, { type TrainerNav } from './TrainerShell';
 
 export interface Flashcard {
@@ -20,11 +20,14 @@ export default function Flashcards({
 
   return (
     <TrainerShell slug={slug} total={cards.length} nav={nav}>
-      {({ index, next, finish }) => {
+      {({ index, next, prev, canGoBack, finish }) => {
         const c = cards[index];
 
-        function advance() {
+        useEffect(() => {
           setFlipped(false);
+        }, [index]);
+
+        function advance() {
           if (index === cards.length - 1) finish(cards.length);
           else next();
         }
@@ -51,9 +54,19 @@ export default function Flashcards({
             {!flipped && c.hint && (
               <p style={{ color: 'var(--text-3)', fontSize: 12, marginTop: 8 }}>Подсказка: {c.hint}</p>
             )}
-            <button className="kc-retry" style={{ marginTop: 16 }} onClick={advance}>
-              {index === cards.length - 1 ? 'Завершить' : 'Следующая карта'}
-            </button>
+            <div className="kc-nav-row">
+              <button
+                type="button"
+                className="kc-btn kc-btn-ghost"
+                onClick={prev}
+                disabled={!canGoBack}
+              >
+                Назад
+              </button>
+              <button type="button" className="kc-retry" onClick={advance}>
+                {index === cards.length - 1 ? 'Завершить' : 'Следующая карта'}
+              </button>
+            </div>
           </div>
         );
       }}

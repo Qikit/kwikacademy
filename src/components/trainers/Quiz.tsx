@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TrainerShell, { type TrainerNav } from './TrainerShell';
+import TrainerShell, { type ReviewItem, type TrainerNav } from './TrainerShell';
 import { scoreQuiz } from '../../lib/trainers/score';
 
 export interface QuizQuestion {
@@ -19,26 +19,33 @@ export default function Quiz({
   nav?: TrainerNav;
 }) {
   const [picks, setPicks] = useState<number[]>([]);
-  const [revealed, setRevealed] = useState(false);
 
   return (
     <TrainerShell slug={slug} total={questions.length} nav={nav}>
-      {({ index, next, finish }) => {
+      {({ index, next, prev, canGoBack, finish }) => {
         const q = questions[index];
         const picked = picks[index];
+        const revealed = typeof picked === 'number';
 
         function choose(i: number) {
           if (revealed) return;
           const copy = [...picks];
           copy[index] = i;
           setPicks(copy);
-          setRevealed(true);
         }
 
         function advance() {
-          setRevealed(false);
           if (index === questions.length - 1) {
-            finish(scoreQuiz(picks, questions.map((x) => x.correctIndex)).score);
+            const correctIndices = questions.map((x) => x.correctIndex);
+            const score = scoreQuiz(picks, correctIndices).score;
+            const review: ReviewItem[] = questions.map((qq, i) => ({
+              prompt: qq.prompt,
+              userAnswer: typeof picks[i] === 'number' ? qq.options[picks[i]] : '—',
+              correctAnswer: qq.options[qq.correctIndex],
+              correct: picks[i] === qq.correctIndex,
+              explain: qq.explain,
+            }));
+            finish(score, review);
           } else {
             next();
           }
@@ -60,11 +67,21 @@ export default function Quiz({
             {revealed && q.explain && (
               <p style={{ color: 'var(--text-2)', fontSize: 13, marginTop: 8 }}>{q.explain}</p>
             )}
-            {revealed && (
-              <button className="kc-retry" style={{ marginTop: 16 }} onClick={advance}>
-                {index === questions.length - 1 ? 'Завершить' : 'Дальше'}
+            <div className="kc-nav-row">
+              <button
+                type="button"
+                className="kc-btn kc-btn-ghost"
+                onClick={prev}
+                disabled={!canGoBack}
+              >
+                Назад
               </button>
-            )}
+              {revealed && (
+                <button type="button" className="kc-retry" onClick={advance}>
+                  {index === questions.length - 1 ? 'Завершить' : 'Дальше'}
+                </button>
+              )}
+            </div>
           </div>
         );
       }}

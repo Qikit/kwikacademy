@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import { withBase } from '../../lib/url';
+
+const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
+const gradVar = (g: string) => `var(--grad-${g})`;
+---
+
+<section class="bento-wrap">
+  <h2>Выбери направление</h2>
+  <div class="bento">
+    {
+      courses.map((c) => (
+        <a class="tile" href={withBase(`/topics/${c.id}`)} style={`background:${gradVar(c.data.gradient)}`}>
+          <span class="g">{c.data.glyph}</span>
+          <span class="t">{c.data.title}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .bento-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 64px;
+  }
+  h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .tile {
+    border-radius: var(--r-lg);
+    padding: 20px;
+    min-height: 120px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-weight: 600;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.25s;
+  }
+  .tile:hover {
+    transform: translateY(-4px);
+  }
+  .g {
+    font-size: 26px;
+  }
+  .t {
+    font-size: 15px;
+  }
+</style>

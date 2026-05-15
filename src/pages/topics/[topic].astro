@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Roadmap from '../../components/course/Roadmap.astro';
-import Icon from '../../components/ui/Icon.astro';
 import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
@@ -25,6 +24,32 @@ const nodes = lessons.map((l) => ({
 }));
 
 const trainers = (await getCollection('trainers')).filter((t) => t.data.course === course.id);
+
+const trainersByLesson = new Map<string, typeof trainers>();
+for (const t of trainers) {
+  const key = t.data.lesson ?? '__loose__';
+  const bucket = trainersByLesson.get(key) ?? [];
+  bucket.push(t);
+  trainersByLesson.set(key, bucket);
+}
+
+type TrainerGroup = { id: string; title: string; items: typeof trainers };
+const groups: TrainerGroup[] = [];
+for (const l of lessons) {
+  const items = trainersByLesson.get(l.id);
+  if (items && items.length) groups.push({ id: l.id, title: l.data.title, items });
+}
+const loose = trainersByLesson.get('__loose__');
+if (loose && loose.length) groups.push({ id: '__loose__', title: 'Без привязки к уроку', items: loose });
+
+const KIND_LABEL: Record<string, string> = {
+  flashcards: 'Карточки',
+  match: 'Match',
+  categorize: 'Категории',
+  quiz: 'Тест',
+  cloze: 'Пропуски',
+  ordering: 'Порядок',
+};
 ---
 
 <BaseLayout title={`${course.data.title} — KwikAcademy`}>
@@ -38,23 +63,43 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
 
     <h2>Тренажёры</h2>
     {
-      trainers.length > 0 ? (
-        <ul class="trainers">
-          {trainers.map((t) => (
-            <li>
-              <a href={withBase(`/practice/${course.id}/${t.id}`)} data-trainer={t.id}>
-                <div class="tinfo">
-                  <strong>{t.data.title}</strong>
-                  <span>{t.data.description}</span>
-                </div>
-                <span class="tbadge" aria-label="результат">
-                  <Icon name="check" size={14} />
-                  <b class="tscore" />
+      groups.length > 0 ? (
+        <div class="trainer-groups">
+          {groups.map((g, gi) => (
+            <details class="trainer-group" open={gi === 0} data-group={g.id}>
+              <summary class="trainer-group-summary">
+                <span class="trainer-group-caret" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
                 </span>
-              </a>
-            </li>
+                <span class="trainer-group-title">{g.title}</span>
+                <span class="trainer-group-meta">
+                  <span class="trainer-group-count">{g.items.length} тр.</span>
+                  <span class="trainer-group-progress" data-group-progress={g.id} hidden>
+                    <span class="trainer-group-progress-text" />
+                  </span>
+                </span>
+              </summary>
+              <div class="kc-trainer-grid">
+                {g.items.map((t) => (
+                  <a
+                    class="kc-trainer-card"
+                    href={withBase(`/practice/${course.id}/${t.id}`)}
+                    data-trainer={t.id}
+                  >
+                    <span class="kc-trainer-kind">{KIND_LABEL[t.data.data.type] ?? t.data.data.type}</span>
+                    <span class="kc-trainer-title">{t.data.title}</span>
+                    <span class="kc-trainer-hint">{t.data.description}</span>
+                    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+                    <span class="kc-trainer-badge" aria-label="результат">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      <b class="tscore" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </details>
           ))}
-        </ul>
+        </div>
       ) : (
         <p class="empty">Тренажёры скоро появятся.</p>
       )
@@ -64,7 +109,19 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
   <script>
     import { hydrateRoadmap, hydrateTrainerList } from '../../lib/progress/hydrate';
     hydrateRoadmap();
-    hydrateTrainerList();
+    hydrateTrainerList().then(() => {
+      document.querySelectorAll<HTMLElement>('[data-group]').forEach((group) => {
+        const cards = group.querySelectorAll<HTMLElement>('[data-trainer]');
+        const done = Array.from(cards).filter((c) => c.dataset.done === 'true').length;
+        if (done === 0) return;
+        const wrap = group.querySelector<HTMLElement>('[data-group-progress]');
+        const text = group.querySelector<HTMLElement>('.trainer-group-progress-text');
+        if (!wrap || !text) return;
+        wrap.hidden = false;
+        text.textContent = `${done} / ${cards.length}`;
+        if (done === cards.length) wrap.dataset.full = 'true';
+      });
+    });
   </script>
 </BaseLayout>
 
@@ -92,53 +149,117 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
     color: var(--text-3);
     font-size: 14px;
   }
-  .trainers {
-    list-style: none;
+  .trainer-groups {
     display: grid;
     gap: 12px;
   }
-  .trainers a {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 18px;
+  .trainer-group {
+    border: 1px solid var(--glass-border);
     border-radius: var(--r-md);
     background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    transition: transform 0.2s, border-color 0.2s;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
   }
-  .trainers a:hover {
-    transform: translateY(-2px);
+  .trainer-group[open] {
+    border-color: rgba(96, 165, 250, 0.35);
   }
-  .trainers a[data-done='true'] {
-    border-color: rgba(52, 211, 153, 0.5);
+  .trainer-group-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
   }
-  .tinfo {
+  .trainer-group-summary::-webkit-details-marker {
+    display: none;
+  }
+  .trainer-group-summary::marker {
+    display: none;
+  }
+  .trainer-group-summary:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .trainer-group-caret {
+    display: inline-flex;
+    color: var(--text-3);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .trainer-group[open] .trainer-group-caret {
+    transform: rotate(90deg);
+    color: var(--c-blue);
+  }
+  .trainer-group-title {
     flex: 1;
-  }
-  .trainers strong {
-    display: block;
     font-family: var(--font-display);
     font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
   }
-  .tinfo span {
-    font-size: 13px;
+  .trainer-group-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .trainer-group-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--text-3);
   }
-  .tbadge {
+  .trainer-group-progress {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: var(--r-full);
+    background: rgba(96, 165, 250, 0.16);
+    color: var(--c-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .trainer-group-progress[data-full='true'] {
+    background: rgba(52, 211, 153, 0.18);
+    color: #34d399;
+  }
+  .trainer-group .kc-trainer-grid {
+    margin: 0;
+    padding: 4px 18px 18px;
+  }
+  .kc-trainer-card .kc-trainer-badge {
     display: none;
+  }
+  .kc-trainer-card[data-done='true'] {
+    border-color: rgba(52, 211, 153, 0.5);
+  }
+  .kc-trainer-card[data-done='true'] .kc-trainer-arrow {
+    display: none;
+  }
+  .kc-trainer-card[data-done='true'] .kc-trainer-badge {
+    grid-area: arrow;
+    display: inline-flex;
     align-items: center;
     gap: 5px;
-    flex-shrink: 0;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
     color: #34d399;
     background: rgba(52, 211, 153, 0.14);
     padding: 5px 10px;
     border-radius: var(--r-full);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    height: fit-content;
+    align-self: center;
   }
-  .trainers a[data-done='true'] .tbadge {
-    display: inline-flex;
+  @media (max-width: 640px) {
+    .trainer-group-summary {
+      padding: 12px 14px;
+    }
+    .trainer-group .kc-trainer-grid {
+      padding: 4px 12px 14px;
+    }
   }
 </style>

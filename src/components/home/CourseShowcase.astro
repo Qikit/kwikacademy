@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import CourseCard from '../course/CourseCard.tsx';
+import { withBase } from '../../lib/url';
+
+const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
+const lessons = await getCollection('lessons');
+const countFor = (slug: string) => lessons.filter((l) => l.data.course === slug).length;
+---
+
+<section class="showcase">
+  <h2>Курсы</h2>
+  <div class="cards">
+    {
+      courses.map((c) => (
+        <div class="slot" data-course={c.id} data-lessons={countFor(c.id)}>
+          <CourseCard
+            client:visible
+            href={withBase(`/topics/${c.id}`)}
+            title={c.data.title}
+            eyebrow={c.data.subtitle}
+            glyph={c.data.glyph}
+            meta={`${countFor(c.id)} уроков`}
+            progress={0}
+          />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .showcase {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+  h2 {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px 26px;
+  }
+</style>

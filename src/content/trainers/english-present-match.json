@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-present",
+  "title": "Маркеры времени → форма",
+  "description": "Подбери, к какому времени относится каждый маркер.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "every morning",
+        "right": "Present Simple",
+        "explain": "«Every + период» — повторяющееся регулярное действие → Simple."
+      },
+      {
+        "left": "right now",
+        "right": "Present Continuous (момент речи)",
+        "explain": "«Right now» = прямо сейчас, действие в моменте → Continuous."
+      },
+      {
+        "left": "usually",
+        "right": "Present Simple",
+        "explain": "Наречие частоты «обычно» = привычка → Simple."
+      },
+      {
+        "left": "at the moment",
+        "right": "Present Continuous (момент речи)",
+        "explain": "«В данный момент» = действие сейчас → Continuous."
+      },
+      {
+        "left": "always (нейтральная привычка)",
+        "right": "Present Simple",
+        "explain": "«Always» в нейтральном смысле «всегда делает» = привычка → Simple. С Continuous always передаёт раздражение."
+      },
+      {
+        "left": "Look! / Listen!",
+        "right": "Present Continuous (момент речи)",
+        "explain": "Императивы внимания указывают на «вот сейчас» → Continuous."
+      },
+      {
+        "left": "twice a week",
+        "right": "Present Simple",
+        "explain": "Частотность «N раз в период» = регулярность → Simple."
+      },
+      {
+        "left": "this week (временно)",
+        "right": "Present Continuous (временный период)",
+        "explain": "«This week / month» = ограниченный период вокруг сейчас → Continuous."
+      },
+      {
+        "left": "rarely",
+        "right": "Present Simple",
+        "explain": "Наречие частоты «редко» = привычка → Simple."
+      },
+      {
+        "left": "these days",
+        "right": "Present Continuous (временный период)",
+        "explain": "«В эти дни» = временный период, не «всегда» → Continuous."
+      }
+    ]
+  }
+}

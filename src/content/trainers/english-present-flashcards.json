@@ -1,0 +1,76 @@
+{
+  "course": "english",
+  "lesson": "english-present",
+  "title": "Глаголы состояния — flashcards",
+  "description": "Глаголы, которые не используются в Present Continuous даже если действие происходит «сейчас».",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "know — I know him.",
+        "back": "Знать кого-то — состояние, не процесс. НЕ Continuous: I am knowing → I know.",
+        "hint": "состояние"
+      },
+      {
+        "front": "understand — I understand now.",
+        "back": "Понимание — состояние. I am understanding → I understand.",
+        "hint": "состояние"
+      },
+      {
+        "front": "believe — I believe you.",
+        "back": "Вера — состояние. I am believing → I believe.",
+        "hint": "состояние"
+      },
+      {
+        "front": "like / love / hate — I love coffee.",
+        "back": "Эмоции и отношение — состояние. I am loving → I love.",
+        "hint": "эмоция"
+      },
+      {
+        "front": "want / need / prefer — I want some water.",
+        "back": "Желания — состояние. I am wanting → I want.",
+        "hint": "желание"
+      },
+      {
+        "front": "see / hear (без усилия) — I see the sign.",
+        "back": "Восприятие без усилия — состояние. I am seeing the sign → I see the sign. Но «see a doctor» = посетить — действие.",
+        "hint": "восприятие"
+      },
+      {
+        "front": "smell / taste (свойство) — This soup tastes good.",
+        "back": "Свойство объекта — состояние. This soup is tasting → This soup tastes. Но «I am tasting the soup» = пробую сейчас — действие.",
+        "hint": "восприятие"
+      },
+      {
+        "front": "own / belong / have (владеть) — I own a flat.",
+        "back": "Владение — состояние. I am owning → I own. Но «I am having dinner» = ужинаю — действие.",
+        "hint": "владение"
+      },
+      {
+        "front": "seem / appear — She seems tired.",
+        "back": "Впечатление — состояние. She is seeming tired → She seems tired.",
+        "hint": "впечатление"
+      },
+      {
+        "front": "mean — What does this word mean?",
+        "back": "Значение — состояние. What is this meaning → What does this mean.",
+        "hint": "значение"
+      },
+      {
+        "front": "remember / forget — I remember the password.",
+        "back": "Память — состояние. I am remembering → I remember.",
+        "hint": "память"
+      },
+      {
+        "front": "depend / contain / consist — The team consists of five people.",
+        "back": "Логическая связь и состав — состояние. The team is consisting → consists.",
+        "hint": "связь"
+      },
+      {
+        "front": "Особенность: have в разных значениях",
+        "back": "have как «владеть» = state (I have a car). have как «есть/пить/проводить» = action (I am having lunch / a great time).",
+        "hint": "ловушка"
+      }
+    ]
+  }
+}

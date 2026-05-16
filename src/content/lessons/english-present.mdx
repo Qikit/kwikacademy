@@ -2,12 +2,318 @@
 course: english
 order: 2
 phase: "Фаза 1 · Бытовой английский"
-title: "Времена настоящего — Present"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Без настоящих времён нет английского. Simple vs Continuous и первое знакомство с Perfect."
-placeholder: true
-tags: [english]
+title: "Времена настоящего — Present Simple и Continuous"
+eyebrow: "Грамматика · уровень A2-B1"
+readingMinutes: 22
+summary: "Два настоящих времени — простое и длительное. Когда какое, почему русскоязычные путают и как ставить выбор автоматически."
+tags: [present, tenses, grammar, A2, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Времена настоящего — Present» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Timeline from '../../components/lesson/Timeline.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем два настоящих
+
+В русском есть одно настоящее время: «я работаю». Это и про привычку («я работаю в банке»), и про сейчас («я работаю, не мешай»), и про текущий период («я работаю над диссертацией этот год»). Контекст разруливает, какой смысл имеется в виду.
+
+В английском такого универсального глагола нет. Есть два настоящих времени, и они отвечают на разные вопросы. **Present Simple** — про то, что верно всегда или регулярно. **Present Continuous** — про то, что происходит сейчас или временно.
+
+Перепутаешь — фраза не сломается, носитель поймёт. Но прозвучит странно: «I am living in Moscow» вместо «I live in Moscow» звучит как «я тут проездом, временно живу», а не «Москва — мой постоянный город». Этот урок про то, как ставить выбор автоматически, не задумываясь.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+**Present Simple** = постоянное, регулярное, всегда верное. **Present Continuous** = прямо сейчас или временный период вокруг сейчас. Если можешь сказать «вообще» — Simple. Если «именно в этот момент» или «эти дни» — Continuous.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Present Simple
+
+Берёшь начальную форму глагола (V1). В третьем лице единственного числа (he / she / it) добавляешь `-s` (или `-es` после `-ch`, `-sh`, `-s`, `-x`, `-o`; меняешь `-y` на `-ies` после согласной).
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / you / we / they | I work | I don't work | Do I work? |
+| he / she / it | She works | She doesn't work | Does she work? |
+
+Особые формы: have → has, do → does, go → goes.
+
+### Present Continuous
+
+Берёшь `be` в правильной форме (am / is / are) и добавляешь `V-ing`.
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I | I am working | I am not working | Am I working? |
+| he / she / it | She is working | She isn't working | Is she working? |
+| you / we / they | They are working | They aren't working | Are they working? |
+
+Правила `-ing`: молчаливое `-e` отбрасывается (write → writing); короткие глаголы CVC удваивают согласную (run → running, sit → sitting); `-ie` превращается в `-y` (lie → lying).
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="В английском Continuous подчёркивает, что действие как процесс заключено в рамку времени. Русский передаёт это интонацией или контекстом, а английский — структурой. Поэтому при переводе с русского часто кажется, что Simple «достаточно», — а на самом деле для смысла «в моменте» нужен Continuous.">
+  <div slot="ru">
+    <strong>Я работаю.</strong><br/>
+    «Я работаю в банке» — постоянная работа.<br/>
+    «Я работаю, не звони» — прямо сейчас.<br/>
+    Форма глагола одинаковая, смысл — из контекста.
+  </div>
+  <div slot="en">
+    <strong>I work.</strong> — Постоянная работа (профессия, привычка).<br/>
+    <strong>I am working.</strong> — Прямо сейчас, в моменте.<br/>
+    Структура `am/is/are + V-ing` буквально означает «есть [находящийся в процессе] работы».
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+**Present Simple** — точки на оси времени. Действие повторяется, разбросано по всей жизни.
+
+<Timeline
+  caption="Present Simple: повторяющиеся действия — точки на оси."
+  points={[
+    { at: 'past', label: 'каждое утро', type: 'point' },
+    { at: 'now', label: 'каждое утро', type: 'point' },
+    { at: 'future', label: 'каждое утро', type: 'point' },
+  ]}
+/>
+
+**Present Continuous** — непрерывная полоса вокруг «сейчас». Действие развёрнуто во времени, мы внутри него.
+
+<Timeline
+  caption="Present Continuous: процесс вокруг момента речи."
+  points={[
+    { at: 'past', label: 'начал недавно', type: 'duration' },
+    { at: 'now', label: 'идёт прямо сейчас', type: 'ongoing' },
+    { at: 'future', label: 'скоро закончу', type: 'duration' },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Когда Present Simple
+
+<RuleList rules={[
+  "<strong>Привычка, регулярное действие.</strong> Маркеры: every day, usually, often, rarely, twice a week. <em>I drink coffee every morning.</em>",
+  "<strong>Факт, постоянное состояние.</strong> Профессия, место жительства, свойство. <em>She lives in Berlin.</em>",
+  "<strong>Научный или общеизвестный факт.</strong> Закон природы, неизменная истина. <em>Water boils at 100°C.</em>",
+  "<strong>Расписание.</strong> Поезд, рейс, занятия — то, что подчинено таблице. <em>The train leaves at 7:15.</em>",
+  "<strong>Глаголы состояния (state verbs).</strong> know, understand, like, want, mean, seem, own. Эти глаголы в Continuous не ставятся даже про «сейчас». <em>I know the answer.</em>",
+]} />
+
+### Когда Present Continuous
+
+<RuleList rules={[
+  "<strong>Действие прямо в момент речи.</strong> Маркеры: now, right now, at the moment, look!, listen!. <em>Look! It is raining.</em>",
+  "<strong>Временное состояние вокруг «сейчас».</strong> Этот месяц, эта неделя, в эти дни — но не навсегда. <em>I am living with my parents this month.</em>",
+  "<strong>Запланированное на близкое будущее.</strong> Договорённость, билеты куплены, точное время есть. <em>We are meeting Anna at 7 tonight.</em>",
+  "<strong>Развивающийся процесс, тренд.</strong> Постепенное изменение. <em>The climate is getting warmer.</em>",
+  "<strong>Раздражающая привычка с always.</strong> Эмоциональная окраска: «вечно», «постоянно». <em>He is always losing his keys!</em>",
+]} />
+
+## 7. Примеры
+
+### Привычки и факты — Present Simple
+
+<Example ru="Я пью кофе каждое утро.">I drink coffee every morning.</Example>
+<Example ru="Она работает в банке.">She works in a bank.</Example>
+<Example ru="Мы живём в Праге.">We live in Prague.</Example>
+<Example ru="Поезд отправляется в 7:15.">The train leaves at 7:15.</Example>
+<Example ru="Вода кипит при 100 градусах.">Water boils at 100°C.</Example>
+<Example ru="Совещание начинается в десять.">The meeting starts at ten.</Example>
+
+### Прямо сейчас — Present Continuous
+
+<Example ru="Смотри! Идёт дождь.">Look! It is raining.</Example>
+<Example ru="Я готовлю ужин, перезвоню через час.">I am cooking dinner, I'll call you back in an hour.</Example>
+<Example ru="Извините, я разговариваю по телефону.">Sorry, I am talking on the phone.</Example>
+<Example ru="Слышишь? Кто-то стучит в дверь.">Listen — someone is knocking at the door.</Example>
+
+### Временное состояние — Present Continuous
+
+<Example ru="Она работает из дома эту неделю — офис закрыт.">She is working from home this week — the office is closed.</Example>
+<Example ru="Я живу у родителей, пока ищу квартиру.">I am staying with my parents while I look for a flat.</Example>
+<Example ru="Команда тестирует новую версию в этом спринте.">The team is testing a new version this sprint.</Example>
+
+### Запланированное и тренды — Present Continuous
+
+<Example ru="Мы встречаемся с Анной сегодня в семь.">We are meeting Anna at seven tonight.</Example>
+<Example ru="В пятницу я лечу в Лиссабон.">On Friday I am flying to Lisbon.</Example>
+<Example ru="Цены растут уже несколько месяцев.">Prices are going up for several months now.</Example>
+
+### Глаголы состояния — только Simple
+
+<Example ru="Я знаю его очень хорошо.">I know him very well.</Example>
+<Example ru="Этот суп вкусный.">This soup tastes good.</Example>
+<Example ru="Тебе нужна помощь?">Do you need help?</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="Present Simple" rightLabel="Present Continuous">
+  <div slot="left">
+    <strong>I work in a bank.</strong><br/>Постоянная работа. Профессия.<br/><br/>
+    <strong>Anna drinks tea.</strong><br/>Привычка в общем.<br/><br/>
+    <strong>It rains a lot in November.</strong><br/>Регулярно, типично.<br/><br/>
+    <strong>The train leaves at 7.</strong><br/>Расписание.<br/><br/>
+    <strong>I have a car.</strong><br/>Владение (state verb).
+  </div>
+  <div slot="right">
+    <strong>I am working from home today.</strong><br/>Временно, на сегодня.<br/><br/>
+    <strong>Anna is drinking coffee right now.</strong><br/>Прямо сейчас.<br/><br/>
+    <strong>Look! It is raining.</strong><br/>В моменте речи.<br/><br/>
+    <strong>I am meeting friends at 7.</strong><br/>План на вечер.<br/><br/>
+    <strong>I am having lunch.</strong><br/>Действие (не «владею обедом», а «ем»).
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Подставь к русскому предложению одно из двух: «вообще» или «прямо сейчас». Если «вообще» лучше — Simple. Если «сейчас» или «эти дни» — Continuous. Работает в 90% случаев, остальные 10% — глаголы состояния (всегда Simple) и план на близкое будущее (всегда Continuous).
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английскому нужны два времени">
+Английский глагол беднее русского: нет суффиксов вида и аспекта, нет деепричастий, мало вариаций. Чтобы передать различие «вообще делаю» и «именно сейчас делаю», язык построил отдельную конструкцию — `be + V-ing`. Это не украшение, а механизм: без Continuous носитель не сможет отличить «работаю в банке (профессия)» от «работаю над задачей (в этот момент)». В русском же различие встроено в семантику глагола и контекст, поэтому одно «работаю» покрывает оба смысла.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Глагол — state verb (know, like, want, mean, seem, own)?", yes: "Present Simple. Continuous недопустим даже про «сейчас».", no: "к вопросу 2" },
+  { q: "В предложении есть «now», «right now», «at the moment», «Look!», «Listen!»?", yes: "Present Continuous. Прямо в моменте.", no: "к вопросу 3" },
+  { q: "Запланированное на ближайшее будущее с указанным временем (tonight, on Friday)?", yes: "Present Continuous. План считается «уже в процессе».", no: "к вопросу 4" },
+  { q: "Маркеры «every day», «usually», «often», «twice a week», «always»?", yes: "Present Simple. Регулярность.", no: "к вопросу 5" },
+  { q: "Действие временно, на ограниченный период «this week / month»?", yes: "Present Continuous. Временно вокруг сейчас.", no: "Скорее всего Present Simple — постоянное состояние или факт." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I am living in Berlin (про постоянное место) | I live in Berlin | Постоянное место жительства → Simple. Continuous даст оттенок «временно». |
+| I am knowing the answer | I know the answer | know — глагол состояния, Continuous не используется. |
+| Look! It rains | Look! It is raining | Look! указывает на момент речи → Continuous. |
+| She works from home this week (про временное) | She is working from home this week | «Эту неделю» = временный период вокруг сейчас → Continuous. |
+| What you are doing? | What are you doing? | Вопросительный порядок: вспомогательный be перед подлежащим. |
+| I am having a car | I have a car | have в значении «владеть» — state, Simple. Continuous только для «есть, проводить»: I am having lunch. |
+| He don't work here | He doesn't work here | В 3-м лице ед. ч. — does/doesn't, не do/don't. |
+| Where does she works? | Where does she work? | После do/does — начальная форма без `-s`. |
+| I am thinking that you are right (про мнение) | I think that you are right | think как «считать, иметь мнение» — state. Continuous только для «обдумываю». |
+| The water is boiling at 100°C (про закон) | Water boils at 100°C | Научный факт, всегда верно → Simple, без артикля. |
+
+## 13. Шпаргалка
+
+| Маркер | Время | Почему |
+| --- | --- | --- |
+| every day, usually, often, rarely, twice a week | Simple | Регулярность |
+| now, right now, at the moment | Continuous | Момент речи |
+| Look!, Listen! | Continuous | Привлечение внимания к моменту |
+| this week, this month, these days | Continuous | Временный период |
+| tonight, tomorrow + договорённость | Continuous | Запланированное будущее |
+| always + раздражение | Continuous | Эмоциональная окраска |
+| always + просто привычка | Simple | Нейтральная регулярность |
+| State verbs (know, like, want, mean) | Simple | Состояния не имеют процесса |
+| Расписание (трамвай, занятия) | Simple | Подчинено таблице |
+| Тренд, изменение со временем | Continuous | Развивающийся процесс |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "Present Simple", meaning: "простое настоящее — для регулярных действий и фактов" },
+  { term: "Present Continuous", meaning: "длительное настоящее — для действий в моменте речи" },
+  { term: "state verb", meaning: "глагол состояния — не используется в Continuous" },
+  { term: "dynamic verb", meaning: "глагол действия — допускает оба времени" },
+  { term: "V1 / base form", meaning: "начальная форма глагола (work, go, be)" },
+  { term: "V-ing / present participle", meaning: "форма с окончанием -ing (working, going, being)" },
+  { term: "auxiliary verb", meaning: "вспомогательный глагол (do, does, am, is, are)" },
+  { term: "third person singular", meaning: "3-е лицо ед. числа (he, she, it) — требует -s в Simple" },
+  { term: "habitual action", meaning: "привычное, повторяющееся действие" },
+  { term: "temporary state", meaning: "временное состояние, ограниченный период" },
+  { term: "time marker", meaning: "слово или фраза, указывающие на время (every day, now)" },
+  { term: "schedule", meaning: "расписание — формат для Simple" },
+  { term: "every day", meaning: "каждый день" },
+  { term: "usually", meaning: "обычно" },
+  { term: "often", meaning: "часто" },
+  { term: "rarely", meaning: "редко" },
+  { term: "sometimes", meaning: "иногда" },
+  { term: "always", meaning: "всегда" },
+  { term: "twice a week", meaning: "дважды в неделю" },
+  { term: "right now", meaning: "прямо сейчас" },
+  { term: "at the moment", meaning: "в данный момент" },
+  { term: "these days", meaning: "в эти дни (период вокруг сейчас)" },
+  { term: "this week / month", meaning: "на этой неделе / в этом месяце" },
+  { term: "tonight", meaning: "сегодня вечером" },
+  { term: "know", meaning: "знать (state)" },
+  { term: "understand", meaning: "понимать (state)" },
+  { term: "like / love / hate", meaning: "нравиться / любить / ненавидеть (state)" },
+  { term: "want / need", meaning: "хотеть / нуждаться (state)" },
+  { term: "mean", meaning: "значить (state)" },
+  { term: "seem / appear", meaning: "казаться (state)" },
+  { term: "own / belong", meaning: "владеть / принадлежать (state)" },
+  { term: "remember / forget", meaning: "помнить / забывать (state)" },
+  { term: "have (own)", meaning: "иметь, владеть — state, только Simple" },
+  { term: "have (action)", meaning: "есть, проводить (lunch, time) — допускает Continuous" },
+  { term: "leave", meaning: "отправляться, уезжать" },
+  { term: "meet", meaning: "встречаться" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-present-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Глаголы состояния</span>
+    <span class="kc-trainer-hint">Запомнить, какие глаголы не идут в Continuous</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-present-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Маркер → время</span>
+    <span class="kc-trainer-hint">Соотнеси маркер с Simple или Continuous</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-present-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Simple или Continuous?</span>
+    <span class="kc-trainer-hint">Разложи предложения по двум корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-present-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-present-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную форму</span>
+    <span class="kc-trainer-hint">Впиши глагол в Simple или Continuous</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-present-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Расставь слова в правильном порядке</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 1-4 (Present Continuous and Present Simple).
+- **Swan M., Practical English Usage** — §453-456 (Present tenses, state and action verbs).
+- **English Page** — englishpage.com/verbpage/presenttenses.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/present-tense

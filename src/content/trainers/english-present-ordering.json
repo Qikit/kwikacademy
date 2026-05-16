@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-present",
+  "title": "Составь предложение",
+  "description": "Поставь слова в правильном порядке.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["coffee", "every", "morning", "I", "drink"],
+        "answer": ["I", "drink", "coffee", "every", "morning"],
+        "translation": "Я пью кофе каждое утро.",
+        "explain": "Простая регулярная привычка (every morning) → Present Simple. Порядок: подлежащее + глагол + дополнение + обстоятельство времени."
+      },
+      {
+        "words": ["working", "She", "home", "from", "is", "this", "week"],
+        "answer": ["She", "is", "working", "from", "home", "this", "week"],
+        "translation": "Она работает из дома на этой неделе.",
+        "explain": "«This week» = временный период → Present Continuous (is working). Обстоятельства места и времени идут после глагольной группы."
+      },
+      {
+        "words": ["does", "where", "live", "your", "brother"],
+        "answer": ["where", "does", "your", "brother", "live"],
+        "translation": "Где живёт твой брат?",
+        "explain": "Специальный вопрос в Present Simple: вопросительное слово + does + подлежащее + начальная форма глагола (без -s)."
+      },
+      {
+        "words": ["the", "train", "at", "leaves", "7:15"],
+        "answer": ["the", "train", "leaves", "at", "7:15"],
+        "translation": "Поезд отправляется в 7:15.",
+        "explain": "Расписание транспорта → Present Simple. В 3-м лице ед. ч. — leaves (с -s)."
+      },
+      {
+        "words": ["raining", "is", "look!", "it"],
+        "answer": ["look!", "it", "is", "raining"],
+        "translation": "Смотри! Идёт дождь.",
+        "explain": "«Look!» = момент речи → Present Continuous. It is raining — стандартная конструкция для погоды."
+      },
+      {
+        "words": ["I", "him", "very", "know", "well"],
+        "answer": ["I", "know", "him", "very", "well"],
+        "translation": "Я знаю его очень хорошо.",
+        "explain": "Know — глагол состояния, всегда в Simple. «Very well» — обстоятельство образа действия в конце."
+      },
+      {
+        "words": ["always", "is", "his", "he", "losing", "keys"],
+        "answer": ["he", "is", "always", "losing", "his", "keys"],
+        "translation": "Он вечно теряет ключи.",
+        "explain": "Always между be и V-ing передаёт раздражение от повторяющегося действия. Конструкция: подлежащее + be + always + V-ing."
+      },
+      {
+        "words": ["studying", "now", "Spanish", "are", "we"],
+        "answer": ["we", "are", "studying", "Spanish", "now"],
+        "translation": "Мы сейчас учим испанский.",
+        "explain": "«Now» = момент речи → Present Continuous (are studying). Обстоятельство времени в конце предложения."
+      }
+    ]
+  }
+}

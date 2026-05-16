@@ -1,0 +1,27 @@
+{
+  "course": "english",
+  "lesson": "english-present",
+  "title": "Simple или Continuous?",
+  "description": "Распредели предложения по двум корзинам.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "simple", "label": "Present Simple" },
+      { "id": "continuous", "label": "Present Continuous" }
+    ],
+    "items": [
+      { "text": "I drink coffee every morning.", "category": "simple", "explain": "Привычка → Simple." },
+      { "text": "I am drinking coffee right now.", "category": "continuous", "explain": "Прямо сейчас → Continuous." },
+      { "text": "She works in a bank.", "category": "simple", "explain": "Постоянная работа → Simple." },
+      { "text": "She is working from home this week.", "category": "continuous", "explain": "Временно «эту неделю» → Continuous." },
+      { "text": "Water boils at 100°C.", "category": "simple", "explain": "Научный факт → Simple." },
+      { "text": "Look! It is raining.", "category": "continuous", "explain": "В момент речи (Look!) → Continuous." },
+      { "text": "The train leaves at 7 PM.", "category": "simple", "explain": "Расписание → Simple." },
+      { "text": "We are meeting Anna at 7 tonight.", "category": "continuous", "explain": "Запланировано на близкое будущее → Continuous." },
+      { "text": "I know him well.", "category": "simple", "explain": "know — state verb, всегда Simple." },
+      { "text": "The climate is getting warmer.", "category": "continuous", "explain": "Тренд, изменение → Continuous." },
+      { "text": "Anna usually reads before bed.", "category": "simple", "explain": "usually → привычка → Simple." },
+      { "text": "He is always losing his keys!", "category": "continuous", "explain": "always + Continuous = раздражающая привычка." }
+    ]
+  }
+}

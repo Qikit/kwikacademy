@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-present",
+  "title": "Поставь правильную форму",
+  "description": "Впиши глагол в нужной форме (Present Simple или Continuous).",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Look! It ___ (rain) outside.",
+        "answers": ["is raining"],
+        "explain": "Маркер «Look!» указывает на момент речи → Present Continuous. Третье лицо ед. ч. (it) → is + V-ing."
+      },
+      {
+        "text": "He ___ (work) in a bank.",
+        "answers": ["works"],
+        "explain": "Постоянная работа, факт → Present Simple. В третьем лице ед. ч. (he) добавляется -s."
+      },
+      {
+        "text": "I ___ (know) the answer.",
+        "answers": ["know"],
+        "explain": "Know — глагол состояния (state verb). В Continuous не используется даже про «сейчас»."
+      },
+      {
+        "text": "She ___ (study) for her exams this week.",
+        "answers": ["is studying"],
+        "explain": "«This week» = временный период вокруг сейчас → Present Continuous."
+      },
+      {
+        "text": "The Earth ___ (orbit) the Sun.",
+        "answers": ["orbits"],
+        "explain": "Научный факт, неизменная истина → Present Simple."
+      },
+      {
+        "text": "We ___ (have) dinner at 8 every day.",
+        "answers": ["have"],
+        "explain": "«Every day» = регулярная привычка → Present Simple. Have в Simple остаётся без -s в 1-м лице мн. ч."
+      },
+      {
+        "text": "We ___ (have) dinner right now — call back later.",
+        "answers": ["are having"],
+        "explain": "«Right now» + have как «ужинать» (action, не «владеть») → Present Continuous допустим."
+      },
+      {
+        "text": "Anna usually ___ (drink) tea, but today she ___ (try) coffee.",
+        "answers": ["drinks", "is trying"],
+        "explain": "Usually → привычка → Simple (drinks, -s в 3-м лице). Today + сейчас пробует → Continuous (is trying)."
+      },
+      {
+        "text": "The train ___ (leave) at 7:15.",
+        "answers": ["leaves"],
+        "explain": "Расписание (как у транспорта) → Present Simple. В 3-м лице ед. ч. — leaves."
+      },
+      {
+        "text": "Listen — they ___ (argue) again.",
+        "answers": ["are arguing"],
+        "explain": "Маркер «Listen» = в момент речи → Present Continuous. Они (they) → are + V-ing."
+      }
+    ]
+  }
+}

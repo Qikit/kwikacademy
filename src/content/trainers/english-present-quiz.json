@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-present",
+  "title": "Времена настоящего — правила",
+  "description": "Выбери правильную форму глагола в контексте.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "My brother ___ in a bank.",
+        "options": ["work", "works", "is working", "are working"],
+        "correctIndex": 1,
+        "explain": "Постоянная работа, привычное состояние → Present Simple. He/she/it → works."
+      },
+      {
+        "prompt": "Look! It ___!",
+        "options": ["rain", "rains", "is raining", "are raining"],
+        "correctIndex": 2,
+        "explain": "Look! указывает на «прямо сейчас» → Present Continuous. It → is raining."
+      },
+      {
+        "prompt": "I ___ him very well.",
+        "options": ["know", "am knowing", "knows", "knowing"],
+        "correctIndex": 0,
+        "explain": "know — глагол состояния, не используется в Continuous даже про «сейчас»."
+      },
+      {
+        "prompt": "We ___ Anna for dinner at 7 tonight.",
+        "options": ["meet", "are meeting", "meeting", "meets"],
+        "correctIndex": 1,
+        "explain": "Запланированное на ближайшее будущее → Present Continuous."
+      },
+      {
+        "prompt": "Water ___ at 100°C.",
+        "options": ["boil", "boils", "is boiling", "are boiling"],
+        "correctIndex": 1,
+        "explain": "Научный факт, всегда верно → Present Simple."
+      },
+      {
+        "prompt": "She ___ from home this week — the office is closed.",
+        "options": ["works", "is working", "work", "are working"],
+        "correctIndex": 1,
+        "explain": "Временное состояние «эту неделю» → Present Continuous."
+      },
+      {
+        "prompt": "What ___ this word ___?",
+        "options": ["does / mean", "is / meaning", "do / mean", "is / mean"],
+        "correctIndex": 0,
+        "explain": "mean — глагол состояния. Вопрос в Simple: does + V."
+      },
+      {
+        "prompt": "He ___ always ___ his keys somewhere!",
+        "options": ["does / lose", "is / losing", "are / losing", "— / loses"],
+        "correctIndex": 1,
+        "explain": "always + Continuous = раздражающая привычка."
+      },
+      {
+        "prompt": "Anna usually ___ tea, but right now she ___ coffee.",
+        "options": ["drinks / drinks", "drinks / is drinking", "is drinking / drinks", "drink / is drinking"],
+        "correctIndex": 1,
+        "explain": "usually → Simple (drinks). right now → Continuous (is drinking)."
+      },
+      {
+        "prompt": "The train ___ at 6:45.",
+        "options": ["leaves", "is leaving", "leave", "are leaving"],
+        "correctIndex": 0,
+        "explain": "Расписание → Present Simple."
+      },
+      {
+        "prompt": "Listen! Someone ___ at the door.",
+        "options": ["knocks", "is knocking", "knock", "knocked"],
+        "correctIndex": 1,
+        "explain": "Listen! указывает на «прямо сейчас» → Continuous."
+      },
+      {
+        "prompt": "I ___ that you ___ the answer.",
+        "options": ["think / know", "am thinking / are knowing", "think / are knowing", "am thinking / know"],
+        "correctIndex": 0,
+        "explain": "think (в смысле «считать») и know — глаголы состояния. Оба в Simple."
+      }
+    ]
+  }
+}

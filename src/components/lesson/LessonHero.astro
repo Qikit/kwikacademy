@@ -1,0 +1,29 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  readingMinutes: number;
+}
+const { eyebrow, title, readingMinutes } = Astro.props;
+---
+
+<header class="lhero">
+  <p class="eyebrow">{eyebrow}</p>
+  <h1>{title}</h1>
+  <p class="rt">⏱ {readingMinutes} мин чтения</p>
+</header>
+
+<style>
+  .lhero {
+    margin-bottom: 32px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    margin: 12px 0;
+  }
+  .rt {
+    font-size: 12px;
+    color: var(--text-3);
+  }
+</style>

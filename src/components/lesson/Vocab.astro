@@ -1,0 +1,42 @@
+---
+interface Props {
+  items: { term: string; meaning: string }[];
+}
+const { items } = Astro.props;
+---
+
+<table class="vocab">
+  <tbody>
+    {
+      items.map((i) => (
+        <tr>
+          <td>{i.term}</td>
+          <td>{i.meaning}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .vocab {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  .vocab td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .vocab td:first-child {
+    font-weight: 600;
+    color: var(--text);
+    width: 36%;
+  }
+  .vocab tr:last-child td {
+    border-bottom: none;
+  }
+</style>

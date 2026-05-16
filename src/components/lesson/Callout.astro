@@ -1,0 +1,36 @@
+---
+interface Props {
+  type?: 'purple' | 'teal' | 'amber' | 'coral' | 'blue';
+  title?: string;
+}
+const { type = 'purple', title } = Astro.props;
+const colors: Record<string, string> = {
+  purple: '#7c6cf0',
+  teal: '#34d399',
+  amber: '#fbbf24',
+  coral: '#f87171',
+  blue: '#60a5fa',
+};
+const c = colors[type];
+---
+
+<div class="callout" style={`border-color:${c};background:${c}22`}>
+  {title && <strong style={`color:${c}`}>{title}</strong>}
+  <div><slot /></div>
+</div>
+
+<style>
+  .callout {
+    border-left: 3px solid;
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    padding: 13px 16px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .callout strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+</style>

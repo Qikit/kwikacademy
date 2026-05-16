@@ -1,0 +1,49 @@
+---
+interface Props {
+  rows: { k: string; v: string }[];
+}
+const { rows } = Astro.props;
+---
+
+<table class="cheat">
+  <tbody>
+    {
+      rows.map((r) => (
+        <tr>
+          <th>{r.k}</th>
+          <td set:html={r.v} />
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .cheat {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  .cheat th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--glass-border);
+    width: 30%;
+    vertical-align: top;
+  }
+  .cheat td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .cheat tr:last-child th,
+  .cheat tr:last-child td {
+    border-bottom: none;
+  }
+</style>

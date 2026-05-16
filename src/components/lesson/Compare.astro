@@ -1,0 +1,48 @@
+---
+interface Props {
+  leftLabel?: string;
+  rightLabel?: string;
+}
+const { leftLabel = 'Верно', rightLabel = 'Неверно' } = Astro.props;
+---
+
+<div class="cmp">
+  <div class="side ok"><span class="lbl">{leftLabel}</span><slot name="left" /></div>
+  <div class="side no"><span class="lbl">{rightLabel}</span><slot name="right" /></div>
+</div>
+
+<style>
+  .cmp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .side {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-md);
+    padding: 16px;
+    background: var(--glass-bg);
+    font-size: 14px;
+    color: var(--text);
+  }
+  .lbl {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+  }
+  .ok .lbl {
+    color: #34d399;
+  }
+  .no .lbl {
+    color: #f87171;
+  }
+  @media (max-width: 520px) {
+    .cmp {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

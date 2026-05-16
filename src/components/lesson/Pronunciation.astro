@@ -1,0 +1,48 @@
+---
+interface Props {
+  groups: { label: string; items: string }[];
+}
+const { groups } = Astro.props;
+---
+
+<div class="pron">
+  {
+    groups.map((g) => (
+      <div class="row">
+        <span class="plabel">{g.label}</span>
+        <span set:html={g.items} />
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .pron {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .row {
+    padding: 12px;
+    border-radius: var(--r-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .plabel {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--c-purple);
+    margin-bottom: 4px;
+  }
+  @media (max-width: 520px) {
+    .pron {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

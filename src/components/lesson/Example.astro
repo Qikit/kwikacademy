@@ -1,0 +1,31 @@
+---
+interface Props {
+  ru?: string;
+}
+const { ru } = Astro.props;
+---
+
+<div class="ex">
+  <div class="en"><slot /></div>
+  {ru && <div class="ru">{ru}</div>}
+</div>
+
+<style>
+  .ex {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-md);
+    padding: 12px 14px;
+    margin: 8px 0;
+  }
+  .en {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .ru {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 4px;
+  }
+</style>

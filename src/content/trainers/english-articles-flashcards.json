@@ -1,0 +1,81 @@
+{
+  "course": "english",
+  "lesson": "english-articles",
+  "title": "Исключения и ловушки",
+  "description": "a/an с буквами-обманками и устойчивые выражения с артиклями.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "an hour, an honest answer, an honour",
+        "back": "h в этих словах немая, слышим гласный звук «ауэр», «онэст», «онэр» → an.",
+        "hint": "h не читается"
+      },
+      {
+        "front": "a university, a uniform, a useful tool",
+        "back": "u в этих словах звучит как «ю» — это согласный звук на слух → a.",
+        "hint": "u = «ю»"
+      },
+      {
+        "front": "an umbrella, an uncle, an unusual case",
+        "back": "u звучит как «а»/«ан» — гласный звук → an.",
+        "hint": "u = «а»"
+      },
+      {
+        "front": "an MBA, an SMS, an HTML page",
+        "back": "Аббревиатуры читаются по буквам. M = «эм», S = «эс», H = «эйч» — все начинаются с гласного звука → an.",
+        "hint": "по звуку первой буквы"
+      },
+      {
+        "front": "a URL, a NATO meeting, a UEFA cup",
+        "back": "URL читается «ю-эр-эл» (звук «ю» — согласный). NATO/UEFA читаются как слова — начинаются с согласного. → a.",
+        "hint": "слышимый звук"
+      },
+      {
+        "front": "the sun, the moon, the sky, the Internet",
+        "back": "Единственные в своём роде объекты — всегда the. Не «one of many».",
+        "hint": "уникальное"
+      },
+      {
+        "front": "play the guitar, play the piano",
+        "back": "Музыкальные инструменты в значении «играть на чём-то» — всегда the. Спорт — наоборот, без артикля: play football.",
+        "hint": "инструменты"
+      },
+      {
+        "front": "the USA, the UK, the Netherlands, the Philippines",
+        "back": "Страны со словами States/Kingdom/Republic + страны во множественном числе — с the. Простые названия (Russia, Germany) — без артикля.",
+        "hint": "спец. география"
+      },
+      {
+        "front": "in the morning, in the evening, in the afternoon — но at night",
+        "back": "Утром/днём/вечером — с the. Ночью — исключение, без артикля.",
+        "hint": "время суток"
+      },
+      {
+        "front": "by car, by bus, by plane — но on foot",
+        "back": "С предлогом by + транспорт — без артикля. «Пешком» — on foot (тоже без артикля, но фразовое).",
+        "hint": "транспорт"
+      },
+      {
+        "front": "go to school / work / bed (функция) vs go to the school / office / bedroom (здание)",
+        "back": "Без артикля — место выполняет свою функцию (учиться, работать, спать). С the — заходим в само здание.",
+        "hint": "функция vs здание"
+      },
+      {
+        "front": "take a look, make a mistake, have a good time, as a rule",
+        "back": "Устойчивые выражения с a — учить как фразу, артикль не менять.",
+        "hint": "идиомы с a"
+      },
+      {
+        "front": "in the end vs at the end",
+        "back": "in the end = в конечном счёте, в итоге (общий вывод). at the end of X = в конце чего-то конкретного (фильма, дня).",
+        "hint": "разные смыслы"
+      },
+      {
+        "front": "I like cats vs I like the cats in our yard",
+        "back": "Без артикля — кошки как категория, вообще. С the — конкретные кошки, известные обоим.",
+        "hint": "общее vs конкретное"
+      }
+    ]
+  }
+}

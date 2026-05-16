@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-articles",
+  "title": "Собери фразу с артиклем",
+  "description": "Расставь слова в правильном порядке.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["am", "I", "engineer", "an"],
+        "answer": ["I", "am", "an", "engineer"],
+        "translation": "Я инженер.",
+        "explain": "Профессия = один из многих → an (engineer начинается с гласного звука)."
+      },
+      {
+        "words": ["best", "the", "is", "this", "film", "year", "of", "the"],
+        "answer": ["this", "is", "the", "best", "film", "of", "the", "year"],
+        "translation": "Это лучший фильм года.",
+        "explain": "Превосходная степень → the best. «Year» уточнено через of → the year."
+      },
+      {
+        "words": ["the", "close", "please", "door"],
+        "answer": ["close", "the", "door", "please"],
+        "translation": "Закрой дверь, пожалуйста.",
+        "explain": "Конкретная дверь из контекста → the door. Глагол в повелительном наклонении в начале."
+      },
+      {
+        "words": ["I", "music", "love"],
+        "answer": ["I", "love", "music"],
+        "translation": "Я обожаю музыку.",
+        "explain": "Music — неисчисляемое в общем смысле → нулевой артикль."
+      },
+      {
+        "words": ["a", "I", "bought", "today", "laptop", "new"],
+        "answer": ["I", "bought", "a", "new", "laptop", "today"],
+        "translation": "Я купил новый ноутбук сегодня.",
+        "explain": "Первое упоминание ноутбука → a. Прилагательное (new) между артиклем и существительным."
+      },
+      {
+        "words": ["UK", "in", "lives", "the", "she"],
+        "answer": ["she", "lives", "in", "the", "UK"],
+        "translation": "Она живёт в Великобритании.",
+        "explain": "Страна со словом Kingdom (UK = United Kingdom) → the."
+      },
+      {
+        "words": ["sun", "the", "today", "is", "shining"],
+        "answer": ["the", "sun", "is", "shining", "today"],
+        "translation": "Сегодня солнце светит.",
+        "explain": "Sun — единственный в своём роде → всегда the."
+      },
+      {
+        "words": ["plays", "football", "weekend", "every", "he"],
+        "answer": ["he", "plays", "football", "every", "weekend"],
+        "translation": "Он играет в футбол каждые выходные.",
+        "explain": "Виды спорта — без артикля. Every + период — обстоятельство в конце."
+      }
+    ]
+  }
+}

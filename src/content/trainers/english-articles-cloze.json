@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-articles",
+  "title": "Поставь артикль",
+  "description": "Впиши a, an, the или прочерк (-) для нулевого артикля.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "I work as ___ engineer at ___ small startup.",
+        "answers": ["an", "a"],
+        "explain": "Engineer начинается с гласного звука «э» → an. Startup впервые упоминается, какой-то → a."
+      },
+      {
+        "text": "She is ___ best student in her class.",
+        "answers": ["the"],
+        "explain": "Превосходная степень (best) всегда с the."
+      },
+      {
+        "text": "I'll see you in ___ hour.",
+        "answers": ["an"],
+        "explain": "h в hour немая, звучит «ауэр» (гласный) → an."
+      },
+      {
+        "text": "___ Volga flows through ___ Russia.",
+        "answers": ["The", "-"],
+        "explain": "Реки всегда с the. Большинство стран — без артикля."
+      },
+      {
+        "text": "He plays ___ piano and listens to ___ classical music.",
+        "answers": ["the", "-"],
+        "explain": "Музыкальный инструмент (piano) — с the. Music в общем смысле — без артикля."
+      },
+      {
+        "text": "Close ___ window, please. It's cold.",
+        "answers": ["the"],
+        "explain": "Очевидно из контекста, какое окно — конкретное в комнате → the."
+      },
+      {
+        "text": "We had ___ dinner at 8 and watched ___ movie.",
+        "answers": ["-", "a"],
+        "explain": "Приём пищи — без артикля. Movie впервые упоминается → a."
+      },
+      {
+        "text": "She speaks ___ English and ___ French fluently.",
+        "answers": ["-", "-"],
+        "explain": "Названия языков — всегда без артикля."
+      },
+      {
+        "text": "___ USA is ___ large country in ___ North America.",
+        "answers": ["The", "a", "-"],
+        "explain": "USA с the (State). «Большая страна» = одна из многих → a. Континент North America — без артикля."
+      },
+      {
+        "text": "I go to ___ work by ___ car every morning.",
+        "answers": ["-", "-"],
+        "explain": "«Идти на работу» (функция) — без артикля. By + транспорт — тоже без артикля."
+      }
+    ]
+  }
+}

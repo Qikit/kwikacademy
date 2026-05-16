@@ -1,0 +1,76 @@
+{
+  "course": "english",
+  "lesson": "english-articles",
+  "title": "a / an / the / нулевой — куда?",
+  "description": "Разложи фразы по корзинам, какой артикль нужен в пропуске.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "a", "label": "a / an" },
+      { "id": "the", "label": "the" },
+      { "id": "zero", "label": "— (нулевой)" }
+    ],
+    "items": [
+      {
+        "text": "She is ___ teacher.",
+        "category": "a",
+        "explain": "Профессия = одна из многих → a/an. Teacher с согласного звука → a."
+      },
+      {
+        "text": "___ sun is shining today.",
+        "category": "the",
+        "explain": "Sun — единственный в своём роде → the."
+      },
+      {
+        "text": "I love ___ music.",
+        "category": "zero",
+        "explain": "Music — неисчисляемое в общем смысле → нулевой артикль."
+      },
+      {
+        "text": "I bought ___ book yesterday.",
+        "category": "a",
+        "explain": "Первое упоминание, какая-то книга → a."
+      },
+      {
+        "text": "She lives in ___ Moscow.",
+        "category": "zero",
+        "explain": "Простой город — без артикля. Moscow is big."
+      },
+      {
+        "text": "He plays ___ guitar.",
+        "category": "the",
+        "explain": "Музыкальный инструмент — всегда с the."
+      },
+      {
+        "text": "I'll be there in ___ hour.",
+        "category": "a",
+        "explain": "h в hour немая, слышим гласный звук → an."
+      },
+      {
+        "text": "She climbed ___ Mount Elbrus.",
+        "category": "zero",
+        "explain": "Отдельная гора с приставкой Mount — без артикля. С the — только горные цепи (the Alps)."
+      },
+      {
+        "text": "I go to ___ work by car.",
+        "category": "zero",
+        "explain": "«Идти на работу» как функция — без артикля. By car — тоже без артикля."
+      },
+      {
+        "text": "This is ___ best film of the year.",
+        "category": "the",
+        "explain": "Превосходная степень всегда с the."
+      },
+      {
+        "text": "I speak ___ English well.",
+        "category": "zero",
+        "explain": "Язык в общем смысле — без артикля."
+      },
+      {
+        "text": "Could you close ___ door, please?",
+        "category": "the",
+        "explain": "Из контекста очевидно, какая дверь имеется в виду → the."
+      }
+    ]
+  }
+}

@@ -1,11 +1,11 @@
 ---
 course: english
 order: 1
-phase: Фаза 1 · Бытовой английский
-title: Артикли — a / an / the / ничего
-eyebrow: Грамматика · уровень A2
-readingMinutes: 18
-summary: Самая частая ошибка русскоговорящих. Одно правило за час — и заметный прогресс в чтении и письме.
+phase: "Фаза 1 · Бытовой английский"
+title: "Артикли — a / an / the / ничего"
+eyebrow: "Грамматика · уровень A2"
+readingMinutes: 22
+summary: "Самая частая ошибка русскоязычных. Три артикля, один алгоритм выбора, типовые ловушки."
 tags: [articles, grammar, A2]
 ---
 
@@ -16,158 +16,218 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Pronunciation from '../../components/lesson/Pronunciation.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
 
-## 1. Зачем нужны артикли
+## 1. Зачем артикли
 
-Артикль — это маленькое слово перед существительным, которое отвечает на главный вопрос: **о ЧЁМ говоришь — о каком-то предмете или о конкретном**.
+Артикль — маленькое служебное слово перед существительным. У него одна задача: сказать слушателю, **о каком предмете идёт речь** — о каком-то одном из многих, об уже известном, или о понятии вообще.
 
-В русском это передаётся **порядком слов** или контекстом. «На столе лежит книга» (какая-то) vs «Книга лежит на столе» (та самая). В английском порядок слов жёсткий, поэтому смысл несёт **артикль**.
+В русском такого слова нет. Эту работу выполняет порядок слов, контекст и интонация: «на столе книга» (какая-то), «книга на столе» (та самая). В английском порядок жёсткий, поэтому смысл несут именно артикли. Поставил не тот — фраза не сломается, но прозвучит странно, иногда смешно, иногда двусмысленно.
 
-<Compare leftLabel="Русский — артиклей нет" rightLabel="Английский — артикль обязателен">
-  <div slot="left">Я вижу <strong>кота</strong>. Я кормлю <strong>кота</strong>.<br/><small>Слово одинаковое — смысл из контекста.</small></div>
-  <div slot="right">I see <strong>a cat</strong>.<br/>I'm feeding <strong>the cat</strong>.<br/><small>a cat = какого-то. the cat = своего конкретного.</small></div>
-</Compare>
+Артикли — самая частая ошибка русскоязычных. Не потому, что правило сложное, а потому, что в родном языке выбора просто нет. Этот урок — справочник. Один раз пройти, потом возвращаться, когда не уверен.
 
-<Callout type="purple" title="Главное правило">
-Перед каждым существительным в единственном числе обязательно стоит один из трёх вариантов: **a/an**, **the** или **ничего**. Третий вариант — это нулевой артикль, он тоже значимый и осознанный.
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Перед каждым существительным в единственном числе стоит один из трёх вариантов: **a/an**, **the** или **ничего** (нулевой артикль). Третий вариант — не «забыли поставить», а полноценный осознанный выбор. Если не уверен какой — задай два вопроса: «один из многих или конкретный?» и «исчисляемое или нет?».
 </Callout>
 
-**Три типа артиклей в английском:**
+## 3. Три артикля — что и когда
 
-- **a / an** — неопределённый (indefinite). Только в единственном числе с исчисляемыми существительными.
-- **the** — определённый (definite). Перед любым существительным — единственным, множественным, исчисляемым, неисчисляемым.
-- **— (нулевой)** — отсутствие артикля. Перед множественным числом в общем смысле, неисчисляемыми в общем смысле, именами собственными.
+| Артикль | Когда | Что в речи |
+| --- | --- | --- |
+| **a / an** | Один из многих, упоминаем впервые | «какой-то», «один» |
+| **the** | Конкретный, известный обоим, единственный | «тот самый» |
+| **— (нулевой)** | Общий смысл, имена собственные, множественное/неисчисляемое | «вообще» |
 
-## 2. Неопределённый артикль a / an
+Существенно: a/an работает **только** с исчисляемыми существительными в единственном числе. The — со всеми. Нулевой — с именами, неисчисляемыми в общем смысле, множественным в общем смысле.
 
-**«какой-то один из многих».** Все случаи использования:
+## 4. Аналогия с русским
 
-<RuleList rules={[
-  "<strong>Первое упоминание предмета</strong> — слушатель ещё не знает о нём. <em>I bought a book yesterday.</em>",
-  "<strong>Один из многих похожих</strong> — не уточняем какой именно. <em>She lives in a small apartment.</em>",
-  "<strong>Профессия или роль</strong>. <em>My brother is a developer. She works as a manager.</em>",
-  "<strong>Тип, класс, категория</strong>. <em>A whale is a mammal.</em>",
-  "<strong>Перед числом — «один»</strong>, синоним one. <em>I'll have a coffee, please.</em>",
-  "<strong>Частота / мера / скорость</strong>. <em>Three times a day. 60 km an hour. Twice a week.</em>",
-  "<strong>В восклицаниях с what!</strong> <em>What a beautiful day! What a mess!</em>",
-  "<strong>Перед фамилией — «некий»</strong>. <em>A Mr. Smith called you.</em>",
-  "<strong>С болезнями</strong> (некоторыми). <em>I have a cold. I have a headache.</em>",
-]} />
+<AnalogyBox note="В русском смысл «какой-то / тот самый» передаётся порядком слов и контекстом. Английский эту работу делегирует артиклю, поэтому артикль обязателен в каждой фразе с существительным. Русскоязычные привычно «не замечают» эту слот в речи и пропускают — отсюда главная ошибка.">
+  <div slot="ru">
+    «На столе <strong>книга</strong>.» — какая-то, впервые.<br/>
+    «<strong>Книга</strong> на столе.» — та самая, о которой шла речь.<br/>
+    Одно и то же слово, смысл — из порядка слов.
+  </div>
+  <div slot="en">
+    «There is <strong>a book</strong> on the table.» — какая-то.<br/>
+    «<strong>The book</strong> is on the table.» — та самая.<br/>
+    Порядок слов фиксирован, а смысл несёт артикль.
+  </div>
+</AnalogyBox>
 
-<Example ru="Я разрабатываю плагин для FunTime. — какой-то один плагин">I'm developing <strong>a plugin</strong> for FunTime.</Example>
-<Example ru="В коде есть баг. — какой-то баг, упоминаем впервые">There is <strong>a bug</strong> in the code.</Example>
-<Example ru="Зарплату платят раз в месяц. — выражение частоты">My salary is paid <strong>a month</strong>.</Example>
+## 5. Когда a, а когда an
 
-<Callout type="amber" title="Ограничения a/an">
-Только с единственным числом исчисляемых существительных. НЕ ставится перед множественным (books, plugins) и перед неисчисляемыми (water, music, advice, information).
-</Callout>
-
-## 3. Когда a, а когда an
-
-**a и an — одно и то же по смыслу.** Выбор зависит только от того, как звучит следующее слово. Главное правило: **смотрим на ЗВУК, а не на букву**. `a` — перед согласным звуком, `an` — перед гласным.
+a и an — одно и то же по смыслу. Выбор зависит **только от звука** следующего слова, не от буквы.
 
 <Pronunciation groups={[
-  { label: "a — перед согласными", items: "a <strong>b</strong>ook · a <strong>c</strong>at · a <strong>d</strong>og · a <strong>m</strong>an · a <strong>p</strong>lugin · a <strong>s</strong>erver" },
-  { label: "an — перед гласными", items: "an <strong>a</strong>pple · an <strong>e</strong>gg · an <strong>i</strong>dea · an <strong>o</strong>range · an <strong>u</strong>pdate" },
+  { label: "a — перед согласным звуком", items: "a <strong>b</strong>ook · a <strong>c</strong>ar · a <strong>d</strong>og · a <strong>m</strong>an · a <strong>s</strong>tudent" },
+  { label: "an — перед гласным звуком", items: "an <strong>a</strong>pple · an <strong>e</strong>gg · an <strong>i</strong>dea · an <strong>o</strong>range · an <strong>u</strong>mbrella" },
 ]} />
 
-<Callout type="amber" title="Главные ловушки — когда буква не совпадает со звуком" />
-
-**Ловушка 1 — буква «u» звучит по-разному:**
+**Ловушки — буква и звук расходятся:**
 
 <Pronunciation groups={[
-  { label: "a — когда u звучит как «ю»", items: "<strong>a</strong> university · <strong>a</strong> uniform · <strong>a</strong> user · <strong>a</strong> useful tool · <strong>a</strong> European country" },
-  { label: "an — когда u звучит как «а»", items: "<strong>an</strong> umbrella · <strong>an</strong> uncle · <strong>an</strong> update · <strong>an</strong> upgrade · <strong>an</strong> unusual case" },
-]} />
-
-**Ловушка 2 — немая буква «h»:**
-
-<Pronunciation groups={[
-  { label: "a — когда h произносится", items: "<strong>a</strong> house · <strong>a</strong> hotel · <strong>a</strong> hat · <strong>a</strong> happy day" },
-  { label: "an — когда h не произносится", items: "<strong>an</strong> hour · <strong>an</strong> honest man · <strong>an</strong> honour · <strong>an</strong> heir" },
-]} />
-
-**Ловушка 3 — аббревиатуры.** Смотрим, как произносится первая буква:
-
-<Pronunciation groups={[
-  { label: "a — согласный звук в начале", items: "<strong>a</strong> URL (ю-эр-эл) · <strong>a</strong> CEO · <strong>a</strong> PDF · <strong>a</strong> NATO meeting" },
-  { label: "an — гласный звук в начале", items: "<strong>an</strong> MVP · <strong>an</strong> SQL query · <strong>an</strong> HTML page · <strong>an</strong> NPC · <strong>an</strong> API · <strong>an</strong> FBI agent" },
+  { label: "u звучит как «ю» → a", items: "<strong>a</strong> university · <strong>a</strong> uniform · <strong>a</strong> useful tool · <strong>a</strong> European city" },
+  { label: "u звучит как «а» → an", items: "<strong>an</strong> umbrella · <strong>an</strong> uncle · <strong>an</strong> ugly bag · <strong>an</strong> unusual case" },
+  { label: "h произносится → a", items: "<strong>a</strong> house · <strong>a</strong> hotel · <strong>a</strong> hat" },
+  { label: "h немая → an", items: "<strong>an</strong> hour · <strong>an</strong> honest answer · <strong>an</strong> honour" },
+  { label: "Аббревиатуры — по звуку первой буквы", items: "<strong>a</strong> NATO meeting (нэйто) · <strong>a</strong> URL (ю-эр-эл) · <strong>an</strong> MBA (эм-би-эй) · <strong>an</strong> SMS (эс-эм-эс) · <strong>an</strong> HTML page" },
 ]} />
 
 <Callout type="teal" title="Лайфхак">
-Произнеси про себя «a + слово» и «an + слово». Что звучит легче — то и правильно. «a hour» сказать трудно — нужно «an hour».
+Произнеси «a + слово» и «an + слово» вслух. Что звучит легче — то и правильно. «A hour» сказать тяжело — между двумя гласными язык спотыкается, нужно «an hour».
 </Callout>
 
-## 4. Определённый артикль the
+## 6. Смысл и использование
 
-**«тот самый, известный обоим».** Все случаи использования:
+### Когда a / an
 
 <RuleList rules={[
-  "<strong>Повторное упоминание</strong>. <em>I bought a book. The book is great.</em>",
-  "<strong>Единственное в своём роде</strong>. <em>the sun, the moon, the Earth, the sky, the Internet</em>",
-  "<strong>Контекст делает очевидным</strong>. <em>Close the door. Pass the salt.</em>",
-  "<strong>Превосходная степень</strong>. <em>the best, the biggest, the most popular, the first, the only</em>",
-  "<strong>Порядковые числительные</strong>. <em>the first version, the second floor, the 21st century</em>",
-  "<strong>Группы людей по характеристике</strong>. <em>the rich, the poor, the elderly, the young</em>",
-  "<strong>Национальности на -sh, -ch</strong>. <em>the English, the French, the Chinese</em>",
-  "<strong>Музыкальные инструменты</strong>. <em>I play the guitar. She plays the piano.</em>",
-  "<strong>Уникальные предметы в доме / месте</strong>. <em>Where's the remote? Open the window.</em>",
-  "<strong>Конкретизация через «of»</strong>. <em>the capital of France, the name of the game</em>",
+  "<strong>Первое упоминание предмета.</strong> Слушатель ещё не знает о нём. <em>I bought a book yesterday.</em>",
+  "<strong>Один из многих похожих.</strong> Не уточняем какой именно. <em>She lives in a small flat.</em>",
+  "<strong>Профессия, роль, статус.</strong> <em>My sister is a doctor. He works as a teacher.</em>",
+  "<strong>Тип, класс, категория.</strong> <em>A whale is a mammal. A laptop is a tool.</em>",
+  "<strong>В значении «один».</strong> <em>I'll have a coffee, please. Wait a minute.</em>",
+  "<strong>Частота, мера, скорость.</strong> <em>Three times a day. 60 km an hour. Twice a week.</em>",
+  "<strong>Восклицания с what.</strong> <em>What a beautiful day! What a mess!</em>",
 ]} />
 
-<Example ru="FunTime — крупнейший Minecraft-сервер в СНГ. — превосходная степень">FunTime is <strong>the biggest</strong> Minecraft server in CIS.</Example>
-<Example ru="Можешь починить тот баг, что обсуждали? — конкретный, уже упомянутый">Could you fix <strong>the bug</strong> we discussed?</Example>
-<Example ru="Команда работает над новой версией FunMenu. — конкретная (с of)">The team is working on <strong>the new version</strong> of FunMenu.</Example>
-
-<Callout type="blue" title="Главный паттерн диалога">
-— I'm developing **a plugin** for FunTime. — Cool! What does **the plugin** do? — It opens **a menu** when you click on **the NPC**.<br/>Первое упоминание — a/an. Повторное — the. NPC знаком обоим из контекста.
-</Callout>
-
-## 5. Нулевой артикль
-
-**«артикль не нужен».** Все случаи:
+### Когда the
 
 <RuleList rules={[
-  "<strong>Множественное число в общем смысле</strong>. <em>Cats are great pets. Plugins help server admins.</em>",
-  "<strong>Неисчисляемые в общем смысле</strong>. <em>I love music. Water is essential.</em>",
-  "<strong>Имена людей</strong>. <em>Dmitry works at FunTime. Elon Musk owns Tesla.</em>",
-  "<strong>Большинство стран и городов</strong>. <em>Russia, Moscow, France, Paris, Japan, Tokyo</em>",
-  "<strong>Континенты и большинство островов</strong>. <em>Europe, Asia, Madagascar, Sicily</em>",
-  "<strong>Языки</strong>. <em>I speak Russian and English.</em>",
-  "<strong>Виды спорта</strong>. <em>I play football, tennis, chess.</em>",
-  "<strong>Приёмы пищи</strong>. <em>for breakfast, after lunch, before dinner</em>",
-  "<strong>Дни недели и месяцы</strong>. <em>on Monday, in January, in 2024</em>",
-  "<strong>Праздники</strong>. <em>Christmas, Easter, Halloween, New Year</em>",
-  "<strong>Абстрактные понятия в общем смысле</strong>. <em>Life is hard. Time is money.</em>",
-  "<strong>Школьные предметы и науки</strong>. <em>math, physics, history, biology</em>",
-  "<strong>Транспорт с предлогом by</strong>. <em>by car, by bus, by plane</em> (но <em>on foot</em>!)",
-  "<strong>Названия болезней</strong> (большинство). <em>cancer, diabetes</em> (но <em>a cold, the flu</em>!)",
-  "<strong>Цвета как понятия</strong>. <em>Black is my favourite colour.</em>",
+  "<strong>Повторное упоминание.</strong> Один и тот же предмет. <em>I bought a book. The book is great.</em>",
+  "<strong>Единственное в своём роде.</strong> <em>the sun, the moon, the Earth, the sky, the Internet</em>",
+  "<strong>Очевидно из контекста.</strong> Обоим понятно, о чём речь. <em>Close the door. Pass the salt.</em>",
+  "<strong>Превосходная степень.</strong> <em>the best, the biggest, the most popular</em>",
+  "<strong>Порядковые числительные.</strong> <em>the first time, the second floor, the 21st century</em>",
+  "<strong>Уточнение через «of».</strong> <em>the capital of France, the name of the song</em>",
+  "<strong>Музыкальные инструменты.</strong> <em>play the guitar, play the piano</em>",
+  "<strong>Группы людей по признаку.</strong> <em>the rich, the young, the elderly</em>",
 ]} />
 
-<Callout type="blue" title="Очень важно про общий смысл">
-«I like cats» (кошек вообще, нулевой) vs «I like the cats in our yard» (конкретных, the). Один объект — разные артикли в зависимости от того, говоришь ли о категории целиком или о конкретных представителях.
+### Когда нулевой артикль
+
+<RuleList rules={[
+  "<strong>Множественное число в общем смысле.</strong> <em>Cats are great pets. Books help me relax.</em>",
+  "<strong>Неисчисляемые в общем смысле.</strong> <em>I love music. Water is essential. Information is free.</em>",
+  "<strong>Имена людей.</strong> <em>Anna lives in Madrid. Elon Musk owns Tesla.</em>",
+  "<strong>Большинство стран и городов.</strong> <em>Russia, Spain, Moscow, Tokyo</em>",
+  "<strong>Континенты, языки, праздники.</strong> <em>Europe, Russian, Christmas</em>",
+  "<strong>Виды спорта.</strong> <em>play football, play chess, do yoga</em>",
+  "<strong>Дни, месяцы, годы (с предлогом).</strong> <em>on Monday, in July, in 2024</em>",
+  "<strong>Приёмы пищи.</strong> <em>for breakfast, after lunch, before dinner</em>",
+  "<strong>Транспорт с предлогом by.</strong> <em>by car, by bus, by plane</em> (но <em>on foot</em>)",
+  "<strong>Школа / работа / больница как функция.</strong> <em>go to school, at work, in hospital (UK)</em>",
+]} />
+
+## 7. Примеры
+
+### Бытовые
+
+<Example ru="Я купил книгу. Книга оказалась интересной.">I bought <strong>a book</strong>. <strong>The book</strong> turned out to be interesting.</Example>
+<Example ru="Закрой дверь, пожалуйста.">Close <strong>the door</strong>, please.</Example>
+<Example ru="Моя сестра — врач.">My sister is <strong>a doctor</strong>.</Example>
+<Example ru="Я обожаю кофе.">I love <strong>coffee</strong>.</Example>
+<Example ru="У меня болит голова.">I have <strong>a headache</strong>.</Example>
+<Example ru="Передай соль, пожалуйста.">Pass <strong>the salt</strong>, please.</Example>
+
+### Из работы / офиса
+
+<Example ru="Мне нужен ноутбук для работы.">I need <strong>a laptop</strong> for work.</Example>
+<Example ru="Менеджер хочет встретиться завтра.">The manager wants to meet tomorrow.</Example>
+<Example ru="Он работает дизайнером в большой компании.">He works as <strong>a designer</strong> at <strong>a big company</strong>.</Example>
+<Example ru="Совещание начинается в три.">The meeting starts at three.</Example>
+
+### IT / нейтрально
+
+<Example ru="Нашёл баг в коде.">I found <strong>a bug</strong> in <strong>the code</strong>.</Example>
+<Example ru="Этот сервис — лучший в своей категории.">This service is <strong>the best</strong> in its category.</Example>
+
+### География
+
+<Example ru="Я живу в России, в Москве.">I live in <strong>Russia</strong>, in <strong>Moscow</strong>.</Example>
+<Example ru="Волга впадает в Каспийское море.">The Volga flows into <strong>the Caspian Sea</strong>.</Example>
+<Example ru="США — большая страна.">The USA is <strong>a big country</strong>.</Example>
+
+### Время и расписание
+
+<Example ru="Утром я пью чай, вечером — кофе.">In <strong>the morning</strong> I drink tea, in <strong>the evening</strong> coffee.</Example>
+<Example ru="Поезд приходит в полночь.">The train arrives at <strong>midnight</strong>.</Example>
+
+## 8. Контрасты — частые путаницы
+
+<Compare leftLabel="a / an — какой-то" rightLabel="the — тот самый">
+  <div slot="left">
+    I bought <strong>a book</strong>.<br/>(какую-то)<br/><br/>
+    She lives in <strong>a flat</strong>.<br/>(где-то в квартире)<br/><br/>
+    I need <strong>a doctor</strong>.<br/>(какого-нибудь)
+  </div>
+  <div slot="right">
+    <strong>The book</strong> is on the table.<br/>(та, о которой говорили)<br/><br/>
+    <strong>The flat</strong> is on the third floor.<br/>(её квартира)<br/><br/>
+    Call <strong>the doctor</strong>.<br/>(нашего семейного)
+  </div>
+</Compare>
+
+<Compare leftLabel="нулевой — общий смысл" rightLabel="the — конкретное">
+  <div slot="left">
+    I like <strong>cats</strong>.<br/>(кошек вообще)<br/><br/>
+    <strong>Music</strong> helps me focus.<br/>(музыка как явление)<br/><br/>
+    <strong>Life</strong> is beautiful.<br/>(жизнь в целом)
+  </div>
+  <div slot="right">
+    I like <strong>the cats</strong> in our yard.<br/>(конкретных, из двора)<br/><br/>
+    Turn down <strong>the music</strong>.<br/>(ту, что играет сейчас)<br/><br/>
+    <strong>The life</strong> of Anna Karenina.<br/>(жизнь конкретного человека)
+  </div>
+</Compare>
+
+## 9. Места — функция или здание
+
+Школа, работа, больница, тюрьма, церковь имеют два смысла: «делать то, для чего место существует» (без артикля) и «зайти в здание» (с the). Это часть культурного стандарта английского, который русскоязычные часто пропускают.
+
+<Compare leftLabel="Без артикля — функция" rightLabel="С the — здание">
+  <div slot="left">
+    go to <strong>school</strong> — учиться<br/>
+    go to <strong>work</strong> — на работу<br/>
+    go to <strong>bed</strong> — спать<br/>
+    in <strong>hospital</strong> (UK) — лечиться<br/>
+    in <strong>prison</strong> — отбывать срок<br/>
+    at <strong>home</strong> — дома
+  </div>
+  <div slot="right">
+    go to <strong>the school</strong> — в здание школы<br/>
+    go to <strong>the office</strong> — в офис<br/>
+    go to <strong>the bedroom</strong> — в спальню<br/>
+    go to <strong>the hospital</strong> (US) — в больницу<br/>
+    go to <strong>the prison</strong> — в здание тюрьмы<br/>
+    go to <strong>the cinema / gym / bank</strong> — в кино / зал / банк
+  </div>
+</Compare>
+
+<Callout type="blue" title="Тонкий нюанс UK vs US">
+В британском английском «in hospital» (без the) = пациент лечится. «In the hospital» = находится внутри здания. В американском английском почти всегда «in the hospital» в обоих смыслах. Для путешествий/работы лучше держать в голове британскую модель.
 </Callout>
 
-## 6. География — особые правила
+## 10. География — отдельные правила
 
-География — один из самых запутанных разделов. Здесь работают **специальные правила**, которые нужно знать наизусть.
+География — самый запутанный раздел артиклей. Правила специальные, их нужно знать наизусть.
 
-**Когда the с географией:**
+**С the:**
 
 | Тип | Пример |
 | --- | --- |
-| Страны со State/Kingdom/Republic | the USA, the UK, the UAE, the Czech Republic |
-| Страны во множественном числе | the Netherlands, the Philippines, the Maldives |
-| Океаны и моря | the Pacific Ocean, the Atlantic, the Black Sea |
-| Реки | the Volga, the Nile, the Thames, the Amazon |
-| Горные цепи | the Alps, the Himalayas, the Urals, the Andes |
-| Группы островов | the Canary Islands, the British Isles |
-| Пустыни | the Sahara, the Gobi, the Atacama |
-| Регионы стран света | the North, the South, the Middle East |
-| Заливы и проливы | the Gulf of Mexico, the English Channel |
+| Страны с State/Kingdom/Republic/Emirates | the USA, the UK, the UAE, the Czech Republic |
+| Страны во множественном | the Netherlands, the Philippines, the Maldives |
+| Океаны, моря, реки | the Pacific Ocean, the Atlantic, the Volga, the Nile |
+| Горные цепи, группы островов | the Alps, the Himalayas, the Canary Islands |
+| Пустыни | the Sahara, the Gobi |
+| Регионы / стороны света | the Middle East, the North, the South |
 
-**Когда без артикля:**
+**Без артикля:**
 
 | Тип | Пример |
 | --- | --- |
@@ -175,169 +235,137 @@ import Vocab from '../../components/lesson/Vocab.astro';
 | Города | Moscow, New York, Tokyo (искл.: the Hague) |
 | Отдельные горы | Mount Everest, Mount Elbrus, Kilimanjaro |
 | Отдельные озёра | Lake Baikal, Lake Geneva |
-| Отдельные острова | Cuba, Madagascar, Sicily, Cyprus |
-| Континенты | Europe, Asia, Africa, Antarctica |
-| Штаты и регионы | Texas, California, Siberia, Bavaria |
+| Континенты, отдельные острова | Europe, Asia, Cuba, Madagascar |
+| Языки, штаты, регионы | Russian, Texas, Bavaria |
 
-<Callout type="coral" title="Запомни как правило">
-Если в названии страны есть слова **States, Kingdom, Republic, Federation, Emirates, Union** — всегда **the**. Если название во множественном — тоже the. Простые названия — без артикля.
+<Callout type="amber" title="Запомни правило">
+Если в названии страны есть **States, Kingdom, Republic, Federation, Emirates, Union** — всегда the. Если название во множественном — тоже the. Простые названия — без артикля.
 </Callout>
 
-<Example ru="Простая страна и город — без артикля.">I live in <strong>Russia</strong>, in <strong>Moscow</strong>.</Example>
-<Example ru="Реки и моря — с the. Страна — без.">The Volga flows through Russia into the Caspian Sea.</Example>
-<Example ru="Отдельная гора — без артикля. Горный регион — с the.">She climbed Mount Elbrus, the highest peak in the Caucasus.</Example>
+## 11. Дерево решений
 
-## 7. Места и заведения — частая путаница
-
-Некоторые места имеют двойное значение. Когда говорим про **функцию** (учиться, лечиться, работать) — без артикля. Когда про **здание** или конкретное место — с the.
-
-<Compare leftLabel="Без артикля (функция)" rightLabel="С the (здание / место)">
-  <div slot="left">go to school — учиться<br/>go to work — на работу<br/>go to church — на службу<br/>go to bed — спать<br/>go to hospital (UK) — лечиться<br/>go to prison — отбывать срок<br/>be at home — дома</div>
-  <div slot="right">go to the school — в здание школы<br/>go to the office — в офис<br/>go to the bank — в банк<br/>go to the cinema — в кино<br/>go to the theatre — в театр<br/>go to the gym — в спортзал<br/>go to the bathroom — в туалет</div>
-</Compare>
-
-<Callout type="teal" title="Сравни смысл">
-«He's in prison» = он сидит (отбывает срок). «He's in the prison» = он в здании тюрьмы. «She's at school» = она учится. «She's at the school» = она в школе как в здании.
-</Callout>
-
-**Названия заведений и достопримечательностей:**
-
-| С the | Без артикля |
-| --- | --- |
-| the Hilton, the Ritz | McDonald's, Starbucks |
-| the British Museum, the Louvre | Harvard University, Oxford |
-| the White House, the Eiffel Tower | Buckingham Palace, Trafalgar Square |
-| the Statue of Liberty | Heathrow Airport, Red Square |
-| Кинотеатры, театры, музеи | Аэропорты, площади, улицы |
-
-## 8. Время, даты и числа
-
-<Compare leftLabel="Без артикля" rightLabel="С the">
-  <div slot="left">at 5 o'clock — в 5 часов<br/>at noon / midnight<br/>on Monday — в понедельник<br/>in January / in summer<br/>in 2024<br/>last week / next year<br/>this morning</div>
-  <div slot="right">in the morning — утром<br/>in the afternoon — днём<br/>in the evening — вечером<br/>in the 1990s — в 90-х<br/>in the 21st century<br/>on the 5th of March<br/>in the past / future</div>
-</Compare>
-
-<Callout type="amber" title="Запомни особо">
-«at night» — без артикля (исключение). «in the morning / afternoon / evening» — с the. «this morning / yesterday morning» — без артикля.
-</Callout>
-
-## 9. Устойчивые выражения с артиклями
-
-Особые сочетания — запомни как есть. Артикль в них может быть нелогичным, но менять его нельзя.
-
-**С артиклем the:**
-
-<Vocab items={[
-  { term: "in the morning / evening", meaning: "утром / вечером" },
-  { term: "on the whole", meaning: "в целом" },
-  { term: "in the end", meaning: "в конце концов" },
-  { term: "on the right / left", meaning: "справа / слева" },
-  { term: "tell the truth", meaning: "говорить правду" },
-  { term: "in the middle", meaning: "посередине" },
-  { term: "the same", meaning: "тот же самый" },
-]} />
-
-**С артиклем a/an:**
-
-<Vocab items={[
-  { term: "as a result", meaning: "в результате" },
-  { term: "as a rule", meaning: "как правило" },
-  { term: "all of a sudden", meaning: "внезапно" },
-  { term: "have a good time", meaning: "хорошо провести время" },
-  { term: "take a look", meaning: "посмотреть, взглянуть" },
-  { term: "make a mistake", meaning: "сделать ошибку" },
-  { term: "it's a pity", meaning: "жаль" },
-]} />
-
-**Без артикля:**
-
-<Vocab items={[
-  { term: "at home / at work", meaning: "дома / на работе" },
-  { term: "at night", meaning: "ночью" },
-  { term: "by car / bus / plane", meaning: "на машине / автобусе / самолёте" },
-  { term: "on foot", meaning: "пешком" },
-  { term: "in time", meaning: "вовремя" },
-  { term: "at first / at last", meaning: "сначала / наконец" },
-  { term: "step by step", meaning: "шаг за шагом" },
-]} />
-
-<Callout type="blue" title="Меняют смысл от артикля">
-**in time** = вовремя (с запасом) vs **on time** = строго по расписанию. **at the end** = в конце чего-то конкретного vs **in the end** = в итоге.
-</Callout>
-
-## 10. Дерево решений — какой артикль выбрать
-
-Универсальный алгоритм. Задавай вопросы по порядку — первый ответ «ДА» даёт результат.
+Универсальный алгоритм. Первый «да» по порядку даёт ответ.
 
 <DecisionTree nodes={[
-  { q: "1. Это имя собственное (человек, простая страна/город, континент, язык, праздник)?", yes: "нулевой артикль (Dmitry, Moscow, English, Christmas)", no: "к вопросу 2" },
-  { q: "2. Это специальная география (страны на States/Kingdom, океаны, реки, горные цепи)?", yes: "the (the USA, the Pacific, the Volga, the Alps)", no: "к вопросу 3" },
-  { q: "3. Это устойчивое выражение?", yes: "артикль из выражения (by car, in the morning, take a look)", no: "к вопросу 4" },
-  { q: "4. Конкретный предмет, известный обоим (упоминался, единственный, превосходная степень, порядковое)?", yes: "the (the book, the sun, the best, the first)", no: "к вопросу 5" },
-  { q: "5. Исчисляемое существительное в единственном числе?", yes: "a/an (a book, an apple, an MVP)", no: "нулевой артикль (множественное или неисчисляемое)" },
+  { q: "Это имя собственное (человек, простая страна, простой город, континент, язык, праздник)?", yes: "Нулевой артикль (Anna, Moscow, Russian, Christmas).", no: "к вопросу 2" },
+  { q: "Это специальная география (страны на States/Kingdom, океаны, реки, горные цепи)?", yes: "the (the USA, the Pacific, the Volga, the Alps).", no: "к вопросу 3" },
+  { q: "Это устойчивое выражение (by car, in the morning, at home, take a look)?", yes: "Артикль из выражения — учить как фразу.", no: "к вопросу 4" },
+  { q: "Конкретный предмет, известный обоим (упоминался, единственный, превосходная степень, порядковое)?", yes: "the (the book we read, the sun, the best, the first).", no: "к вопросу 5" },
+  { q: "Исчисляемое существительное в единственном числе?", yes: "a/an (по звуку следующего слова).", no: "Нулевой артикль (множественное или неисчисляемое в общем смысле)." },
 ]} />
 
-## 11. Типовые ошибки русскоговорящих
+## 12. Типовые ошибки русскоязычных
 
 | Неверно | Верно | Почему |
 | --- | --- | --- |
-| I am developer. | I am **a** developer. | Профессия — всегда «один из многих». |
-| The Moscow is big. | Moscow is big. | Простые города — без артикля. |
-| I love **a** music. | I love music. | Неисчисляемое в общем смысле. |
-| I bought **a** books. | I bought books / a book. | a/an только в единственном числе. |
-| learning English language | learning English | Просто язык — без артикля. |
-| USA is big country. | **The** USA is **a** big country. | States → the; big country → a. |
-| I play guitar. | I play **the** guitar. | Инструменты — с the. |
+| I am developer. | I am **a** developer. | Профессия = «один из многих» → a. |
+| The Moscow is big. | Moscow is big. | Простой город — без артикля. |
+| I love **a** music. | I love music. | Неисчисляемое в общем смысле — нулевой. |
+| I bought **a** books. | I bought books. | a/an только в единственном числе. |
+| I'm learning English language. | I'm learning English. | Язык как понятие — без артикля. |
+| USA is big country. | **The** USA is **a** big country. | States → the. Big country (одна из многих) → a. |
+| I play guitar. | I play **the** guitar. | Музыкальный инструмент — с the. |
 | I play **the** football. | I play football. | Спорт — без артикля. |
-| I have problem with the server. | I have **a** problem with the server. | Проблема впервые — a; сервер известен — the. |
-| at **the** 11 PM | at 11 PM | «at + время» — без артикля. |
-| **an** university degree | **a** university degree | «юниверсити» — согласный звук «ю». |
-| **a** hour | **an** hour | h немая, звучит «ауэр» — гласный. |
-| **a** SQL developer | **an** SQL developer | «эс-кью-эл» — гласный звук. |
-| go to **the** school every day | go to school every day | «учиться» — без артикля. |
-| The life is beautiful. | Life is beautiful. | Абстракция в общем смысле. |
+| at **the** 11 PM | at 11 PM | «at + конкретное время» — без артикля. |
+| **an** university | **a** university | «университи» начинается со звука «ю» (согласный). |
+| **a** hour | **an** hour | h немая, звучит «ауэр» — гласный звук. |
+| **a** SQL query | **an** SQL query | «эс-кью-эл» — гласный «э». |
+| go to **the** school every day | go to school every day | «Учиться» — без артикля (функция). |
+| **The** life is hard. | Life is hard. | Абстрактное понятие в общем смысле. |
 | by **the** car | by car | «by + транспорт» — без артикля. |
 
-## 12. Шпаргалка — всё в одной таблице
+## 13. Шпаргалка
 
-| Артикль | Основные случаи | Примеры |
+| Артикль | Главные случаи | Примеры |
 | --- | --- | --- |
-| a / an | Какой-то один из многих, первое упоминание, профессия, тип, мера, частота. Только исчисляемые ед.ч. | I see a cat. She's an engineer. Three times a day. |
-| the | Конкретный, известный, единственный, превосходная степень, порядковое, инструмент, спец. география | The cat is hungry. The sun. The best. The USA. The guitar. |
-| — (нулевой) | Имена, простые страны/города, языки, спорт, школа/работа как функция, абстракции и неисчисляемые в общем смысле | Dmitry lives in Moscow. I love music. On Monday. By car. |
+| **a / an** | Один из многих, первое упоминание, профессия, тип, частота, мера. Только исч. ед.ч. | a book, an apple, a doctor, twice a day |
+| **the** | Конкретный, известный обоим, единственный, превосходная степень, порядковое, инструменты, спец. география | the sun, the best, the first, the guitar, the USA |
+| **— (нулевой)** | Имена, простые страны/города, языки, спорт, школа/работа как функция, абстракции и неисчисляемые в общем смысле | Anna, Moscow, Russian, football, Monday, music |
 
-## 13. Словарь урока — в копилку
+## 14. Словарь урока
 
 <Vocab items={[
-  { term: "a / an", meaning: "неопред. артикль" },
-  { term: "the", meaning: "опред. артикль" },
-  { term: "developer", meaning: "разработчик" },
-  { term: "engineer", meaning: "инженер" },
-  { term: "manager", meaning: "менеджер" },
-  { term: "plugin", meaning: "плагин" },
-  { term: "server", meaning: "сервер" },
-  { term: "bug", meaning: "баг, ошибка в коде" },
-  { term: "version", meaning: "версия" },
-  { term: "team", meaning: "команда" },
-  { term: "salary", meaning: "зарплата" },
-  { term: "apartment", meaning: "квартира" },
-  { term: "country / capital", meaning: "страна / столица" },
-  { term: "river / mountain", meaning: "река / гора" },
-  { term: "ocean / sea / island", meaning: "океан / море / остров" },
-  { term: "university / school", meaning: "университет / школа" },
-  { term: "hospital / office / gym", meaning: "больница / офис / спортзал" },
-  { term: "cinema / bank / prison", meaning: "кино / банк / тюрьма" },
-  { term: "guitar / piano", meaning: "гитара / пианино" },
-  { term: "breakfast / lunch / dinner", meaning: "завтрак / обед / ужин" },
-  { term: "to develop / to fix", meaning: "разрабатывать / чинить" },
-  { term: "to climb / to flow", meaning: "взбираться / течь" },
-  { term: "an hour", meaning: "час" },
-  { term: "take a look", meaning: "взглянуть" },
+  { term: "article", meaning: "артикль" },
+  { term: "indefinite article", meaning: "неопределённый артикль (a/an)" },
+  { term: "definite article", meaning: "определённый артикль (the)" },
+  { term: "zero article", meaning: "нулевой артикль (отсутствие)" },
+  { term: "countable noun", meaning: "исчисляемое существительное" },
+  { term: "uncountable noun", meaning: "неисчисляемое существительное" },
+  { term: "singular / plural", meaning: "единственное / множественное число" },
+  { term: "proper noun", meaning: "имя собственное" },
+  { term: "common noun", meaning: "имя нарицательное" },
+  { term: "first mention", meaning: "первое упоминание" },
+  { term: "general sense", meaning: "общий смысл" },
+  { term: "specific reference", meaning: "конкретное упоминание" },
+  { term: "superlative", meaning: "превосходная степень" },
+  { term: "ordinal number", meaning: "порядковое числительное" },
+  { term: "an hour", meaning: "час (h немая)" },
+  { term: "a university", meaning: "университет (звук «ю»)" },
+  { term: "an MBA / an SMS", meaning: "аббревиатуры с гласным звуком" },
+  { term: "take a look", meaning: "взглянуть (фразовое выражение)" },
   { term: "make a mistake", meaning: "сделать ошибку" },
   { term: "as a rule", meaning: "как правило" },
+  { term: "as a result", meaning: "в результате" },
+  { term: "in the morning / evening", meaning: "утром / вечером" },
   { term: "in the end", meaning: "в конце концов" },
+  { term: "on the right / left", meaning: "справа / слева" },
+  { term: "by car / bus / plane", meaning: "на машине / автобусе / самолёте" },
+  { term: "on foot", meaning: "пешком" },
+  { term: "at home / at work", meaning: "дома / на работе" },
+  { term: "at night", meaning: "ночью (без the)" },
+  { term: "in time / on time", meaning: "вовремя (с запасом) / строго по расписанию" },
+  { term: "go to school", meaning: "учиться (функция, без the)" },
+  { term: "go to the school", meaning: "идти к школе (здание, с the)" },
+  { term: "the same", meaning: "тот же самый" },
+  { term: "all of a sudden", meaning: "внезапно" },
 ]} />
 
-<Callout type="teal" title="Готов идти дальше?">
-Когда артикли начнут «видеться» в текстах автоматически — переходи к уроку **Времена настоящего**. Этот урок — справочник, к которому можно вернуться в любой момент.
-</Callout>
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Исключения и ловушки</span>
+    <span class="kc-trainer-hint">a/an с u, h, аббревиатурами и фиксированные выражения</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Ситуация → артикль</span>
+    <span class="kc-trainer-hint">Соотнеси случай с правильным артиклем</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">a / the / —</span>
+    <span class="kc-trainer-hint">Разложи существительные по трём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь артикль</span>
+    <span class="kc-trainer-hint">Впиши a, an, the или прочерк</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери фразу</span>
+    <span class="kc-trainer-hint">Расставь слова с правильными артиклями</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 69-78 (Articles).
+- **Swan M., Practical English Usage** — §63-77 (the, a/an, names of places, no article).
+- **English Page** — englishpage.com/articles/
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/articles

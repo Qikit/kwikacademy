@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-articles",
+  "title": "Артикли — правила в контексте",
+  "description": "Выбери правильный артикль для пропуска.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "I work as ___ designer in ___ small studio.",
+        "options": ["a / the", "a / a", "the / a", "— / a"],
+        "correctIndex": 1,
+        "explain": "Профессия → a designer. Студия впервые упоминается, одна из многих → a small studio."
+      },
+      {
+        "prompt": "Anna is ___ youngest in her family.",
+        "options": ["a", "an", "the", "—"],
+        "correctIndex": 2,
+        "explain": "Превосходная степень (youngest) всегда с the."
+      },
+      {
+        "prompt": "I'll see you in ___ hour.",
+        "options": ["a", "an", "the", "—"],
+        "correctIndex": 1,
+        "explain": "h в hour немая, слово звучит «ауэр» — гласный звук → an."
+      },
+      {
+        "prompt": "She studies at ___ university in ___ UK.",
+        "options": ["a / the", "an / the", "a / —", "an / —"],
+        "correctIndex": 0,
+        "explain": "University звучит с «ю» (согласный звук) → a. UK = United Kingdom, страна с «Kingdom» → the."
+      },
+      {
+        "prompt": "We had ___ dinner at 8 and went to ___ cinema after.",
+        "options": ["the / the", "a / the", "— / the", "— / —"],
+        "correctIndex": 2,
+        "explain": "Приём пищи — без артикля (had dinner). Кинотеатр в смысле «пойти посмотреть фильм» — с the (go to the cinema)."
+      },
+      {
+        "prompt": "He plays ___ football every Sunday and listens to ___ music while running.",
+        "options": ["— / —", "the / —", "— / the", "the / the"],
+        "correctIndex": 0,
+        "explain": "Спорт — без артикля. Music в общем смысле — тоже без артикля."
+      },
+      {
+        "prompt": "___ Volga is the longest river in ___ Europe.",
+        "options": ["The / the", "The / —", "— / —", "— / the"],
+        "correctIndex": 1,
+        "explain": "Реки всегда с the (the Volga). Континенты — без артикля (Europe)."
+      },
+      {
+        "prompt": "I bought ___ new laptop. ___ laptop is fast.",
+        "options": ["the / The", "a / A", "a / The", "— / The"],
+        "correctIndex": 2,
+        "explain": "Первое упоминание → a laptop. Повторное → the laptop."
+      },
+      {
+        "prompt": "She's in ___ hospital after the accident (UK English).",
+        "options": ["a", "the", "—", "an"],
+        "correctIndex": 2,
+        "explain": "В британском английском «in hospital» (без the) = лечится как пациент. С the — про здание (US English обычно использует the в обоих случаях)."
+      },
+      {
+        "prompt": "Could you pass ___ salt, please?",
+        "options": ["a", "the", "—", "an"],
+        "correctIndex": 1,
+        "explain": "Соль на столе одна, обоим понятно, о чём речь → the."
+      },
+      {
+        "prompt": "___ honest man would never do that.",
+        "options": ["A", "An", "The", "—"],
+        "correctIndex": 1,
+        "explain": "h в honest немая, слышим «онэст» — гласный звук → an. «Какой-то» (any) честный человек → неопределённый артикль."
+      },
+      {
+        "prompt": "I read ___ interesting article about ___ Internet yesterday.",
+        "options": ["an / the", "a / the", "an / —", "the / —"],
+        "correctIndex": 0,
+        "explain": "Article впервые, гласный звук «и» → an. Internet — единственный в своём роде → the."
+      }
+    ]
+  }
+}

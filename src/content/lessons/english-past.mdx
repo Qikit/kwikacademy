@@ -2,12 +2,374 @@
 course: english
 order: 3
 phase: "Фаза 1 · Бытовой английский"
-title: "Времена прошедшего — Past"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Рассказывать истории — что было, что произошло. Главная сложность — неправильные глаголы."
-placeholder: true
-tags: [english]
+title: "Времена прошедшего — Past Simple, Continuous, Perfect"
+eyebrow: "Грамматика · уровень A2-B1"
+readingMinutes: 25
+summary: "Три прошедших времени против одного русского. Когда факт, когда фон, когда «до того как». Неправильные глаголы и маркеры."
+tags: [past, tenses, grammar, A2, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Времена прошедшего — Past» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Timeline from '../../components/lesson/Timeline.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем три прошедших
+
+В русском прошедшее одно: «я работал». Это и про вчерашний день («вчера работал до восьми»), и про процесс («работал, когда пришла мама»), и про то, что закончилось раньше другого («к восьми уже отработал»). Контекст и наречия дают понять, какой именно смысл.
+
+В английском под эти три ситуации — три отдельные формы. **Past Simple** — факт в прошлом, точка или последовательность («работал до восьми»). **Past Continuous** — процесс, развёрнутый во времени прошлого («работал, когда…»). **Past Perfect** — действие, законченное до другого момента в прошлом («уже отработал к тому моменту»).
+
+Перепутать — фраза не сломается, поймут. Но смысл поплывёт. «I had dinner when she called» и «I was having dinner when she called» — это две разные истории: в первой ужин уже был съеден, а потом был звонок; во второй звонок прервал процесс ужина. Этот урок про то, как выбирать форму осознанно и автоматически, и про то, как сладить с неправильными глаголами.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+**Past Simple** = факт или последовательность фактов в прошлом. **Past Continuous** = процесс, который шёл в моменте прошлого. **Past Perfect** = действие, законченное до другого прошедшего момента. Маркер времени и логика «что произошло раньше» решают выбор за тебя.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Past Simple
+
+Берёшь вторую форму глагола (V2). Для правильных глаголов это V + `-ed`. Для неправильных — отдельная форма, её надо запомнить (`go → went`, `see → saw`, `take → took`).
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / you / we / they | I worked | I didn't work | Did I work? |
+| he / she / it | She worked | She didn't work | Did she work? |
+
+В отрицании и вопросе появляется вспомогательный `did`, а смысловой глагол возвращается к начальной форме без `-ed`. «Did she worked?» — типичная ошибка.
+
+**Орфография `-ed`**:
+
+- `like → liked` — молчаливое `-e` сливается с `-ed`.
+- `study → studied` — `-y` после согласной превращается в `-ied`.
+- `play → played` — `-y` после гласной остаётся (`-yed`).
+- `stop → stopped`, `plan → planned` — короткий глагол CVC удваивает последнюю согласную.
+- `travel → travelled` (UK) / `traveled` (US) — двойная или одинарная `l` в зависимости от варианта.
+
+**Глагол `be`** — особый, без `did`:
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / he / she / it | I was | I wasn't | Was I? |
+| you / we / they | You were | You weren't | Were you? |
+
+### Past Continuous
+
+`was / were` + `V-ing`. Правила `-ing` те же, что в Present Continuous: `write → writing`, `run → running`, `lie → lying`.
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / he / she / it | I was working | I wasn't working | Was I working? |
+| you / we / they | They were working | They weren't working | Were they working? |
+
+### Past Perfect
+
+`had` + третья форма (V3). Для правильных глаголов V3 совпадает с V2 (`worked / worked`). Для неправильных — отдельная третья форма (`go → went → gone`, `see → saw → seen`, `write → wrote → written`).
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| Все лица | I had finished | I hadn't finished | Had I finished? |
+
+Сокращения: `I'd worked` = `I had worked` (не путать с `I'd work` = `I would work`).
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русское «делал» — это контейнер. Английскому контейнер мал, поэтому форма выбирается под точный смысл: факт, фон или предшествование. Если переводить «делал» только через Past Simple, теряются нюансы, которые в русском передаются контекстом и наречиями («как раз», «уже»).">
+  <div slot="ru">
+    <strong>Я ужинал.</strong><br/>
+    «Я ужинал в восемь» — факт.<br/>
+    «Я ужинал, когда она позвонила» — процесс, прерванный звонком.<br/>
+    «Я уже поужинал, когда она позвонила» — закончил до звонка.<br/>
+    Глагол один, смысл — из контекста.
+  </div>
+  <div slot="en">
+    <strong>I had dinner at eight.</strong> — Past Simple, факт.<br/>
+    <strong>I was having dinner when she called.</strong> — Past Continuous, процесс + Past Simple, прерывание.<br/>
+    <strong>I had had dinner when she called.</strong> — Past Perfect, уже закончилось до звонка.<br/>
+    Три разные формы для трёх разных смыслов.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+**Past Continuous** — процесс шёл, и в этот момент произошло короткое действие (Past Simple), которое его прервало или совпало с ним.
+
+<Timeline
+  caption="Past Continuous как фон + Past Simple как точка-прерывание."
+  points={[
+    { at: 'past', label: 'я ехал домой', type: 'duration' },
+    { at: 'now', label: 'позвонила мама', type: 'point' },
+    { at: 'future', label: '(сейчас и будущее)', type: 'point' },
+  ]}
+/>
+
+**Past Perfect** — одно действие закончилось раньше другого прошедшего момента. На оси времени Perfect стоит левее.
+
+<Timeline
+  caption="Past Perfect = действие до точки в прошлом."
+  points={[
+    { at: 'past', label: 'уже поужинал', type: 'point' },
+    { at: 'now', label: 'она пришла', type: 'point' },
+    { at: 'future', label: '(сейчас)', type: 'point' },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Когда Past Simple
+
+<RuleList rules={[
+  "<strong>Завершённый факт в прошлом.</strong> Маркеры: yesterday, last week/month/year, in 2020, ago, then. <em>I saw her yesterday.</em>",
+  "<strong>Последовательность действий.</strong> Одно за другим, как в рассказе. <em>I came home, made tea and opened my laptop.</em>",
+  "<strong>Привычка или повторяющееся действие в прошлом.</strong> Часто с every / always / usually + прошлый период. <em>We went to the lake every summer.</em>",
+  "<strong>Длительное состояние в прошлом, которое закончилось.</strong> <em>She lived in Paris for ten years.</em>",
+  "<strong>Глаголы состояния в прошлом — всегда Simple.</strong> know, like, want, mean, seem, own. <em>I knew the answer.</em>",
+]} />
+
+### Когда Past Continuous
+
+<RuleList rules={[
+  "<strong>Действие шло в конкретный момент прошлого.</strong> Маркеры: at 7 yesterday, this time last week, all morning. <em>At 7 PM I was cooking dinner.</em>",
+  "<strong>Фон для другого действия.</strong> Длинное действие в Continuous + короткое в Simple, обычно с when. <em>I was reading when she called.</em>",
+  "<strong>Два параллельных процесса в прошлом.</strong> Оба в Continuous, часто с while. <em>While I was cooking, he was setting the table.</em>",
+  "<strong>Временная ситуация в прошлом.</strong> Период вокруг точки прошлого, не «всегда тогда». <em>That summer she was living with her cousin.</em>",
+  "<strong>Раздражающая привычка с always.</strong> Эмоциональная окраска. <em>He was always losing his keys.</em>",
+]} />
+
+### Когда Past Perfect
+
+<RuleList rules={[
+  "<strong>Действие закончилось до другого момента в прошлом.</strong> Маркер: by + время. <em>By 8 PM I had finished the report.</em>",
+  "<strong>В сложных предложениях с when / after / before — чтобы показать «было сделано раньше».</strong> <em>When I arrived, she had already left.</em>",
+  "<strong>С already, just, yet, never, ever — но в прошлом.</strong> <em>I had never seen such a sunset before.</em>",
+  "<strong>В косвенной речи — сдвиг Present Perfect или Past Simple назад.</strong> <em>She said she had finished. (прямая речь: «I have finished» / «I finished»)</em>",
+  "<strong>Не нужен, если порядок очевиден из слов after / before или из контекста.</strong> <em>After I finished, I went home.</em> — Past Simple достаточно.",
+]} />
+
+### Маркеры повторяющегося прошлого: used to и would
+
+`used to + V` = «раньше делал, а теперь нет». Подходит для привычек и состояний.
+
+- *I used to smoke, but I quit two years ago.*
+- *She used to live in Berlin.*
+
+`would + V` — для привычек, но не для состояний. Нельзя сказать `I would live in Berlin` в значении «раньше жил».
+
+- *Every summer we would go to the lake.*
+
+Отрицание и вопрос с `used to`: `didn't use to`, `did you use to?` (без второго `-d`).
+
+## 7. Примеры
+
+### Факты и последовательность — Past Simple
+
+<Example ru="Я видел её вчера на станции.">I saw her at the station yesterday.</Example>
+<Example ru="Мы купили эту квартиру в 2019 году.">We bought this flat in 2019.</Example>
+<Example ru="Она открыла окно и впустила кота.">She opened the window and let the cat in.</Example>
+<Example ru="Я не позавтракал, поэтому голодный.">I didn't have breakfast, so I'm hungry.</Example>
+<Example ru="Ты говорил с ней на прошлой неделе?">Did you talk to her last week?</Example>
+<Example ru="Команда сдала проект в пятницу.">The team delivered the project on Friday.</Example>
+<Example ru="Совещание закончилось час назад.">The meeting ended an hour ago.</Example>
+
+### Процесс и фон — Past Continuous
+
+<Example ru="В семь вечера я готовил ужин.">At 7 PM I was cooking dinner.</Example>
+<Example ru="Я читал, когда она позвонила.">I was reading when she called.</Example>
+<Example ru="Пока я мыл посуду, он накрывал на стол.">While I was washing the dishes, he was setting the table.</Example>
+<Example ru="Тем летом она жила у двоюродной сестры.">That summer she was living with her cousin.</Example>
+<Example ru="Что ты делал вчера в десять?">What were you doing at ten yesterday?</Example>
+<Example ru="Сайт не работал всё утро.">The website wasn't working all morning.</Example>
+
+### Действие до действия — Past Perfect
+
+<Example ru="К восьми вечера я уже закончил отчёт.">By 8 PM I had finished the report.</Example>
+<Example ru="Когда я пришёл, она уже ушла.">When I arrived, she had already left.</Example>
+<Example ru="Я никогда раньше не видел такого заката.">I had never seen such a sunset before.</Example>
+<Example ru="Поезд ушёл до того, как мы добрались до станции.">The train had left before we got to the station.</Example>
+
+### used to / would
+
+<Example ru="Раньше я курил, но бросил два года назад.">I used to smoke, but I quit two years ago.</Example>
+<Example ru="Каждое лето мы ездили на озеро.">Every summer we would go to the lake.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="Past Simple" rightLabel="Past Continuous">
+  <div slot="left">
+    <strong>I cooked dinner at 7.</strong><br/>Факт: в семь приготовил (и, возможно, закончил).<br/><br/>
+    <strong>She called when I came home.</strong><br/>Сначала пришёл — потом позвонила. Последовательность.<br/><br/>
+    <strong>It rained yesterday.</strong><br/>Факт про вчера.<br/><br/>
+    <strong>I knew the answer.</strong><br/>Состояние — Continuous недопустим.
+  </div>
+  <div slot="right">
+    <strong>I was cooking dinner at 7.</strong><br/>Процесс шёл в семь, не факт «сделал».<br/><br/>
+    <strong>She called when I was coming home.</strong><br/>Позвонила, пока я ехал домой. Прерывание процесса.<br/><br/>
+    <strong>It was raining all morning.</strong><br/>Процесс растянут на промежуток.<br/><br/>
+    <strong>—</strong><br/>State verbs в Continuous не идут.
+  </div>
+</Compare>
+
+<Compare leftLabel="Past Simple" rightLabel="Past Perfect">
+  <div slot="left">
+    <strong>When she called, I had dinner.</strong><br/>Сначала позвонила — потом поужинал. Последовательность.<br/><br/>
+    <strong>I finished the report at 8.</strong><br/>В восемь — момент завершения.<br/><br/>
+    <strong>After I finished, I went home.</strong><br/>After уже задаёт порядок — Simple хватает.
+  </div>
+  <div slot="right">
+    <strong>When she called, I had had dinner.</strong><br/>К моменту звонка ужин уже был съеден. Предшествование.<br/><br/>
+    <strong>By 8 I had finished the report.</strong><br/>К восьми уже было готово.<br/><br/>
+    <strong>When I arrived, she had already left.</strong><br/>Без Perfect получится «пришёл — и она ушла», что значит другое.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Задай себе три вопроса по очереди. Первый — «есть ли в предложении два прошедших действия, и одно явно раньше другого?». Если да и порядок важен — Past Perfect для раннего, Past Simple для позднего. Второй — «было ли это процессом в момент прошлого или фоном для чего-то?». Если да — Past Continuous. Если оба «нет» — Past Simple. Это покрывает 90% случаев.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английскому нужны три прошедших">
+Английскому глаголу не хватает того, что есть у русского: видовых пар (`делал` / `сделал`), приставок, развитой системы причастий. Чтобы передать «делал процессом», «сделал фактом» и «сделал раньше другого сделанного», английский поставил три отдельные конструкции: `V2`, `was/were + V-ing`, `had + V3`. Это не украшение и не педантизм — без них фраза перестаёт различать смыслы, которые русский передаёт одной формой глагола в нужном контексте. Past Perfect особенно — это способ явно указать порядок двух прошлых событий там, где английский синтаксис сам по себе порядок не задаёт.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Глагол — state verb (know, like, want, mean, seem, own)?", yes: "Past Simple. Continuous недопустим, Perfect — только в сложной хронологии.", no: "к вопросу 2" },
+  { q: "В предложении два прошедших действия, и одно завершилось ДО другого?", yes: "Раннее — Past Perfect (had + V3). Позднее — Past Simple.", no: "к вопросу 3" },
+  { q: "Есть маркер «at 7 yesterday», «all morning», «while» или другой указатель на процесс в моменте прошлого?", yes: "Past Continuous (was/were + V-ing).", no: "к вопросу 4" },
+  { q: "Длинное действие как фон + короткое в when, которое его прерывает?", yes: "Длинное — Past Continuous, короткое — Past Simple.", no: "к вопросу 5" },
+  { q: "Просто факт, последовательность фактов, или привычка в прошлом?", yes: "Past Simple. Для регулярной привычки можно used to / would.", no: "Вернись к вопросу 1 — что-то не учли." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I goed to the shop yesterday | I went to the shop yesterday | go — неправильный глагол, V2 = went, не `goed`. |
+| Did you went there? | Did you go there? | После did — начальная форма без `-ed`. |
+| She didn't worked late | She didn't work late | После didn't — начальная форма, не V2. |
+| I was knowing the answer | I knew the answer | know — глагол состояния, Continuous недопустим. |
+| When she called, I cooked dinner (имелся в виду процесс) | When she called, I was cooking dinner | Процесс в моменте прошлого → Past Continuous. |
+| I lived in Paris (если до сих пор живёт) | I have lived in Paris (Present Perfect) | Past Simple = закончилось. До сих пор живёт — Present Perfect, другой урок. |
+| When I came home, she left | When I came home, she had left | Без Past Perfect получается «я пришёл — потом она ушла». С Perfect — «к моему приходу её уже не было». |
+| He was died in 1990 | He died in 1990 | die в Past Simple — died. Continuous здесь бессмыслен. |
+| What you did yesterday? | What did you do yesterday? | Вопросительный порядок: вопросительное слово + did + подлежащее + V. |
+| I used to working there | I used to work there | После used to — начальная форма глагола, не V-ing. |
+| She use to live in Berlin | She used to live in Berlin | В утверждении `used to`, не `use to`. |
+| Did you used to smoke? | Did you use to smoke? | В вопросе с did — `use to` без второго `-d`. |
+
+## 13. Шпаргалка
+
+| Маркер | Время | Почему |
+| --- | --- | --- |
+| yesterday, last week, in 2020, ago | Past Simple | Указатель на завершённый момент прошлого |
+| when (короткое в моменте) | Past Simple (короткое) + Past Continuous (фон) | Прерывание процесса |
+| while | Past Continuous (оба) | Два параллельных процесса |
+| at 7 yesterday, all morning, this time last week | Past Continuous | Процесс в конкретный момент |
+| by 8 PM, by the time, by then | Past Perfect | Завершение до момента |
+| already, just, never + прошлый контекст | Past Perfect | Завершение до точки в прошлом |
+| after / before (явный порядок) | Past Simple | Связка уже задаёт порядок, Perfect не нужен |
+| every summer (в прошлом) | Past Simple или would | Регулярность |
+| used to | Конструкция | Бывшая привычка / состояние, которого больше нет |
+| State verbs (know, like, want, mean) | Past Simple | Состояния не имеют процесса |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "Past Simple", meaning: "простое прошедшее — V2 (worked / went)" },
+  { term: "Past Continuous", meaning: "длительное прошедшее — was/were + V-ing" },
+  { term: "Past Perfect", meaning: "предпрошедшее — had + V3" },
+  { term: "V1 / base form", meaning: "начальная форма (go, see, write)" },
+  { term: "V2 / past simple form", meaning: "вторая форма (went, saw, wrote)" },
+  { term: "V3 / past participle", meaning: "третья форма (gone, seen, written)" },
+  { term: "regular verb", meaning: "правильный глагол — V2 и V3 образуются через -ed" },
+  { term: "irregular verb", meaning: "неправильный глагол — V2 и V3 надо запомнить" },
+  { term: "auxiliary did", meaning: "вспомогательный did в вопросах и отрицаниях Past Simple" },
+  { term: "used to + V", meaning: "раньше делал / был, а теперь нет" },
+  { term: "would + V (привычка)", meaning: "для повторяющихся прошлых действий, не для состояний" },
+  { term: "go → went → gone", meaning: "идти / пошёл / пошедший" },
+  { term: "see → saw → seen", meaning: "видеть / увидел / увиденный" },
+  { term: "do → did → done", meaning: "делать / сделал / сделанный" },
+  { term: "have → had → had", meaning: "иметь / имел / имевший" },
+  { term: "be → was/were → been", meaning: "быть / был / бывший" },
+  { term: "write → wrote → written", meaning: "писать / написал / написанный" },
+  { term: "read → read → read", meaning: "читать / прочитал / прочитанный (V2 и V3 читаются «рэд»)" },
+  { term: "take → took → taken", meaning: "брать / взял / взятый" },
+  { term: "give → gave → given", meaning: "давать / дал / данный" },
+  { term: "find → found → found", meaning: "находить / нашёл / найденный" },
+  { term: "think → thought → thought", meaning: "думать / подумал" },
+  { term: "say → said → said", meaning: "говорить / сказал" },
+  { term: "leave → left → left", meaning: "уходить / ушёл" },
+  { term: "buy → bought → bought", meaning: "покупать / купил" },
+  { term: "yesterday", meaning: "вчера" },
+  { term: "last week / month / year", meaning: "на прошлой неделе / в прошлом месяце / в прошлом году" },
+  { term: "ago", meaning: "тому назад (an hour ago, two days ago)" },
+  { term: "in 2020", meaning: "в 2020 году" },
+  { term: "then", meaning: "тогда" },
+  { term: "while", meaning: "пока, в то время как — обычно с Past Continuous" },
+  { term: "when", meaning: "когда — связка для Simple и Continuous" },
+  { term: "by + время", meaning: "к (8 часам, тому моменту) — маркер Past Perfect" },
+  { term: "already / just / yet / never", meaning: "наречия завершённости — с Past Perfect в прошлом" },
+  { term: "before / after", meaning: "до / после — задают порядок без Past Perfect" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-past-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Неправильные глаголы</span>
+    <span class="kc-trainer-hint">Запомни V1 → V2 → V3 и трудные пары</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-past-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Маркер → время</span>
+    <span class="kc-trainer-hint">Соотнеси маркер с Simple, Continuous или Perfect</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-past-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Какое прошедшее?</span>
+    <span class="kc-trainer-hint">Разложи предложения по трём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-past-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">10 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-past-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную форму</span>
+    <span class="kc-trainer-hint">Впиши глагол в Simple, Continuous или Perfect</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-past-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Расставь слова — в том числе вопросы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 5-8, 13-15 (Past Simple, Past Continuous, Past Perfect).
+- **Swan M., Practical English Usage** — §421-426 (past tenses), §605 (used to).
+- **English Page** — englishpage.com/verbpage/pasttenses.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/past-tense

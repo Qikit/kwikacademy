@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-past",
+  "title": "Собери предложение в прошлом",
+  "description": "Расставь слова в правильном порядке. Внимание к вопросам и месту вспомогательного.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["yesterday", "I", "her", "saw", "at", "the", "station"],
+        "answer": ["I", "saw", "her", "at", "the", "station", "yesterday"],
+        "translation": "Я видел её на станции вчера.",
+        "explain": "Past Simple: подлежащее + V2 + дополнение + обстоятельства места и времени. Маркер «yesterday» уходит в конец."
+      },
+      {
+        "words": ["was", "at", "I", "PM", "cooking", "7", "dinner"],
+        "answer": ["at", "7", "PM", "I", "was", "cooking", "dinner"],
+        "translation": "В 7 вечера я готовил ужин.",
+        "explain": "Past Continuous: обстоятельство времени может стоять в начале. I → was + V-ing (cooking)."
+      },
+      {
+        "words": ["go", "did", "where", "you", "?"],
+        "answer": ["where", "did", "you", "go", "?"],
+        "translation": "Куда ты ходил?",
+        "explain": "Специальный вопрос Past Simple: вопросительное слово + did + подлежащее + начальная форма глагола (go, не went)."
+      },
+      {
+        "words": ["doing", "you", "yesterday", "what", "were", "at", "three", "?"],
+        "answer": ["what", "were", "you", "doing", "at", "three", "yesterday", "?"],
+        "translation": "Что ты делал вчера в три?",
+        "explain": "Вопрос в Past Continuous: вопросительное слово + were + подлежащее + V-ing. Обстоятельства времени в конце."
+      },
+      {
+        "words": ["already", "she", "left", "had", "I", "when", "arrived"],
+        "answer": ["when", "I", "arrived", "she", "had", "already", "left"],
+        "translation": "Когда я пришёл, она уже ушла.",
+        "explain": "Раннее действие — Past Perfect (had left), позднее — Past Simple (arrived). Already встаёт между had и V3."
+      },
+      {
+        "words": ["the", "phone", "I", "rang", "reading", "was", "when"],
+        "answer": ["I", "was", "reading", "when", "the", "phone", "rang"],
+        "translation": "Я читал, когда зазвонил телефон.",
+        "explain": "Фон (was reading) — Past Continuous, прерывание (rang) — Past Simple. Связка through «when»."
+      },
+      {
+        "words": ["didn't", "have", "I", "breakfast", "today"],
+        "answer": ["I", "didn't", "have", "breakfast", "today"],
+        "translation": "Я не позавтракал сегодня.",
+        "explain": "Отрицание Past Simple: подлежащее + didn't + начальная форма (have, не had)."
+      },
+      {
+        "words": ["smoke", "to", "she", "used"],
+        "answer": ["she", "used", "to", "smoke"],
+        "translation": "Раньше она курила.",
+        "explain": "Конструкция «used to + V (начальная форма)» = раньше делала, теперь нет."
+      }
+    ]
+  }
+}

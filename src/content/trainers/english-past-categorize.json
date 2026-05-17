@@ -1,0 +1,76 @@
+{
+  "course": "english",
+  "lesson": "english-past",
+  "title": "Какое прошедшее?",
+  "description": "Распредели предложения по трём корзинам: Simple, Continuous, Perfect.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "simple", "label": "Past Simple" },
+      { "id": "continuous", "label": "Past Continuous" },
+      { "id": "perfect", "label": "Past Perfect" }
+    ],
+    "items": [
+      {
+        "text": "I saw her at the station yesterday.",
+        "category": "simple",
+        "explain": "«Yesterday» + завершённый факт → Past Simple."
+      },
+      {
+        "text": "At 7 PM I was cooking dinner.",
+        "category": "continuous",
+        "explain": "«At 7 PM» + процесс в моменте прошлого → Past Continuous."
+      },
+      {
+        "text": "By 8 I had finished the report.",
+        "category": "perfect",
+        "explain": "«By 8» = к восьми уже было сделано → Past Perfect."
+      },
+      {
+        "text": "We bought this flat in 2019.",
+        "category": "simple",
+        "explain": "Конкретный год + завершённый факт → Past Simple."
+      },
+      {
+        "text": "While she was reading, he was cooking.",
+        "category": "continuous",
+        "explain": "«While» + два параллельных процесса → Past Continuous в обеих частях."
+      },
+      {
+        "text": "When I arrived, she had already left.",
+        "category": "perfect",
+        "explain": "Уход случился ДО прихода → Past Perfect (had left)."
+      },
+      {
+        "text": "The meeting ended an hour ago.",
+        "category": "simple",
+        "explain": "«Ago» = точка в прошлом → Past Simple."
+      },
+      {
+        "text": "I was reading when she called.",
+        "category": "continuous",
+        "explain": "Длинный процесс (was reading) прерван коротким (called) → Past Continuous для фона."
+      },
+      {
+        "text": "I had never seen such a sunset before.",
+        "category": "perfect",
+        "explain": "«Never ... before» в прошлом контексте → Past Perfect."
+      },
+      {
+        "text": "She didn't have breakfast yesterday.",
+        "category": "simple",
+        "explain": "Отрицание Past Simple с «yesterday»: didn't + V."
+      },
+      {
+        "text": "What were you doing at ten?",
+        "category": "continuous",
+        "explain": "Вопрос о процессе в конкретный момент прошлого → Past Continuous."
+      },
+      {
+        "text": "The train had left before we got to the station.",
+        "category": "perfect",
+        "explain": "Поезд ушёл раньше нашего прихода → Past Perfect для раннего, Past Simple для позднего."
+      }
+    ]
+  }
+}

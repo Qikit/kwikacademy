@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-past",
+  "title": "Поставь правильную форму",
+  "description": "Впиши глагол в Past Simple, Past Continuous или Past Perfect.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "I ___ (see) her at the station yesterday.",
+        "answers": ["saw"],
+        "explain": "«Yesterday» + факт → Past Simple. see — неправильный, V2 = saw."
+      },
+      {
+        "text": "We ___ (buy) this flat in 2019.",
+        "answers": ["bought"],
+        "explain": "Конкретный год в прошлом → Past Simple. buy → bought."
+      },
+      {
+        "text": "At 7 PM I ___ (cook) dinner.",
+        "answers": ["was cooking"],
+        "explain": "«At 7 PM» = процесс в моменте прошлого → Past Continuous. I → was."
+      },
+      {
+        "text": "I ___ (read) when the phone ___ (ring).",
+        "answers": ["was reading", "rang"],
+        "explain": "Длинное действие как фон → Past Continuous (was reading). Короткое прерывание → Past Simple (rang, неправильный)."
+      },
+      {
+        "text": "By 8 PM I ___ (finish) the report.",
+        "answers": ["had finished"],
+        "explain": "«By 8 PM» = к восьми уже было сделано → Past Perfect (had + V3)."
+      },
+      {
+        "text": "When I ___ (arrive), she ___ (already / leave).",
+        "answers": ["arrived", "had already left"],
+        "explain": "Приход — Past Simple (arrived). Уход случился раньше, маркер «already» → Past Perfect (had already left)."
+      },
+      {
+        "text": "While she ___ (cook), I ___ (set) the table.",
+        "answers": ["was cooking", "was setting"],
+        "explain": "«While» = параллельные процессы в прошлом → Past Continuous в обеих частях."
+      },
+      {
+        "text": "He ___ (not / have) breakfast, so he was hungry.",
+        "answers": ["didn't have", "did not have"],
+        "explain": "Отрицание Past Simple: didn't + V (начальная форма). НЕ «didn't had»."
+      },
+      {
+        "text": "I ___ (never / see) such a sunset before that evening.",
+        "answers": ["had never seen"],
+        "explain": "«Never ... before» в прошлом → Past Perfect. see — неправильный, V3 = seen."
+      },
+      {
+        "text": "She ___ (use) to smoke, but she quit two years ago.",
+        "answers": ["used"],
+        "explain": "Конструкция «used to + V» = раньше делала, теперь нет. В утверждении — used (с -d)."
+      }
+    ]
+  }
+}

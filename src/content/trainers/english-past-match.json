@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-past",
+  "title": "Маркеры прошлого → форма",
+  "description": "Подбери, к какому из трёх прошедших времён относится маркер или конструкция.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "yesterday",
+        "right": "Past Simple",
+        "explain": "«Yesterday» = точка в законченном прошлом → Past Simple."
+      },
+      {
+        "left": "at 7 PM yesterday",
+        "right": "Past Continuous",
+        "explain": "«At 7 PM yesterday» = конкретный момент прошлого, действие шло вокруг этой точки → Past Continuous."
+      },
+      {
+        "left": "while I was reading",
+        "right": "Past Continuous",
+        "explain": "«While» = два параллельных процесса в прошлом → Past Continuous в обеих частях."
+      },
+      {
+        "left": "by the time he arrived",
+        "right": "Past Perfect",
+        "explain": "«By the time + прошлое» = до этого момента уже что-то закончилось → Past Perfect."
+      },
+      {
+        "left": "in 2019",
+        "right": "Past Simple",
+        "explain": "Конкретный год в прошлом, законченный период → Past Simple."
+      },
+      {
+        "left": "two hours ago",
+        "right": "Past Simple",
+        "explain": "«Ago» = столько-то назад от сейчас, точка в прошлом → Past Simple."
+      },
+      {
+        "left": "all morning",
+        "right": "Past Continuous",
+        "explain": "«All morning» = процесс растянут на промежуток в прошлом → Past Continuous."
+      },
+      {
+        "left": "already (в прошлом)",
+        "right": "Past Perfect",
+        "explain": "«Already» в прошлом = к моменту X уже было сделано → Past Perfect (had already done)."
+      },
+      {
+        "left": "last week",
+        "right": "Past Simple",
+        "explain": "«Last week» = законченный прошлый период → Past Simple."
+      },
+      {
+        "left": "when I came in, she ___",
+        "right": "Past Perfect (если уже ушла)",
+        "explain": "Если действие закончилось ДО моего прихода → Past Perfect (had left). Если случилось после/в момент — Past Simple."
+      }
+    ]
+  }
+}

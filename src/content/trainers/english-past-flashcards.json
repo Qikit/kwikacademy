@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-past",
+  "title": "Неправильные глаголы — flashcards",
+  "description": "Тройки V1 → V2 → V3 и пары-ловушки, которые путают чаще всего.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "go",
+        "back": "go → went → gone. «I went to the shop.» — Past Simple. «I had gone before she arrived.» — Past Perfect.",
+        "hint": "движение"
+      },
+      {
+        "front": "see",
+        "back": "see → saw → seen. «I saw her yesterday.» «I had never seen this film before.»",
+        "hint": "восприятие"
+      },
+      {
+        "front": "do",
+        "back": "do → did → done. «I did my homework.» «I had done everything by 8.» Также did — вспомогательный для вопросов и отрицаний.",
+        "hint": "действие"
+      },
+      {
+        "front": "have",
+        "back": "have → had → had. V2 и V3 совпадают. «I had breakfast.» «I had had breakfast before the call.» — два had подряд, это нормально.",
+        "hint": "владение / процесс"
+      },
+      {
+        "front": "be",
+        "back": "be → was/were → been. Единственный глагол, где V2 зависит от лица: I/he/she/it was, you/we/they were.",
+        "hint": "быть"
+      },
+      {
+        "front": "write",
+        "back": "write → wrote → written. «I wrote a letter.» «She had written the report before lunch.»",
+        "hint": "создание текста"
+      },
+      {
+        "front": "read",
+        "back": "read → read → read. Пишутся одинаково, но V2 и V3 читаются «рэд» (как red), а V1 — «рид». «I read /рид/ books. Yesterday I read /рэд/ a novel.»",
+        "hint": "ловушка чтения"
+      },
+      {
+        "front": "take",
+        "back": "take → took → taken. «I took the bus.» «He had taken the keys before he left.»",
+        "hint": "брать"
+      },
+      {
+        "front": "give",
+        "back": "give → gave → given. «She gave me a book.» «By that time he had given his answer.»",
+        "hint": "давать"
+      },
+      {
+        "front": "find",
+        "back": "find → found → found. V2 и V3 совпадают. «I found my keys.» «She had found the mistake before the meeting.»",
+        "hint": "находить"
+      },
+      {
+        "front": "think",
+        "back": "think → thought → thought. «I thought it was Tuesday.» «I had thought about it before answering.»",
+        "hint": "мысль"
+      },
+      {
+        "front": "buy",
+        "back": "buy → bought → bought. «We bought a flat in 2019.» «They had bought tickets in advance.»",
+        "hint": "покупка"
+      },
+      {
+        "front": "leave",
+        "back": "leave → left → left. «I left at 7.» «The train had left before we got to the station.»",
+        "hint": "уходить"
+      },
+      {
+        "front": "say vs tell",
+        "back": "say → said → said. tell → told → told. say что-то (say hello), tell кому-то (tell me a story). Не «say me» — это калька с русского.",
+        "hint": "ловушка"
+      },
+      {
+        "front": "lay vs lie (ловушка)",
+        "back": "lay (класть) → laid → laid (нужен объект: lay a book on the table). lie (лежать) → lay → lain (без объекта: lie on the sofa). Lie (врать) — отдельный глагол: lie → lied → lied.",
+        "hint": "три похожих глагола"
+      },
+      {
+        "front": "hang (вешать) vs hang (казнить)",
+        "back": "hang (вешать предмет) → hung → hung. hang (казнить через повешение) → hanged → hanged. «I hung the picture.» vs «He was hanged in 1745.»",
+        "hint": "разные значения — разные формы"
+      }
+    ]
+  }
+}

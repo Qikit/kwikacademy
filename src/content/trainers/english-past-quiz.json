@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-past",
+  "title": "Времена прошедшего — правила",
+  "description": "Выбери правильную форму глагола в контексте.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "I ___ her at the station yesterday.",
+        "options": ["see", "saw", "was seeing", "had seen"],
+        "correctIndex": 1,
+        "explain": "«Yesterday» + завершённый факт → Past Simple. see → saw (неправильный)."
+      },
+      {
+        "prompt": "At 7 PM I ___ dinner.",
+        "options": ["cooked", "was cooking", "had cooked", "have cooked"],
+        "correctIndex": 1,
+        "explain": "«At 7 PM (yesterday)» = процесс в конкретный момент прошлого → Past Continuous."
+      },
+      {
+        "prompt": "When I arrived, she ___ already.",
+        "options": ["left", "was leaving", "had left", "leaves"],
+        "correctIndex": 2,
+        "explain": "Уход случился ДО прихода, маркер «already» → Past Perfect (had left)."
+      },
+      {
+        "prompt": "I ___ when the phone rang.",
+        "options": ["read", "was reading", "had read", "have read"],
+        "correctIndex": 1,
+        "explain": "Длинное действие как фон + короткое в Simple (rang) → Past Continuous для фона."
+      },
+      {
+        "prompt": "___ you ___ the report by 8?",
+        "options": ["Did / finish", "Were / finishing", "Had / finished", "Have / finished"],
+        "correctIndex": 2,
+        "explain": "«By 8» в прошлом = к восьми было сделано → Past Perfect: Had + S + V3."
+      },
+      {
+        "prompt": "She ___ in Berlin for ten years before she moved to Prague.",
+        "options": ["lived", "was living", "had lived", "has lived"],
+        "correctIndex": 2,
+        "explain": "Действие закончилось ДО другого прошлого действия (moved) → Past Perfect."
+      },
+      {
+        "prompt": "We ___ to the lake every summer when I was a kid.",
+        "options": ["go", "went", "were going", "had gone"],
+        "correctIndex": 1,
+        "explain": "Повторяющееся действие в прошлом → Past Simple. Также допустимо «would go», но не среди вариантов."
+      },
+      {
+        "prompt": "He ___ his keys somewhere in the flat — typical.",
+        "options": ["always loses", "was always losing", "always lost", "had always lost"],
+        "correctIndex": 1,
+        "explain": "«Always» + Past Continuous = раздражающая привычка в прошлом."
+      },
+      {
+        "prompt": "What ___ you ___ yesterday at three?",
+        "options": ["did / do", "were / doing", "had / done", "are / doing"],
+        "correctIndex": 1,
+        "explain": "«At three yesterday» = конкретный момент прошлого → Past Continuous: Were + S + V-ing."
+      },
+      {
+        "prompt": "I ___ the answer, but I forgot it.",
+        "options": ["knew", "was knowing", "had known", "know"],
+        "correctIndex": 0,
+        "explain": "know — глагол состояния, в Continuous не идёт. Простой факт прошлого → Past Simple."
+      },
+      {
+        "prompt": "Anna ___ in Paris, but she moved away two years ago.",
+        "options": ["used to live", "used to living", "use to live", "was used to live"],
+        "correctIndex": 0,
+        "explain": "«Used to + V» = раньше было, теперь нет. После used to — начальная форма (live, не living)."
+      },
+      {
+        "prompt": "While I ___ the dishes, he ___ the table.",
+        "options": ["washed / set", "was washing / was setting", "had washed / set", "wash / sets"],
+        "correctIndex": 1,
+        "explain": "«While» + два параллельных процесса в прошлом → Past Continuous в обеих частях."
+      }
+    ]
+  }
+}

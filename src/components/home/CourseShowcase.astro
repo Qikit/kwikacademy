@@ -5,7 +5,7 @@ import { withBase } from '../../lib/url';
 
 const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
 const lessons = await getCollection('lessons');
-const countFor = (slug: string) => lessons.filter((l) => l.data.course === slug).length;
+const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slug);
 ---
 
 <section class="showcase">
@@ -13,14 +13,20 @@ const countFor = (slug: string) => lessons.filter((l) => l.data.course === slug)
   <div class="cards">
     {
       courses.map((c) => (
-        <div class="slot" data-course={c.id} data-lessons={countFor(c.id)}>
+        <div
+          class="slot"
+          data-course={c.id}
+          data-lesson-slugs={lessonsFor(c.id)
+            .map((l) => l.id)
+            .join(',')}
+        >
           <CourseCard
             client:visible
             href={withBase(`/topics/${c.id}`)}
             title={c.data.title}
             eyebrow={c.data.subtitle}
             glyph={c.data.glyph}
-            meta={`${countFor(c.id)} уроков`}
+            meta={`${lessonsFor(c.id).length} уроков`}
             progress={0}
           />
         </div>
@@ -28,6 +34,11 @@ const countFor = (slug: string) => lessons.filter((l) => l.data.course === slug)
     }
   </div>
 </section>
+
+<script>
+  import { hydrateCourseCards } from '../../lib/progress/hydrate';
+  hydrateCourseCards();
+</script>
 
 <style>
   .showcase {

@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-future",
+  "title": "Собери предложение",
+  "description": "Поставь слова в правильном порядке.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["call", "I'll", "you", "back", "in", "an", "hour"],
+        "answer": ["I'll", "call", "you", "back", "in", "an", "hour"],
+        "translation": "Я перезвоню тебе через час.",
+        "explain": "Обещание/спонтанное решение → will (I'll). Порядок: subject + 'll + V1 + object + обстоятельство времени."
+      },
+      {
+        "words": ["going", "rain", "to", "it's"],
+        "answer": ["it's", "going", "to", "rain"],
+        "translation": "Сейчас будет дождь.",
+        "explain": "Видимое доказательство → be going to. It's = it is, дальше going to + V1 (rain)."
+      },
+      {
+        "words": ["meeting", "at", "Anna", "I'm", "tonight", "7"],
+        "answer": ["I'm", "meeting", "Anna", "at", "7", "tonight"],
+        "translation": "Я встречаюсь с Анной в семь вечера.",
+        "explain": "Конкретная договорённость → Present Continuous (I'm meeting). Порядок: subject + be + V-ing + object + время."
+      },
+      {
+        "words": ["leaves", "the", "at", "train", "6:30"],
+        "answer": ["the", "train", "leaves", "at", "6:30"],
+        "translation": "Поезд отправляется в 6:30.",
+        "explain": "Расписание → Present Simple. 3 лицо ед. ч. → leaves с -s. Время в конце с предлогом at."
+      },
+      {
+        "words": ["I", "won't", "anyone", "tell"],
+        "answer": ["I", "won't", "tell", "anyone"],
+        "translation": "Я никому не скажу.",
+        "explain": "Обещание в отрицательной форме → won't (will not). После won't — V1 (tell). Anyone в конце как дополнение."
+      },
+      {
+        "words": ["arrive", "I", "I'll", "when", "you", "call"],
+        "answer": ["when", "I", "arrive", "I'll", "call", "you"],
+        "translation": "Когда я приеду, я тебе позвоню.",
+        "explain": "После when — Present Simple (arrive), не будущее. В главной части — will (I'll call)."
+      },
+      {
+        "words": ["it", "rains", "if", "stay", "we'll", "home"],
+        "answer": ["if", "it", "rains", "we'll", "stay", "home"],
+        "translation": "Если будет дождь, мы останемся дома.",
+        "explain": "После if — Present Simple (rains). В главной части — will (we'll stay). Это условное предложение первого типа."
+      },
+      {
+        "words": ["aren't", "the", "you", "today", "coming", "to", "office"],
+        "answer": ["aren't", "you", "coming", "to", "the", "office", "today"],
+        "translation": "Ты сегодня не приходишь в офис?",
+        "explain": "Вопрос про договорённость на сегодня → Present Continuous, отрицательная вопросительная форма: aren't + subject + V-ing."
+      }
+    ]
+  }
+}

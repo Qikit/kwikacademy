@@ -1,0 +1,81 @@
+{
+  "course": "english",
+  "lesson": "english-future",
+  "title": "Формы и маркеры будущего",
+  "description": "Ключевые конструкции и нюансы выбора формы будущего.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "I'll = ?",
+        "back": "I'll = I will. Сокращение для устной речи и неформального письма. Также: you'll, he'll, she'll, we'll, they'll.",
+        "hint": "сокращение"
+      },
+      {
+        "front": "won't = ?",
+        "back": "won't = will not. Произносится «уоунт». Категоричное отрицание: I won't tell anyone.",
+        "hint": "отрицание will"
+      },
+      {
+        "front": "be going to + V — для чего?",
+        "back": "Для заранее принятых намерений (I'm going to learn Spanish) и для предсказаний с видимыми доказательствами (Look — it's going to rain).",
+        "hint": "план или видимое"
+      },
+      {
+        "front": "When I ___ home, I'll call. — какая форма после when?",
+        "back": "When I arrive home — Present Simple. После союзов времени (when, before, after, until, as soon as) — НЕ будущее, а Simple, даже если действие в будущем.",
+        "hint": "союз времени"
+      },
+      {
+        "front": "If it ___ tomorrow, we'll stay home. — какая форма после if?",
+        "back": "If it rains tomorrow — Present Simple. После if (условие первого типа) — НЕ будущее, а Simple. Will только в главной части.",
+        "hint": "союз условия"
+      },
+      {
+        "front": "Present Continuous как будущее — когда?",
+        "back": "Когда есть конкретная договорённость на близкое будущее: время, место, кто-то ждёт. I'm meeting Anna at 7. We're flying to Rome on Friday.",
+        "hint": "договорённость"
+      },
+      {
+        "front": "Present Simple как будущее — когда?",
+        "back": "Когда это расписание, не зависящее от говорящего: транспорт, фильм, занятия, программа. The train leaves at 7:15.",
+        "hint": "расписание"
+      },
+      {
+        "front": "will vs be going to: «Я возьму салат» в кафе",
+        "back": "Если решил в момент речи, глядя в меню — I'll have the salad (спонтанно). Если решил заранее, ещё до того, как открыл меню — I'm going to have the salad.",
+        "hint": "момент решения"
+      },
+      {
+        "front": "Look at those clouds! It ___ rain.",
+        "back": "It's going to rain. Есть видимое доказательство (тучи) → be going to. Will здесь звучит неестественно: он для предсказаний-мнений без видимых признаков.",
+        "hint": "видимое доказательство"
+      },
+      {
+        "front": "Future Continuous — формула и смысл",
+        "back": "will be + V-ing. Что будет идти (быть в процессе) в момент будущего. At 7 PM I'll be flying to Paris (буду в полёте).",
+        "hint": "процесс в будущем"
+      },
+      {
+        "front": "Future Perfect — формула и смысл",
+        "back": "will have + V3 (past participle). Что будет завершено к моменту в будущем. By next Monday I'll have finished the report.",
+        "hint": "завершено к моменту"
+      },
+      {
+        "front": "Shall — когда используется?",
+        "back": "Архаично для будущего с I/we (Shall I go = Will I go). Сейчас живо только в предложениях и просьбах: Shall we go? Shall I open the window?",
+        "hint": "устаревшее"
+      },
+      {
+        "front": "gonna — что это?",
+        "back": "Разговорное сокращение от going to. Только в устной речи. В письме (даже неформальном) — пиши going to. I'm gonna call him → I'm going to call him.",
+        "hint": "только в речи"
+      },
+      {
+        "front": "Сокращения be going to: I'm going to, she's going to, they're going to",
+        "back": "be сокращается стандартно (I am → I'm, she is → she's, they are → they're). going to само не сокращается в письме.",
+        "hint": "сокращения be"
+      }
+    ]
+  }
+}

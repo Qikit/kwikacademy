@@ -1,0 +1,56 @@
+{
+  "course": "english",
+  "lesson": "english-future",
+  "title": "Ситуация → форма будущего",
+  "description": "Подбери, какая форма будущего подходит для каждой ситуации.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "Спонтанное решение в момент речи",
+        "right": "will",
+        "explain": "Решение приходит сейчас, в моменте речи — спонтанно. «— Phone is ringing. — I'll get it.»"
+      },
+      {
+        "left": "Заранее принятое намерение",
+        "right": "be going to",
+        "explain": "Намерение существовало до разговора — это план. «I'm going to learn Spanish this year.»"
+      },
+      {
+        "left": "Конкретная договорённость с другим человеком",
+        "right": "Present Continuous",
+        "explain": "Договорились заранее, есть время и место, кто-то ждёт. «I'm meeting Anna at 7.»"
+      },
+      {
+        "left": "Расписание поезда, фильма, занятий",
+        "right": "Present Simple",
+        "explain": "Расписание не зависит от говорящего, оно зафиксировано. «The train leaves at 6:30.»"
+      },
+      {
+        "left": "Видимое доказательство в настоящем (тучи, симптомы)",
+        "right": "be going to",
+        "explain": "Доказательство есть прямо сейчас → going to. «Look at those clouds — it's going to rain.»"
+      },
+      {
+        "left": "Предсказание-мнение без видимых признаков",
+        "right": "will",
+        "explain": "«Думаю, что», «уверен, что» без объективных доказательств. «I think she'll like it.»"
+      },
+      {
+        "left": "Обещание, гарантия",
+        "right": "will",
+        "explain": "«Я обещаю, что» — типичная роль will. «I'll call you as soon as I land.»"
+      },
+      {
+        "left": "Купленные билеты, забронированный отель",
+        "right": "Present Continuous",
+        "explain": "Бронь уже сделана — это самая надёжная категория «уже почти происходит». «We're flying to Rome on Friday.»"
+      },
+      {
+        "left": "После союза when, if, before, as soon as",
+        "right": "Present Simple",
+        "explain": "В придаточных времени и условия — Present Simple, даже если действие в будущем. «When I arrive, I'll call you.»"
+      }
+    ]
+  }
+}

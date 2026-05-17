@@ -1,0 +1,77 @@
+{
+  "course": "english",
+  "lesson": "english-future",
+  "title": "Какая форма будущего?",
+  "description": "Разложи предложения по четырём корзинам — will, going to, Present Continuous, Present Simple.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "will", "label": "will" },
+      { "id": "going-to", "label": "be going to" },
+      { "id": "pc", "label": "Present Continuous" },
+      { "id": "ps", "label": "Present Simple" }
+    ],
+    "items": [
+      {
+        "text": "— The phone is ringing. — I'll get it.",
+        "category": "will",
+        "explain": "Спонтанное решение в момент речи → will."
+      },
+      {
+        "text": "I'm going to learn Spanish this year.",
+        "category": "going-to",
+        "explain": "Заранее принятое намерение, план был до разговора → be going to."
+      },
+      {
+        "text": "We're meeting Anna at 7 tonight.",
+        "category": "pc",
+        "explain": "Конкретная договорённость с другим человеком на близкое будущее → Present Continuous."
+      },
+      {
+        "text": "The train leaves at 6:30 tomorrow.",
+        "category": "ps",
+        "explain": "Расписание транспорта, не зависит от говорящего → Present Simple."
+      },
+      {
+        "text": "Look at those clouds — it's going to rain.",
+        "category": "going-to",
+        "explain": "Видимое доказательство в настоящем (тучи) → be going to."
+      },
+      {
+        "text": "I'll call you as soon as I land, promise.",
+        "category": "will",
+        "explain": "Обещание → will. Will передаёт «гарантирую, что сделаю»."
+      },
+      {
+        "text": "On Friday I'm flying to Lisbon.",
+        "category": "pc",
+        "explain": "Билеты куплены, рейс в близком будущем → Present Continuous."
+      },
+      {
+        "text": "The film starts at 8.",
+        "category": "ps",
+        "explain": "Расписание сеанса → Present Simple."
+      },
+      {
+        "text": "I think it will rain tomorrow.",
+        "category": "will",
+        "explain": "Предсказание-мнение («I think») без видимых доказательств → will."
+      },
+      {
+        "text": "She's having a job interview on Monday.",
+        "category": "pc",
+        "explain": "Личная встреча запланирована, есть точное время и место → Present Continuous."
+      },
+      {
+        "text": "We're going to move to a new flat in March.",
+        "category": "going-to",
+        "explain": "Намерение принято до разговора, но без конкретной договорённости с кем-то ещё → be going to."
+      },
+      {
+        "text": "The conference starts on March 12 and ends on the 14th.",
+        "category": "ps",
+        "explain": "Программа мероприятия — расписание → Present Simple."
+      }
+    ]
+  }
+}

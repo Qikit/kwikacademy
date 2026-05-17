@@ -2,12 +2,395 @@
 course: english
 order: 4
 phase: "Фаза 1 · Бытовой английский"
-title: "Времена будущего — Future"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Будущее богатое — will, going to и Present Continuous как будущее, каждое со своим оттенком."
-placeholder: true
-tags: [english]
+title: "Времена будущего — will, going to, Present Continuous, Present Simple"
+eyebrow: "Грамматика · уровень A2-B1"
+readingMinutes: 25
+summary: "Четыре способа выразить будущее в английском. Когда какой использовать и почему «I'll come» и «I'm coming» — это разные смыслы."
+tags: [future, tenses, grammar, A2, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Времена будущего — Future» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Timeline from '../../components/lesson/Timeline.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем столько способов сказать о будущем
+
+В русском «я завтра еду в Москву» — одна фраза, одно будущее, и не важно, купил ли ты билет вчера или решил минуту назад. Контекст разруливает.
+
+В английском так не работает. Когда ты говоришь о будущем, язык требует выбрать форму, и выбор кодирует дополнительный смысл: решено ли это сейчас, давно ли это спланировано, есть ли договорённость, или это просто расписание. «I'll fly to Moscow tomorrow», «I'm going to fly», «I'm flying» и «I fly» — все четыре грамматически правильны для слов «завтра я лечу в Москву», но звучат по-разному.
+
+Перепутаешь — фраза не сломается. Но прозвучит странно. «I will meet Anna at 7» вместо «I'm meeting Anna at 7» звучит так, будто решение возникло у тебя только что, в момент речи. А ты с ней договаривался неделю назад. Носитель уловит, что что-то не так, даже если не сразу скажет, что именно.
+
+Этот урок про то, как выбирать форму будущего автоматически: по смыслу, а не по совпадению со словарём.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Выбор формы будущего зависит не от того, **когда** произойдёт действие, а от того, **что ты сейчас о нём знаешь**. Решил спонтанно — **will**. Решил заранее, есть намерение — **be going to**. Уже договорился, есть конкретная договорённость — **Present Continuous**. Это расписание, не зависящее от тебя — **Present Simple**.
+</Callout>
+
+## 3. Формы и грамматика
+
+### will / won't
+
+Модальный глагол. Не меняется по лицам, после него — начальная форма (V1) без `to`.
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / you / he / she / we / they | I will call | I won't call | Will I call? |
+
+Сокращения: `I'll`, `you'll`, `he'll`, `she'll`, `we'll`, `they'll`. Отрицание: `won't` (= will not).
+
+Краткие ответы: `Yes, I will. / No, I won't.`
+
+### be going to
+
+Конструкция `be (am / is / are) + going to + V1`.
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I | I am going to call | I'm not going to call | Am I going to call? |
+| he / she / it | She is going to call | She isn't going to call | Is she going to call? |
+| you / we / they | They are going to call | They aren't going to call | Are they going to call? |
+
+В разговорной речи `going to` часто сжимается до `gonna` — это устная норма, в письме так не пишут.
+
+### Present Continuous как будущее
+
+Та же форма, что и для «прямо сейчас»: `be + V-ing`. Смысл определяется контекстом — обычно маркер времени (`tomorrow`, `at 7`, `on Friday`).
+
+`I am meeting Anna tomorrow.` — встреча запланирована, договорённость есть.
+
+### Present Simple как будущее
+
+Та же форма, что и для привычек: V1 (или V-s в третьем лице). Используется для расписаний — поезда, рейсы, занятия, расписание сеансов.
+
+`The train leaves at 7:15 tomorrow.` — расписание объективно, ты не можешь его поменять.
+
+### Future Continuous и Future Perfect — кратко
+
+- **Future Continuous**: `will be + V-ing`. Действие будет идти в момент будущего. `At 7 PM tomorrow I will be flying to Paris.` (буду в полёте).
+- **Future Perfect**: `will have + V3 (past participle)`. Действие будет завершено к моменту в будущем. `By next Monday I will have finished the report.` (закончу к понедельнику).
+
+Эти формы — для отдельной проработки в уроке про Perfect. Здесь — для общей картины.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="В русском будущее «решено сейчас» vs «решено заранее» обычно передаётся не формой глагола, а порядком слов, частицами и интонацией. Английский кодирует это самой формой — поэтому при переводе с русского нужно сначала прояснить для себя, что именно произошло у говорящего в голове, а не просто переводить слово в слово.">
+  <div slot="ru">
+    <strong>«Я тебе перезвоню».</strong><br/>
+    Контекст 1 (только что вспомнил): I'll call you back.<br/>
+    Контекст 2 (договорились заранее): I'm calling you back at 6.<br/>
+    Контекст 3 (план на сегодня): I'm going to call you back today.<br/>
+    Русская форма одна, английских — три. Все три про будущее, но передают разный «бэкграунд» решения.
+  </div>
+  <div slot="en">
+    <strong>I'll come.</strong> — решил сейчас, в момент речи.<br/>
+    <strong>I'm going to come.</strong> — планирую, есть намерение.<br/>
+    <strong>I'm coming.</strong> — договорённость, ждут.<br/>
+    <strong>It comes at 7.</strong> — расписание, не моё решение.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+**will vs be going to** — отличаются не временем действия, а моментом принятия решения.
+
+<Timeline
+  caption="will: решение принимается в момент речи. Действие — в любой точке будущего."
+  points={[
+    { at: 'now', label: 'решил сейчас', type: 'point' },
+    { at: 'future', label: 'сделаю', type: 'point' },
+  ]}
+/>
+
+<Timeline
+  caption="be going to: решение принято раньше, действие — впереди."
+  points={[
+    { at: 'past', label: 'решил раньше', type: 'point' },
+    { at: 'now', label: 'намерение в силе', type: 'ongoing' },
+    { at: 'future', label: 'сделаю', type: 'point' },
+  ]}
+/>
+
+**Present Continuous как будущее** — точка близкого будущего, к которой ведёт уже существующая договорённость.
+
+<Timeline
+  caption="Present Continuous (будущее): договорённость есть сейчас — событие в близкой точке."
+  points={[
+    { at: 'now', label: 'договорённость', type: 'duration' },
+    { at: 'future', label: 'встреча', type: 'point' },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Когда will
+
+<RuleList rules={[
+  "<strong>Спонтанное решение в момент речи.</strong> Только что подумал, прямо сейчас вызвался. <em>— The phone is ringing. — I'll get it.</em>",
+  "<strong>Предсказание, основанное на мнении или ощущении.</strong> Думаю, считаю, уверен, что. Без видимых доказательств в настоящем. <em>I think it will rain tomorrow.</em>",
+  "<strong>Обещание, гарантия, готовность.</strong> «Я обещаю, что», «не волнуйся». <em>I'll call you as soon as I land.</em>",
+  "<strong>Предложение помощи или просьба.</strong> <em>I'll help you with the bags.</em> / <em>Will you pass the salt?</em>",
+  "<strong>Угроза или отказ.</strong> Категоричное «не буду» — won't. <em>I won't tell anyone, I promise.</em>",
+  "<strong>Факты о будущем, не зависящие от воли.</strong> Возраст, время года, расчётные данные. <em>She will be 30 next year.</em>",
+]} />
+
+### Когда be going to
+
+<RuleList rules={[
+  "<strong>Заранее принятое решение, намерение.</strong> План уже есть в голове до момента речи. <em>I'm going to learn Spanish this year.</em>",
+  "<strong>Предсказание по видимым признакам сейчас.</strong> Доказательства в настоящем: тучи, симптомы, нагрузка. <em>Look at those clouds — it's going to rain.</em>",
+  "<strong>Намерение, не подкреплённое договорённостью.</strong> Решил, но ещё не записался, не купил билет, ни с кем не согласовал. <em>I'm going to call her tonight.</em>",
+  "<strong>Близкое событие, которое начинается на глазах.</strong> <em>Hurry up — the bus is going to leave!</em>",
+]} />
+
+### Когда Present Continuous (как будущее)
+
+<RuleList rules={[
+  "<strong>Запланированное конкретное событие в близком будущем.</strong> Есть договорённость, время, место — кто-то уже знает и ждёт. <em>We're meeting Anna at 7 tonight.</em>",
+  "<strong>Билеты куплены, бронь сделана, в календаре записано.</strong> Это уже почти происходит, машина запущена. <em>I'm flying to Lisbon on Friday.</em>",
+  "<strong>Личные встречи, поездки, ужины, занятия с конкретным временем.</strong> <em>She's having a job interview on Monday.</em>",
+  "<strong>Не используется для отдалённого будущего без точной даты.</strong> «Когда-нибудь я переду в Берлин» — это не Present Continuous. Это going to или will.",
+]} />
+
+### Когда Present Simple (как будущее)
+
+<RuleList rules={[
+  "<strong>Расписание транспорта, рейсов, сеансов.</strong> То, что зафиксировано в таблице и не зависит от говорящего. <em>The train leaves at 6:30 tomorrow.</em>",
+  "<strong>Программа мероприятий, занятий, графика работы.</strong> <em>The conference starts on March 12 and ends on the 14th.</em>",
+  "<strong>Расписание фильмов, спектаклей, матчей.</strong> <em>The film starts at 8.</em>",
+  "<strong>В придаточных времени и условия — вместо будущего.</strong> После when, if, before, after, until, as soon as, while — Present Simple, даже если действие в будущем. <em>When I arrive, I'll call you.</em>",
+]} />
+
+## 7. Примеры
+
+### Спонтанное решение — will
+
+<Example ru="— Телефон звонит. — Я возьму.">— The phone is ringing. — I'll get it.</Example>
+<Example ru="Знаешь что, я возьму салат вместо супа.">You know what, I'll have the salad instead of the soup.</Example>
+<Example ru="— У меня закончилось молоко. — Я схожу куплю.">— I'm out of milk. — I'll go and buy some.</Example>
+<Example ru="Хорошо, я тебе помогу с переездом в субботу.">OK, I'll help you with the move on Saturday.</Example>
+
+### Предсказание и обещание — will
+
+<Example ru="Думаю, завтра будет дождь.">I think it will rain tomorrow.</Example>
+<Example ru="Я тебе позвоню, как только приземлюсь.">I'll call you as soon as I land.</Example>
+<Example ru="Никому не скажу, обещаю.">I won't tell anyone, I promise.</Example>
+<Example ru="В следующем году ей исполнится тридцать.">She will be 30 next year.</Example>
+
+### План и намерение — be going to
+
+<Example ru="В этом году я собираюсь выучить испанский.">I'm going to learn Spanish this year.</Example>
+<Example ru="Мы собираемся переехать в новую квартиру в марте.">We're going to move to a new flat in March.</Example>
+<Example ru="Я сегодня вечером ей позвоню.">I'm going to call her tonight.</Example>
+<Example ru="Команда собирается выпустить новую версию на следующей неделе.">The team is going to release a new version next week.</Example>
+
+### Видимые признаки — be going to
+
+<Example ru="Посмотри на эти тучи — сейчас будет дождь.">Look at those clouds — it's going to rain.</Example>
+<Example ru="Осторожно, ты сейчас уронишь чашку!">Careful, you're going to drop the cup!</Example>
+<Example ru="Ему плохо — кажется, он сейчас потеряет сознание.">He looks bad — I think he's going to faint.</Example>
+
+### Договорённость и план на близкое будущее — Present Continuous
+
+<Example ru="Мы встречаемся с Анной в семь вечера.">We're meeting Anna at seven tonight.</Example>
+<Example ru="В пятницу я лечу в Лиссабон.">On Friday I'm flying to Lisbon.</Example>
+<Example ru="В понедельник у неё собеседование.">She's having a job interview on Monday.</Example>
+<Example ru="В четверг мы проводим ревью кода вместе с командой.">On Thursday we're doing a code review with the team.</Example>
+
+### Расписание — Present Simple
+
+<Example ru="Поезд отправляется в 6:30 завтра.">The train leaves at 6:30 tomorrow.</Example>
+<Example ru="Фильм начинается в восемь.">The film starts at 8.</Example>
+<Example ru="Конференция начинается 12 марта и заканчивается 14-го.">The conference starts on March 12 and ends on the 14th.</Example>
+<Example ru="Самолёт прилетает в 22:40.">The plane arrives at 22:40.</Example>
+
+### Придаточные времени и условия
+
+<Example ru="Когда я приеду, я тебе позвоню.">When I arrive, I will call you.</Example>
+<Example ru="Если завтра пойдёт дождь, останемся дома.">If it rains tomorrow, we'll stay at home.</Example>
+<Example ru="Как только дедлайн закроется, мы выкатим обновление.">As soon as the deadline closes, we'll roll out the update.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="will" rightLabel="be going to">
+  <div slot="left">
+    <strong>I'll have the salad.</strong><br/>Решил прямо сейчас, глядя в меню.<br/><br/>
+    <strong>I think it will rain.</strong><br/>Мнение, ощущение — без видимых доказательств.<br/><br/>
+    <strong>I'll call you tonight.</strong><br/>Обещание в моменте речи.<br/><br/>
+    <strong>OK, I'll help you.</strong><br/>Реакция на просьбу, спонтанное согласие.
+  </div>
+  <div slot="right">
+    <strong>I'm going to have the salad.</strong><br/>Решил заранее, ещё до того, как открыл меню.<br/><br/>
+    <strong>Look at those clouds — it's going to rain.</strong><br/>Тучи видны — есть очевидное доказательство сейчас.<br/><br/>
+    <strong>I'm going to call her tonight.</strong><br/>Намерение, уже было в плане до разговора.<br/><br/>
+    <strong>I'm going to help you with the move.</strong><br/>Заранее запланированное участие.
+  </div>
+</Compare>
+
+<Compare leftLabel="Present Continuous (будущее)" rightLabel="Present Simple (расписание)">
+  <div slot="left">
+    <strong>I'm meeting friends at 8.</strong><br/>Личная договорённость — друзья ждут.<br/><br/>
+    <strong>We're flying to Rome on Friday.</strong><br/>Билеты куплены, бронь сделана.<br/><br/>
+    <strong>She's giving a presentation tomorrow.</strong><br/>Запланированное событие с конкретным человеком.
+  </div>
+  <div slot="right">
+    <strong>The film starts at 8.</strong><br/>Расписание сеанса — не моё решение.<br/><br/>
+    <strong>The plane lands at 9:40.</strong><br/>Расписание рейса.<br/><br/>
+    <strong>The lecture begins at 10.</strong><br/>Расписание занятий.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Задай себе один вопрос: **«Я знал об этом до того, как открыл рот?»**. Не знал — `will`. Знал, но просто намерение — `going to`. Знал и уже договорился — `Present Continuous`. Знал, но это вообще не моё решение, а расписание — `Present Simple`.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английский раздробил будущее">
+У английского глагола нет «настоящего будущего» в виде окончания — `will` не часть слова, а отдельный модальный, изначально означавший «хотеть». Поэтому язык собрал будущее из подручного материала: `will` (воля), `be going to` (буквально «находиться в движении к чему-то»), Present Continuous (продлевая «сейчас» в близкое будущее), Present Simple (для объективных расписаний). Каждый из этих способов передаёт не только время, но и оттенок: чья инициатива, насколько твёрдый план, есть ли договорённость. Русский эту разницу не кодирует в форме — отсюда и трудность выбора при переводе.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Это придаточное времени или условия (when, if, before, after, as soon as, until)?", yes: "Present Simple, без will. «When I arrive, I'll call.»", no: "к вопросу 2" },
+  { q: "Это расписание, не зависящее от говорящего (транспорт, фильм, занятия)?", yes: "Present Simple. «The train leaves at 7.»", no: "к вопросу 3" },
+  { q: "Есть конкретная договорённость на близкое будущее (время, место, кто-то ждёт)?", yes: "Present Continuous. «I'm meeting Anna at 7.»", no: "к вопросу 4" },
+  { q: "Есть видимое доказательство в настоящем, что событие неизбежно (тучи, симптомы)?", yes: "be going to. «It's going to rain.»", no: "к вопросу 5" },
+  { q: "Намерение или план был у тебя в голове ДО момента речи?", yes: "be going to. «I'm going to learn Spanish.»", no: "will — спонтанное решение, обещание или предсказание-мнение. «I'll help you.»" },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| When I will arrive, I will call you | When I arrive, I will call you | В придаточном времени (after when, if, before, as soon as) — Present Simple, не будущее. |
+| If it will rain tomorrow, we'll stay at home | If it rains tomorrow, we'll stay at home | В придаточном условия (if) — Present Simple, даже если действие в будущем. |
+| I want will go home | I want to go home | want / need / would like берут инфинитив с to, а не будущее время. |
+| I'm meeting Anna someday | I'll meet Anna someday / I'm going to meet Anna someday | Present Continuous для будущего требует конкретного времени и договорённости. «Когда-нибудь» — не подходит. |
+| Look at the clouds! It will rain | Look at the clouds! It's going to rain | Есть видимое доказательство (тучи) → going to, не will. Will — для предсказаний без видимых признаков. |
+| I will call you tonight (если уже планировал) | I'm going to call you tonight / I'm calling you tonight | Если намерение возникло заранее — going to или Present Continuous. Will звучит как «только что решил». |
+| The film will start at 8 | The film starts at 8 | Расписание сеансов → Present Simple, не will. |
+| He will going to come | He is going to come | Не путать конструкции: либо will + V, либо be going to + V. Вместе не используются. |
+| She wills come | She will come | will не меняется по лицам, никогда не добавляется -s. |
+| I'll meeting you at 7 | I'll meet you at 7 / I'm meeting you at 7 | После will — начальная форма без -ing. Если хочется -ing, нужно Present Continuous: I'm meeting. |
+| Where you will go? | Where will you go? | В вопросе will идёт перед подлежащим: question word + will + subject + V. |
+| I don't will go | I won't go | Отрицание у will — won't (= will not), без вспомогательного do. |
+
+## 13. Шпаргалка
+
+| Ситуация | Форма | Пример |
+| --- | --- | --- |
+| Решил прямо сейчас, в моменте речи | will | I'll get it. |
+| Обещание, гарантия | will | I'll call you back. |
+| Предсказание-мнение («думаю, что») | will | I think it'll rain. |
+| Предложение помощи, просьба | will | I'll help you. / Will you pass the salt? |
+| Заранее принятое намерение | be going to | I'm going to learn Spanish. |
+| Видимое доказательство сейчас | be going to | Look — it's going to rain. |
+| Договорённость, билеты, бронь | Present Continuous | I'm flying to Rome on Friday. |
+| Личная встреча, кто-то ждёт | Present Continuous | We're meeting at 7. |
+| Расписание транспорта, фильма | Present Simple | The train leaves at 6:30. |
+| Программа, график | Present Simple | The conference starts on March 12. |
+| После when, if, before, after, as soon as | Present Simple | When I arrive, I'll call. |
+| Что-то будет идти в момент будущего | Future Continuous | At 7 I'll be flying. |
+| Что-то будет завершено к моменту | Future Perfect | By Monday I'll have finished. |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "will / 'll", meaning: "модальный для спонтанных решений, предсказаний, обещаний" },
+  { term: "won't", meaning: "сокращение от will not — отрицание" },
+  { term: "shall", meaning: "устаревший аналог will для I/we; сейчас — только в предложениях: Shall we go?" },
+  { term: "be going to", meaning: "конструкция для заранее принятых планов и видимых предсказаний" },
+  { term: "gonna", meaning: "разговорное сокращение от going to (только в речи, не в письме)" },
+  { term: "Present Continuous (для будущего)", meaning: "запланированное событие с договорённостью" },
+  { term: "Present Simple (для будущего)", meaning: "расписание, объективная программа" },
+  { term: "Future Continuous", meaning: "will be + V-ing — что будет идти в момент будущего" },
+  { term: "Future Perfect", meaning: "will have + V3 — что будет завершено к моменту в будущем" },
+  { term: "spontaneous decision", meaning: "спонтанное решение, принятое в моменте речи" },
+  { term: "prior decision", meaning: "заранее принятое решение, существующее до разговора" },
+  { term: "arrangement", meaning: "договорённость — двое или больше людей согласовали действие" },
+  { term: "schedule / timetable", meaning: "расписание — фиксированная таблица" },
+  { term: "prediction", meaning: "предсказание о будущем" },
+  { term: "promise", meaning: "обещание" },
+  { term: "intention", meaning: "намерение, план" },
+  { term: "offer", meaning: "предложение помощи — обычно через will" },
+  { term: "tomorrow", meaning: "завтра" },
+  { term: "tonight", meaning: "сегодня вечером" },
+  { term: "next week / month / year", meaning: "на следующей неделе / в следующем месяце / в следующем году" },
+  { term: "in an hour / in two days", meaning: "через час / через два дня" },
+  { term: "soon", meaning: "скоро" },
+  { term: "later", meaning: "позже" },
+  { term: "in 2030", meaning: "в 2030 году — типовой маркер удалённого будущего" },
+  { term: "on Friday / at 7", meaning: "в пятницу / в семь — типовые маркеры конкретной точки" },
+  { term: "by Monday", meaning: "к понедельнику — типовой маркер для Future Perfect" },
+  { term: "when / before / after / until / as soon as", meaning: "союзы времени — требуют Present Simple после себя" },
+  { term: "if", meaning: "союз условия — требует Present Simple после себя" },
+  { term: "plan (verb)", meaning: "планировать" },
+  { term: "intend", meaning: "намереваться" },
+  { term: "expect", meaning: "ожидать" },
+  { term: "might / may + V", meaning: "модальные «возможно» — мягкое будущее с оттенком неуверенности" },
+  { term: "probably / definitely", meaning: "наверное / точно — наречия степени уверенности при will" },
+  { term: "arrange", meaning: "договариваться, организовывать" },
+  { term: "book (verb)", meaning: "бронировать — обычно идёт вместе с Present Continuous будущего" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-future-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Маркеры и формы будущего</span>
+    <span class="kc-trainer-hint">Запомнить ключевые конструкции и сокращения</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-future-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Ситуация → форма</span>
+    <span class="kc-trainer-hint">Соотнеси контекст с правильной формой будущего</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-future-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">will / going to / PC / PS</span>
+    <span class="kc-trainer-hint">Разложи предложения по четырём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-future-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-future-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную форму</span>
+    <span class="kc-trainer-hint">Впиши форму будущего в контексте</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-future-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Расставь слова в правильном порядке</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 19-25 (will, going to, present tenses for future).
+- **Swan M., Practical English Usage** — §211-220 (future forms and their differences).
+- **English Page — Future Tenses overview** — englishpage.com/verbpage/futuretenses.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/talking-about-the-future

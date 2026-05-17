@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-future",
+  "title": "Поставь форму будущего",
+  "description": "Впиши глагол в правильной форме (will / going to / Present Continuous / Present Simple).",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "— Someone is at the door. — I ___ (get) it.",
+        "answers": ["'ll get", "will get"],
+        "explain": "Спонтанное решение в момент речи (реакция на сообщение) → will. Сокращение I'll get."
+      },
+      {
+        "text": "Look at the sky — it ___ (rain) any minute now.",
+        "answers": ["is going to rain", "'s going to rain"],
+        "explain": "Видимое доказательство сейчас (небо) → be going to. Сокращение it's going to."
+      },
+      {
+        "text": "I can't come on Saturday — I ___ (have) dinner with my parents.",
+        "answers": ["am having", "'m having"],
+        "explain": "Договорённость на конкретный день → Present Continuous. Have здесь = «ужинать» (action), не «владеть»."
+      },
+      {
+        "text": "The train ___ (leave) at 7:15 tomorrow morning.",
+        "answers": ["leaves"],
+        "explain": "Расписание транспорта → Present Simple. 3 лицо ед. ч. (the train) → leaves с -s."
+      },
+      {
+        "text": "If it ___ (be) sunny tomorrow, we ___ (go) to the beach.",
+        "answers": ["is", "will go", "'ll go"],
+        "explain": "В придаточном условия (if) — Present Simple (is). В главной части — will (will go)."
+      },
+      {
+        "text": "I promise I ___ (not tell) anyone.",
+        "answers": ["won't tell", "will not tell"],
+        "explain": "Обещание → will. Отрицание won't = will not."
+      },
+      {
+        "text": "She ___ (study) Italian next year — she's already paid for the course.",
+        "answers": ["is going to study", "'s going to study"],
+        "explain": "Заранее принятое намерение (уже заплатила) → be going to. Без конкретной договорённости на день/время — поэтому не Present Continuous."
+      },
+      {
+        "text": "When I ___ (finish) the report, I ___ (send) it to you.",
+        "answers": ["finish", "will send", "'ll send"],
+        "explain": "После when — Present Simple (finish). В главной части — will (will send)."
+      },
+      {
+        "text": "The film ___ (start) at 8 and ___ (end) around 10:30.",
+        "answers": ["starts", "ends"],
+        "explain": "Расписание сеансов → Present Simple. Для обоих глаголов нужна форма с -s (3 лицо ед. ч.)."
+      },
+      {
+        "text": "— What ___ (you do) on Friday evening? — I ___ (meet) Sam for coffee.",
+        "answers": ["are you doing", "am meeting", "'m meeting"],
+        "explain": "Вопрос про конкретный план → Present Continuous (are you doing). Ответ — тоже Present Continuous, договорённость уже есть."
+      }
+    ]
+  }
+}

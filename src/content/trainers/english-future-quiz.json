@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-future",
+  "title": "Времена будущего — правила",
+  "description": "Выбери правильную форму будущего в контексте.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "— I'm cold. — OK, I ___ close the window.",
+        "options": ["close", "am closing", "'ll close", "am going to close"],
+        "correctIndex": 2,
+        "explain": "Спонтанное решение в момент речи (реакция на «I'm cold») → will. Сокращение I'll."
+      },
+      {
+        "prompt": "Look at those black clouds! It ___ rain in a minute.",
+        "options": ["will", "is going to", "is", "rains"],
+        "correctIndex": 1,
+        "explain": "Видимое доказательство сейчас (тучи) → be going to. Will здесь звучит неестественно — он для предсказаний без видимых признаков."
+      },
+      {
+        "prompt": "I can't meet you tomorrow. I ___ Anna at 5.",
+        "options": ["meet", "'ll meet", "am meeting", "am going to meet"],
+        "correctIndex": 2,
+        "explain": "Конкретная договорённость (встреча в назначенное время) → Present Continuous. Будущее звучит как «уже почти происходит»."
+      },
+      {
+        "prompt": "When I ___ home, I'll send you the file.",
+        "options": ["will get", "get", "am getting", "am going to get"],
+        "correctIndex": 1,
+        "explain": "После союза времени (when) — Present Simple, не будущее. Will только в главной части."
+      },
+      {
+        "prompt": "If it ___ tomorrow, we'll stay at home.",
+        "options": ["will rain", "rains", "is raining", "is going to rain"],
+        "correctIndex": 1,
+        "explain": "После if (условие первого типа) — Present Simple. Will только в главной части."
+      },
+      {
+        "prompt": "The plane ___ at 22:40 tomorrow.",
+        "options": ["will land", "lands", "is landing", "is going to land"],
+        "correctIndex": 1,
+        "explain": "Расписание рейса → Present Simple. Объективное расписание, не зависит от говорящего."
+      },
+      {
+        "prompt": "I think she ___ love this gift.",
+        "options": ["loves", "is loving", "will", "is going to"],
+        "correctIndex": 2,
+        "explain": "Предсказание-мнение («I think») без видимых доказательств → will. После will идёт V1 (love)."
+      },
+      {
+        "prompt": "We ___ a new version next week — the date is fixed in the roadmap.",
+        "options": ["release", "'ll release", "are releasing", "release will"],
+        "correctIndex": 2,
+        "explain": "Заранее запланированный релиз с зафиксированной датой → Present Continuous. Will был бы спонтанным."
+      },
+      {
+        "prompt": "Don't worry, I ___ anyone about this.",
+        "options": ["don't tell", "am not telling", "won't tell", "am not going to tell"],
+        "correctIndex": 2,
+        "explain": "Обещание, гарантия → will/won't. Сокращение won't = will not."
+      },
+      {
+        "prompt": "— What ___ you ___ this weekend? — I'm going hiking with friends.",
+        "options": ["will / do", "are / doing", "do / do", "are / going to do"],
+        "correctIndex": 1,
+        "explain": "Вопрос про конкретный план — Present Continuous (are doing). Ответ тоже Present Continuous (going hiking) — договорённость с друзьями."
+      },
+      {
+        "prompt": "Hurry up! The bus ___ leave!",
+        "options": ["will", "is going to", "is leaving", "leaves"],
+        "correctIndex": 1,
+        "explain": "Близкое событие, начинается на глазах (есть видимый признак — водитель закрывает двери) → be going to."
+      },
+      {
+        "prompt": "As soon as the deadline ___, we'll deploy the fix.",
+        "options": ["will close", "closes", "is closing", "is going to close"],
+        "correctIndex": 1,
+        "explain": "После as soon as — Present Simple, не будущее. Это правило для всех союзов времени (when, before, after, until, as soon as)."
+      }
+    ]
+  }
+}

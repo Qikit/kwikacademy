@@ -8,4 +8,22 @@ summary: Показывает компоненты уроков.
 tags: [demo]
 ---
 
-Текст урока появится здесь. Компоненты подключим в Phase 4.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+
+## Раздел один
+
+Обычный абзац прозы. **Жирный** акцент работает, как и `инлайн-код`.
+
+<Callout type="purple" title="Заметка">Так выглядит выноска.</Callout>
+
+<RuleList rules={["Первое правило", "Второе правило с <strong>акцентом</strong>"]} />
+
+<Compare leftLabel="Верно" rightLabel="Неверно">
+  <span slot="left">a cat</span>
+  <span slot="right">a apple</span>
+</Compare>
+
+<Example ru="Перевод примера">This is an example.</Example>

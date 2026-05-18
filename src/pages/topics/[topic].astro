@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Roadmap from '../../components/course/Roadmap.astro';
+import { withBase } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+  return courses.map((course) => ({ params: { topic: course.id }, props: { course } }));
+}
+
+const { course } = Astro.props;
+
+const lessons = (await getCollection('lessons'))
+  .filter((l) => l.data.course === course.id)
+  .sort((a, b) => a.data.order - b.data.order);
+const nodes = lessons.map((l) => ({
+  slug: l.id,
+  title: l.data.title,
+  order: l.data.order,
+  href: withBase(`/learn/${course.id}/${l.id}`),
+}));
+
+const trainers = (await getCollection('trainers')).filter((t) => t.data.course === course.id);
+---
+
+<BaseLayout title={`${course.data.title} — KwikAcademy`}>
+  <section class="topic" data-course={course.id}>
+    <p class="eyebrow">{course.data.subtitle}</p>
+    <h1>{course.data.title}</h1>
+    <p class="desc">{course.data.description}</p>
+
+    <h2>Дорожная карта</h2>
+    {nodes.length > 0 ? <Roadmap nodes={nodes} /> : <p class="empty">Уроки скоро появятся.</p>}
+
+    <h2>Тренажёры</h2>
+    {
+      trainers.length > 0 ? (
+        <ul class="trainers">
+          {trainers.map((t) => (
+            <li>
+              <a href={withBase(`/practice/${course.id}/${t.id}`)}>
+                <strong>{t.data.title}</strong>
+                <span>{t.data.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">Тренажёры скоро появятся.</p>
+      )
+    }
+  </section>
+
+  <script>
+    import { hydrateRoadmap } from '../../lib/progress/hydrate';
+    hydrateRoadmap();
+  </script>
+</BaseLayout>
+
+<style>
+  .topic {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 800;
+    margin: 12px 0;
+  }
+  .desc {
+    color: var(--text-2);
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 48px 0 24px;
+  }
+  .empty {
+    color: var(--text-3);
+    font-size: 14px;
+  }
+  .trainers {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+  .trainers a {
+    display: block;
+    padding: 16px 18px;
+    border-radius: var(--r-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    transition: transform 0.2s;
+  }
+  .trainers a:hover {
+    transform: translateY(-2px);
+  }
+  .trainers strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+  }
+  .trainers span {
+    font-size: 13px;
+    color: var(--text-3);
+  }
+</style>

@@ -227,3 +227,84 @@ a {
   color: var(--c-purple);
   z-index: 3;
 }
+
+/* ===== Trainers ===== */
+.kc-trainer {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.kc-trk {
+  height: 6px;
+  border-radius: 6px;
+  background: var(--track);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.kc-trk i {
+  display: block;
+  height: 100%;
+  background: var(--grad-blue-purple);
+  transition: width 0.3s;
+}
+.kc-trainer-result {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-2);
+}
+.kc-pct-big {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 800;
+  background: var(--grad-aurora);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kc-retry {
+  margin-top: 16px;
+  padding: 12px 22px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  background: var(--grad-blue-purple);
+}
+.kc-retry:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.kc-q {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.kc-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 15px;
+  transition: all 0.2s;
+}
+.kc-opt:hover {
+  border-color: var(--c-purple);
+}
+.kc-opt.correct {
+  background: #34d39922;
+  border-color: #34d399;
+}
+.kc-opt.wrong {
+  background: #f8717122;
+  border-color: #f87171;
+}

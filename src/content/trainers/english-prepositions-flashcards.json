@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-prepositions",
+  "title": "Предлоги — flashcards",
+  "description": "Маркеры контекста и глагольные связки с фиксированным предлогом.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "January, March, summer, 2020, the 90s",
+        "back": "in. Большие периоды (месяц, время года, год, десятилетие, век) → in. «In January / in summer / in 2020.»",
+        "hint": "большой период"
+      },
+      {
+        "front": "Monday, March 5, my birthday, Christmas Day",
+        "back": "on. День недели, дата, конкретный день → on. «On Monday / on March 5 / on my birthday.»",
+        "hint": "конкретный день"
+      },
+      {
+        "front": "7 o'clock, noon, midnight, night",
+        "back": "at. Точное время и моменты дня → at. Включая ловушку: at night (но in the morning / afternoon / evening).",
+        "hint": "точка времени"
+      },
+      {
+        "front": "the morning / afternoon / evening",
+        "back": "in. Часть дня — in the morning, in the afternoon, in the evening. Исключение: at night.",
+        "hint": "часть дня"
+      },
+      {
+        "front": "the weekend",
+        "back": "at the weekend (UK) / on the weekend (US). Оба варианта корректны, но in the weekend — ошибка.",
+        "hint": "UK vs US"
+      },
+      {
+        "front": "the table, the wall, the floor, the bus",
+        "back": "on. Поверхность, линия, этаж, большой транспорт → on. «On the table / on the second floor / on the bus.»",
+        "hint": "поверхность"
+      },
+      {
+        "front": "the room, Moscow, Russia, the car",
+        "back": "in. Объём, помещение, город, страна, личный транспорт → in. «In the room / in Moscow / in the car.»",
+        "hint": "объём"
+      },
+      {
+        "front": "school, work, the door, the bus stop",
+        "back": "at. Точка-координата или роль (учусь / работаю) → at. «At school / at work / at the door / at the bus stop.»",
+        "hint": "точка / роль"
+      },
+      {
+        "front": "at school vs in the school",
+        "back": "at school = роль (учусь). in the school = физически внутри здания. То же для work / hospital / church.",
+        "hint": "ловушка"
+      },
+      {
+        "front": "Lermontov Street",
+        "back": "on Lermontov Street (US) / in Lermontov Street (UK). С номером дома — at: at 5 Lermontov Street.",
+        "hint": "UK vs US"
+      },
+      {
+        "front": "listen ___ music",
+        "back": "listen to music. Глагол listen всегда с предлогом to. «Listen music» — ошибка.",
+        "hint": "фикс. связка"
+      },
+      {
+        "front": "wait ___ the bus",
+        "back": "wait for the bus. Глагол wait требует for перед объектом ожидания. «Wait the bus» — ошибка.",
+        "hint": "фикс. связка"
+      },
+      {
+        "front": "depend ___ the weather",
+        "back": "depend on the weather. Не depend from (калька с русского «зависит от»).",
+        "hint": "фикс. связка"
+      },
+      {
+        "front": "look ___ this photo / look ___ my keys",
+        "back": "look at this photo (смотреть на). look for my keys (искать). Два разных значения — два разных предлога.",
+        "hint": "два значения"
+      },
+      {
+        "front": "arrive ___ Moscow / arrive ___ the station",
+        "back": "arrive in Moscow (город / страна). arrive at the station (точка: вокзал, аэропорт, мероприятие). Никогда arrive to.",
+        "hint": "ловушка"
+      },
+      {
+        "front": "agree ___ you / agree ___ the price",
+        "back": "agree with you (соглашаться с человеком). agree on the price (договариваться о чём-то). Разные предлоги — разные смыслы.",
+        "hint": "два предлога"
+      }
+    ]
+  }
+}

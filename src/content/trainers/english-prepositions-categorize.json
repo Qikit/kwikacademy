@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-prepositions",
+  "title": "in / on / at",
+  "description": "Распредели фразы по трём корзинам в зависимости от нужного предлога.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "in", "label": "in" },
+      { "id": "on", "label": "on" },
+      { "id": "at", "label": "at" }
+    ],
+    "items": [
+      {
+        "text": "___ January",
+        "category": "in",
+        "explain": "Месяц = большой период → in. С месяцами всегда in: in January, in March, in December."
+      },
+      {
+        "text": "___ Monday",
+        "category": "on",
+        "explain": "День недели → on. Не in Monday и не at Monday."
+      },
+      {
+        "text": "___ 5 o'clock",
+        "category": "at",
+        "explain": "Точное время = точка → at. С часами всегда at: at 5, at 7:30, at noon."
+      },
+      {
+        "text": "___ 2020",
+        "category": "in",
+        "explain": "Год = период → in. Это работает для любого года и десятилетия: in 2020, in the 90s."
+      },
+      {
+        "text": "___ the morning",
+        "category": "in",
+        "explain": "Часть дня (утро / день / вечер) → in. Ловушка: at night, не in the night."
+      },
+      {
+        "text": "___ night",
+        "category": "at",
+        "explain": "Ночь — историческое исключение: at night. Не in the night и не on night."
+      },
+      {
+        "text": "___ March 5",
+        "category": "on",
+        "explain": "Дата = конкретный день → on. С числами и днями всегда on: on March 5, on June 12."
+      },
+      {
+        "text": "___ Moscow",
+        "category": "in",
+        "explain": "Город = объём → in. С городами и странами всегда in: in Moscow, in Russia."
+      },
+      {
+        "text": "___ the table",
+        "category": "on",
+        "explain": "Поверхность стола → on. Книга, чашка, ключи — всё «на» поверхности → on the table."
+      },
+      {
+        "text": "___ work",
+        "category": "at",
+        "explain": "Работа как роль / место занятости → at. Калька «on work» по русскому «на работе» — типичная ошибка."
+      },
+      {
+        "text": "___ the bus",
+        "category": "on",
+        "explain": "Большой общественный транспорт → on. Логика: ты заходишь на борт. С личной машиной — in the car."
+      },
+      {
+        "text": "___ the room",
+        "category": "in",
+        "explain": "Помещение = объём → in. Всегда in для замкнутых пространств: in the room, in the kitchen, in the box."
+      },
+      {
+        "text": "___ Monday morning",
+        "category": "on",
+        "explain": "День + часть дня склеиваются на on (побеждает узкий маркер дня). On Monday morning, on Friday evening."
+      },
+      {
+        "text": "___ summer",
+        "category": "in",
+        "explain": "Время года = большой период → in. С сезонами всегда in: in summer, in winter."
+      },
+      {
+        "text": "___ the bus stop",
+        "category": "at",
+        "explain": "Остановка как точка-координата на маршруте → at. То же логика: at the door, at the corner."
+      }
+    ]
+  }
+}

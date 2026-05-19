@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-prepositions",
+  "title": "Глагол → предлог",
+  "description": "Соотнеси глагол с фиксированным предлогом, который идёт после него.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "listen ___ music",
+        "right": "to",
+        "explain": "Глагол listen всегда идёт с предлогом to. «Listen music» — типичная ошибка, в английском глагол не может управлять объектом напрямую."
+      },
+      {
+        "left": "wait ___ the bus",
+        "right": "for",
+        "explain": "Глагол wait требует for перед тем, что ждёшь: wait for somebody / something. «Wait the bus» — калька с русского."
+      },
+      {
+        "left": "depend ___ the weather",
+        "right": "on",
+        "explain": "Depend on — фиксированная связка. Калька «depend from» под русское «зависит от» — частая ошибка русскоязычных."
+      },
+      {
+        "left": "look ___ this photo",
+        "right": "at",
+        "explain": "Look at = смотреть на (направление взгляда). Не путать с look for (искать) и look after (присматривать)."
+      },
+      {
+        "left": "look ___ my keys",
+        "right": "for",
+        "explain": "Look for = искать. Контекст «потерял и ищу» — for, а не at."
+      },
+      {
+        "left": "belong ___ Anna",
+        "right": "to",
+        "explain": "Belong to = принадлежать кому-то. Без to не используется: «This book belongs to me», не «belongs me»."
+      },
+      {
+        "left": "apologise ___ the delay",
+        "right": "for",
+        "explain": "Apologise for + причина извинения. Apologise to + человек, перед которым извиняемся: «I apologised to her for the delay»."
+      },
+      {
+        "left": "worry ___ the deadline",
+        "right": "about",
+        "explain": "Worry about = беспокоиться о чём-то. «Worry of» / «worry for» — неверно."
+      },
+      {
+        "left": "complain ___ the noise",
+        "right": "about",
+        "explain": "Complain about = жаловаться на что-то. Complain to + человек, которому жалуешься."
+      },
+      {
+        "left": "arrive ___ Moscow",
+        "right": "in",
+        "explain": "Arrive in для городов и стран (большой объём). Arrive at — для точечных мест (вокзал, аэропорт). Никогда arrive to."
+      }
+    ]
+  }
+}

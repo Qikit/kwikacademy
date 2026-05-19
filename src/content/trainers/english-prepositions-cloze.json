@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-prepositions",
+  "title": "Поставь правильный предлог",
+  "description": "Впиши in, on, at или нужный предлог глагола.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "We're meeting ___ Saturday ___ 7 o'clock.",
+        "answers": ["on", "at"],
+        "explain": "День недели → on (on Saturday). Точное время → at (at 7 o'clock). Сначала более крупный маркер (день), потом узкий (час)."
+      },
+      {
+        "text": "She moved to Berlin ___ 2018, ___ September.",
+        "answers": ["in", "in"],
+        "explain": "Год → in (in 2018). Месяц → in (in September). Оба маркера большие → оба in."
+      },
+      {
+        "text": "The cafe is ___ the second floor, ___ the corner.",
+        "answers": ["on", "at"],
+        "explain": "Этаж = поверхность здания → on the second floor. Угол как точка-координата → at the corner."
+      },
+      {
+        "text": "I usually go to bed ___ midnight and wake up ___ the morning.",
+        "answers": ["at", "in"],
+        "explain": "Midnight (полночь) — точка → at. Утро (часть дня) → in the morning. Ловушка: at night, но in the morning."
+      },
+      {
+        "text": "Don't worry ___ the deadline — we'll be ready ___ time.",
+        "answers": ["about", "in"],
+        "explain": "Worry about (фиксированная связка). In time = вовремя, с запасом — устойчивое выражение."
+      },
+      {
+        "text": "I've been looking ___ my glasses ___ an hour.",
+        "answers": ["for", "for"],
+        "explain": "Look for = искать. For an hour = в течение часа (длительность). Оба for, но в разных ролях."
+      },
+      {
+        "text": "The team usually works ___ the office, but ___ Fridays we work from home.",
+        "answers": ["in", "on"],
+        "explain": "Офис как физическое помещение → in the office. День недели → on Fridays (множественное число = «по пятницам»)."
+      },
+      {
+        "text": "We arrived ___ the airport ___ 6 AM.",
+        "answers": ["at", "at"],
+        "explain": "Arrive at для точечных мест (вокзал, аэропорт, мероприятие). Точное время → at 6 AM. Оба at, но в разных ролях."
+      },
+      {
+        "text": "I always listen ___ podcasts ___ the train.",
+        "answers": ["to", "on"],
+        "explain": "Listen to (фиксированная связка). Большой общественный транспорт → on the train. Не in the train."
+      },
+      {
+        "text": "This book belongs ___ my sister — she lent it to me ___ Christmas.",
+        "answers": ["to", "at"],
+        "explain": "Belong to = принадлежать кому-то. Christmas как праздничный период → at Christmas. С Christmas Day было бы on."
+      }
+    ]
+  }
+}

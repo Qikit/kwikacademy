@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-prepositions",
+  "title": "Собери предложение с предлогом",
+  "description": "Расставь слова в правильном порядке. Следи за местом предлога.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["the", "I", "morning", "coffee", "in", "drink"],
+        "answer": ["I", "drink", "coffee", "in", "the", "morning"],
+        "translation": "Я пью кофе утром.",
+        "explain": "Present Simple для привычки. Часть дня → in the morning. Маркер времени уходит в конец предложения."
+      },
+      {
+        "words": ["Monday", "we're", "Anna", "meeting", "on", "at", "7"],
+        "answer": ["we're", "meeting", "Anna", "on", "Monday", "at", "7"],
+        "translation": "Мы встречаемся с Анной в понедельник в семь.",
+        "explain": "День недели → on Monday. Точное время → at 7. Сначала идёт более крупный маркер (день), потом более узкий (час)."
+      },
+      {
+        "words": ["bus", "I", "for", "the", "stop", "the", "waiting", "am", "at"],
+        "answer": ["I", "am", "waiting", "for", "the", "bus", "at", "the", "stop"],
+        "translation": "Я жду автобус на остановке.",
+        "explain": "Wait for (фиксированная связка). Остановка как точка → at the stop. Предлог for идёт сразу за глаголом, at — с обстоятельством места."
+      },
+      {
+        "words": ["depends", "weather", "the", "it", "on"],
+        "answer": ["it", "depends", "on", "the", "weather"],
+        "translation": "Это зависит от погоды.",
+        "explain": "Depend on — фиксированная связка. Никогда не depend from (калька с русского «зависит от»)."
+      },
+      {
+        "words": ["live", "they", "Moscow", "in"],
+        "answer": ["they", "live", "in", "Moscow"],
+        "translation": "Они живут в Москве.",
+        "explain": "Город = объём → in Moscow. Порядок: подлежащее + глагол + предлог + место. С городами всегда in, не on и не at."
+      },
+      {
+        "words": ["listening", "I", "podcast", "a", "to", "am"],
+        "answer": ["I", "am", "listening", "to", "a", "podcast"],
+        "translation": "Я слушаю подкаст.",
+        "explain": "Present Continuous (am + V-ing). Listen всегда с to: listen to a podcast. Без to — ошибка."
+      },
+      {
+        "words": ["worry", "don't", "about", "it"],
+        "answer": ["don't", "worry", "about", "it"],
+        "translation": "Не беспокойся об этом.",
+        "explain": "Worry about (фиксированная связка). Повелительное наклонение с don't: don't + V (начальная форма)."
+      },
+      {
+        "words": ["airport", "we", "the", "arrived", "at", "AM", "at", "6"],
+        "answer": ["we", "arrived", "at", "the", "airport", "at", "6", "AM"],
+        "translation": "Мы прибыли в аэропорт в 6 утра.",
+        "explain": "Arrive at — для точечных мест (аэропорт). At 6 AM — точное время. Два at подряд в одном предложении — нормально, у них разные роли."
+      }
+    ]
+  }
+}

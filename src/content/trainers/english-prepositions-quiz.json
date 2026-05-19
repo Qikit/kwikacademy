@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-prepositions",
+  "title": "Предлоги — правила в контексте",
+  "description": "Выбери правильный предлог. Один вопрос — один пропуск.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "I was born ___ March 5, 1989.",
+        "options": ["in", "on", "at", "—"],
+        "correctIndex": 1,
+        "explain": "Дата = конкретный день → on. Год в этой фразе уже привязан к дню, и весь маркер идёт с одним on."
+      },
+      {
+        "prompt": "The meeting starts ___ 10 o'clock sharp.",
+        "options": ["in", "on", "at", "—"],
+        "correctIndex": 2,
+        "explain": "Точное время = точка → at. С часами всегда at: at 10, at 5:30, at noon."
+      },
+      {
+        "prompt": "We usually go on holiday ___ August.",
+        "options": ["in", "on", "at", "—"],
+        "correctIndex": 0,
+        "explain": "Месяц = большой период → in. С месяцами всегда in: in January, in August, in December."
+      },
+      {
+        "prompt": "Sorry, I can't talk now — I'm ___ work.",
+        "options": ["in", "on", "at", "to"],
+        "correctIndex": 2,
+        "explain": "Работа как роль или место занятости → at work. Калька «on work» по русскому «на работе» — ошибка."
+      },
+      {
+        "prompt": "The keys are ___ the kitchen table.",
+        "options": ["in", "on", "at", "to"],
+        "correctIndex": 1,
+        "explain": "Поверхность стола → on. Всё, что лежит на плоскости, использует on: on the table, on the floor, on the shelf."
+      },
+      {
+        "prompt": "She's been living ___ Moscow for ten years.",
+        "options": ["in", "on", "at", "to"],
+        "correctIndex": 0,
+        "explain": "Город = объём → in. С городами и странами всегда in: in Moscow, in Russia, in Europe."
+      },
+      {
+        "prompt": "I usually read ___ the bus on my way to work.",
+        "options": ["in", "on", "at", "to"],
+        "correctIndex": 1,
+        "explain": "Большой общественный транспорт → on. Логика: на борт заходишь. С машиной — in the car, с такси — in the taxi."
+      },
+      {
+        "prompt": "Don't call me ___ night, please.",
+        "options": ["in the", "on", "at", "—"],
+        "correctIndex": 2,
+        "explain": "Ночь — историческое исключение: at night, без артикля. Не in the night и не on night."
+      },
+      {
+        "prompt": "I'm waiting ___ the bus — it's already late.",
+        "options": ["to", "on", "at", "for"],
+        "correctIndex": 3,
+        "explain": "Глагол wait требует for перед объектом ожидания: wait for the bus / for somebody. «Wait the bus» — калька с русского."
+      },
+      {
+        "prompt": "Could you please listen ___ me for a second?",
+        "options": ["to", "on", "at", "for"],
+        "correctIndex": 0,
+        "explain": "Глагол listen всегда с предлогом to: listen to music / to me / to the radio. «Listen me» — ошибка уровня A1."
+      },
+      {
+        "prompt": "It depends ___ the weather.",
+        "options": ["of", "from", "on", "with"],
+        "correctIndex": 2,
+        "explain": "Фиксированная связка: depend on. «Depend from» под русское «зависит от» — типичная ошибка русскоязычных."
+      },
+      {
+        "prompt": "We finally arrived ___ Berlin late ___ Friday evening.",
+        "options": ["to / in", "in / on", "at / on", "in / in"],
+        "correctIndex": 1,
+        "explain": "Arrive in для города (объём, не to). День недели + часть дня склеиваются на on: on Friday evening. Поэтому in / on."
+      }
+    ]
+  }
+}

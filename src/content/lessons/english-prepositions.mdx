@@ -2,12 +2,426 @@
 course: english
 order: 5
 phase: "Фаза 1 · Бытовой английский"
-title: "Предлоги — in / on / at"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Самые проблемные слова — один русский «в» делится на in / on / at по контексту."
-placeholder: true
-tags: [english]
+title: "Предлоги времени и места — in / on / at"
+eyebrow: "Грамматика · уровень A2"
+readingMinutes: 23
+summary: "Один русский «в» против трёх английских предлогов. Когда in, когда on, когда at — и какие предлоги намертво пришиты к глаголам."
+tags: [prepositions, grammar, A2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Предлоги — in / on / at» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Scale from '../../components/lesson/Scale.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем разбираться с in / on / at
+
+В русском один предлог «в» обслуживает почти всё. «В январе», «в понедельник», «в пять часов», «в Москве», «в комнате» — везде одно и то же слово, и русскоязычный мозг к этому привык. В английском тех же ситуаций три: `in January`, `on Monday`, `at five o'clock`. Промахнёшься — фраза не сломается, но звучать будет ученически: `on January`, `in five o'clock`, `at Moscow` — это маркер уровня A1.
+
+С местом ситуация ещё хитрее. «На улице Лермонтова» — это `on` или `in`? «На работе» — `on work` или `at work`? «В аэропорту» — `in the airport` или `at the airport`? Каждый раз нужно понимать, что в голове у англичанина: точка на карте, поверхность или объём.
+
+Поверх этого есть ещё один пласт — предлоги, намертво пришитые к глаголам. `Listen to music`, не `listen music`. `Wait for somebody`, не `wait somebody`. `Depend on`, не `depend from`. Эти связки запоминаются как фразы, а не выводятся по логике предлога.
+
+Этот урок про то, как выбирать `in / on / at` за полсекунды и не спотыкаться о фиксированные связки.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Английский кодирует масштаб точностью предлога: **at** — точка (момент времени или место как координата), **on** — поверхность или линия (день, дата, плоскость), **in** — объём или большой период (месяц, год, страна, помещение). От самого узкого к самому широкому: `at → on → in`.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Предлоги времени
+
+| Предлог | С чем | Примеры |
+| --- | --- | --- |
+| `at` | точное время, момент дня, праздник | at 7 o'clock, at noon, at midnight, at night, at the weekend (UK), at Christmas |
+| `on` | день недели, дата, конкретный день | on Monday, on March 5, on my birthday, on Monday morning |
+| `in` | месяц, год, время года, часть дня, большой период | in January, in 2020, in summer, in the morning, in the 21st century |
+
+Особенности:
+
+- **Часть дня — `in`**, кроме `night`: `in the morning / afternoon / evening`, но `at night`.
+- **День + часть дня склеиваются на `on`**: `on Monday morning`, `on Friday evening` — побеждает более узкий маркер (день).
+- **Выходные**: `at the weekend` — британский вариант, `on the weekend` — американский. Оба нормальные.
+- **`at`** с праздниками-периодами: `at Christmas`, `at Easter` (= в эти дни). С конкретным днём праздника — `on`: `on Christmas Day`, `on Easter Sunday`.
+- **Без предлога** перед `this / next / last / every`: `next Monday`, `last week`, `every day` — никаких `on`, `in`.
+
+### Предлоги места
+
+| Предлог | С чем | Примеры |
+| --- | --- | --- |
+| `at` | точечное место, адрес-координата, мероприятие | at the door, at school, at work, at the bus stop, at the conference, at 5 Lermontov Street |
+| `on` | поверхность, линия, этаж, улица (US), транспорт | on the table, on the wall, on the floor, on the second floor, on Lermontov Street (US), on the bus |
+| `in` | внутри объёма, город, страна, помещение | in the box, in the room, in Moscow, in Russia, in the car |
+
+Особенности:
+
+- **Транспорт**: на больших — `on` (`on the bus / train / plane / ship`), в маленьких личных — `in` (`in the car / taxi`). Логика: на большой ты заходишь как на поверхность, в маленький — садишься внутрь.
+- **Здание как точка vs как объём**: `at school` (учусь, как роль) vs `in the school` (физически внутри здания). То же с `work / hospital / church`.
+- **Улица**: американский английский — `on Lermontov Street`, британский — `in Lermontov Street`. Адрес с номером — `at`: `at 5 Lermontov Street`.
+
+### Направления движения — мини-блок
+
+Когда речь не о месте, а о движении, предлоги другие:
+
+- `to` — общее «куда»: `go to the shop`.
+- `into / onto` — внутрь / на поверхность с переходом границы: `walk into the room`, `jump onto the table`.
+- `from / out of / off` — обратные: `come from London`, `get out of the car`, `take the book off the shelf`.
+- `towards` — в направлении, но необязательно достичь: `walk towards the station`.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русский «в» — универсальный контейнер: подходит и к моменту, и к дню, и к году, и к комнате, и к городу. Английский на каждый из этих случаев требует выбора уровня масштаба. Поэтому при переводе с русского нельзя автоматически ставить тот предлог, который буквально совпадает: «в» = in только если объём или большой период. В остальных случаях — on или at.">
+  <div slot="ru">
+    <strong>В январе</strong> — про месяц.<br/>
+    <strong>В понедельник</strong> — про день.<br/>
+    <strong>В пять часов</strong> — про точное время.<br/>
+    <strong>В Москве</strong> — про город.<br/>
+    <strong>На работе</strong> — про роль.<br/>
+    Один и тот же «в» (и «на») для всех случаев.
+  </div>
+  <div slot="en">
+    <strong>In January.</strong> — месяц = большой период → in.<br/>
+    <strong>On Monday.</strong> — конкретный день недели → on.<br/>
+    <strong>At five o'clock.</strong> — точка времени → at.<br/>
+    <strong>In Moscow.</strong> — город = объём → in.<br/>
+    <strong>At work.</strong> — точка-роль → at.<br/>
+    Тонко настроенный выбор под смысл.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+Время как масштаб: чем уже промежуток — тем `at`, чем шире — тем `in`.
+
+<Scale
+  axis="время: от точки к периоду"
+  leftLabel="точка"
+  rightLabel="большой период"
+  items={[
+    { position: 10, label: "at", note: "5 o'clock, noon, night" },
+    { position: 50, label: "on", note: "Monday, March 5" },
+    { position: 90, label: "in", note: "January, 2020, summer" },
+  ]}
+/>
+
+Место как масштаб: от точки-координаты к поверхности и далее к объёму.
+
+<Scale
+  axis="место: от точки к объёму"
+  leftLabel="точка"
+  rightLabel="объём"
+  items={[
+    { position: 10, label: "at", note: "the door, work, bus stop" },
+    { position: 50, label: "on", note: "the table, the wall, the bus" },
+    { position: 90, label: "in", note: "the room, Moscow, Russia" },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Время — когда какой предлог
+
+<RuleList rules={[
+  "<strong>at — точное время и моменты.</strong> Часы, полдень, полночь, ночь, праздничный период, выходные (UK). <em>at 7, at noon, at night, at the weekend.</em>",
+  "<strong>on — конкретный день или дата.</strong> День недели, число месяца, день рождения, день праздника, день + часть дня. <em>on Monday, on March 5, on my birthday, on Monday morning.</em>",
+  "<strong>in — большие периоды и части дня.</strong> Месяц, год, век, время года, утро/день/вечер (но не night). <em>in January, in 2020, in summer, in the morning.</em>",
+  "<strong>Без предлога — после this / next / last / every.</strong> <em>next Monday, last week, every day, this evening.</em>",
+  "<strong>at night, но in the morning.</strong> Историческое исключение, его просто запоминают. Логику искать бесполезно.",
+]} />
+
+### Место — когда какой предлог
+
+<RuleList rules={[
+  "<strong>at — место как точка или роль.</strong> Координата, адрес, мероприятие, институция. <em>at the door, at the bus stop, at the conference, at school, at work, at 5 Lermontov Street.</em>",
+  "<strong>on — поверхность или линия.</strong> Стол, стена, пол, этаж, улица (US), большой транспорт. <em>on the table, on the wall, on the second floor, on the bus.</em>",
+  "<strong>in — внутри объёма.</strong> Комната, здание, город, страна, континент, личный транспорт. <em>in the room, in Moscow, in Russia, in the car.</em>",
+  "<strong>at school vs in the school.</strong> at — про роль («учусь, работаю»), in — про физическое нахождение внутри. То же для work, hospital, church.",
+  "<strong>Транспорт делится по размеру.</strong> Большой и общественный — on (on the bus / train / plane). Личный, маленький — in (in the car / taxi).",
+]} />
+
+### Движение
+
+<RuleList rules={[
+  "<strong>to — общее направление.</strong> <em>I'm going to the gym.</em>",
+  "<strong>into / onto — пересечение границы внутрь / на поверхность.</strong> <em>She walked into the room. He jumped onto the chair.</em>",
+  "<strong>from / out of / off — обратные движения.</strong> <em>He's from London. Get out of the car. Take the book off the shelf.</em>",
+  "<strong>towards — в направлении, но без обязательного достижения.</strong> <em>He walked towards the door but stopped.</em>",
+]} />
+
+### Предлоги после распространённых глаголов
+
+Эти связки нужно заучивать целиком — логика предлога тут вторична, связка устоявшаяся.
+
+<RuleList rules={[
+  "<strong>listen to</strong> — слушать (что-то). <em>I listen to music every morning.</em> Не «listen music».",
+  "<strong>look at</strong> — смотреть на. <em>Look at this photo.</em> Не «look on».",
+  "<strong>look for</strong> — искать. <em>I'm looking for my keys.</em>",
+  "<strong>wait for</strong> — ждать (кого-то / чего-то). <em>I'm waiting for the bus.</em> Не «wait the bus».",
+  "<strong>depend on</strong> — зависеть от. <em>It depends on the weather.</em> Не «depend from».",
+  "<strong>talk about / think about</strong> — говорить / думать о. <em>We talked about the project.</em>",
+  "<strong>agree with (somebody) / agree on (something)</strong> — соглашаться с кем-то / договариваться о чём-то. <em>I agree with you. We agreed on the price.</em>",
+  "<strong>belong to</strong> — принадлежать. <em>This book belongs to Anna.</em>",
+  "<strong>apologise for</strong> — извиняться за. <em>He apologised for the delay.</em>",
+  "<strong>complain about</strong> — жаловаться на. <em>She complained about the noise.</em>",
+  "<strong>worry about</strong> — беспокоиться о. <em>Don't worry about it.</em>",
+  "<strong>arrive at / arrive in</strong> — прибыть. at — для точки (вокзал, аэропорт, мероприятие), in — для города / страны. <em>I arrived at the station at 7. We arrived in Moscow last night.</em>",
+]} />
+
+## 7. Примеры
+
+### Время — точное и моменты (at)
+
+<Example ru="Совещание начинается в десять.">The meeting starts at ten.</Example>
+<Example ru="Я обычно ложусь спать в полночь.">I usually go to bed at midnight.</Example>
+<Example ru="Ночью город тихий.">The city is quiet at night.</Example>
+<Example ru="На выходных мы ездим за город.">At the weekend we go out of town.</Example>
+
+### Время — день и дата (on)
+
+<Example ru="Встречаемся в субботу в семь.">We're meeting on Saturday at seven.</Example>
+<Example ru="Я родился пятого марта.">I was born on March 5.</Example>
+<Example ru="В понедельник утром у меня созвон.">On Monday morning I have a call.</Example>
+<Example ru="Релиз запланирован на пятницу.">The release is scheduled on Friday.</Example>
+
+### Время — период и часть дня (in)
+
+<Example ru="В январе всегда холодно.">It's always cold in January.</Example>
+<Example ru="Мы переехали в эту квартиру в 2019 году.">We moved to this flat in 2019.</Example>
+<Example ru="Летом мы ездим к морю.">In summer we go to the sea.</Example>
+<Example ru="Я лучше работаю утром.">I work better in the morning.</Example>
+
+### Место — точка и роль (at)
+
+<Example ru="Подожди меня у двери.">Wait for me at the door.</Example>
+<Example ru="Я сейчас на работе, перезвоню вечером.">I'm at work now, I'll call you back in the evening.</Example>
+<Example ru="Встретимся на автобусной остановке.">Let's meet at the bus stop.</Example>
+<Example ru="Я был на конференции в прошлую пятницу.">I was at the conference last Friday.</Example>
+
+### Место — поверхность и линия (on)
+
+<Example ru="Ключи на столе.">The keys are on the table.</Example>
+<Example ru="На стене висит карта.">There's a map on the wall.</Example>
+<Example ru="Кафе на втором этаже.">The cafe is on the second floor.</Example>
+<Example ru="Я обычно читаю в автобусе.">I usually read on the bus.</Example>
+
+### Место — внутри объёма (in)
+
+<Example ru="Дети играют в комнате.">The kids are playing in the room.</Example>
+<Example ru="Я живу в Москве уже десять лет.">I've been living in Moscow for ten years.</Example>
+<Example ru="В машине пахнет кофе.">It smells of coffee in the car.</Example>
+<Example ru="Ноутбук в сумке.">The laptop is in the bag.</Example>
+
+### Глаголы с фиксированным предлогом
+
+<Example ru="Я слушаю подкасты по дороге на работу.">I listen to podcasts on my way to work.</Example>
+<Example ru="Посмотри на эти цены.">Look at these prices.</Example>
+<Example ru="Я ищу свои очки уже час.">I've been looking for my glasses for an hour.</Example>
+<Example ru="Я жду ответа от менеджера.">I'm waiting for an answer from the manager.</Example>
+<Example ru="Это зависит от бюджета.">It depends on the budget.</Example>
+<Example ru="Не беспокойся о дедлайне — успеем.">Don't worry about the deadline — we'll make it.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="at school / at work" rightLabel="in the school / in the office">
+  <div slot="left">
+    <strong>She's at school.</strong><br/>Она учится (роль / институция).<br/><br/>
+    <strong>He's at work.</strong><br/>Он на работе как занятии. Не уточняется, где физически.<br/><br/>
+    <strong>I was at the conference.</strong><br/>Участвовал, был среди участников.
+  </div>
+  <div slot="right">
+    <strong>She's in the school.</strong><br/>Физически внутри здания школы (например, забирает ребёнка).<br/><br/>
+    <strong>He's in the office.</strong><br/>Физически в офисном помещении прямо сейчас.<br/><br/>
+    <strong>I was in the conference room.</strong><br/>Внутри переговорки, в физическом пространстве.
+  </div>
+</Compare>
+
+<Compare leftLabel="улица — US" rightLabel="улица — UK">
+  <div slot="left">
+    <strong>on Lermontov Street.</strong><br/>Американский английский: улица как линия / поверхность.<br/><br/>
+    <strong>on Fifth Avenue.</strong><br/>Стандарт для US-адресов без номера дома.
+  </div>
+  <div slot="right">
+    <strong>in Lermontov Street.</strong><br/>Британский английский: улица как объём, в который ты заходишь.<br/><br/>
+    <strong>in Oxford Street.</strong><br/>Стандарт для UK. Оба варианта понимаются носителями обеих сторон.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Для времени и места работает одна и та же визуализация: **зум от точки к объёму**. Самое узкое — `at` (точка). Чуть шире — `on` (поверхность или день). Шире всего — `in` (объём или большой период). Прежде чем ставить предлог, мысленно спроси: «насколько эта штука большая?». Точка — at, плоскость или линия — on, объём — in.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему англичанам нужны три уровня">
+В русском «в» и «на» работают по совсем другой логике: они различают не масштаб, а тип контакта (внутри vs сверху) и грамматический падеж. Поэтому один и тот же «в» легко обслуживает и «в январе» (период), и «в комнате» (объём), и «в Москве» (город), и «в пять часов» (момент). Английская система выросла из другой логики — из пространственных координат: точка, плоскость, объём. Эту систему потом распространили и на время по аналогии (момент = точка, день = плоскость на оси, месяц = объёмный отрезок). Получилось три предлога вместо одного, и у каждого свой «характер размера». Если запомнить именно эту шкалу, выбор перестаёт быть угадайкой.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Это время или место?", yes: "Время — к вопросу 2.", no: "Место — к вопросу 4." },
+  { q: "Время: это конкретная точка (час, момент дня, праздничный период)?", yes: "at. at 7, at noon, at night, at Christmas.", no: "к вопросу 3." },
+  { q: "Время: это конкретный день или дата (Monday, March 5, my birthday)?", yes: "on. on Monday, on March 5.", no: "Большой период — in. in January, in 2020, in summer." },
+  { q: "Место: это точка-координата, роль или адрес (door, school, bus stop, 5 Lermontov St)?", yes: "at. at the door, at school, at work.", no: "к вопросу 5." },
+  { q: "Место: это поверхность, линия, этаж, улица (US) или большой транспорт?", yes: "on. on the table, on the wall, on the bus.", no: "Объём (комната, город, страна, личный транспорт) — in. in the room, in Moscow, in the car." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| on January | in January | Месяц = большой период → in, не on. |
+| in Monday | on Monday | Конкретный день недели → on, не in. |
+| in five o'clock | at five o'clock | Точное время = точка → at, не in. |
+| on the morning | in the morning | Часть дня (утро/день/вечер) → in. Исключение: at night. |
+| on Moscow | in Moscow | Город = объём → in, не on. |
+| on work | at work | «На работе» как роль → at, не on. Калька с русского «на». |
+| in the bus | on the bus | Большой транспорт = поверхность, на которую заходишь → on. in — только для личных авто и такси. |
+| listen music | listen to music | Глагол listen всегда с предлогом to: listen to music / radio / podcast. |
+| wait the bus | wait for the bus | Глагол wait требует for перед объектом ожидания. |
+| depend from the weather | depend on the weather | Depend on — фиксированная связка. Калька «зависит от» через from — типичная ошибка. |
+| look on this | look at this | look at — смотреть на. look on — смотреть со стороны, не вмешиваясь (другое значение). |
+| in the weekend (если по-британски) | at the weekend | UK: at the weekend. US: on the weekend. in здесь не используется. |
+| arrive to Moscow | arrive in Moscow | arrive in для городов и стран, arrive at для точечных мест (вокзал, аэропорт). to с arrive не идёт. |
+
+## 13. Шпаргалка
+
+| Контекст | Предлог | Пример |
+| --- | --- | --- |
+| Точное время | at | at 7, at noon, at midnight |
+| Ночь | at | at night |
+| Праздничный период | at | at Christmas, at Easter |
+| Выходные (UK / US) | at / on | at the weekend / on the weekend |
+| День недели | on | on Monday |
+| Дата | on | on March 5 |
+| День + часть дня | on | on Monday morning |
+| День праздника | on | on Christmas Day |
+| Часть дня (утро/день/вечер) | in | in the morning |
+| Месяц | in | in January |
+| Год | in | in 2020 |
+| Время года | in | in summer |
+| Век, десятилетие | in | in the 21st century, in the 90s |
+| После this / next / last / every | — | next Monday, last week |
+| Точка-координата, адрес | at | at the door, at 5 Lermontov St |
+| Институция как роль | at | at school, at work, at university |
+| Мероприятие | at | at the conference, at the party |
+| Поверхность | on | on the table, on the wall |
+| Этаж | on | on the second floor |
+| Улица US | on | on Lermontov Street |
+| Улица UK | in | in Lermontov Street |
+| Большой транспорт | on | on the bus, on the train |
+| Помещение, объём | in | in the room, in the box |
+| Город, страна | in | in Moscow, in Russia |
+| Личный транспорт | in | in the car, in the taxi |
+| Слушать что-то | listen to | listen to music |
+| Ждать кого-то / чего-то | wait for | wait for the bus |
+| Зависеть от | depend on | it depends on you |
+| Смотреть на | look at | look at the screen |
+| Искать | look for | look for keys |
+| Прибыть в город / страну | arrive in | arrive in Moscow |
+| Прибыть на вокзал / в аэропорт | arrive at | arrive at the station |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "preposition", meaning: "предлог — служебное слово, связывающее существительное с остальной фразой" },
+  { term: "in (time)", meaning: "в — для месяцев, годов, времён года, частей дня, веков" },
+  { term: "on (time)", meaning: "в — для дней недели, дат, конкретных дней" },
+  { term: "at (time)", meaning: "в — для точного времени, моментов, праздничных периодов" },
+  { term: "in (place)", meaning: "в — для объёмов, помещений, городов, стран" },
+  { term: "on (place)", meaning: "на — для поверхностей, линий, этажей, большого транспорта" },
+  { term: "at (place)", meaning: "у / на / в — для точек, ролей, адресов" },
+  { term: "to", meaning: "направление: куда (go to school)" },
+  { term: "into", meaning: "внутрь с пересечением границы (walk into the room)" },
+  { term: "onto", meaning: "на поверхность с переходом (jump onto the chair)" },
+  { term: "from", meaning: "откуда (come from London)" },
+  { term: "out of", meaning: "из (get out of the car)" },
+  { term: "off", meaning: "с поверхности (take the book off the shelf)" },
+  { term: "towards", meaning: "в направлении к (walk towards the station)" },
+  { term: "at night", meaning: "ночью — исключение, не in" },
+  { term: "in the morning / afternoon / evening", meaning: "утром / днём / вечером" },
+  { term: "at the weekend (UK)", meaning: "на выходных — британский вариант" },
+  { term: "on the weekend (US)", meaning: "на выходных — американский вариант" },
+  { term: "at noon", meaning: "в полдень" },
+  { term: "at midnight", meaning: "в полночь" },
+  { term: "at Christmas", meaning: "в Рождество (как период)" },
+  { term: "on Christmas Day", meaning: "в день Рождества (25 декабря)" },
+  { term: "at school / at work", meaning: "в школе / на работе как роль" },
+  { term: "in the school / in the office", meaning: "физически внутри школьного здания / офиса" },
+  { term: "at the bus stop", meaning: "на автобусной остановке" },
+  { term: "on the bus / train / plane", meaning: "в автобусе / поезде / самолёте" },
+  { term: "in the car / taxi", meaning: "в машине / такси" },
+  { term: "arrive in", meaning: "прибыть в город или страну" },
+  { term: "arrive at", meaning: "прибыть в точку (вокзал, аэропорт, мероприятие)" },
+  { term: "listen to", meaning: "слушать — обязательно с to" },
+  { term: "wait for", meaning: "ждать — обязательно с for" },
+  { term: "look at", meaning: "смотреть на" },
+  { term: "look for", meaning: "искать" },
+  { term: "depend on", meaning: "зависеть от" },
+  { term: "talk about / think about", meaning: "говорить / думать о" },
+  { term: "agree with / agree on", meaning: "соглашаться с кем-то / договариваться о чём-то" },
+  { term: "belong to", meaning: "принадлежать кому-то" },
+  { term: "apologise for", meaning: "извиняться за" },
+  { term: "complain about", meaning: "жаловаться на" },
+  { term: "worry about", meaning: "беспокоиться о" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Маркер → предлог</span>
+    <span class="kc-trainer-hint">Запомни связку контекста и in / on / at</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Глагол → предлог</span>
+    <span class="kc-trainer-hint">Соотнеси глагол с фиксированным предлогом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">in / on / at</span>
+    <span class="kc-trainer-hint">Разложи фразы по трём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильный предлог</span>
+    <span class="kc-trainer-hint">Впиши in, on, at или нужный предлог глагола</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Расставь слова — следи за местом предлога</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 121-126 (prepositions of time: at, on, in; prepositions of place).
+- **Swan M., Practical English Usage** — §456-462 (at / on / in: time and place), §465 (verb + preposition).
+- **Cambridge Dictionary — Grammar reference** — prepositions of time and place.
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/prepositions

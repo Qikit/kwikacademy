@@ -1,0 +1,66 @@
+{
+  "course": "english",
+  "lesson": "english-modals",
+  "title": "Впиши модальный",
+  "description": "Подбери подходящий модальный или конструкцию. Где нужно — с отрицанием.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "You ___ wear a seatbelt — it's the law.",
+        "answers": ["must", "have to"],
+        "explain": "Закон → must (моральная установка от закона) или have to (внешнее правило). Оба варианта работают."
+      },
+      {
+        "text": "You ___ tell anyone about the surprise — it's a secret.",
+        "answers": ["mustn't", "must not", "can't", "cannot"],
+        "explain": "Запрет → mustn't или can't. don't have to означало бы «не обязан рассказывать» — другой смысл."
+      },
+      {
+        "text": "You ___ come to the meeting if you're busy — it's optional.",
+        "answers": ["don't have to", "do not have to"],
+        "hint": "не обязан, а не запрещено",
+        "explain": "«Не обязан, на твой выбор» → don't have to. mustn't было бы запретом."
+      },
+      {
+        "text": "I ___ swim when I was four — my dad taught me.",
+        "answers": ["could"],
+        "explain": "Общая способность в прошлом → could. was able to работает для разового успеха, тут — общий навык."
+      },
+      {
+        "text": "After the surgery she ___ walk again within a month.",
+        "answers": ["was able to"],
+        "hint": "разовый успех, не общая способность",
+        "explain": "Разовое восстановление, конкретный успех в конкретной ситуации → was able to. could тут звучит неестественно."
+      },
+      {
+        "text": "___ I borrow your laptop for an hour?",
+        "answers": ["Could", "May", "Can"],
+        "explain": "Просьба разрешения. Could — вежливо, May — формально, Can — нейтрально-бытово. Все три работают."
+      },
+      {
+        "text": "He's not picking up — he ___ be in a meeting.",
+        "answers": ["might", "may", "could"],
+        "hint": "вероятность около 30-50%",
+        "explain": "Допущение с неуверенностью → might / may / could be. Не must be — нет твёрдых доказательств."
+      },
+      {
+        "text": "The lights are on and the door is open — someone ___ be inside.",
+        "answers": ["must"],
+        "hint": "высокая уверенность по косвенным признакам",
+        "explain": "Дедукция с высокой уверенностью (два косвенных признака) → must be. ~95%."
+      },
+      {
+        "text": "His car isn't here — he ___ be at home.",
+        "answers": ["can't", "cannot"],
+        "hint": "исключаем возможность",
+        "explain": "Исключение возможности → can't be. Противоположность must be в дедукции."
+      },
+      {
+        "text": "You ___ see a doctor about that cough.",
+        "answers": ["should", "ought to"],
+        "explain": "Совет → should или ought to. must было бы слишком категорично, have to не подходит — это не правило извне."
+      }
+    ]
+  }
+}

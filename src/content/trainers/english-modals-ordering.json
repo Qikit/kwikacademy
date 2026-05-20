@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-modals",
+  "title": "Собери предложение с модальным",
+  "description": "Расставь слова — особенно внимательно с вопросами и отрицаниями.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["please", "open", "you", "the", "window", "could", "?"],
+        "answer": ["could", "you", "open", "the", "window", "please", "?"],
+        "translation": "Не могли бы вы открыть окно, пожалуйста?",
+        "explain": "Вежливая просьба в вопросе: модальный (could) + подлежащее (you) + V (open) без to. Please — в конец."
+      },
+      {
+        "words": ["have", "wear", "you", "a", "uniform", "to", "do", "?"],
+        "answer": ["do", "you", "have", "to", "wear", "a", "uniform", "?"],
+        "translation": "Тебе приходится носить униформу?",
+        "explain": "have to — единственный «модальный», который берёт вспомогательный do в вопросе: Do + S + have to + V."
+      },
+      {
+        "words": ["tell", "anyone", "you", "mustn't"],
+        "answer": ["you", "mustn't", "tell", "anyone"],
+        "translation": "Никому не говори.",
+        "explain": "Запрет: подлежащее + mustn't + V (начальная форма). Без to и без -ing."
+      },
+      {
+        "words": ["have", "you", "to", "come", "don't"],
+        "answer": ["you", "don't", "have", "to", "come"],
+        "translation": "Ты не обязан приходить.",
+        "explain": "«Не обязан» = don't have to. Отрицание у have to строится через do/does: S + don't + have to + V."
+      },
+      {
+        "words": ["at", "home", "be", "he", "must"],
+        "answer": ["he", "must", "be", "at", "home"],
+        "translation": "Он, должно быть, дома.",
+        "explain": "Дедукция: S + must + be + место/состояние. Без второго be дедукции не получится — будет звучать как обязательство."
+      },
+      {
+        "words": ["see", "a", "doctor", "you", "should"],
+        "answer": ["you", "should", "see", "a", "doctor"],
+        "translation": "Тебе стоит сходить к врачу.",
+        "explain": "Совет: S + should + V (начальная форма) + дополнение. После should — без to."
+      },
+      {
+        "words": ["able", "we", "to", "the", "bug", "were", "fix"],
+        "answer": ["we", "were", "able", "to", "fix", "the", "bug"],
+        "translation": "Нам удалось пофиксить баг.",
+        "explain": "Разовый успех в прошлом: S + was/were + able to + V. Здесь was/were согласуется с подлежащим (we → were)."
+      },
+      {
+        "words": ["rain", "might", "later", "it"],
+        "answer": ["it", "might", "rain", "later"],
+        "translation": "Возможно, позже пойдёт дождь.",
+        "explain": "Вероятность: S + might + V (начальная форма). Обстоятельство времени (later) — в конец."
+      }
+    ]
+  }
+}

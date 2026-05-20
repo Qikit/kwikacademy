@@ -2,12 +2,469 @@
 course: english
 order: 6
 phase: "Фаза 1 · Бытовой английский"
-title: "Модальные глаголы"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Тонкие смыслы — можно vs нужно vs следует. Вежливость и нюансы."
-placeholder: true
-tags: [english]
+title: "Модальные глаголы — can, could, must, should, may, might, will, would"
+eyebrow: "Грамматика · уровень A2-B1"
+readingMinutes: 26
+summary: "Девять модальных, которые передают то, что у русского передаётся интонацией: разрешение, запрет, обязанность, совет, степень уверенности. Когда «должен» — must, когда have to, а когда should."
+tags: [modals, grammar, A2, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Модальные глаголы» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Scale from '../../components/lesson/Scale.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем модальные
+
+В русском «должен» — одно слово на пять смыслов. «Я должен сдать отчёт» (босс требует), «человек должен помогать другим» (моральная установка), «тебе бы стоило сходить к врачу» (совет), «он должен быть дома» (предположение по косвенным признакам), «обещаю — я должен прийти» (намерение). Какой именно смысл — мы достраиваем из интонации и контекста.
+
+В английском под каждый смысл — отдельный модальный. **must** — внутренняя обязанность и сильное предположение. **have to** — внешнее правило. **should** — совет. **may / might** — возможность и формальное разрешение. **can / could** — способность, разрешение, просьба. **will / would** — намерение, вежливость, бывшая привычка. Замешать их — фраза не сломается, но смысл поплывёт: «You must go to the gym» вместо «You should go to the gym» звучит как приказ от человека, у которого есть на это право, а не как дружеский совет.
+
+Этот урок про то, как выбирать модальный по смыслу, а не по словарному переводу. И про десяток ловушек, в которые регулярно попадают русскоязычные: `mustn't` vs `don't have to`, `can` vs `be able to`, дедукция через `must be` / `can't be`, особенности отрицания и вопроса.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Модальный глагол стоит перед смысловым в начальной форме без `to` (исключения: `ought to`, `have to`, `used to`). По лицам не меняется — `-s` в третьем лице не добавляется. Вопрос строится инверсией (модальный + подлежащее), отрицание — модальный + `not` (без вспомогательного `do`). Выбор модального передаёт не действие, а отношение к нему: обязанность, совет, возможность, разрешение.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Общая схема
+
+| Тип | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| can | I can swim | I can't swim | Can you swim? |
+| could | She could ski | She couldn't ski | Could you help? |
+| must | We must leave | We mustn't tell | Must I stay? |
+| should | You should rest | You shouldn't smoke | Should I call? |
+| may | He may come | He may not come | May I come in? |
+| might | It might rain | It might not rain | (редко) Might I ask? |
+| will | I will call | I won't call | Will you help? |
+| would | I would prefer tea | I wouldn't agree | Would you wait? |
+
+### Сокращения и особые формы
+
+- `can't` (= cannot, пишется слитно); `cannot` — единственный модальный, который в полной форме пишется одним словом.
+- `couldn't`, `mustn't`, `shouldn't`, `won't` (= will not), `wouldn't`.
+- `may not` слитно почти не сокращают (`mayn't` — архаизм). `might not` тоже без сокращения.
+- `'ll` = will, `'d` = would или had (контекст решает).
+
+### Исключения с `to`
+
+Три модальных требуют `to` перед смысловым глаголом:
+
+- `have to + V` — внешняя обязанность. *I have to wear a uniform.*
+- `ought to + V` — совет (синоним should, чуть более формальный). *You ought to apologise.*
+- `used to + V` — бывшая привычка (был тема прошедшего урока). *I used to smoke.*
+
+`have to` — единственный из них, который ведёт себя как обычный глагол: меняется по лицам (`he has to`), берёт вспомогательный `do` в вопросе и отрицании (`Do you have to work?`, `I don't have to go`). Остальные — настоящие модальные с инверсией.
+
+### Прошедшее у модальных
+
+Часть модальных имеет «парную» прошедшую форму, часть — нет.
+
+- `can → could` (прошедшее значение способности: «I could swim at five»).
+- `will → would` (вежливость и условные).
+- `may → might` (но в современном языке `might` чаще про вероятность, чем про прошлое от `may`).
+- `must`, `should`, `ought to` — прошедшей формы нет. Для прошлого используют `had to` (вместо must) и `should have + V3` (для упущенного совета, тема урока про conditionals).
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русское «должен» / «могу» — один глагол на пять-шесть смыслов. Английский раскладывает эти смыслы на отдельные модальные. При переводе с русского нельзя идти от слова — нужно сначала спросить себя: «Это внутренний долг или внешнее правило? Совет или приказ? Способность или разрешение?» — и только потом подбирать модальный.">
+  <div slot="ru">
+    <strong>«Ты должен прийти».</strong><br/>
+    Контекст 1 (формальное правило, ты обязан): You have to come.<br/>
+    Контекст 2 (моральный долг, я считаю обязательным): You must come.<br/>
+    Контекст 3 (совет, тебе бы стоило): You should come.<br/>
+    Контекст 4 (предположение по косвенным): You must be tired.<br/>
+    Глагол один, модальных — четыре.
+  </div>
+  <div slot="en">
+    <strong>I can swim.</strong> — Умею (способность).<br/>
+    <strong>Can I sit here?</strong> — Можно ли мне (разрешение).<br/>
+    <strong>You must wear a seatbelt.</strong> — Обязан по закону.<br/>
+    <strong>You should see a doctor.</strong> — Тебе стоит.<br/>
+    <strong>It might rain.</strong> — Возможно, пойдёт.<br/>
+    Каждый смысл — свой модальный.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+**Шкала обязательства** — от запрета до полной свободы. Слева — жёстче, справа — мягче.
+
+<Scale
+  axis="Сила обязательства"
+  leftLabel="запрещено"
+  rightLabel="свободно"
+  items={[
+    { position: 0, label: "mustn't", note: "запрет" },
+    { position: 20, label: "must / have to", note: "обязан" },
+    { position: 45, label: "should / ought to", note: "стоит" },
+    { position: 70, label: "don't have to", note: "не обязан" },
+    { position: 95, label: "can", note: "можно" },
+  ]}
+/>
+
+**Шкала вероятности** — насколько говорящий уверен, что что-то так и есть.
+
+<Scale
+  axis="Уверенность в утверждении"
+  leftLabel="точно нет"
+  rightLabel="точно да"
+  items={[
+    { position: 0, label: "can't be", note: "~0%" },
+    { position: 30, label: "might / may be", note: "~30-50%" },
+    { position: 55, label: "could be", note: "~50%" },
+    { position: 80, label: "should be", note: "~80%" },
+    { position: 100, label: "must be", note: "~95%" },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Способность — can / could / be able to
+
+<RuleList rules={[
+  "<strong>can — общая способность в настоящем.</strong> Умею вообще, не про разовый случай. <em>I can swim. She can speak French.</em>",
+  "<strong>could — способность в прошлом, общая.</strong> «Умел в принципе» — без указания на конкретный случай. <em>I could read at five.</em>",
+  "<strong>was/were able to — разовый успех в прошлом.</strong> Удалось в конкретной ситуации. <em>The fire was huge, but we were able to escape.</em> «Could» здесь не работает.",
+  "<strong>will be able to — способность в будущем.</strong> «Can» не имеет будущего, для него используют «be able to». <em>After the course you'll be able to read articles in English.</em>",
+]} />
+
+### Разрешение — can / could / may
+
+<RuleList rules={[
+  "<strong>can — нейтрально, бытовое разрешение.</strong> <em>You can sit here. — Можешь сесть здесь.</em>",
+  "<strong>could — вежливая просьба разрешения.</strong> Не «мог в прошлом», а «можно ли мне». <em>Could I borrow your pen?</em>",
+  "<strong>may — формальное разрешение.</strong> Официальные ситуации, обращение к старшим, на собеседовании. <em>May I come in?</em>",
+  "<strong>may not — формальный запрет.</strong> В правилах, инструкциях, объявлениях. <em>Visitors may not use the staff lift.</em>",
+]} />
+
+### Просьба — can / could / would / will
+
+<RuleList rules={[
+  "<strong>can you — самая простая просьба, между близкими.</strong> <em>Can you pass the salt?</em>",
+  "<strong>could you — вежливее, нейтральный регистр.</strong> Безопасно почти всегда. <em>Could you open the window, please?</em>",
+  "<strong>would you — формально-вежливая просьба или приглашение.</strong> Особенно «would you mind + V-ing». <em>Would you mind closing the door?</em>",
+  "<strong>will you — категоричнее, иногда раздражённо.</strong> «Сделаешь уже это?». В вежливой просьбе лучше избегать. <em>Will you stop talking?</em>",
+]} />
+
+### Обязательство — must / have to
+
+<RuleList rules={[
+  "<strong>must — внутренняя обязанность, моральный долг, личная установка.</strong> Я сам считаю важным. <em>I must call my mum tonight — I haven't talked to her for a week.</em>",
+  "<strong>must — закон, правило безопасности, инструкция.</strong> Не лично моё, но безусловное. <em>You must wear a seatbelt by law.</em>",
+  "<strong>have to — внешнее давление, правило извне.</strong> Кто-то требует, я подчиняюсь, но не по своей воле. <em>I have to work on Saturday — the boss said so.</em>",
+  "<strong>must vs have to — прошедшее: только «had to».</strong> У must нет прошедшей формы. <em>I had to wait for an hour.</em>",
+  "<strong>mustn't — запрет.</strong> Делать это нельзя. <em>You mustn't tell anyone.</em>",
+  "<strong>don't have to — отсутствие обязательства.</strong> Делать не обязательно — выбор за тобой. <em>You don't have to come if you're tired.</em>",
+]} />
+
+### Совет — should / ought to
+
+<RuleList rules={[
+  "<strong>should — самый частый способ дать совет.</strong> «Тебе стоит». <em>You should see a doctor.</em>",
+  "<strong>ought to — синоним, чуть более формальный.</strong> Сейчас встречается реже. <em>You ought to call your mum.</em>",
+  "<strong>should I / should we — спросить совета.</strong> <em>Should I tell him the truth?</em>",
+  "<strong>shouldn't — мягкий запрет-совет.</strong> «Лучше бы не». <em>You shouldn't drink so much coffee.</em>",
+]} />
+
+### Возможность — may / might / could
+
+<RuleList rules={[
+  "<strong>may — возможность, средняя уверенность.</strong> <em>It may rain later.</em>",
+  "<strong>might — то же, чуть менее уверенно.</strong> Граница между may и might тонкая, в современном языке часто взаимозаменяемы. <em>I might come, I'm not sure yet.</em>",
+  "<strong>could — возможность, гипотетический вариант.</strong> «Возможен такой исход». <em>The keys could be in the car.</em>",
+  "<strong>can — общая возможность, не вероятность.</strong> «Бывает так, что». <em>It can be cold here in winter.</em> Не путать с «может быть» в смысле прогноза — там may/might.",
+]} />
+
+### Дедукция — степень уверенности
+
+<RuleList rules={[
+  "<strong>must be — почти уверен, что так и есть.</strong> Косвенные доказательства убедительны. <em>The lights are on — he must be at home.</em>",
+  "<strong>should be — должно быть так, по логике.</strong> Чуть менее уверенно, чем must be. <em>The package should be here by Friday.</em>",
+  "<strong>could / may / might be — допускаю, но не уверен.</strong> <em>He's not answering — he might be in a meeting.</em>",
+  "<strong>can't be — уверен, что нет.</strong> Дедуктивный запрет: исключаю эту возможность. <em>His car isn't here — he can't be at home.</em>",
+  "<strong>Дедукция — это «должно быть / не может быть», не действие.</strong> После must / can't в этом смысле обычно идёт be, have или другой state-глагол.",
+]} />
+
+### Намерение, привычка прошлого — will / would
+
+<RuleList rules={[
+  "<strong>will — намерение, обещание, спонтанное решение (было в уроке про будущее).</strong> <em>I'll help you.</em>",
+  "<strong>would — повторяющаяся привычка в прошлом.</strong> Только для действий, не для состояний. «Каждое лето мы ездили». <em>Every summer we would go to the lake.</em> Для состояний — used to.",
+  "<strong>would — вежливое предложение или предпочтение.</strong> <em>Would you like some tea? I'd prefer coffee.</em>",
+]} />
+
+## 7. Примеры
+
+### Способность — can / could / was able to
+
+<Example ru="Я умею плавать, но не очень быстро.">I can swim, but not very fast.</Example>
+<Example ru="Она говорит по-французски и по-немецки.">She can speak French and German.</Example>
+<Example ru="Я умел читать в пять лет.">I could read at five.</Example>
+<Example ru="Пожар был сильный, но мы смогли выбраться.">The fire was huge, but we were able to escape.</Example>
+<Example ru="После курса вы сможете читать статьи в оригинале.">After the course you'll be able to read articles in the original.</Example>
+
+### Разрешение и просьба — can / could / may / would
+
+<Example ru="Можешь сесть сюда, место свободно.">You can sit here, the seat is free.</Example>
+<Example ru="Можно одолжить ручку?">Could I borrow your pen?</Example>
+<Example ru="Можно войти?">May I come in?</Example>
+<Example ru="Не могли бы вы прикрыть дверь?">Would you mind closing the door?</Example>
+<Example ru="Передай соль, пожалуйста.">Can you pass the salt, please?</Example>
+
+### Обязанность — must / have to
+
+<Example ru="Ты обязан пристёгиваться по закону.">You must wear a seatbelt by law.</Example>
+<Example ru="Я должен позвонить маме сегодня — давно не разговаривали.">I must call my mum tonight — we haven't talked for a week.</Example>
+<Example ru="В субботу мне приходится работать — так сказал начальник.">I have to work on Saturday — the boss said so.</Example>
+<Example ru="Им пришлось час ждать поезда.">They had to wait for the train for an hour.</Example>
+<Example ru="Никому не говори, обещай.">You mustn't tell anyone, promise.</Example>
+<Example ru="Можешь не приходить, если устал.">You don't have to come if you're tired.</Example>
+
+### Совет — should / ought to
+
+<Example ru="Тебе стоит сходить к врачу.">You should see a doctor.</Example>
+<Example ru="Лучше тебе не пить столько кофе.">You shouldn't drink so much coffee.</Example>
+<Example ru="Стоит ли мне сказать ему правду?">Should I tell him the truth?</Example>
+<Example ru="Тебе бы извиниться перед ней.">You ought to apologise to her.</Example>
+
+### Вероятность — may / might / could / can
+
+<Example ru="Возможно, позже пойдёт дождь.">It may rain later.</Example>
+<Example ru="Я, может быть, приду — пока не уверен.">I might come — I'm not sure yet.</Example>
+<Example ru="Ключи могут быть в машине, проверь.">The keys could be in the car, check.</Example>
+<Example ru="Зимой здесь бывает очень холодно.">It can be very cold here in winter.</Example>
+
+### Дедукция — must be / can't be / might be
+
+<Example ru="Свет горит — он, должно быть, дома.">The lights are on — he must be at home.</Example>
+<Example ru="Его машины нет — он не может быть дома.">His car isn't here — he can't be at home.</Example>
+<Example ru="Не отвечает — может быть, на совещании.">He's not answering — he might be in a meeting.</Example>
+<Example ru="Посылка должна прийти к пятнице.">The package should be here by Friday.</Example>
+
+### Привычка прошлого — would
+
+<Example ru="Каждое лето мы ездили на озеро.">Every summer we would go to the lake.</Example>
+<Example ru="Хочешь чаю? — Лучше кофе.">Would you like some tea? — I'd prefer coffee.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="must" rightLabel="have to">
+  <div slot="left">
+    <strong>I must finish this report tonight.</strong><br/>Я сам считаю это обязательным — внутренний долг.<br/><br/>
+    <strong>You must wear a seatbelt.</strong><br/>Закон, безусловное правило.<br/><br/>
+    <strong>You mustn't smoke here.</strong><br/>Запрещено, делать нельзя.<br/><br/>
+    <strong>Нет прошедшего у must.</strong><br/>Для прошлого — had to.
+  </div>
+  <div slot="right">
+    <strong>I have to finish this report — the boss is waiting.</strong><br/>Внешнее давление, не моё желание.<br/><br/>
+    <strong>You have to show your ID at the entrance.</strong><br/>Правило извне, кто-то его установил.<br/><br/>
+    <strong>You don't have to smoke here.</strong><br/>Не обязан — можешь курить, а можешь нет.<br/><br/>
+    <strong>I had to wait for an hour.</strong><br/>Прошедшая форма для обоих модальных.
+  </div>
+</Compare>
+
+<Compare leftLabel="mustn't" rightLabel="don't have to">
+  <div slot="left">
+    <strong>You mustn't tell anyone.</strong><br/>Запрет — нельзя.<br/><br/>
+    <strong>You mustn't park here.</strong><br/>Парковаться запрещено.<br/><br/>
+    <strong>Visitors mustn't enter this area.</strong><br/>Вход для посетителей закрыт.
+  </div>
+  <div slot="right">
+    <strong>You don't have to tell anyone.</strong><br/>Не обязан рассказывать — выбор за тобой.<br/><br/>
+    <strong>You don't have to park here, there's free space round the corner.</strong><br/>Не обязан тут парковаться, есть варианты.<br/><br/>
+    <strong>You don't have to come to the meeting.</strong><br/>Не обязан приходить — можешь пропустить.
+  </div>
+</Compare>
+
+<Compare leftLabel="can / could (общая способность)" rightLabel="was/were able to (разовый успех)">
+  <div slot="left">
+    <strong>I could swim at five.</strong><br/>Общая способность в прошлом — умел в принципе.<br/><br/>
+    <strong>She can play the guitar.</strong><br/>Общая способность сейчас.
+  </div>
+  <div slot="right">
+    <strong>I was able to swim across the river.</strong><br/>Разовый успех в конкретной ситуации.<br/><br/>
+    <strong>We were able to fix the bug before the release.</strong><br/>Сумели — в этом конкретном случае. «Could» здесь звучит неестественно.
+  </div>
+</Compare>
+
+<Compare leftLabel="may / might (вероятность)" rightLabel="can (общая возможность)">
+  <div slot="left">
+    <strong>It may rain tomorrow.</strong><br/>Прогноз на конкретный день.<br/><br/>
+    <strong>She might be late.</strong><br/>Допускаю такую возможность.
+  </div>
+  <div slot="right">
+    <strong>It can be cold here in winter.</strong><br/>Общее свойство — иногда так бывает.<br/><br/>
+    <strong>This medicine can cause drowsiness.</strong><br/>Возможный побочный эффект как свойство.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Перед модальным задай себе один вопрос: **«Это про факт действия, про отношение к нему или про мою уверенность?»**. Про отношение — выбирай между обязанностью (must / have to / should) и разрешением (can / may). Про уверенность — между шкалой must be → might be → can't be. И помни: после любого модального, кроме `ought to` / `have to` / `used to`, идёт начальная форма без `to` — никаких `-s`, никаких `to`, никаких `-ing`.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему English раздробил «должен» и «могу»">
+Английский глагол не имеет окончаний для разных оттенков долга или возможности — у него вообще мало окончаний. Поэтому язык поставил перед смысловым глаголом отдельные модальные, каждый со своим оттенком. Must, should, can, may — это бывшие полнозначные глаголы, которые потеряли часть форм и стали служебными. В русском их работу делают интонация, частицы («бы», «же», «-ка»), вид глагола и порядок слов: «должен» с командной интонацией = must, «должен» с просительной = have to, «надо бы» = should. Английский кодирует эти оттенки самой лексикой — поэтому при переводе нельзя идти от слова, только от смысла.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Что выражаешь: оценку уверенности (предположение по косвенным признакам)?", yes: "Шкала дедукции: must be (95%) → should be (80%) → could / may / might be (30-50%) → can't be (0%).", no: "к вопросу 2" },
+  { q: "Это совет («тебе стоит»)?", yes: "should (нейтрально) или ought to (формальнее). Отрицание — shouldn't.", no: "к вопросу 3" },
+  { q: "Это обязательство («должен»)?", yes: "Внутренний долг или закон → must. Внешнее правило, кто-то требует → have to. Запрет → mustn't. Отсутствие обязательства → don't have to.", no: "к вопросу 4" },
+  { q: "Это разрешение или просьба?", yes: "Разрешение бытовое — can; вежливое — could; формальное — may. Просьба: can (близко), could (нейтрально), would (формально-вежливо).", no: "к вопросу 5" },
+  { q: "Это способность («умею»)?", yes: "Общая в настоящем — can; в прошлом — could. Разовый успех в прошлом — was/were able to. В будущем — will be able to.", no: "Если это намерение / обещание / спонтанное решение — will / would (см. урок про будущее)." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I can to swim | I can swim | После модального — начальная форма без `to`. Исключения: `ought to`, `have to`, `used to`. |
+| She cans speak French | She can speak French | Модальные не меняются по лицам. Никаких `-s` в третьем лице. |
+| You can help me? | Can you help me? | В вопросе модальный встаёт перед подлежащим: модальный + S + V. |
+| I don't can come | I can't come | Отрицание модального — `модальный + not`, без вспомогательного `do`. `can't`, `won't`, `shouldn't`. |
+| You mustn't come if you're tired | You don't have to come if you're tired | `mustn't` = запрещено. «Не обязан» = `don't have to`. Это противоположные смыслы. |
+| I could pass the test yesterday | I was able to pass the test yesterday | Разовый успех в прошлом → `was/were able to`. `Could` звучит как «в принципе умел». |
+| I will can speak English next year | I'll be able to speak English next year | У `can` нет будущей формы. Будущее способности — `will be able to`. |
+| He must to wear a seatbelt | He must wear a seatbelt | После `must` — без `to`. С `to` идёт только `have to` / `ought to`. |
+| It can rain tomorrow | It may rain tomorrow / It might rain tomorrow | Прогноз на конкретный день → `may / might`. `Can` — общая возможность («бывает так»), не вероятность. |
+| He must home (хотели сказать «он должен быть дома») | He must be at home | Дедукция = `must + be`, не голый `must`. |
+| You must call your mum (имели в виду совет) | You should call your mum | `Must` звучит как приказ. Совет — `should`. |
+| I would live in Berlin before (хотел сказать «раньше жил») | I used to live in Berlin | `Would` для прошлой привычки — только для действий. Для состояний (жил, знал, любил) — `used to`. |
+| Did you can swim? | Could you swim? / Were you able to swim? | С модальным `do` не используется. Прошедшее «мог» — `could` или `was able to`. |
+| Should I to call him? | Should I call him? | После `should` — без `to`. |
+| Maybe he is at home (как предположение с уверенностью) | He must be at home | `Maybe` — это наречие «может быть». Для уверенной дедукции — `must be`. |
+
+## 13. Шпаргалка
+
+| Смысл | Модальный | Пример |
+| --- | --- | --- |
+| Способность сейчас | can | I can swim. |
+| Способность в прошлом (общая) | could | I could read at five. |
+| Разовый успех в прошлом | was/were able to | We were able to escape. |
+| Способность в будущем | will be able to | I'll be able to drive next month. |
+| Разрешение (бытовое) | can | You can sit here. |
+| Разрешение (вежливое) | could | Could I borrow your pen? |
+| Разрешение (формальное) | may | May I come in? |
+| Просьба (вежливо) | could / would | Could you / Would you open the window? |
+| Внутренний долг, закон | must | You must wear a seatbelt. |
+| Внешняя обязанность | have to | I have to work on Saturday. |
+| Прошедшее «был обязан» | had to | I had to wait. |
+| Запрет | mustn't | You mustn't tell anyone. |
+| Отсутствие обязательства | don't have to | You don't have to come. |
+| Совет | should / ought to | You should see a doctor. |
+| Мягкий запрет-совет | shouldn't | You shouldn't smoke. |
+| Возможность (прогноз) | may / might | It may / might rain. |
+| Общая возможность («бывает») | can | It can be cold here. |
+| Дедукция, ~95% | must be | He must be tired. |
+| Дедукция, ~80% | should be | The package should be here. |
+| Дедукция, ~30-50% | could / might be | She might be at work. |
+| Дедукция, ~0% | can't be | He can't be at home. |
+| Бывшая привычка (действие) | would / used to | We would go to the lake. |
+| Бывшее состояние | used to | I used to live in Berlin. |
+| Вежливое предпочтение | would | I'd prefer tea. |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "modal verb", meaning: "модальный глагол — служебный, добавляет смысл основному" },
+  { term: "can", meaning: "могу / умею / можно (способность, разрешение, просьба)" },
+  { term: "cannot / can't", meaning: "не могу / нельзя — отрицание can; cannot пишется слитно" },
+  { term: "could", meaning: "мог (прошлое) / мог бы (вежливость) / возможно (вероятность)" },
+  { term: "must", meaning: "должен (внутренний долг, закон); должно быть (дедукция)" },
+  { term: "mustn't", meaning: "нельзя — запрет, противоположность must" },
+  { term: "have to", meaning: "приходится / должен (внешнее обязательство); меняется по лицам" },
+  { term: "had to", meaning: "пришлось — прошедшая форма для must / have to" },
+  { term: "don't have to", meaning: "не обязан — отсутствие обязательства, не запрет" },
+  { term: "should", meaning: "стоит, следует — совет, рекомендация" },
+  { term: "ought to", meaning: "стоит — синоним should, более формальный" },
+  { term: "shouldn't", meaning: "не стоит — мягкий совет «лучше не»" },
+  { term: "may", meaning: "возможно (вероятность); можно (формальное разрешение)" },
+  { term: "may not", meaning: "может не / нельзя — без сокращения; в правилах для формального запрета" },
+  { term: "might", meaning: "возможно, чуть менее уверенно, чем may" },
+  { term: "will", meaning: "буду / обещаю / сделаю (намерение, спонтанное решение)" },
+  { term: "won't", meaning: "не буду — сокращение от will not" },
+  { term: "would", meaning: "бы / каждый раз делал (привычка прошлого); вежливое предпочтение" },
+  { term: "wouldn't", meaning: "не стал бы — отрицание would" },
+  { term: "be able to", meaning: "быть способным — заменяет can в прошлом (разовый успех) и будущем" },
+  { term: "was/were able to", meaning: "сумел в конкретной ситуации (прошлое)" },
+  { term: "will be able to", meaning: "сможет — будущее для способности" },
+  { term: "used to + V", meaning: "раньше делал / был — состояние или повторявшееся действие в прошлом" },
+  { term: "would (привычка прошлого)", meaning: "только для повторяющихся действий, не для состояний" },
+  { term: "ability", meaning: "способность" },
+  { term: "permission", meaning: "разрешение" },
+  { term: "obligation", meaning: "обязательство" },
+  { term: "prohibition", meaning: "запрет" },
+  { term: "advice", meaning: "совет" },
+  { term: "request", meaning: "просьба" },
+  { term: "offer", meaning: "предложение помощи" },
+  { term: "deduction", meaning: "дедукция — вывод о факте по косвенным признакам" },
+  { term: "possibility", meaning: "вероятность, возможность" },
+  { term: "Would you mind + V-ing?", meaning: "Не будете ли вы возражать против... — формально-вежливая просьба" },
+  { term: "have got to", meaning: "разговорный синоним have to (I've got to go = I have to go)" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Модальный → значения</span>
+    <span class="kc-trainer-hint">Запомни оттенки и типовые контексты</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Ситуация → модальный</span>
+    <span class="kc-trainer-hint">Соотнеси контекст с подходящим словом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Какой смысл несёт модальный?</span>
+    <span class="kc-trainer-hint">Разложи предложения по пяти корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши модальный</span>
+    <span class="kc-trainer-hint">Подбери правильный модальный или конструкцию</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение с модальным</span>
+    <span class="kc-trainer-hint">Расставь слова — особенно в вопросах</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 26-36 (can, could, may, might, must, have to, should, would).
+- **Swan M., Practical English Usage** — §341-360 (modal auxiliary verbs), §156 (can и be able to).
+- **English Page — Modal verbs overview** — englishpage.com/modals/modalintro.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/modals

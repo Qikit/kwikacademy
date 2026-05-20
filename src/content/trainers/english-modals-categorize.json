@@ -1,0 +1,92 @@
+{
+  "course": "english",
+  "lesson": "english-modals",
+  "title": "Какой смысл несёт модальный?",
+  "description": "Определи, что выражает модальный в предложении: способность или разрешение, обязательство, совет или вероятность.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "ability", "label": "Способность / разрешение" },
+      { "id": "obligation", "label": "Обязательство / запрет" },
+      { "id": "advice", "label": "Совет" },
+      { "id": "probability", "label": "Вероятность / дедукция" }
+    ],
+    "items": [
+      {
+        "text": "I can swim, but not very fast.",
+        "category": "ability",
+        "explain": "Общая способность в настоящем → can как «умею»."
+      },
+      {
+        "text": "May I come in?",
+        "category": "ability",
+        "explain": "Формальная просьба разрешения → may. Вежливый регистр. В этой корзине вместе со способностью: оба смысла идут через can/could/may."
+      },
+      {
+        "text": "You must wear a seatbelt by law.",
+        "category": "obligation",
+        "explain": "Закон, безусловное правило → must в значении обязательства."
+      },
+      {
+        "text": "You should see a doctor.",
+        "category": "advice",
+        "explain": "Совет → should. Не приказ (must) и не правило (have to)."
+      },
+      {
+        "text": "He must be at home — the lights are on.",
+        "category": "probability",
+        "explain": "Дедукция по косвенному признаку (свет горит) → must be ~95%."
+      },
+      {
+        "text": "Could you open the window, please?",
+        "category": "ability",
+        "explain": "Вежливая просьба → could you. Не способность («мог ли в прошлом»), а просьба в настоящем. Тот же can/could, что и для умений."
+      },
+      {
+        "text": "It might rain later — take an umbrella.",
+        "category": "probability",
+        "explain": "Прогноз с неуверенностью → might. Уверенность около 30-50%."
+      },
+      {
+        "text": "I have to finish this report by Friday.",
+        "category": "obligation",
+        "explain": "Внешний дедлайн → have to. Кто-то поставил срок, я подчиняюсь."
+      },
+      {
+        "text": "She can speak three languages.",
+        "category": "ability",
+        "explain": "Способность как навык → can. Не «можно ей говорить», а «умеет»."
+      },
+      {
+        "text": "You shouldn't drink so much coffee.",
+        "category": "advice",
+        "explain": "Мягкий совет «лучше не» → shouldn't. Не запрет, не правило."
+      },
+      {
+        "text": "You mustn't tell anyone about this.",
+        "category": "obligation",
+        "explain": "Запрет → mustn't. Делать это нельзя. Не путать с don't have to."
+      },
+      {
+        "text": "His car isn't here — he can't be at home.",
+        "category": "probability",
+        "explain": "Дедуктивный запрет, исключение возможности → can't be. Противоположность must be."
+      },
+      {
+        "text": "We were able to fix the bug before the release.",
+        "category": "ability",
+        "explain": "Разовый успех в прошлом → was/were able to. Сумели в конкретной ситуации."
+      },
+      {
+        "text": "You can sit here, the seat is free.",
+        "category": "ability",
+        "explain": "Бытовое разрешение → can. «Можно сесть.» Тот же can, что и для умений."
+      },
+      {
+        "text": "You ought to apologise to her.",
+        "category": "advice",
+        "explain": "Совет, чуть формальнее → ought to. Синоним should."
+      }
+    ]
+  }
+}

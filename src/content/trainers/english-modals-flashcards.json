@@ -1,0 +1,86 @@
+{
+  "course": "english",
+  "lesson": "english-modals",
+  "title": "Модальные — значения и контексты",
+  "description": "Запомни оттенки каждого модального и типовые ситуации, в которых он работает.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "can",
+        "back": "Способность в настоящем + бытовое разрешение + простая просьба. «I can swim.» «You can sit here.» «Can you pass the salt?» Отрицание — can't / cannot. По лицам не меняется.",
+        "hint": "умею / можно"
+      },
+      {
+        "front": "could",
+        "back": "Три смысла: 1) общая способность в прошлом — «I could read at five». 2) Вежливая просьба разрешения — «Could I borrow your pen?». 3) Возможность, гипотеза — «The keys could be in the car». НЕ для разового успеха в прошлом — там was/were able to.",
+        "hint": "мог / можно ли / возможно"
+      },
+      {
+        "front": "must",
+        "back": "1) Внутренний долг, моральное обязательство, закон — «You must wear a seatbelt». 2) Дедукция с высокой уверенностью — «He must be at home (свет горит)». Прошедшего нет → используется had to. Запрет — mustn't.",
+        "hint": "обязан / должно быть"
+      },
+      {
+        "front": "have to",
+        "back": "Внешнее обязательство, не моё желание — «I have to work on Saturday». Меняется по лицам (he has to), вопрос и отрицание через do/does (Do you have to? I don't have to). Прошедшее — had to.",
+        "hint": "приходится"
+      },
+      {
+        "front": "mustn't vs don't have to",
+        "back": "mustn't = запрещено («You mustn't tell anyone» = нельзя говорить). don't have to = не обязан («You don't have to tell anyone» = можешь говорить, можешь нет). Это противоположные смыслы — частая ловушка.",
+        "hint": "запрет vs необязательность"
+      },
+      {
+        "front": "should / ought to",
+        "back": "Совет, рекомендация. «You should see a doctor.» «You ought to apologise.» Ought to — синоним should, чуть формальнее. Вопрос — Should I? Отрицание — shouldn't.",
+        "hint": "стоит / следует"
+      },
+      {
+        "front": "may",
+        "back": "Два смысла: 1) Возможность, средняя уверенность — «It may rain later». 2) Формальное разрешение — «May I come in?». Отрицание — may not (без сокращения), используется в правилах.",
+        "hint": "возможно / можно (формально)"
+      },
+      {
+        "front": "might",
+        "back": "Возможность, чуть менее уверенно, чем may. «I might come — I'm not sure yet.» В современном языке часто заменяет may. Прошедшая форма от may существует, но в живой речи редка.",
+        "hint": "может быть"
+      },
+      {
+        "front": "will / would (вежливость)",
+        "back": "would — формально-вежливая просьба или предпочтение. «Would you mind closing the door?» «I'd prefer tea.» will — категоричнее, иногда раздражённо: «Will you stop talking?». В обычной просьбе лучше could / would.",
+        "hint": "не будете ли / предпочёл бы"
+      },
+      {
+        "front": "be able to",
+        "back": "Заменяет can там, где у can нет формы: 1) Разовый успех в прошлом — «We were able to escape» (НЕ could). 2) Будущее — «I'll be able to drive next month». 3) Перфект — «I haven't been able to reach him».",
+        "hint": "сумел / смогу"
+      },
+      {
+        "front": "Дедукция: must be / can't be",
+        "back": "must be = почти уверен, что так («He must be tired — he hasn't slept»). can't be = почти уверен, что нет («He can't be at home — his car isn't here»). Между ними по убыванию: should be → could/might be → can't be.",
+        "hint": "почти точно / точно нет"
+      },
+      {
+        "front": "would (привычка прошлого) vs used to",
+        "back": "would — только для повторявшихся действий: «Every summer we would go to the lake». used to — и для действий, и для состояний: «I used to live in Berlin» (would тут нельзя — это состояние, не действие).",
+        "hint": "раньше делал — действие vs состояние"
+      },
+      {
+        "front": "Общая схема: V после модального",
+        "back": "Модальный + начальная форма (V1) без to. Исключения с to: have to, ought to, used to. Никогда: модальный + V-s (she cans — неверно), модальный + V-ing (I can swimming — неверно), модальный + to (I can to swim — неверно).",
+        "hint": "форма основного глагола"
+      },
+      {
+        "front": "Вопрос с модальным",
+        "back": "Инверсия: модальный + подлежащее + V. Can you help? Should I call? Must I stay? Without вспомогательного do. С have to — иначе: Do you have to work? (потому что have to не настоящий модальный).",
+        "hint": "порядок слов в вопросе"
+      },
+      {
+        "front": "Отрицание у модальных",
+        "back": "Модальный + not, без do. can not → cannot/can't, will not → won't, must not → mustn't, should not → shouldn't, would not → wouldn't. У have to — через don't: I don't have to go.",
+        "hint": "как сказать «не»"
+      }
+    ]
+  }
+}

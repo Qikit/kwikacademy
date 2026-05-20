@@ -1,0 +1,66 @@
+{
+  "course": "english",
+  "lesson": "english-modals",
+  "title": "Ситуация → модальный",
+  "description": "Подбери модальный или конструкцию к контексту.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "Ремень безопасности — требование закона",
+        "right": "must",
+        "explain": "Закон, безусловное правило → must. «You must wear a seatbelt.»"
+      },
+      {
+        "left": "Босс требует выйти в субботу",
+        "right": "have to",
+        "explain": "Внешнее давление, не моё желание → have to. «I have to work on Saturday.»"
+      },
+      {
+        "left": "Дружеский совет («тебе бы сходить к врачу»)",
+        "right": "should",
+        "explain": "Совет, рекомендация → should. Не must (это приказ) и не have to."
+      },
+      {
+        "left": "Запрет: «никому ни слова»",
+        "right": "mustn't",
+        "explain": "Запрет → mustn't. «You mustn't tell anyone.» НЕ don't have to — это противоположный смысл."
+      },
+      {
+        "left": "«Можешь не приходить, если устал»",
+        "right": "don't have to",
+        "explain": "Отсутствие обязательства → don't have to. Выбор за человеком. mustn't здесь стало бы запретом."
+      },
+      {
+        "left": "Вежливая просьба разрешения у незнакомца",
+        "right": "could / may",
+        "explain": "Вежливое разрешение → could (нейтрально-вежливо) или may (формально). «Could / May I borrow your pen?»"
+      },
+      {
+        "left": "Свет в окнах горит — он, видимо, дома",
+        "right": "must be",
+        "explain": "Дедукция с высокой уверенностью → must be. Косвенное доказательство убеждает."
+      },
+      {
+        "left": "Его машины нет у дома — точно не дома",
+        "right": "can't be",
+        "explain": "Дедуктивный запрет, исключаю возможность → can't be. Противоположность must be."
+      },
+      {
+        "left": "Сумел сдать тест с первого раза",
+        "right": "was/were able to",
+        "explain": "Разовый успех в прошлом → was/were able to. «I was able to pass the test.» НЕ could — это была бы общая способность."
+      },
+      {
+        "left": "Каждое лето в детстве ездили к бабушке",
+        "right": "would / used to",
+        "explain": "Повторявшееся действие в прошлом → would или used to. Для действий работают оба."
+      },
+      {
+        "left": "Раньше жил в Берлине, теперь нет",
+        "right": "used to",
+        "explain": "Состояние в прошлом → только used to. «I used to live in Berlin.» Would тут не работает — это состояние, не действие."
+      }
+    ]
+  }
+}

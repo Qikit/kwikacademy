@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-modals",
+  "title": "Модальные — правила в контексте",
+  "description": "Выбери правильный модальный или конструкцию.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "You ___ tell anyone — it's a secret.",
+        "options": ["mustn't", "don't have to", "shouldn't", "may not"],
+        "correctIndex": 0,
+        "explain": "Запрет («нельзя говорить») → mustn't. don't have to означало бы «не обязан» — противоположный смысл."
+      },
+      {
+        "prompt": "You ___ come if you don't want to — it's optional.",
+        "options": ["mustn't", "don't have to", "can't", "shouldn't"],
+        "correctIndex": 1,
+        "explain": "«Не обязан, на твой выбор» → don't have to. mustn't был бы запретом «приходить нельзя»."
+      },
+      {
+        "prompt": "The fire was huge, but we ___ escape through the window.",
+        "options": ["could", "were able to", "can", "must"],
+        "correctIndex": 1,
+        "explain": "Разовый успех в конкретной прошлой ситуации → was/were able to. could здесь означало бы общую способность («в принципе умели бежать»)."
+      },
+      {
+        "prompt": "She isn't answering — she ___ in a meeting.",
+        "options": ["must be", "can be", "should", "can't be"],
+        "correctIndex": 0,
+        "explain": "Дедукция по косвенному признаку (не отвечает) с высокой уверенностью → must be. Не can be — это общая возможность, не вероятность здесь."
+      },
+      {
+        "prompt": "His car isn't in the parking lot — he ___ at the office.",
+        "options": ["must be", "could be", "can't be", "shouldn't"],
+        "correctIndex": 2,
+        "explain": "Исключение возможности: машины нет → его точно нет на месте → can't be."
+      },
+      {
+        "prompt": "I have an exam tomorrow — I ___ study tonight.",
+        "options": ["must", "may", "could", "would"],
+        "correctIndex": 0,
+        "explain": "Внутренняя обязанность, личная установка («я сам понимаю важность») → must. Если бы был внешний экзаменатор-надзиратель, подошло бы have to."
+      },
+      {
+        "prompt": "It ___ rain later — look at those clouds.",
+        "options": ["can", "must", "might", "should"],
+        "correctIndex": 2,
+        "explain": "Прогноз вероятности → might (или may). can — общая возможность, не прогноз на конкретный день."
+      },
+      {
+        "prompt": "___ you mind opening the window?",
+        "options": ["Will", "Would", "Should", "Must"],
+        "correctIndex": 1,
+        "explain": "Формально-вежливая просьба → Would you mind + V-ing. Стандартная фиксированная конструкция."
+      },
+      {
+        "prompt": "When I was five, I ___ already read.",
+        "options": ["can", "could", "was able to", "should"],
+        "correctIndex": 1,
+        "explain": "Общая способность в прошлом («умел вообще») → could. was able to работает для разового успеха, здесь — навык."
+      },
+      {
+        "prompt": "Next year I ___ speak Spanish fluently — that's my goal.",
+        "options": ["can", "will can", "will be able to", "could"],
+        "correctIndex": 2,
+        "explain": "У can нет будущей формы. Способность в будущем → will be able to. «will can» — нет такой конструкции."
+      },
+      {
+        "prompt": "You ___ apologise to her — that's the right thing to do.",
+        "options": ["must", "have to", "ought to", "can"],
+        "correctIndex": 2,
+        "explain": "Совет с моральным оттенком → ought to (синоним should, чуть формальнее). must был бы приказом, have to — внешним правилом."
+      },
+      {
+        "prompt": "He ___ in Berlin for ten years before he moved to Moscow.",
+        "options": ["would live", "used to live", "should live", "can live"],
+        "correctIndex": 1,
+        "explain": "Состояние в прошлом → used to. would тут не работает — оно только для повторявшихся действий, не для состояний."
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TrainerLoader from '../../../components/trainers/TrainerLoader.tsx';
+
+export async function getStaticPaths() {
+  const trainers = await getCollection('trainers');
+  return trainers.map((t) => ({
+    params: { topic: t.data.course, trainer: t.id },
+    props: { trainer: t },
+  }));
+}
+
+const { trainer } = Astro.props;
+---
+
+<BaseLayout title={`${trainer.data.title} — KwikAcademy`}>
+  <section style="max-width:600px;margin:0 auto;padding:48px 24px 96px;">
+    <p class="eyebrow">Тренажёр</p>
+    <h1 style="font-size:clamp(28px,5vw,42px);font-weight:800;margin:12px 0 32px;">{trainer.data.title}</h1>
+    <TrainerLoader client:load slug={trainer.id} data={trainer.data.data} />
+  </section>
+</BaseLayout>

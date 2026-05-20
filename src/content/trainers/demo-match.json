@@ -1,0 +1,12 @@
+{
+  "course": "demo",
+  "title": "Демо-сопоставление",
+  "description": "Проверка движка Match.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      { "left": "cat", "right": "кот" },
+      { "left": "dog", "right": "пёс" }
+    ]
+  }
+}

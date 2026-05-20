@@ -1,0 +1,12 @@
+{
+  "course": "demo",
+  "title": "Демо-карточки",
+  "description": "Проверка движка Flashcards.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Hello", "back": "Привет", "hint": "приветствие" },
+      { "front": "Bye", "back": "Пока" }
+    ]
+  }
+}

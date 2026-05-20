@@ -1,0 +1,9 @@
+{
+  "course": "demo",
+  "title": "Демо-пропуски",
+  "description": "Проверка движка Cloze.",
+  "data": {
+    "type": "cloze",
+    "items": [{ "text": "I have ___ apple and ___ book.", "answers": ["an", "a"] }]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-questions",
+  "title": "Утверждение → правильный tag",
+  "description": "Подбери к каждому утверждению или отрицанию его tag-question.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "She lives in London,",
+        "right": "doesn't she?",
+        "explain": "Утверждение в Present Simple, 3-е лицо ед. → отрицательный tag с doesn't + местоимение she."
+      },
+      {
+        "left": "You can swim,",
+        "right": "can't you?",
+        "explain": "Утверждение с модальным can → отрицательный tag с тем же модальным: can't + you."
+      },
+      {
+        "left": "He has finished,",
+        "right": "hasn't he?",
+        "explain": "Present Perfect, 3-е лицо ед. → отрицательный tag через тот же аукс has → hasn't he."
+      },
+      {
+        "left": "They went home,",
+        "right": "didn't they?",
+        "explain": "Past Simple, своего аукса в утверждении нет → подставляем did для tag и инвертируем: didn't they."
+      },
+      {
+        "left": "She doesn't smoke,",
+        "right": "does she?",
+        "explain": "Отрицание Present Simple → утвердительный tag с тем же аукс: does she."
+      },
+      {
+        "left": "You can't drive,",
+        "right": "can you?",
+        "explain": "Отрицание с модальным can't → утвердительный tag без n't: can you."
+      },
+      {
+        "left": "He isn't ready,",
+        "right": "is he?",
+        "explain": "Отрицание с be (isn't) → утвердительный tag: is he."
+      },
+      {
+        "left": "I'm late,",
+        "right": "aren't I?",
+        "explain": "Особый случай: для «I am» в tag используется aren't I, а не amn't I (такой формы в литературной норме нет)."
+      },
+      {
+        "left": "Let's go,",
+        "right": "shall we?",
+        "explain": "После «Let's» tag — это shall we?. Не doesn't us, не don't we."
+      },
+      {
+        "left": "It was expensive,",
+        "right": "wasn't it?",
+        "explain": "Past Simple глагола be (was) → отрицательный tag wasn't + it."
+      }
+    ]
+  }
+}

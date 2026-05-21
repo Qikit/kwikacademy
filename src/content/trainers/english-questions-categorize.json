@@ -1,0 +1,77 @@
+{
+  "course": "english",
+  "lesson": "english-questions",
+  "title": "Тип вопроса",
+  "description": "Разложи вопросы по четырём типам: general (yes/no), special (wh-), subject (без аукс) и tag.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "general", "label": "General (yes/no)" },
+      { "id": "special", "label": "Special (wh-)" },
+      { "id": "subject", "label": "Subject (без аукс)" },
+      { "id": "tag", "label": "Tag question" }
+    ],
+    "items": [
+      {
+        "text": "Do you speak English?",
+        "category": "general",
+        "explain": "Yes/no вопрос с подставленным do — типичный general question."
+      },
+      {
+        "text": "Where do you live?",
+        "category": "special",
+        "explain": "Есть вопросительное слово where + аукс do + подлежащее + V → special wh-question."
+      },
+      {
+        "text": "Who lives here?",
+        "category": "subject",
+        "explain": "WH-слово who само подлежащее, аукса нет, глагол lives в 3-м лице ед. → subject question."
+      },
+      {
+        "text": "She lives in London, doesn't she?",
+        "category": "tag",
+        "explain": "Утверждение + хвостик doesn't she? — это tag question."
+      },
+      {
+        "text": "Are you ready?",
+        "category": "general",
+        "explain": "Yes/no с инверсией be — без вопросительного слова → general question."
+      },
+      {
+        "text": "What happened?",
+        "category": "subject",
+        "explain": "What — подлежащее. Глагол happened в V2 без did. Subject question."
+      },
+      {
+        "text": "When did you arrive?",
+        "category": "special",
+        "explain": "WH-слово when + did + S + V (начальная форма) → special question."
+      },
+      {
+        "text": "You can swim, can't you?",
+        "category": "tag",
+        "explain": "Утверждение с модальным + отрицательный tag can't you → tag question."
+      },
+      {
+        "text": "Have you finished?",
+        "category": "general",
+        "explain": "Перфект через инверсию have. Ждёт yes/no → general question."
+      },
+      {
+        "text": "Which book costs more?",
+        "category": "subject",
+        "explain": "Which book — подлежащее, costs в 3-м лице без did. Subject question."
+      },
+      {
+        "text": "Why has she left?",
+        "category": "special",
+        "explain": "WH why + аукс has + S + V3 → special wh-question."
+      },
+      {
+        "text": "He doesn't smoke, does he?",
+        "category": "tag",
+        "explain": "Отрицание + утвердительный tag does he? → tag question."
+      }
+    ]
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "course": "english",
+  "lesson": "english-questions",
+  "title": "Вопросы и отрицания — flashcards",
+  "description": "Шесть типов вопросов, формулы и сокращённые отрицания.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "General question (yes/no)",
+        "back": "Аукс + S + V. Если своего аукса нет — подставляем do/does/did. «Do you speak English? / Are you ready? / Have you finished? / Can you swim?»",
+        "hint": "ждём «да / нет»"
+      },
+      {
+        "front": "Special question (wh-)",
+        "back": "WH + аукс + S + V. «Where do you live? / What are you doing? / When did you arrive? / Why has she left?»",
+        "hint": "запрос конкретной информации"
+      },
+      {
+        "front": "Subject question",
+        "back": "WH-слово само подлежащее → прямой порядок, без do/does/did. «Who lives here? / What happened? / Which costs more?» Глагол в 3-м лице ед. числа.",
+        "hint": "кто / что сделал"
+      },
+      {
+        "front": "Object question (контраст)",
+        "back": "WH-слово — дополнение, нужен аукс. «Who(m) did John see?» vs «Who saw John?» — две разные конструкции.",
+        "hint": "кого / кому / что (как объект)"
+      },
+      {
+        "front": "Tag question — утверждение",
+        "back": "После утверждения — отрицательный tag. Аукс тот же, что в основной части, плюс местоимение. «She lives here, doesn't she? / You can swim, can't you? / He has finished, hasn't he?»",
+        "hint": "правда?"
+      },
+      {
+        "front": "Tag question — отрицание",
+        "back": "После отрицания — утвердительный tag. «She doesn't live here, does she? / You can't swim, can you? / He hasn't finished, has he?»",
+        "hint": "верно?"
+      },
+      {
+        "front": "I'm late, _____ ?",
+        "back": "aren't I? Литературного `amn't` нет — стандартный tag для «I am» — это aren't I?",
+        "hint": "особый случай"
+      },
+      {
+        "front": "Negative question",
+        "back": "Аукс с n't + S + V. «Don't you like it? / Aren't you tired? / Hasn't she arrived yet?» Передают удивление, заботу, упрёк или приглашение (Why don't we...).",
+        "hint": "удивление или ожидание"
+      },
+      {
+        "front": "Embedded question (wh-)",
+        "back": "Внутри обёртки — прямой порядок, без инверсии. «Could you tell me where the station is?» (НЕ «where is the station»). Аукса нет, глагол в 3-м лице (starts, lives).",
+        "hint": "вежливая обёртка"
+      },
+      {
+        "front": "Embedded question (yes/no)",
+        "back": "Через if или whether. «Do you know if they're coming? / I'd like to know whether or not he agrees.» Whether чуть формальнее, особенно с «or not».",
+        "hint": "yes/no в обёртке"
+      },
+      {
+        "front": "Отрицание Present Simple",
+        "back": "don't / doesn't + V1. «I don't smoke. / She doesn't like coffee.» После doesn't — начальная форма без -s: НЕ «doesn't likes».",
+        "hint": "обычные глаголы"
+      },
+      {
+        "front": "Отрицание Past Simple",
+        "back": "didn't + V1. «I didn't go. / He didn't have breakfast.» НЕ «not went», НЕ «didn't went».",
+        "hint": "прошедшее"
+      },
+      {
+        "front": "Отрицание Perfect и Continuous",
+        "back": "Аукс + n't + смысловой. haven't / hasn't / hadn't + V3. isn't / aren't / wasn't / weren't + V-ing. «I haven't finished. / She isn't working today.»",
+        "hint": "через свой аукс"
+      },
+      {
+        "front": "Отрицание модальных",
+        "back": "Модальный + n't + V1. won't, wouldn't, can't, couldn't, shouldn't, mustn't, needn't. «I can't swim. / You shouldn't smoke.» cannot пишется слитно — единственный модальный с такой особенностью.",
+        "hint": "модальные"
+      },
+      {
+        "front": "mustn't ≠ don't have to",
+        "back": "mustn't = запрет, «нельзя» (You mustn't smoke here). don't have to = отсутствие необходимости, «не обязан» (You don't have to come if you don't want). Это разные смыслы, путать опасно.",
+        "hint": "ловушка"
+      },
+      {
+        "front": "Ответ на negative question",
+        "back": "Ответ строится от факта, а не от формы вопроса. «Don't you like it?» — «Yes, I do» = да, нравится; «No, I don't» = нет, не нравится. Знак отрицания в вопросе на ответ не влияет.",
+        "hint": "yes = факт да, no = факт нет"
+      },
+      {
+        "front": "Tag после Let's",
+        "back": "Let's + V, ..., shall we? «Let's go for a walk, shall we? / Let's order pizza, shall we?» Особый случай — не doesn't us / does we.",
+        "hint": "особый tag"
+      },
+      {
+        "front": "Двойное отрицание",
+        "back": "В стандартном английском не работает. После don't / didn't / doesn't — anything, anyone, anywhere, ever. «I don't know anything.» НЕ «I don't know nothing» (это просторечие или песенный стиль, не норма).",
+        "hint": "избегать"
+      }
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-questions",
+  "title": "Поставь аукс или вопросительное слово",
+  "description": "Впиши пропущенный вспомогательный глагол или связку embedded-вопроса.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "___ you speak Spanish?",
+        "answers": ["Do", "do"],
+        "explain": "Present Simple, обычный глагол speak → аукс do для общего вопроса. С you — do, не does."
+      },
+      {
+        "text": "Where ___ she live?",
+        "answers": ["does"],
+        "explain": "Special question Present Simple, 3-е лицо ед. → does. Дальше — начальная форма live."
+      },
+      {
+        "text": "What ___ you doing right now?",
+        "answers": ["are"],
+        "explain": "Present Continuous, you → are. Special question: WH + аукс + S + V-ing."
+      },
+      {
+        "text": "Who ___ the window? (= кто разбил)",
+        "answers": ["broke"],
+        "explain": "Subject question: who — подлежащее, did не нужен. Глагол сразу в V2 (broke), без аукс."
+      },
+      {
+        "text": "Could you tell me what time the film ___ ?",
+        "answers": ["starts"],
+        "explain": "Embedded question: прямой порядок, без инверсии. Глагол в 3-м лице ед. — starts. НЕ «does the film start»."
+      },
+      {
+        "text": "She works in a bank, ___ she?",
+        "answers": ["doesn't"],
+        "explain": "Утверждение Present Simple, 3-е лицо ед. → отрицательный tag doesn't + she."
+      },
+      {
+        "text": "I'm right, ___ I?",
+        "answers": ["aren't"],
+        "explain": "Особый случай: tag для «I am» — это aren't I. Литературного amn't нет."
+      },
+      {
+        "text": "He ___ smoke — he quit two years ago.",
+        "answers": ["doesn't"],
+        "explain": "Отрицание Present Simple, 3-е лицо ед. → doesn't + начальная форма smoke."
+      },
+      {
+        "text": "I ___ go to the party yesterday — I was sick.",
+        "answers": ["didn't"],
+        "explain": "Отрицание Past Simple → didn't + начальная форма go. НЕ «not went», НЕ «didn't went»."
+      },
+      {
+        "text": "Do you know ___ they're coming or not?",
+        "answers": ["whether", "if"],
+        "explain": "Embedded yes/no вопрос. Whether (особенно с «or not») или if — обе формы корректны."
+      }
+    ]
+  }
+}

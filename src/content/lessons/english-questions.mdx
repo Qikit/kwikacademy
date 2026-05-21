@@ -2,12 +2,491 @@
 course: english
 order: 7
 phase: "Фаза 1 · Бытовой английский"
-title: "Вопросы и отрицания"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Как строить вопросы и отрицания во всех временах."
-placeholder: true
-tags: [english]
+title: "Вопросы и отрицания — все формы"
+eyebrow: "Грамматика · уровень A2-B1"
+readingMinutes: 24
+summary: "Шесть типов вопросов и полный набор кратких отрицаний. Когда инверсия, когда do-support, когда порядок остаётся прямым."
+tags: [questions, grammar, A2, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Вопросы и отрицания» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем разбирать вопросы отдельно
+
+Половина живого разговора — это вопросы. «Где ты живёшь?», «Ты согласен?», «Не правда ли?», «А ты, случайно, не знаешь, во сколько начинается?». Без вопросов диалог превращается в обмен заявлениями, не в общение.
+
+В русском вопрос строится в основном интонацией: «Ты говоришь по-английски?» отличается от «Ты говоришь по-английски.» только тоном. Слова и их порядок — почти те же. Поэтому русскоязычные привычно переносят эту модель в английский и говорят «You speak English?», «You know him?», «She lives here?». Носитель поймёт, но услышит ломаную речь — английский про вопросы устроен иначе.
+
+В английском вопрос — это структура. Глагол-помощник встаёт перед подлежащим, у глагола `be` свои правила, у вопроса о подлежащем — третий сценарий, у косвенного вопроса — четвёртый. Плюс tag questions («right?», «isn't it?»), без которых разговорный английский звучит сухо. И отдельный пласт — отрицания во всех временах с их короткими формами.
+
+Этот урок собирает всё это в одну карту: какие бывают типы вопросов, как они строятся, где русскоязычные ломают конструкцию и какие кратки отрицаний нужно держать в активной памяти.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Английский вопрос строится **инверсией**: вспомогательный глагол (или модальный, или `be`) встаёт перед подлежащим. Если своего вспомогательного нет — подставляется `do / does / did` (do-support). Из этого правила два исключения: **вопрос о подлежащем** (порядок прямой, без аукс) и **косвенный вопрос** (порядок прямой внутри придаточного).
+</Callout>
+
+## 3. Формы и грамматика
+
+### General questions (yes/no)
+
+Вспомогательный или модальный глагол — перед подлежащим. Дальше идёт смысловой глагол.
+
+| Время / модальный | Утверждение | Вопрос |
+| --- | --- | --- |
+| Present Simple | You speak English. | Do you speak English? |
+| Present Simple (be) | She is ready. | Is she ready? |
+| Present Continuous | They are working. | Are they working? |
+| Present Perfect | He has finished. | Has he finished? |
+| Past Simple | They went home. | Did they go home? |
+| Past Simple (be) | He was tired. | Was he tired? |
+| Past Continuous | You were waiting. | Were you waiting? |
+| Past Perfect | She had left. | Had she left? |
+| Future will | We will come. | Will we come? |
+| Future be going to | She is going to call. | Is she going to call? |
+| Can / could / should / must | You can swim. | Can you swim? |
+
+### Special questions (wh-)
+
+Сначала вопросительное слово, потом обычная структура вопроса.
+
+| Слово | Пример |
+| --- | --- |
+| What | What are you doing? |
+| Where | Where do you live? |
+| When | When did you arrive? |
+| Why | Why has she left? |
+| Who(m) | Who(m) did you see? |
+| Which | Which book did you choose? |
+| Whose | Whose phone is this? |
+| How | How does it work? |
+| How long | How long have you lived here? |
+| How often | How often do you exercise? |
+
+Старая литературная норма различает `who` (подлежащее) и `whom` (дополнение). В современной разговорной речи `who` вытеснил `whom` почти везде — `Who did you see?` нормально звучит и в речи, и в нейтральном письме. `Whom` остаётся в формальных текстах и после предлогов: `To whom did you give it?` (но и здесь живая речь предпочитает `Who did you give it to?`).
+
+### Subject questions
+
+Когда вопросительное слово само является подлежащим, аукс **не нужен**. Порядок — как в утверждении.
+
+| Тип | Пример | Что отвечаем |
+| --- | --- | --- |
+| Подлежащее | Who lives here? | Anna lives here. |
+| Подлежащее | What happened? | Nothing serious. |
+| Подлежащее | Which costs more? | The blue one. |
+| Дополнение (для контраста) | Who(m) did John see? | (He saw) Anna. |
+
+Глагол в Subject question стоит в 3-м лице ед. числа (`lives`, не `live`), даже если ответ во множественном (`Anna and Pete live here`). Это норма.
+
+### Tag questions
+
+Утверждение → отрицательный «хвост». Отрицание → утвердительный «хвост». Аукс в хвосте — тот же, что в основной части (или подразумевается `do / does / did`).
+
+| Основная часть | Хвост | Полный пример |
+| --- | --- | --- |
+| She lives in London, | doesn't she? | She lives in London, doesn't she? |
+| You can swim, | can't you? | You can swim, can't you? |
+| He has finished, | hasn't he? | He has finished, hasn't he? |
+| They went home, | didn't they? | They went home, didn't they? |
+| She doesn't smoke, | does she? | She doesn't smoke, does she? |
+| You can't swim, | can you? | You can't swim, can you? |
+| He isn't ready, | is he? | He isn't ready, is he? |
+| I'm late, | aren't I? | I'm late, aren't I? |
+
+Особые случаи: `I am` → tag `aren't I?` (форма `amn't` в литературной норме отсутствует). После `let's` → `shall we?` (`Let's go, shall we?`). После повелительного — `will you? / won't you? / would you?` (`Open the window, will you?`).
+
+**Интонация решает смысл**. Tag с восходящей интонацией (rising) — настоящий вопрос, говорящий не уверен и ждёт подтверждения. С нисходящей (falling) — риторический, говорящий ждёт согласия, это почти утверждение с приглашением кивнуть.
+
+### Negative questions
+
+Аукс с отрицанием выносится перед подлежащим: `Don't you... ? / Aren't you... ? / Hasn't she... ?`.
+
+| Пример | Смысловой оттенок |
+| --- | --- |
+| Don't you like it? | Удивление: я думал, нравится. |
+| Aren't you tired? | Забота или ожидание: должен быть устал. |
+| Hasn't she arrived yet? | Нетерпение: давно ждём. |
+| Wasn't it expensive? | Сомнение: казалось дорого. |
+| Why don't we go out? | Предложение, не упрёк. |
+
+Полная форма (`Do you not like it?`) звучит формально и эмоционально нейтрально. В разговорной речи стандарт — сокращённая.
+
+### Indirect / embedded questions
+
+Когда вопрос «обёрнут» в более вежливую конструкцию (`Could you tell me...`, `Do you know...`, `I wonder...`, `I'd like to know...`), порядок внутри становится **прямым**, как в утверждении. Аукс из прямого вопроса исчезает.
+
+| Прямой вопрос | Embedded |
+| --- | --- |
+| Where is the station? | Could you tell me where the station is? |
+| What time does it start? | Do you know what time it starts? |
+| Why did she leave? | I wonder why she left. |
+| Are they coming? | I'd like to know if / whether they're coming. |
+| Has he finished? | Could you tell me if he has finished? |
+
+Для yes/no вопросов в embedded нужна связка `if` или `whether` — нельзя «обернуть» yes/no вопрос без неё. `Whether` чуть формальнее, чем `if`, особенно с `or not`: `whether or not they're coming`.
+
+### Отрицания во всех временах
+
+Везде отрицание ставится через `not` после первого вспомогательного или модального глагола, и в речи почти всегда сжимается.
+
+| Аукс / модальный | Полная форма | Краткая |
+| --- | --- | --- |
+| do | do not | don't |
+| does | does not | doesn't |
+| did | did not | didn't |
+| am | am not | I'm not (в вопросе — `aren't I?`) |
+| is | is not | isn't |
+| are | are not | aren't |
+| was | was not | wasn't |
+| were | were not | weren't |
+| have | have not | haven't |
+| has | has not | hasn't |
+| had | had not | hadn't |
+| will | will not | won't |
+| would | would not | wouldn't |
+| can | cannot | can't |
+| could | could not | couldn't |
+| should | should not | shouldn't |
+| must | must not | mustn't |
+| need | need not | needn't |
+| may | may not | (mayn't редко, обычно полная форма) |
+
+`Cannot` пишется слитно — это единственный модальный с такой особенностью. `Mustn't` означает запрет («нельзя»), а `don't have to` — отсутствие необходимости («не обязательно»); это разные смыслы, не путать.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русский опирается на интонацию: достаточно поднять тон в конце, и утверждение становится вопросом. Английский так не работает — нужна перестройка порядка слов или ввод вспомогательного. Поэтому при переводе с русского нельзя «просто добавить вопрос», нужно сначала собрать правильную конструкцию.">
+  <div slot="ru">
+    <strong>Ты говоришь по-английски?</strong><br/>
+    Слова те же, что в утверждении «Ты говоришь по-английски». Меняется только интонация.<br/><br/>
+    <strong>Где ты живёшь?</strong><br/>
+    Вопросительное слово — впереди, дальше тот же порядок «ты живёшь».
+  </div>
+  <div slot="en">
+    <strong>Do you speak English?</strong><br/>
+    Появляется вспомогательный `do` и встаёт перед подлежащим. Без него — не вопрос для письменной нормы.<br/><br/>
+    <strong>Where do you live?</strong><br/>
+    Вопросительное слово + аукс + подлежащее + смысловой глагол. Четыре слота, порядок жёсткий.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема — какой вопрос я строю
+
+<DecisionTree nodes={[
+  { q: "Это yes/no вопрос (ждёт «да / нет»)?", yes: "General question. Аукс + S + V. «Do you speak English?»", no: "к вопросу 2" },
+  { q: "Есть вопросительное слово (what, where, when, why, how)?", yes: "к вопросу 3", no: "к вопросу 5" },
+  { q: "Вопросительное слово само является подлежащим (спрашиваем «кто / что сделал»)?", yes: "Subject question. Прямой порядок, без do/does/did. «Who lives here?»", no: "к вопросу 4" },
+  { q: "Спрашиваем про обстоятельство или дополнение?", yes: "Special question. WH + аукс + S + V. «Where do you live?»", no: "к вопросу 5" },
+  { q: "Вопрос «обёрнут» в вежливую конструкцию (Could you tell me..., Do you know...)?", yes: "Embedded question. Внутри — прямой порядок, без инверсии. «Could you tell me where the station is?»", no: "Это не вопрос, либо нужен tag — см. слот 6." },
+]} />
+
+## 6. Смысл и использование
+
+### General questions
+
+<RuleList rules={[
+  "<strong>Простой запрос подтверждения.</strong> Ждём «yes» или «no». <em>Do you speak English?</em>",
+  "<strong>С be — без do.</strong> Сам глагол `be` встаёт перед подлежащим. <em>Are you ready?</em>",
+  "<strong>Перфекты и Continuous — через свой аукс.</strong> Have/has, am/is/are, was/were. <em>Have you finished? / Are they working?</em>",
+  "<strong>Модальные — сами как аукс.</strong> Can/should/must встают перед подлежащим. <em>Can you swim?</em>",
+]} />
+
+### Special questions (wh-)
+
+<RuleList rules={[
+  "<strong>Запрос конкретной информации.</strong> Вопросительное слово определяет, чего хотим. <em>Where do you live?</em>",
+  "<strong>Структура: WH + аукс + S + V.</strong> Аукс между вопросительным словом и подлежащим. <em>What are you doing? / When did you arrive?</em>",
+  "<strong>Why используется без аукс только в коротких репликах.</strong> <em>«I quit.» — «Why?»</em> В полном предложении — Why did you quit?",
+  "<strong>How — про способ, состояние или степень.</strong> How do you feel? How long have you been here? How often does it happen?",
+]} />
+
+### Subject questions
+
+<RuleList rules={[
+  "<strong>Когда WH-слово — подлежащее, аукс выбрасывается.</strong> <em>Who lives here?</em> — не «Who does live here?».",
+  "<strong>Глагол в 3-м лице ед. числа.</strong> <em>Who knows the answer?</em>, <em>What happens next?</em>, даже если ожидаемый ответ во мн. числе.",
+  "<strong>Сравни два «who-вопроса».</strong> Who saw John? (кто видел — субъект) vs Who(m) did John see? (кого видел — объект, нужен did).",
+  "<strong>В прошлом — V2, без did.</strong> <em>Who broke the window?</em>, не «Who did break the window?».",
+]} />
+
+### Tag questions
+
+<RuleList rules={[
+  "<strong>Утверждение → отрицательный tag.</strong> <em>She lives here, doesn't she?</em>",
+  "<strong>Отрицание → утвердительный tag.</strong> <em>She doesn't live here, does she?</em>",
+  "<strong>Аукс в tag совпадает с основной частью.</strong> Если её нет — подставляется do/does/did. <em>You went home, didn't you?</em>",
+  "<strong>I'm → aren't I.</strong> Литературного `amn't` нет. <em>I'm late, aren't I?</em>",
+  "<strong>Rising tone = настоящий вопрос; falling tone = ждём согласия.</strong> Интонация меняет функцию.",
+]} />
+
+### Negative questions
+
+<RuleList rules={[
+  "<strong>Передают удивление, упрёк, заботу или приглашение.</strong> Эмоциональная окраска есть всегда. <em>Don't you like it?</em>",
+  "<strong>Why don't we / you... — мягкое предложение.</strong> Не упрёк, а вежливое «давай / почему бы тебе не». <em>Why don't we go out?</em>",
+  "<strong>Ответ устроен от факта, а не от формы вопроса.</strong> Yes = да, делаю / да, нравится. No = нет, не делаю. <em>«Don't you like it?» — «Yes, I do.» = нравится.</em>",
+]} />
+
+### Embedded questions
+
+<RuleList rules={[
+  "<strong>Внутри embedded — прямой порядок слов.</strong> Без инверсии, без do-support. <em>Could you tell me where the station is?</em>",
+  "<strong>Yes/no вопрос обёртывается через if или whether.</strong> <em>Do you know if they're coming?</em>",
+  "<strong>Whether — чуть формальнее, особенно с or not.</strong> <em>I'm not sure whether or not he agrees.</em>",
+  "<strong>Embedded — стандартная вежливая форма.</strong> Прямой вопрос «Where is the station?» — нормально для друга. К незнакомцу — лучше через embedded.",
+]} />
+
+## 7. Примеры
+
+### General questions
+
+<Example ru="Ты говоришь по-английски?">Do you speak English?</Example>
+<Example ru="Она готова?">Is she ready?</Example>
+<Example ru="Они работают?">Are they working?</Example>
+<Example ru="Ты закончил?">Have you finished?</Example>
+<Example ru="Ты ходил туда вчера?">Did you go there yesterday?</Example>
+<Example ru="Ты умеешь плавать?">Can you swim?</Example>
+
+### Special questions
+
+<Example ru="Где ты живёшь?">Where do you live?</Example>
+<Example ru="Что ты делаешь?">What are you doing?</Example>
+<Example ru="Когда ты приехал?">When did you arrive?</Example>
+<Example ru="Почему она ушла?">Why has she left?</Example>
+<Example ru="Сколько времени ты здесь живёшь?">How long have you lived here?</Example>
+<Example ru="Как часто ты тренируешься?">How often do you exercise?</Example>
+
+### Subject questions
+
+<Example ru="Кто здесь живёт?">Who lives here?</Example>
+<Example ru="Что случилось?">What happened?</Example>
+<Example ru="Какая книга стоит дороже?">Which book costs more?</Example>
+<Example ru="Кто разбил окно?">Who broke the window?</Example>
+<Example ru="Кто знает ответ?">Who knows the answer?</Example>
+
+### Tag questions
+
+<Example ru="Она живёт в Лондоне, не так ли?">She lives in London, doesn't she?</Example>
+<Example ru="Ты умеешь плавать, правда?">You can swim, can't you?</Example>
+<Example ru="Он не курит, верно?">He doesn't smoke, does he?</Example>
+<Example ru="Я опоздал, да?">I'm late, aren't I?</Example>
+<Example ru="Давай пойдём прогуляемся, согласен?">Let's go for a walk, shall we?</Example>
+
+### Negative questions
+
+<Example ru="Тебе разве не нравится?">Don't you like it?</Example>
+<Example ru="Ты разве не устал?">Aren't you tired?</Example>
+<Example ru="Она ещё не пришла?">Hasn't she arrived yet?</Example>
+<Example ru="Может, сходим куда-нибудь?">Why don't we go out?</Example>
+
+### Embedded questions
+
+<Example ru="Не подскажете, где станция?">Could you tell me where the station is?</Example>
+<Example ru="Знаешь, во сколько начинается?">Do you know what time it starts?</Example>
+<Example ru="Я хотел бы узнать, придут ли они.">I'd like to know if they're coming.</Example>
+<Example ru="Интересно, почему она ушла.">I wonder why she left.</Example>
+
+## 8. Контрасты
+
+<Compare leftLabel="Утверждение" rightLabel="Вопрос">
+  <div slot="left">
+    <strong>You speak English.</strong><br/>Подлежащее + смысловой глагол.<br/><br/>
+    <strong>She is ready.</strong><br/>Be уже на месте.<br/><br/>
+    <strong>They have finished.</strong><br/>Have — вспомогательный, стоит после подлежащего.<br/><br/>
+    <strong>He went home.</strong><br/>V2 в прошлом, аукса нет.
+  </div>
+  <div slot="right">
+    <strong>Do you speak English?</strong><br/>Появляется do, встаёт перед подлежащим.<br/><br/>
+    <strong>Is she ready?</strong><br/>Be инвертируется — без do.<br/><br/>
+    <strong>Have they finished?</strong><br/>Have перепрыгивает через подлежащее.<br/><br/>
+    <strong>Did he go home?</strong><br/>Появляется did, V возвращается к начальной форме.
+  </div>
+</Compare>
+
+<Compare leftLabel="Subject question (кто/что сделал)" rightLabel="Object question (кого/что)">
+  <div slot="left">
+    <strong>Who saw John?</strong><br/>«Кто» — подлежащее. Прямой порядок, без did.<br/><br/>
+    <strong>What happened?</strong><br/>«Что» — подлежащее. happened — V2, без аукса.<br/><br/>
+    <strong>Which costs more?</strong><br/>«Который» — подлежащее. costs в 3-м лице.
+  </div>
+  <div slot="right">
+    <strong>Who(m) did John see?</strong><br/>«Кого» — дополнение. Нужен did + see.<br/><br/>
+    <strong>What did you do?</strong><br/>«Что» — дополнение. Did you do.<br/><br/>
+    <strong>Which did you choose?</strong><br/>«Который» — дополнение. Did you choose.
+  </div>
+</Compare>
+
+<Compare leftLabel="Direct question" rightLabel="Embedded question">
+  <div slot="left">
+    <strong>Where is the station?</strong><br/>Инверсия: is перед the station.<br/><br/>
+    <strong>What time does it start?</strong><br/>Аукс does + начальная форма.<br/><br/>
+    <strong>Are they coming?</strong><br/>Be впереди.
+  </div>
+  <div slot="right">
+    <strong>Could you tell me where the station is?</strong><br/>Прямой порядок: the station is.<br/><br/>
+    <strong>Do you know what time it starts?</strong><br/>Аукса нет, V в 3-м лице (starts).<br/><br/>
+    <strong>Do you know if they're coming?</strong><br/>Yes/no через if, дальше — утверждение.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Запомни две короткие фразы. **«Вопрос = аукс впереди»** — для общих и специальных вопросов: бери первый вспомогательный или модальный (или подставляй do/does/did) и переноси через подлежащее. **«Embedded = аукс не двигаем»** — внутри `Could you tell me / Do you know / I wonder` порядок остаётся утвердительным, аукс никуда не прыгает. Эти два правила покрывают почти всё.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английскому не хватает интонации">
+В русском нет жёсткого порядка слов: глагол может стоять до подлежащего, после, между обстоятельствами — смысл не сломается. Вопросительная функция передаётся через вопросительные частицы (`ли`) и интонацию, потому что место в предложении и так свободное. В английском порядок жёсткий и значимый: «You speak English» и «Speak you English?» — это разные грамматические конструкции, а не два варианта одной фразы. Чтобы получить вопрос, язык вынужден физически менять порядок — инвертировать вспомогательный глагол. А там, где смыслового вспомогательного нет (как в Present и Past Simple для обычных глаголов), английский подставляет «пустой» `do`, единственная задача которого — занять место в инверсии. Это историческая компенсация: когда-то английский тоже строил вопросы инверсией смыслового глагола (`Speak you English?`), но к XVI–XVII векам перешёл на do-support как стандарт.
+</Callout>
+
+## 11. Дерево решений — что куда
+
+<DecisionTree nodes={[
+  { q: "В основном предложении есть вспомогательный или модальный глагол (be, have, will, can, should, must)?", yes: "Инверсия этого глагола: переносим его перед подлежащим. «Are you ready? / Have you finished? / Can you swim?»", no: "к вопросу 2" },
+  { q: "Глагол смысловой, время — Present или Past Simple?", yes: "Подставляем do / does / did, смысловой глагол в начальной форме. «Do you speak English? / Did he go home?»", no: "к вопросу 3" },
+  { q: "WH-слово — подлежащее (кто / что сделал)?", yes: "Прямой порядок, без аукс. «Who lives here? / What happened?»", no: "к вопросу 4" },
+  { q: "Вопрос обёрнут в вежливую конструкцию (Could you tell me, Do you know, I wonder)?", yes: "Embedded: внутри — прямой порядок, без инверсии. «Could you tell me where the station is?» Для yes/no — через if/whether.", no: "к вопросу 5" },
+  { q: "Это короткий «хвост» в конце утверждения (правда? / не так ли?)?", yes: "Tag question. Аукс из основной части + противоположный знак. «She lives here, doesn't she?»", no: "Это общий или специальный вопрос, см. вопросы 1-2." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| You speak English? | Do you speak English? | В письменной норме нужен do + инверсия. Прямой порядок с вопросительной интонацией — устная небрежность, не правило. |
+| Who do live here? | Who lives here? | Subject question: WH-слово само подлежащее, do/does/did не нужен. |
+| What did happened? | What happened? | То же: «что» — подлежащее, did не вставляется, глагол сразу в V2. |
+| She lives, doesn't lives? | She lives, doesn't she? | В tag — вспомогательный (does), а не повтор смыслового. И обязательно местоимение (she). |
+| Could you tell me where is the station? | Could you tell me where the station is? | Embedded: внутри прямой порядок, без инверсии is. |
+| Do you know what time does it start? | Do you know what time it starts? | Embedded: аукса does нет, V в 3-м лице (starts). |
+| I don't know nothing about it. | I don't know anything about it. | Двойное отрицание в стандартном английском не работает. После don't — anything, не nothing. |
+| He doesn't likes coffee. | He doesn't like coffee. | После doesn't — начальная форма без -s. |
+| I not went there. | I didn't go there. | Отрицание Past Simple — через didn't + начальная форма, не «not + V2». |
+| What you are doing? | What are you doing? | Special question: WH + аукс + подлежащее. Are перед you. |
+| Where you will go? | Where will you go? | То же для будущего: WH + will + подлежащее + V. |
+| Why she didn't came? | Why didn't she come? | Negative question: аукс с not перед подлежащим, смысловой глагол в начальной форме (come). |
+| You mustn't go = You don't have to go | You mustn't go ≠ You don't have to go | mustn't = запрет («нельзя»). don't have to = не обязан («не нужно, но можно»). |
+| «Don't you like it?» — «Yes, I don't» | «Don't you like it?» — «Yes, I do.» / «No, I don't.» | Ответ строится от факта: yes = да, нравится; no = нет, не нравится. Знак отрицания в вопросе на ответ не влияет. |
+| How long are you here? (про срок) | How long have you been here? | Если действие началось в прошлом и длится — Present Perfect. Present звучит как «как долго ты планируешь тут быть». |
+
+## 13. Шпаргалка
+
+| Тип вопроса | Формула | Пример |
+| --- | --- | --- |
+| General (yes/no) | Аукс + S + V | Do you speak English? / Are you ready? |
+| Special (wh-) | WH + аукс + S + V | Where do you live? / What are you doing? |
+| Subject | WH (= S) + V | Who lives here? / What happened? |
+| Tag (после утверждения) | ..., негативный аукс + местоимение? | She lives here, doesn't she? |
+| Tag (после отрицания) | ..., позитивный аукс + местоимение? | She doesn't live here, does she? |
+| Negative | Аукс + n't + S + V | Don't you like it? / Aren't you tired? |
+| Embedded yes/no | ... + if/whether + S + V | Do you know if they're coming? |
+| Embedded wh- | ... + WH + S + V | Could you tell me where the station is? |
+| Отрицание be | S + be + not | I'm not ready. / She isn't here. |
+| Отрицание have/has + V3 | S + haven't/hasn't + V3 | I haven't finished. |
+| Отрицание Past Simple | S + didn't + V1 | I didn't go. |
+| Отрицание модальных | S + модальный + n't + V1 | I can't swim. / You mustn't smoke. |
+| I am в tag | ..., aren't I? | I'm late, aren't I? |
+| После Let's в tag | ..., shall we? | Let's go, shall we? |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "question", meaning: "вопрос" },
+  { term: "statement", meaning: "утверждение" },
+  { term: "negation", meaning: "отрицание" },
+  { term: "inversion", meaning: "инверсия — перенос вспомогательного перед подлежащим" },
+  { term: "auxiliary verb", meaning: "вспомогательный глагол (do, be, have, will...)" },
+  { term: "modal verb", meaning: "модальный глагол (can, could, must, should, may...)" },
+  { term: "do-support", meaning: "подстановка do/does/did для построения вопроса или отрицания" },
+  { term: "general question", meaning: "общий yes/no вопрос" },
+  { term: "special question", meaning: "специальный вопрос с WH-словом" },
+  { term: "subject question", meaning: "вопрос о подлежащем — без аукс" },
+  { term: "object question", meaning: "вопрос о дополнении — с инверсией и аукс" },
+  { term: "tag question", meaning: "вопрос-хвостик в конце утверждения" },
+  { term: "negative question", meaning: "отрицательный вопрос — Don't you...? / Aren't you...?" },
+  { term: "embedded / indirect question", meaning: "вопрос, обёрнутый в более вежливую конструкцию" },
+  { term: "what", meaning: "что / какой" },
+  { term: "where", meaning: "где / куда" },
+  { term: "when", meaning: "когда" },
+  { term: "why", meaning: "почему" },
+  { term: "who", meaning: "кто" },
+  { term: "whom", meaning: "кого / кому — формальная форма" },
+  { term: "which", meaning: "который" },
+  { term: "whose", meaning: "чей" },
+  { term: "how", meaning: "как" },
+  { term: "how long", meaning: "как долго" },
+  { term: "how often", meaning: "как часто" },
+  { term: "how much / many", meaning: "сколько (неисчисляемое / исчисляемое)" },
+  { term: "if / whether", meaning: "связки для embedded yes/no вопроса" },
+  { term: "don't / doesn't / didn't", meaning: "сокращённые отрицания do / does / did" },
+  { term: "isn't / aren't / wasn't / weren't", meaning: "сокращённые отрицания be" },
+  { term: "haven't / hasn't / hadn't", meaning: "сокращённые отрицания have" },
+  { term: "won't / wouldn't", meaning: "сокращённые отрицания will / would" },
+  { term: "can't / cannot / couldn't", meaning: "сокращённые отрицания can / could; cannot пишется слитно" },
+  { term: "shouldn't / mustn't / needn't", meaning: "сокращённые отрицания модальных" },
+  { term: "aren't I?", meaning: "стандартный tag для «I am» — литературного `amn't` нет" },
+  { term: "shall we?", meaning: "tag после Let's — Let's go, shall we?" },
+  { term: "rising tone", meaning: "восходящая интонация tag — настоящий вопрос" },
+  { term: "falling tone", meaning: "нисходящая интонация tag — ждём согласия" },
+  { term: "double negative", meaning: "двойное отрицание — в стандартном английском не используется" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Структуры и формы</span>
+    <span class="kc-trainer-hint">Запомни шесть типов вопросов и сокращённые отрицания</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Утверждение → tag</span>
+    <span class="kc-trainer-hint">Подбери правильный хвостик</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Тип вопроса</span>
+    <span class="kc-trainer-hint">Разложи по четырём корзинам: general / special / subject / tag</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь аукс</span>
+    <span class="kc-trainer-hint">Впиши вспомогательный или вопросительное слово</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери вопрос</span>
+    <span class="kc-trainer-hint">Расставь слова — особенно важно для embedded и subject</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 49-52 (Questions, Question tags), Units 43-44 (Negatives, auxiliary verbs).
+- **Swan M., Practical English Usage** — §471-484 (questions, question tags, negative structures, indirect speech: questions).
+- **English Page — Questions overview** — englishpage.com/minitutorials/question.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/question-forms

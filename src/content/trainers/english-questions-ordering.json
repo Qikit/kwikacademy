@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-questions",
+  "title": "Собери вопрос",
+  "description": "Расставь слова в правильном порядке. Внимание к subject, embedded и tag questions.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["English", "you", "do", "speak", "?"],
+        "answer": ["do", "you", "speak", "English", "?"],
+        "translation": "Ты говоришь по-английски?",
+        "explain": "General question Present Simple: аукс do + подлежащее + начальная форма + дополнение + знак вопроса."
+      },
+      {
+        "words": ["live", "do", "where", "you", "?"],
+        "answer": ["where", "do", "you", "live", "?"],
+        "translation": "Где ты живёшь?",
+        "explain": "Special wh-question: WH-слово + аукс do + подлежащее + V (начальная форма)."
+      },
+      {
+        "words": ["here", "who", "lives", "?"],
+        "answer": ["who", "lives", "here", "?"],
+        "translation": "Кто здесь живёт?",
+        "explain": "Subject question: who — подлежащее, аукса нет, глагол сразу в 3-м лице ед. (lives)."
+      },
+      {
+        "words": ["the", "is", "station", "could", "you", "where", "tell", "me", "?"],
+        "answer": ["could", "you", "tell", "me", "where", "the", "station", "is", "?"],
+        "translation": "Не подскажете, где станция?",
+        "explain": "Embedded question: после «Could you tell me» — прямой порядок: where the station is. НЕ «where is the station»."
+      },
+      {
+        "words": ["she", "doesn't", "in", "London", "lives", "she", ",", "?"],
+        "answer": ["she", "lives", "in", "London", ",", "doesn't", "she", "?"],
+        "translation": "Она живёт в Лондоне, не так ли?",
+        "explain": "Tag question после утверждения Present Simple: ..., doesn't she? — отрицательный tag с аукс и местоимением."
+      },
+      {
+        "words": ["yesterday", "didn't", "I", "go", "to", "the", "meeting"],
+        "answer": ["I", "didn't", "go", "to", "the", "meeting", "yesterday"],
+        "translation": "Я не пошёл на собрание вчера.",
+        "explain": "Отрицание Past Simple: подлежащее + didn't + начальная форма (go, не went) + дополнение + обстоятельство времени в конце."
+      },
+      {
+        "words": ["you", "aren't", "?", "tired"],
+        "answer": ["aren't", "you", "tired", "?"],
+        "translation": "Ты разве не устал?",
+        "explain": "Negative question с be: аукс с n't + S + прилагательное/V. Передаёт удивление или ожидание."
+      },
+      {
+        "words": ["if", "they're", "coming", "you", "know", "do", "?"],
+        "answer": ["do", "you", "know", "if", "they're", "coming", "?"],
+        "translation": "Ты знаешь, придут ли они?",
+        "explain": "Embedded yes/no: внешняя обёртка «Do you know», внутри — if + подлежащее + V (прямой порядок, без инверсии)."
+      },
+      {
+        "words": ["arrive", "when", "you", "did", "?"],
+        "answer": ["when", "did", "you", "arrive", "?"],
+        "translation": "Когда ты приехал?",
+        "explain": "Special question Past Simple: WH + did + S + V (начальная форма arrive, не arrived)."
+      },
+      {
+        "words": ["I'm", ",", "I", "aren't", "?", "late"],
+        "answer": ["I'm", "late", ",", "aren't", "I", "?"],
+        "translation": "Я опоздал, да?",
+        "explain": "Tag после «I am»: особый случай — aren't I?. Литературного amn't нет."
+      }
+    ]
+  }
+}

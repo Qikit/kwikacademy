@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-questions",
+  "title": "Вопросы и отрицания — правила",
+  "description": "Выбери правильную форму вопроса или отрицания в контексте.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "___ you speak English?",
+        "options": ["Are", "Do", "Have", "Is"],
+        "correctIndex": 1,
+        "explain": "Present Simple, обычный глагол speak → нужен аукс do для общего вопроса. Are / Have / Is здесь не подходят по конструкции."
+      },
+      {
+        "prompt": "___ here?",
+        "options": ["Who lives", "Who does live", "Who do live", "Whom does live"],
+        "correctIndex": 0,
+        "explain": "Subject question: WH-слово who само подлежащее → прямой порядок без do. Глагол lives в 3-м лице ед."
+      },
+      {
+        "prompt": "Could you tell me where ___ ?",
+        "options": ["is the station", "the station is", "does the station", "the station does be"],
+        "correctIndex": 1,
+        "explain": "Embedded question: внутри обёртки — прямой порядок (the station is), без инверсии."
+      },
+      {
+        "prompt": "She lives in London, ___ ?",
+        "options": ["isn't she", "doesn't she", "does she", "lives she"],
+        "correctIndex": 1,
+        "explain": "Утверждение Present Simple, 3-е лицо ед. → отрицательный tag с doesn't + she."
+      },
+      {
+        "prompt": "Who ___ John yesterday?",
+        "options": ["saw", "did saw", "did see", "has seen"],
+        "correctIndex": 2,
+        "explain": "Object question (John — подлежащее, who — дополнение «кого»). Нужен did + see (начальная форма). «Who saw John?» означало бы наоборот — кто видел Джона."
+      },
+      {
+        "prompt": "___ you tired? You look exhausted.",
+        "options": ["Don't", "Doesn't", "Aren't", "Haven't"],
+        "correctIndex": 2,
+        "explain": "Negative question с be: аукс с n't + S + V. Aren't you tired? — передаёт удивление или заботу."
+      },
+      {
+        "prompt": "Do you know ___ they're coming to the party?",
+        "options": ["are", "do", "if", "that are"],
+        "correctIndex": 2,
+        "explain": "Embedded yes/no вопрос обёртывается через if (или whether). Внутри — прямой порядок: they're coming."
+      },
+      {
+        "prompt": "He ___ coffee in the morning.",
+        "options": ["doesn't drinks", "don't drink", "doesn't drink", "not drink"],
+        "correctIndex": 2,
+        "explain": "Отрицание Present Simple, 3-е лицо ед. → doesn't + начальная форма drink. НЕ doesn't drinks, НЕ don't drink."
+      },
+      {
+        "prompt": "I'm late, ___ ?",
+        "options": ["amn't I", "isn't I", "aren't I", "am not I"],
+        "correctIndex": 2,
+        "explain": "Особый случай: tag для «I am» — это aren't I. Литературного `amn't` в стандартном английском нет."
+      },
+      {
+        "prompt": "Why ___ to the meeting yesterday?",
+        "options": ["didn't you come", "you didn't come", "you didn't came", "not came you"],
+        "correctIndex": 0,
+        "explain": "Negative special question Past Simple: WH + аукс с n't + S + V (начальная форма come). НЕ «didn't came»."
+      },
+      {
+        "prompt": "You ___ smoke here — it's a hospital.",
+        "options": ["mustn't", "don't have to", "needn't", "won't"],
+        "correctIndex": 0,
+        "explain": "Запрет — это mustn't. don't have to означало бы «не обязан», что неверно для запрета. Это два разных смысла, путать опасно."
+      },
+      {
+        "prompt": "«Don't you like the soup?» — «___ , it's delicious!»",
+        "options": ["No, I don't", "Yes, I do", "Yes, I don't", "No, I do"],
+        "correctIndex": 1,
+        "explain": "Ответ строится от факта: суп нравится → Yes, I do. Знак отрицания в negative question на ответ не влияет."
+      }
+    ]
+  }
+}

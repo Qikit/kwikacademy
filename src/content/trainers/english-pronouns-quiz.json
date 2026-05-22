@@ -1,0 +1,95 @@
+{
+  "course": "english",
+  "lesson": "english-pronouns",
+  "title": "Местоимения и определители — правила",
+  "description": "Выбери правильную форму местоимения или квантификатора в контексте.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Anna and ___ went to the cinema yesterday.",
+        "options": ["me", "I", "myself", "mine"],
+        "correctIndex": 1,
+        "explain": "Подлежащее → subject form: I, не me. Второе лицо («Anna and I») по этикету ставится первым."
+      },
+      {
+        "prompt": "This is not my bag. ___ is bigger and black.",
+        "options": ["My", "Mine", "Me", "Myself"],
+        "correctIndex": 1,
+        "explain": "После «is» нет существительного — нужен possessive pronoun: mine. «My» всегда требует N после себя."
+      },
+      {
+        "prompt": "She cut ___ while chopping onions.",
+        "options": ["her", "hers", "herself", "she"],
+        "correctIndex": 2,
+        "explain": "Субъект (she) и объект — одно лицо → reflexive: herself."
+      },
+      {
+        "prompt": "Would you like ___ coffee?",
+        "options": ["any", "some", "many", "much"],
+        "correctIndex": 1,
+        "explain": "Вопрос-предложение (ожидаем «да») → some. «Any» в вопросе — для нейтрального «есть ли вообще»."
+      },
+      {
+        "prompt": "There aren't ___ apples left in the fridge.",
+        "options": ["some", "any", "much", "no"],
+        "correctIndex": 1,
+        "explain": "Отрицание + countable → any. «Some» в отрицании не используется. «No» работает без «not»: «There are no apples»."
+      },
+      {
+        "prompt": "How ___ time do we have before the meeting?",
+        "options": ["many", "much", "few", "a lot of"],
+        "correctIndex": 1,
+        "explain": "time — uncountable, в вопросе → much. «Many» только с countable, «few» вообще не подходит для вопроса о количестве."
+      },
+      {
+        "prompt": "I have ___ friends in this city, I can introduce you to them.",
+        "options": ["few", "a few", "little", "a little"],
+        "correctIndex": 1,
+        "explain": "«A few» = несколько, есть кого представить, нейтрально. «Few» (без a) звучало бы грустно — «мало, недостаточно»."
+      },
+      {
+        "prompt": "The dog wagged ___ tail when it saw me.",
+        "options": ["it's", "its", "his", "their"],
+        "correctIndex": 1,
+        "explain": "Possessive adjective для it — its (без апострофа). «It's» = «it is» — другое слово."
+      },
+      {
+        "prompt": "Everybody ___ already here, we can start.",
+        "options": ["are", "is", "were", "have"],
+        "correctIndex": 1,
+        "explain": "Составные с -body согласуются с глаголом в единственном числе: everybody is, nobody is, somebody is."
+      },
+      {
+        "prompt": "___ student in the group received a different topic.",
+        "options": ["All", "Every", "Each", "None"],
+        "correctIndex": 2,
+        "explain": "«Each» подчёркивает индивидуально каждого (когда есть различия, как тут — разные темы). «Every» — обобщённо без акцента на различиях."
+      },
+      {
+        "prompt": "I don't want the red shirt, give me the blue ___.",
+        "options": ["—", "it", "one", "ones"],
+        "correctIndex": 2,
+        "explain": "При замене повторённого N в единственном числе нужен «one»: the red one, the blue one. Без «one» фраза обрывается."
+      },
+      {
+        "prompt": "Look at ___ mountains over there — they're amazing.",
+        "options": ["this", "these", "that", "those"],
+        "correctIndex": 3,
+        "explain": "Удалённый объект + множественное число → those. «These» — близкие, «that» — удалённое единственное."
+      },
+      {
+        "prompt": "Sorry, I have my keys with ___.",
+        "options": ["me", "myself", "I", "my"],
+        "correctIndex": 0,
+        "explain": "После предлога «with» — object form: me. Reflexive «myself» здесь не нужен, действие не возвратное."
+      },
+      {
+        "prompt": "They helped ___ during the project — collaboration was excellent.",
+        "options": ["themselves", "each other", "them", "theirs"],
+        "correctIndex": 1,
+        "explain": "«Each other» = друг другу/друг друга, взаимное действие. «Themselves» означало бы «каждый сам себе»."
+      }
+    ]
+  }
+}

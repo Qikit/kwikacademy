@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-pronouns",
+  "title": "Местоимения по лицам — flashcards",
+  "description": "Пять форм на каждое лицо плюс ключевые квантификаторы и ловушки.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "1-е лицо ед. — пять форм",
+        "back": "I (subject) → me (object) → my (adj + N) → mine (pronoun, сам) → myself (reflexive). «I see him. He sees me. This is my book. This book is mine. I cut myself.»",
+        "hint": "ядро системы"
+      },
+      {
+        "front": "3-е лицо ед. м. — пять форм",
+        "back": "he → him → his (adj) → his (pronoun) → himself. Особенность: his и для adj, и для pronoun — одна форма. «He called. Anna called him. His car. This car is his. He did it himself.»",
+        "hint": "his двойной"
+      },
+      {
+        "front": "3-е лицо ед. ж. — her vs hers",
+        "back": "she → her → her (adj) → hers (pronoun) → herself. Ловушка: her — adjective (перед N), hers — pronoun (сам). «Her book / This book is hers».",
+        "hint": "две разные формы"
+      },
+      {
+        "front": "it — без possessive pronoun",
+        "back": "it → it → its → — → itself. Possessive adjective есть (its tail), но самостоятельной pronoun-формы нет. «Tail is its» нельзя сказать. И помни: its без апострофа, it's = it is.",
+        "hint": "уникальный случай"
+      },
+      {
+        "front": "we / us / our / ours / ourselves",
+        "back": "Все пять форм для 1-го мн. «We won. They saw us. Our team. The bigger one is ours. We did it ourselves.»",
+        "hint": "1-е мн."
+      },
+      {
+        "front": "they / them / their / theirs / themselves",
+        "back": "Пять форм для 3-го мн. Также «they/their/them» используются как gender-neutral для «о ком-то одном»: «Somebody left their bag here.»",
+        "hint": "3-е мн. + gender-neutral"
+      },
+      {
+        "front": "you — четыре формы (subj=obj)",
+        "back": "you → you → your → yours → yourself (ед.) / yourselves (мн.). Subject и object совпадают. Reflexive — единственная форма, где видно ед./мн. различие.",
+        "hint": "ловушка ед./мн."
+      },
+      {
+        "front": "this / these / that / those",
+        "back": "this (ед., близко) ↔ these (мн., близко); that (ед., далеко) ↔ those (мн., далеко). «This book / these books / that mountain / those guys». Согласование по числу — обязательно. «This books» — ошибка.",
+        "hint": "указательные"
+      },
+      {
+        "front": "some vs any — правило выбора",
+        "back": "some — в утверждениях и в просьбах/предложениях (Would you like some tea?). any — в вопросах и отрицаниях (Do you have any time? / I don't have any). С исчисляемыми и неисчисляемыми — оба работают.",
+        "hint": "ядро темы"
+      },
+      {
+        "front": "much vs many vs a lot of",
+        "back": "many — countable (many books). much — uncountable (much money), чаще в вопросах/отрицаниях. a lot of / lots of — универсально, особенно в утверждениях. «I have a lot of friends and a lot of work.»",
+        "hint": "выбор по типу N"
+      },
+      {
+        "front": "few vs a few (та же логика для little / a little)",
+        "back": "few = «мало, недостаточно» (грустный тон). a few = «несколько, есть какое-то количество» (нейтрально). «I have few friends» (грустно) vs «I have a few friends» (нормально, могу позвать).",
+        "hint": "артикль меняет смысл"
+      },
+      {
+        "front": "myself — когда нужен, когда нет",
+        "back": "Нужен: субъект = объект (I cut myself), эмфаза (I did it myself), «один» (by myself). НЕ нужен: после wash, shave, dress, hide в обычном смысле; после большинства предлогов места (with me, not with myself).",
+        "hint": "не злоупотреблять"
+      },
+      {
+        "front": "each vs every vs all",
+        "back": "each — индивидуально каждый (each student has a different book). every — обобщённо в группе (every student must pass). all — все вместе (all students are here). each/every + ед. ч. глагола; all + мн. ч.",
+        "hint": "тонкие оттенки"
+      },
+      {
+        "front": "somebody / anybody / nobody / everybody",
+        "back": "Логика та же, что у some/any. Все составные с глаголом в единственном числе: Everybody is here, Nothing matters. Прилагательное — после: «something strange», не «strange something».",
+        "hint": "составные"
+      },
+      {
+        "front": "its / it's / hers / her's — апострофы",
+        "back": "Possessive формы пишутся БЕЗ апострофа: its, hers, yours, theirs, ours. Апостроф — только в сокращениях: it's = it is, he's = he is, they're = they are. «It's tail» — ошибка, правильно «Its tail».",
+        "hint": "правописание"
+      },
+      {
+        "front": "one / ones — замена существительного",
+        "back": "Чтобы не повторять N: «Which book? — The red one.» / «I prefer the black ones.» Только для countable. С uncountable (milk, time) — без one: «Give me some», не «give me the one».",
+        "hint": "избегаем повторов"
+      }
+    ]
+  }
+}

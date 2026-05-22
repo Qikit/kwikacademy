@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-pronouns",
+  "title": "Местоимение → роль",
+  "description": "Соотнеси форму местоимения с её типом или ролью в предложении.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "me",
+        "right": "object form (1-е ед.)",
+        "explain": "«Me» — форма дополнения. Идёт после глагола или предлога: «Anna saw me», «for me». Subject — это «I»."
+      },
+      {
+        "left": "mine",
+        "right": "possessive pronoun (1-е ед.)",
+        "explain": "«Mine» заменяет существительное целиком: «This book is mine». Adjective-форма — «my» (всегда перед N)."
+      },
+      {
+        "left": "myself",
+        "right": "reflexive (1-е ед.)",
+        "explain": "«Myself» — возвратное. Используется, когда субъект и объект совпадают: «I cut myself»."
+      },
+      {
+        "left": "hers",
+        "right": "possessive pronoun (3-е ед. ж.)",
+        "explain": "«Hers» стоит без существительного: «This bag is hers». Adjective — «her» (her bag)."
+      },
+      {
+        "left": "themselves",
+        "right": "reflexive (3-е мн.)",
+        "explain": "«Themselves» — возвратная форма для they. «They blame themselves». Не «theirselves»."
+      },
+      {
+        "left": "those",
+        "right": "demonstrative (мн., далеко)",
+        "explain": "«Those» — указательное, множественное число, для дальних объектов или ранее упомянутых: «those mountains», «those guys we met»."
+      },
+      {
+        "left": "any",
+        "right": "quantifier для вопросов и отрицаний",
+        "explain": "«Any» используется в вопросах и отрицаниях: «Do you have any time?» / «I don't have any». В утверждении и просьбах — «some»."
+      },
+      {
+        "left": "much",
+        "right": "quantifier для uncountable",
+        "explain": "«Much» работает с неисчисляемыми (money, time, water), чаще в вопросах и отрицаниях. В утверждении предпочитают «a lot of»."
+      },
+      {
+        "left": "everybody",
+        "right": "indefinite pronoun (+ ед. ч. глагола)",
+        "explain": "«Everybody» — составное местоимение для людей, всегда согласуется с глаголом в единственном числе: «Everybody is here», не «are»."
+      },
+      {
+        "left": "its",
+        "right": "possessive adjective (3-е ед. ср.)",
+        "explain": "«Its» определяет существительное: «its tail», «its colour». Без апострофа. С апострофом — «it's» = «it is», это совсем другое слово."
+      },
+      {
+        "left": "each other",
+        "right": "reciprocal (друг друга)",
+        "explain": "«Each other» — взаимное местоимение, означает «друг друга»: «We help each other». Синоним — «one another» (более формально)."
+      },
+      {
+        "left": "ones",
+        "right": "замена существительного во мн. ч.",
+        "explain": "«Ones» подставляется вместо повторённого N во множественном числе: «I prefer the black ones». Для ед. ч. — «one»."
+      }
+    ]
+  }
+}

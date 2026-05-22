@@ -1,0 +1,77 @@
+{
+  "course": "english",
+  "lesson": "english-pronouns",
+  "title": "Четыре семьи местоимений",
+  "description": "Распредели предложения по четырём корзинам по типу выделенного местоимения.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "personal", "label": "Personal (subj/obj)" },
+      { "id": "possessive", "label": "Possessive (adj/pron)" },
+      { "id": "reflexive", "label": "Reflexive" },
+      { "id": "demonstrative", "label": "Demonstrative" }
+    ],
+    "items": [
+      {
+        "text": "Anna called HIM yesterday.",
+        "category": "personal",
+        "explain": "«Him» — object form 3-го ед. м. После глагола → personal/object. Personal-семья объединяет subject и object формы."
+      },
+      {
+        "text": "This is MY laptop, not yours.",
+        "category": "possessive",
+        "explain": "«My» — possessive adjective, стоит перед N (laptop). Это семья possessive."
+      },
+      {
+        "text": "I cut MYSELF while cooking.",
+        "category": "reflexive",
+        "explain": "«Myself» — возвратная форма. Субъект (I) и объект совпадают."
+      },
+      {
+        "text": "THESE shoes are too small.",
+        "category": "demonstrative",
+        "explain": "«These» — указательное, мн. ч., «близко». Demonstrative-семья."
+      },
+      {
+        "text": "WE are leaving in five minutes.",
+        "category": "personal",
+        "explain": "«We» — subject form 1-го мн. Делает действие → personal/subject."
+      },
+      {
+        "text": "The bigger room is OURS.",
+        "category": "possessive",
+        "explain": "«Ours» — possessive pronoun, стоит само (без N после). Это семья possessive."
+      },
+      {
+        "text": "She made the presentation HERSELF.",
+        "category": "reflexive",
+        "explain": "«Herself» — эмфатическое использование reflexive: «сама, лично сделала». Семья reflexive."
+      },
+      {
+        "text": "THAT was a great meeting.",
+        "category": "demonstrative",
+        "explain": "«That» — указательное, ед. ч., обычно о ранее упомянутом/удалённом. Demonstrative."
+      },
+      {
+        "text": "Did you see THEM at the party?",
+        "category": "personal",
+        "explain": "«Them» — object form 3-го мн. После глагола → personal/object."
+      },
+      {
+        "text": "HIS code is cleaner than mine.",
+        "category": "possessive",
+        "explain": "«His» перед N (code) — possessive adjective. Семья possessive. (А «mine» в конце — тоже possessive, pronoun-форма.)"
+      },
+      {
+        "text": "They blamed THEMSELVES for the delay.",
+        "category": "reflexive",
+        "explain": "«Themselves» — reflexive 3-го мн. Субъект (they) и объект совпадают."
+      },
+      {
+        "text": "THOSE files are outdated, delete them.",
+        "category": "demonstrative",
+        "explain": "«Those» — указательное мн. ч. для дальних / упомянутых ранее. Demonstrative."
+      }
+    ]
+  }
+}

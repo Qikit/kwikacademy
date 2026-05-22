@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-pronouns",
+  "title": "Собери предложение с местоимениями",
+  "description": "Расставь слова в правильном порядке. Внимание к роли местоимения в предложении.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["I", "her", "saw", "yesterday", "at", "the", "station"],
+        "answer": ["I", "saw", "her", "at", "the", "station", "yesterday"],
+        "translation": "Я видел её на станции вчера.",
+        "explain": "Subject (I) + V + object (her) + место + время. «Her» как object form 3-го ед. ж. после глагола."
+      },
+      {
+        "words": ["mine", "this", "laptop", "is"],
+        "answer": ["this", "laptop", "is", "mine"],
+        "translation": "Этот ноутбук — мой.",
+        "explain": "После «is» — possessive pronoun «mine» (без N). Если бы «my laptop», нужен был бы second N: «this is my laptop»."
+      },
+      {
+        "words": ["did", "the", "presentation", "she", "herself"],
+        "answer": ["she", "did", "the", "presentation", "herself"],
+        "translation": "Она сделала презентацию сама.",
+        "explain": "Эмфатическое reflexive «herself» в конце усиливает «сама, лично». Subject + V + object + reflexive (эмфаза)."
+      },
+      {
+        "words": ["any", "do", "have", "you", "time", "?"],
+        "answer": ["do", "you", "have", "any", "time", "?"],
+        "translation": "У тебя есть время?",
+        "explain": "Вопрос: Do + you + V + any + N. «Any» в вопросах вместо «some» по умолчанию."
+      },
+      {
+        "words": ["here", "everybody", "already", "is"],
+        "answer": ["everybody", "is", "already", "here"],
+        "translation": "Все уже здесь.",
+        "explain": "«Everybody» + ед. ч. глагола (is, не are). «Already» обычно между to be и обстоятельством места."
+      },
+      {
+        "words": ["wagged", "the", "dog", "tail", "its"],
+        "answer": ["the", "dog", "wagged", "its", "tail"],
+        "translation": "Собака виляла хвостом.",
+        "explain": "S + V + possessive adjective + N. «Its» — притяжательное прилагательное для it, всегда перед N, без апострофа."
+      },
+      {
+        "words": ["one", "red", "give", "me", "the"],
+        "answer": ["give", "me", "the", "red", "one"],
+        "translation": "Дай мне красный.",
+        "explain": "Императив: V + object pronoun (me) + the + adj + one (замена N). Без «one» фраза «give me the red» обрывается."
+      },
+      {
+        "words": ["each", "we", "help", "other"],
+        "answer": ["we", "help", "each", "other"],
+        "translation": "Мы помогаем друг другу.",
+        "explain": "Reciprocal «each other» — два слова, ставится в позиции object: S + V + each other."
+      }
+    ]
+  }
+}

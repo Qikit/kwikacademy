@@ -3,11 +3,506 @@ course: english
 order: 8
 phase: "Фаза 1 · Бытовой английский"
 title: "Местоимения и определители"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "this, that, some, any, much, many и другие определители."
-placeholder: true
-tags: [english]
+eyebrow: "Грамматика · уровень A2"
+readingMinutes: 26
+summary: "Personal, possessive, reflexive, demonstrative, quantifiers и compound — все семь семей местоимений в одной системе. Когда какая форма и почему English не прощает падежной свободы."
+tags: [pronouns, grammar, A2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Местоимения и определители» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем учить местоимения отдельной темой
+
+В русском местоимения не вызывают вопросов: «я» / «меня» / «мне» / «мной» — падежи делают всю работу, и какой формой обозначить себя в роли подлежащего или дополнения, мозг решает на автомате. Английский же отказался от падежей почти полностью, но оставил их для одного класса слов — для личных местоимений. Поэтому «он видит меня» в русском — это «видит» плюс «меня» в винительном; в английском то же предложение требует двух разных слов: «He sees me». Перепутаешь — носитель поймёт, но фраза прозвучит «по-детски».
+
+Дальше — больше. У английского местоимения есть не один «дополнительный» падеж, а целая семья форм: subject, object, possessive-adjective, possessive-pronoun, reflexive. Пять форм на каждое лицо. Плюс отдельный набор для указания (this / that), отдельный — для количества (some / any / much / many / few / little), отдельный — для «кто-то / что-то / нигде» (somebody / anything / nowhere), отдельный — для «каждый / все» (each / every / all). Всё это разные системы со своими правилами выбора.
+
+Хорошая новость: каждая система маленькая и логичная. Эта тема не про зубрёжку, а про то, чтобы один раз увидеть всю карту и перестать гадать.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+**Форму местоимения определяет роль в предложении.** Делает действие — subject (I, he, she). Получает действие — object (me, him, her). Стоит перед существительным как определение — possessive adjective (my, his, her). Заменяет существительное целиком и стоит сам — possessive pronoun (mine, his, hers). Совпадает с подлежащим — reflexive (myself, himself, herself). Английский не позволяет одной формой покрыть всё, как русский «я».
+</Callout>
+
+## 3. Формы и грамматика
+
+### Сводная таблица — все семь лиц
+
+| Лицо | Subject (подлеж.) | Object (доп.) | Possessive Adjective (+ N) | Possessive Pronoun (сам) | Reflexive |
+| --- | --- | --- | --- | --- | --- |
+| 1 ед. | I | me | my | mine | myself |
+| 2 ед./мн. | you | you | your | yours | yourself / yourselves |
+| 3 ед. м. | he | him | his | his | himself |
+| 3 ед. ж. | she | her | her | hers | herself |
+| 3 ед. ср. | it | it | its | — | itself |
+| 1 мн. | we | us | our | ours | ourselves |
+| 3 мн. | they | them | their | theirs | themselves |
+
+Заметь: `his` — одинаковая форма для adjective и pronoun, у `her` — две разные (`her` adj / `hers` pron), `it` не имеет possessive-pronoun формы (нельзя сказать «this tail is its»), `you` одинаковая для subject и object.
+
+### Demonstrative (указательные)
+
+| | Близко | Далеко |
+| --- | --- | --- |
+| Ед. | this | that |
+| Мн. | these | those |
+
+«Близко» — физически рядом или только что упомянутое. «Далеко» — на расстоянии или ранее упомянутое.
+
+### Quantifiers (количественные)
+
+| Группа | С исчисляемыми (countable) | С неисчисляемыми (uncountable) | С любыми |
+| --- | --- | --- | --- |
+| Много | many books | much money | a lot of / lots of |
+| Немного / несколько | a few books / few books | a little money / little money | some |
+| Сколько-нибудь | any books | any money | any |
+| Никакой | no books | no money | none |
+
+`few` без `a` = «мало, недостаточно» (грустно). `a few` = «несколько, есть какое-то количество» (нейтрально). То же для `little` / `a little`.
+
+### Indefinite (составные местоимения)
+
+| | -body / -one (люди) | -thing (предметы) | -where (места) |
+| --- | --- | --- | --- |
+| some- | somebody / someone | something | somewhere |
+| any- | anybody / anyone | anything | anywhere |
+| no- | nobody / no one | nothing | nowhere |
+| every- | everybody / everyone | everything | everywhere |
+
+Все составные местоимения согласуются с глаголом в **единственном** числе: «Everybody **is** here», «Nothing **happens**».
+
+### Each / every / all
+
+| | Что подчёркивает | Грамматика |
+| --- | --- | --- |
+| each | каждый по отдельности | + ед. ч.: each student has a book |
+| every | каждый в группе | + ед. ч.: every student in the class |
+| all | все вместе | + мн. ч. + N: all students; all of them; all the books |
+
+### One / ones — замена существительного
+
+«One» (ед.) и «ones» (мн.) подставляются вместо повторённого существительного, чтобы не повторяться: «I don't want the red one, give me the blue one», «These shoes are nice, but I prefer the black ones».
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русские падежи делают за местоимение всю работу. Английский переложил эту работу на отдельные слова, и теперь форму определяет роль в предложении, а не окончание. Перевод «слово в слово» из русского регулярно ломается: «у меня есть» → не «By me have», а «I have»; «моя книга» и «эта книга — моя» — это два разных слова (my / mine), хотя по-русски корень один.">
+  <div slot="ru">
+    <strong>Я вижу его.</strong> — «я» (им.) + «его» (вин.). Падежи говорят, кто видит, а кого видят.<br/>
+    <strong>Это моя книга. Эта книга — моя.</strong> — Один корень «мой», падеж и позиция меняют форму.<br/>
+    <strong>Я порезался.</strong> — Возвратное «-ся» в глаголе.
+  </div>
+  <div slot="en">
+    <strong>I see him.</strong> — Subject = I, object = him. Позиция (до глагола / после) кодируется формой местоимения.<br/>
+    <strong>This is my book. This book is mine.</strong> — `my` всегда перед N, `mine` стоит сам.<br/>
+    <strong>I cut myself.</strong> — Возвратность вынесена в отдельное слово «-self».
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+`some` и `any` ставят русскоязычных в тупик чаще всего. Дерево решений ниже выбирает за тебя.
+
+<DecisionTree nodes={[
+  { q: "Предложение отрицательное (not, never, no)?", yes: "any: I don't have any time. / There is nothing here.", no: "к вопросу 2" },
+  { q: "Предложение вопросительное?", yes: "По умолчанию any: Do you have any questions? Но если это просьба/предложение/ожидаешь «да» — some: Would you like some coffee?", no: "к вопросу 3" },
+  { q: "Предложение утвердительное?", yes: "some: I have some friends here. / There is some milk in the fridge.", no: "Скорее всего речь о квантификаторе вне выбора some/any — посмотри much/many/few." },
+]} />
+
+## 6. Смысл и использование
+
+### Personal — subject vs object
+
+<RuleList rules={[
+  "<strong>Subject</strong> делает действие. Стоит перед глаголом, кодируется формой I, you, he, she, it, we, they. <em>I called Anna.</em>",
+  "<strong>Object</strong> получает действие или идёт после предлога. Кодируется формой me, you, him, her, it, us, them. <em>Anna called me.</em> / <em>This is for him.</em>",
+  "<strong>После предлога — всегда object.</strong> with me, for him, between us, to them. <em>Come with me.</em> (не «with I»)",
+  "<strong>В сравнениях устной нормы — object.</strong> She is taller than me. (формальная грамматика допускает «than I», но в речи слышишь «than me»)",
+]} />
+
+### Possessive — adjective vs pronoun
+
+<RuleList rules={[
+  "<strong>Possessive adjective</strong> определяет существительное и стоит ПЕРЕД ним. my book, your car, his idea, our team. Никогда отдельно: «This is my» — нельзя.",
+  "<strong>Possessive pronoun</strong> заменяет существительное целиком и стоит САМ, без N после. mine, yours, his, hers, ours, theirs. <em>This book is mine.</em> = This book is my book.",
+  "<strong>Без апострофа.</strong> hers, yours, theirs, ours, its — никогда не пишутся с апострофом. «it's» = «it is», это совсем другое слово.",
+  "<strong>«A friend of mine»</strong> — типовая конструкция вместо «my friend» в значении «один из моих друзей». Иначе «my friend» звучит как «мой единственный друг».",
+]} />
+
+### Reflexive — когда нужны и не нужны
+
+<RuleList rules={[
+  "<strong>Субъект и объект совпадают.</strong> Действие направлено на себя. <em>I cut myself shaving. / She blames herself.</em>",
+  "<strong>Эмфаза «сам, лично».</strong> Может стоять рядом с подлежащим или в конце. <em>The CEO himself answered the email. / I did it myself.</em>",
+  "<strong>«By + reflexive»</strong> = в одиночку, без посторонней помощи. <em>She lives by herself. / I solved it by myself.</em>",
+  "<strong>НЕ используются с wash, shave, dress, change, hide</strong> в современном английском. <em>I wash and shave every morning.</em> — без myself. Сказать «I wash myself» можно, но звучит формально/старо.",
+  "<strong>НЕ используются после большинства предлогов места.</strong> <em>I have my keys with me.</em> — не «with myself». Reflexive только если действие реально возвратное.",
+]} />
+
+### Demonstrative — this / that / these / those
+
+<RuleList rules={[
+  "<strong>This / these</strong> — для близкого по расстоянию или по времени. <em>This book in my hand. / These days I'm busy.</em>",
+  "<strong>That / those</strong> — для дальнего по расстоянию или о чём говорили. <em>That mountain on the horizon. / Remember that meeting last week?</em>",
+  "<strong>В телефонном разговоре</strong>: «This is Anna» (я — Anna), «Is that John?» (на том конце — John).",
+  "<strong>Согласование по числу обязательно.</strong> this book / these books, that idea / those ideas. «This books» — типовая ошибка.",
+]} />
+
+### Quantifiers — some / any / much / many / few / little
+
+<RuleList rules={[
+  "<strong>some</strong> — в утверждениях и в вопросах-просьбах/предложениях. <em>I have some questions. / Would you like some tea?</em>",
+  "<strong>any</strong> — в вопросах и отрицаниях. <em>Do you have any questions? / I don't have any time.</em>",
+  "<strong>many</strong> — с исчисляемыми (countable). <em>many people, many books, many ideas.</em>",
+  "<strong>much</strong> — с неисчисляемыми (uncountable): money, time, water, information, advice, news, furniture. Чаще в вопросах и отрицаниях. <em>How much time? / I don't have much money.</em>",
+  "<strong>a lot of / lots of</strong> — универсальная замена much и many в утверждениях. <em>I have a lot of friends and a lot of work.</em>",
+  "<strong>a few / a little</strong> — «несколько / немного», нейтрально, есть какое-то количество. <em>I have a few friends here.</em>",
+  "<strong>few / little</strong> (без a) — «мало, почти нет», с оттенком «недостаточно». <em>I have few friends here</em> — звучит грустно.",
+  "<strong>no / none</strong> — «никакой». <em>I have no idea. / How much money do you have? — None.</em>",
+]} />
+
+### Indefinite (составные) — some-/any-/no-/every-
+
+<RuleList rules={[
+  "<strong>Логика та же, что у some/any.</strong> Утверждение → some- (I saw somebody there). Вопрос/отрицание → any- (Did you see anybody?).",
+  "<strong>-body и -one взаимозаменяемы.</strong> somebody = someone, nobody = no one. В письме «no one» — два слова, без дефиса.",
+  "<strong>Глагол всегда в единственном числе.</strong> Everybody is here, not «are». Nothing matters, not «matter».",
+  "<strong>После составных — единственное число у глагола, но «they» как местоимение для «о ком-то».</strong> <em>Somebody left their bag here.</em> — «their» вместо «his or her» — стандартная норма.",
+  "<strong>Прилагательное после составного — после слова, не перед.</strong> <em>Something strange happened.</em> (не «strange something»)",
+]} />
+
+### Each / every / all
+
+<RuleList rules={[
+  "<strong>each</strong> — рассматриваем индивидуально, каждого по отдельности. <em>Each student got a different book.</em>",
+  "<strong>every</strong> — обобщаем всю группу. <em>Every student must pass the exam.</em>",
+  "<strong>each и every — оба с единственным числом N и глагола.</strong> «Each / every student is here».",
+  "<strong>all</strong> — все как единое целое. С множественным N: <em>All students are here.</em> или с of: <em>all of the students / all of them.</em>",
+  "<strong>«All» обычно не заменяет «everything».</strong> «I know everything» — естественно. «I know all» — звучит обрывисто, требует продолжения: «I know all about it».",
+]} />
+
+### One / ones — замена существительного
+
+<RuleList rules={[
+  "<strong>one</strong> = единственное число повторяемого N. <em>— Which book? — The red one.</em>",
+  "<strong>ones</strong> = множественное число. <em>I like the green ones better.</em>",
+  "<strong>«These ones» / «those ones»</strong> допустимы, но «the» обычно не нужно. <em>These ones look better.</em>",
+  "<strong>Не использовать вместо неисчисляемых.</strong> «I don't want this milk, give me the one» — нельзя. С uncountable говорят без замены или с «some»: «give me some».",
+]} />
+
+### Reciprocal — each other / one another
+
+«Each other» и «one another» означают «друг друга» и используются как взаимное местоимение: «We help each other», «They sent each other gifts». Разницы в смысле между ними почти нет; «one another» формальнее, чаще для групп больше двух.
+
+## 7. Примеры
+
+### Personal — subject vs object
+
+<Example ru="Я звонил Анне вчера.">I called Anna yesterday.</Example>
+<Example ru="Анна звонила мне вчера.">Anna called me yesterday.</Example>
+<Example ru="Он не видит её отсюда.">He can't see her from here.</Example>
+<Example ru="Мы пригласили их на ужин.">We invited them to dinner.</Example>
+<Example ru="Это для меня?">Is this for me?</Example>
+
+### Possessive adjective vs pronoun
+
+<Example ru="Это моя сумка, не его.">This is my bag, not his.</Example>
+<Example ru="Этот ноутбук — мой.">This laptop is mine.</Example>
+<Example ru="У её брата свой дом, а её — съёмный.">Her brother has his own house, hers is rented.</Example>
+<Example ru="Наша команда выиграла, ваша проиграла.">Our team won, yours lost.</Example>
+<Example ru="Один мой друг работает в этой компании.">A friend of mine works at this company.</Example>
+
+### Reflexive — возвратные
+
+<Example ru="Я порезался, когда брился.">I cut myself shaving.</Example>
+<Example ru="Она сама сделала презентацию.">She made the presentation herself.</Example>
+<Example ru="Сам директор ответил на письмо.">The director himself answered the email.</Example>
+<Example ru="Я живу один.">I live by myself.</Example>
+
+### Demonstrative — указательные
+
+<Example ru="Эта книга интереснее той.">This book is more interesting than that one.</Example>
+<Example ru="Те ребята, что мы вчера встретили, тоже разработчики.">Those guys we met yesterday are also developers.</Example>
+<Example ru="В эти дни я много работаю.">These days I work a lot.</Example>
+<Example ru="Помнишь то совещание на прошлой неделе?">Remember that meeting last week?</Example>
+
+### Quantifiers — some / any / much / many
+
+<Example ru="У меня есть несколько вопросов.">I have some questions.</Example>
+<Example ru="Хотите чаю?">Would you like some tea?</Example>
+<Example ru="У тебя есть какие-нибудь идеи?">Do you have any ideas?</Example>
+<Example ru="У меня сегодня нет времени.">I don't have any time today.</Example>
+<Example ru="На совещании было много людей.">There were many people at the meeting.</Example>
+<Example ru="У него много опыта в этой области.">He has a lot of experience in this field.</Example>
+<Example ru="Сколько у тебя денег?">How much money do you have?</Example>
+
+### few / a few — про друзей
+
+<Example ru="У меня есть несколько друзей здесь — могу позвать.">I have a few friends here — I can call them.</Example>
+<Example ru="У меня мало друзей здесь, чувствую себя одиноко.">I have few friends here, I feel lonely.</Example>
+<Example ru="Налей немного молока в кофе.">Pour a little milk in the coffee.</Example>
+<Example ru="У нас мало времени, нужно поторопиться.">We have little time, we need to hurry.</Example>
+
+### Indefinite — составные
+
+<Example ru="Кто-то оставил здесь куртку.">Somebody left a jacket here.</Example>
+<Example ru="Я ничего не видел.">I didn't see anything.</Example>
+<Example ru="Все уже знают.">Everybody already knows.</Example>
+<Example ru="В комнате никого нет.">There is nobody in the room.</Example>
+<Example ru="Случилось что-то странное.">Something strange happened.</Example>
+
+### Each / every / all / one
+
+<Example ru="У каждого студента — своя задача.">Each student has a different task.</Example>
+<Example ru="Каждый сотрудник должен прочитать инструкцию.">Every employee must read the instructions.</Example>
+<Example ru="Все собрались в переговорке.">All of them gathered in the meeting room.</Example>
+<Example ru="— Какую кружку? — Синюю.">— Which mug? — The blue one.</Example>
+<Example ru="Эти кроссовки красивее, чем те.">These trainers are nicer than those ones.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="few / little (без a)" rightLabel="a few / a little">
+  <div slot="left">
+    <strong>I have few friends here.</strong><br/>Мало друзей. Звучит грустно, недостаточно.<br/><br/>
+    <strong>We have little time.</strong><br/>Времени мало, надо торопиться.<br/><br/>
+    <strong>She speaks little Spanish.</strong><br/>Знает плохо, общаться сложно.
+  </div>
+  <div slot="right">
+    <strong>I have a few friends here.</strong><br/>Несколько друзей. Нейтрально, какое-то количество есть.<br/><br/>
+    <strong>We have a little time.</strong><br/>Немного времени, успеем кое-что.<br/><br/>
+    <strong>She speaks a little Spanish.</strong><br/>На бытовом уровне говорит.
+  </div>
+</Compare>
+
+<Compare leftLabel="some" rightLabel="any">
+  <div slot="left">
+    <strong>I have some questions.</strong><br/>Утверждение → some.<br/><br/>
+    <strong>Would you like some coffee?</strong><br/>Просьба / предложение → some, ожидаем «да».<br/><br/>
+    <strong>Can I have some water?</strong><br/>Вежливая просьба → some.
+  </div>
+  <div slot="right">
+    <strong>Do you have any questions?</strong><br/>Открытый вопрос → any, не знаем ответа.<br/><br/>
+    <strong>I don't have any time.</strong><br/>Отрицание → any (или «no time»).<br/><br/>
+    <strong>Is there anything to eat?</strong><br/>Открытый вопрос → anything.
+  </div>
+</Compare>
+
+<Compare leftLabel="his (adjective и pronoun)" rightLabel="her vs hers">
+  <div slot="left">
+    <strong>This is his book.</strong> (adj + N)<br/>
+    <strong>This book is his.</strong> (pronoun)<br/><br/>
+    `his` — одна форма для обоих случаев. Удобно и редко путают.
+  </div>
+  <div slot="right">
+    <strong>This is her book.</strong> (adj + N)<br/>
+    <strong>This book is hers.</strong> (pronoun)<br/><br/>
+    `her` — adjective, всегда перед N. `hers` — pronoun, стоит сам. Это две разные формы.
+  </div>
+</Compare>
+
+<Compare leftLabel="each" rightLabel="every vs all">
+  <div slot="left">
+    <strong>Each student got a different book.</strong><br/>Подчёркиваем индивидуально каждого. Часто — когда есть различия между членами группы.
+  </div>
+  <div slot="right">
+    <strong>Every student must read the manual.</strong><br/>Обобщаем всю группу. Подчёркиваем «все без исключения».<br/><br/>
+    <strong>All students are here.</strong><br/>Все вместе как единое целое. С множественным числом.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+**Adjective или pronoun?** Если за словом сразу идёт существительное — adjective (`my book`, `his idea`). Если после слова — точка, глагол или ничего — pronoun (`This is mine`, `Hers is bigger`). Простое правило с почти 100% точностью.
+
+**Reflexive нужен?** Спроси: «совпадают ли подлежащее и объект?». Если да — myself / yourself / himself. Если нет (`I have my keys with me` — «я» и «ключи» разные) — обычное object местоимение.
+
+**some или any?** В утверждении и в просьбе — `some`. В вопросе и в отрицании — `any`. Запомни как пару: «Would you like some?» / «Do you have any?».
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английский держит пять форм на одно «я»">
+Древнеанглийский был полноценно падежным: пять-шесть форм на каждое местоимение, склонение существительных, согласование прилагательных. За тысячу лет язык избавился почти от всех падежей в существительных и прилагательных — слово «book» одинаково в любой роли в предложении. Но для местоимений падежи остались, потому что они звучат сотни раз в день и сжатый вариант «I → me → my → mine → myself» оказался удобнее, чем длинные конструкции с предлогами. То, что русский передаёт окончанием, английский передаёт самой формой слова. Поэтому в английском местоимение — последний остров «падежного» мышления; всё остальное склонение сгорело.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Местоимение стоит ПЕРЕД существительным (определяет его)?", yes: "Possessive adjective: my, your, his, her, its, our, their.", no: "к вопросу 2" },
+  { q: "Местоимение заменяет существительное и стоит САМО (без N после)?", yes: "Possessive pronoun: mine, yours, his, hers, ours, theirs (для it — нет такой формы).", no: "к вопросу 3" },
+  { q: "Подлежащее и объект — одно и то же лицо?", yes: "Reflexive: myself, yourself, himself, herself, ourselves, themselves.", no: "к вопросу 4" },
+  { q: "Местоимение — подлежащее (делает действие)?", yes: "Subject: I, you, he, she, it, we, they.", no: "к вопросу 5" },
+  { q: "Местоимение — дополнение или идёт после предлога?", yes: "Object: me, you, him, her, it, us, them.", no: "Если ни одно не подходит — скорее всего речь о demonstrative (this/that) или quantifier (some/any/much/many). Возвращайся к 5-му разделу." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| Me and Anna went to the cinema | Anna and I went to the cinema | Подлежащее → subject: I, не me. И второе лицо принято ставить первым из вежливости. |
+| Give it to I | Give it to me | После предлога — object: me. |
+| This is my. | This is mine. | Без N после — possessive pronoun: mine. `my` всегда требует N после себя. |
+| This is hers book. | This is her book. | Перед N — adjective `her`. `hers` стоит само, без N. |
+| The dog wagged it's tail. | The dog wagged its tail. | `its` (без апострофа) = possessive. `it's` = «it is». |
+| Everybody are here. | Everybody is here. | Составные с -body/-one согласуются с глаголом в единственном числе. |
+| I have much friends. | I have many friends / a lot of friends. | friends — countable → many. В утверждении лучше «a lot of». |
+| I have many money. | I have much money / a lot of money. | money — uncountable → much / a lot of. |
+| Do you have some time? | Do you have any time? | В нейтральном вопросе → any. `some` в вопросе — только если это просьба/предложение. |
+| I have few friends here, let me introduce you. | I have a few friends here, let me introduce you. | «Несколько» (есть кого представить) → a few. `few` без `a` звучит «их мало, грустно». |
+| I wash myself every morning. | I wash every morning. | После wash / shave / dress reflexive не нужен — он избыточен. |
+| My friend, he is a doctor. | My friend is a doctor. | Двойное подлежащее — школьная калька с русского «мой друг, он...». В английском лишнее. |
+| Strange something happened. | Something strange happened. | Прилагательное после составного, не перед. |
+| I know all. | I know everything. | «All» в значении «всё» обычно требует продолжения. Для «всё» в общем смысле — everything. |
+| These books are interesting, this is too. | These books are interesting, this one is too. | При замене существительного нужен `one`. Без него — обрыв. |
+
+## 13. Шпаргалка
+
+### Главная таблица — 7 лиц × 5 форм
+
+| Лицо | Subj | Obj | Adj + N | Pron (сам) | Reflexive |
+| --- | --- | --- | --- | --- | --- |
+| I | I | me | my | mine | myself |
+| you (ед.) | you | you | your | yours | yourself |
+| he | he | him | his | his | himself |
+| she | she | her | her | hers | herself |
+| it | it | it | its | — | itself |
+| we | we | us | our | ours | ourselves |
+| they | they | them | their | theirs | themselves |
+| you (мн.) | you | you | your | yours | yourselves |
+
+### Quantifiers — что с чем
+
+| Маркер | Countable | Uncountable | Утв./Вопр./Отр. |
+| --- | --- | --- | --- |
+| some | books | milk | Утв. + просьба |
+| any | books | milk | Вопр. + отр. |
+| many | books | — | Все |
+| much | — | money | Чаще вопр./отр. |
+| a lot of / lots of | books | money | Все, чаще утв. |
+| a few | books | — | Утв., «несколько» |
+| few | books | — | Утв., «мало (плохо)» |
+| a little | — | money | Утв., «немного» |
+| little | — | money | Утв., «мало (плохо)» |
+| no / none | books | money | Все |
+
+### Indefinite — таблица 3×4
+
+| | -body / -one | -thing | -where |
+| --- | --- | --- | --- |
+| some- | somebody / someone | something | somewhere |
+| any- | anybody / anyone | anything | anywhere |
+| no- | nobody / no one | nothing | nowhere |
+| every- | everybody / everyone | everything | everywhere |
+
+### Each / every / all
+
+- **each** — индивидуально, + ед. ч.
+- **every** — обобщённо, + ед. ч.
+- **all** — все вместе, + мн. ч.
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "personal pronoun", meaning: "личное местоимение (I, you, he, she...)" },
+  { term: "subject form", meaning: "форма подлежащего (I, he, she, we, they)" },
+  { term: "object form", meaning: "форма дополнения (me, him, her, us, them)" },
+  { term: "possessive adjective", meaning: "притяжательное прилагательное — перед N (my, your, his)" },
+  { term: "possessive pronoun", meaning: "притяжательное местоимение — стоит само (mine, yours, his, hers)" },
+  { term: "reflexive pronoun", meaning: "возвратное местоимение (myself, yourself, himself)" },
+  { term: "demonstrative", meaning: "указательное местоимение (this, that, these, those)" },
+  { term: "quantifier", meaning: "местоимение количества (some, any, much, many, few, little)" },
+  { term: "indefinite pronoun", meaning: "неопределённое местоимение (somebody, anything, nowhere)" },
+  { term: "reciprocal pronoun", meaning: "взаимное местоимение (each other, one another)" },
+  { term: "I / me / my / mine / myself", meaning: "1-е лицо ед. — пять форм" },
+  { term: "you / your / yours / yourself", meaning: "2-е лицо ед. — четыре формы (subj и obj совпадают)" },
+  { term: "he / him / his / himself", meaning: "3-е ед. м. (his — и adj, и pronoun)" },
+  { term: "she / her / hers / herself", meaning: "3-е ед. ж. (her — adj, hers — pronoun)" },
+  { term: "it / its / itself", meaning: "3-е ед. ср. (нет possessive pronoun формы)" },
+  { term: "we / us / our / ours / ourselves", meaning: "1-е мн. — пять форм" },
+  { term: "they / them / their / theirs / themselves", meaning: "3-е мн. — пять форм" },
+  { term: "this / these", meaning: "указательное «близко» (ед. / мн.)" },
+  { term: "that / those", meaning: "указательное «далеко» (ед. / мн.)" },
+  { term: "some", meaning: "некоторое количество — в утверждениях и просьбах" },
+  { term: "any", meaning: "сколько-нибудь — в вопросах и отрицаниях" },
+  { term: "much", meaning: "много (с неисчисляемыми, чаще вопр./отр.)" },
+  { term: "many", meaning: "много (с исчисляемыми)" },
+  { term: "a lot of / lots of", meaning: "много (универсально, чаще в утверждениях)" },
+  { term: "a few", meaning: "несколько (с исчисляемыми, нейтрально)" },
+  { term: "few", meaning: "мало (с исчисляемыми, «недостаточно»)" },
+  { term: "a little", meaning: "немного (с неисчисляемыми)" },
+  { term: "little", meaning: "мало (с неисчисляемыми, «недостаточно»)" },
+  { term: "no / none", meaning: "никакой / никто (отрицание без not)" },
+  { term: "somebody / someone", meaning: "кто-то (утверждение)" },
+  { term: "anybody / anyone", meaning: "кто-нибудь (вопрос/отрицание)" },
+  { term: "nobody / no one", meaning: "никто (отрицание без not)" },
+  { term: "everybody / everyone", meaning: "все (согласуется с ед. ч. глагола)" },
+  { term: "something / anything / nothing / everything", meaning: "что-то / что-нибудь / ничего / всё" },
+  { term: "somewhere / anywhere / nowhere / everywhere", meaning: "где-то / где-нибудь / нигде / везде" },
+  { term: "each", meaning: "каждый (индивидуально), + ед. ч." },
+  { term: "every", meaning: "каждый (в составе группы), + ед. ч." },
+  { term: "all", meaning: "все (вместе), + мн. ч." },
+  { term: "one / ones", meaning: "замена существительного — «который, такой»" },
+  { term: "each other / one another", meaning: "друг друга" },
+  { term: "by myself / by yourself", meaning: "сам, в одиночку, без помощи" },
+  { term: "a friend of mine", meaning: "один из моих друзей (вместо «my friend»)" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Формы по лицам</span>
+    <span class="kc-trainer-hint">Запомни subject / object / possessive / reflexive</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Форма → тип</span>
+    <span class="kc-trainer-hint">Соотнеси местоимение с его ролью</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Четыре семьи местоимений</span>
+    <span class="kc-trainer-hint">Разложи по personal / possessive / reflexive / demonstrative</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную форму</span>
+    <span class="kc-trainer-hint">Впиши местоимение или квантификатор</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Расставь слова с местоимениями</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+> Сноска про относительные местоимения. Слова **who** (для людей), **which** (для не-людей) и **that** (для обоих) связывают предложения: «The man who called you is here», «The book that I bought». Это отдельная большая тема — придаточные определительные — будет в продвинутом уроке. Здесь достаточно знать, что эти слова — тоже местоимения, просто другая семья.
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 82-86 (personal, possessive, reflexive), 87-92 (this/that, some/any, much/many, few/little), 89-91 (every/all/each).
+- **Swan M., Practical English Usage** — §424-440 (pronouns), §389-396 (determiners and quantifiers).
+- **English Page — Pronouns overview** — englishpage.com/grammar/pronouns.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/pronouns

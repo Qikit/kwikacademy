@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-pronouns",
+  "title": "Поставь правильное местоимение",
+  "description": "Впиши местоимение или квантификатор в правильной форме.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Anna called ___ yesterday. (1-е ед., объект)",
+        "answers": ["me"],
+        "explain": "После глагола → object form 1-го ед.: me. Subject (I) ставился бы перед глаголом."
+      },
+      {
+        "text": "This is not your laptop, it's ___. (1-е ед., possessive pronoun)",
+        "answers": ["mine"],
+        "explain": "Без N после → possessive pronoun: mine. «My» требует N: this is my laptop."
+      },
+      {
+        "text": "She did the whole report ___. (эмфаза «сама»)",
+        "answers": ["herself"],
+        "explain": "Эмфаза «сама, лично сделала» — reflexive: herself. Стоит в конце предложения для усиления."
+      },
+      {
+        "text": "Do you have ___ time to look at this? (вопрос)",
+        "answers": ["any"],
+        "explain": "В вопросе по умолчанию → any. «Some» в вопросе только если это просьба/предложение."
+      },
+      {
+        "text": "We have ___ milk left, let's buy more. (мало, грустно)",
+        "answers": ["little"],
+        "explain": "milk — uncountable. «Little» (без a) = «мало, недостаточно». «A little» означало бы «немного есть»."
+      },
+      {
+        "text": "How ___ people came to the conference? (countable, вопрос)",
+        "answers": ["many"],
+        "explain": "people — countable → many. «Much» только с uncountable."
+      },
+      {
+        "text": "___ student in the class must submit the form by Friday. (обобщённо)",
+        "answers": ["Every", "every", "Each", "each"],
+        "explain": "«Every» подчёркивает группу в целом («все без исключения»), «each» — индивидуально. Оба работают и оба требуют ед. ч. глагола (must submit)."
+      },
+      {
+        "text": "Somebody left ___ umbrella in the office. (gender-neutral possessive)",
+        "answers": ["their", "his or her"],
+        "explain": "Для «о ком-то одном» без указания пола в современном английском стандарт — «their»: somebody left their umbrella. Допустимо и формальное «his or her»."
+      },
+      {
+        "text": "The cat licked ___ paw. (3-е ед. ср., possessive adj)",
+        "answers": ["its"],
+        "explain": "Possessive adjective для it — its (без апострофа). «It's» = «it is», другое слово."
+      },
+      {
+        "text": "I don't want the green pen, give me the red ___. (замена N)",
+        "answers": ["one"],
+        "explain": "При замене повторённого N в единственном — one: the red one, the blue one. Без «one» фраза обрывается."
+      },
+      {
+        "text": "We met ___ at the airport and went to dinner together. (взаимно, друг друга)",
+        "answers": ["each other", "one another"],
+        "explain": "Взаимное действие «друг друга» — each other (или формальнее one another). «Ourselves» означало бы «каждый сам себя»."
+      },
+      {
+        "text": "___ guys we saw at the bar yesterday are also developers. (указательное, мн., далеко)",
+        "answers": ["Those", "those"],
+        "explain": "Удалённые/упомянутые ранее + множественное число → those. «These» — для близких, «that» — единственное."
+      }
+    ]
+  }
+}

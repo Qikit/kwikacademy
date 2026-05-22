@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import { withBase } from '../lib/url';
+---
+
+<BaseLayout title="404 — KwikAcademy">
+  <section style="max-width:560px;margin:0 auto;padding:120px 24px;text-align:center;">
+    <h1
+      style="font-size:80px;font-weight:800;background:var(--grad-aurora);-webkit-background-clip:text;background-clip:text;color:transparent;"
+    >
+      404
+    </h1>
+    <p style="color:var(--text-2);margin:16px 0 28px;">Такой страницы нет.</p>
+    <Button href={withBase('/')}>На главную</Button>
+  </section>
+</BaseLayout>

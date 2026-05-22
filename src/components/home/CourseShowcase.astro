@@ -5,7 +5,9 @@ import { withBase } from '../../lib/url';
 
 const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
 const lessons = await getCollection('lessons');
+const trainers = await getCollection('trainers');
 const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slug);
+const trainersFor = (slug: string) => trainers.filter((t) => t.data.course === slug);
 ---
 
 <section class="showcase">
@@ -19,6 +21,9 @@ const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slu
           data-lesson-slugs={lessonsFor(c.id)
             .map((l) => l.id)
             .join(',')}
+          data-trainer-slugs={trainersFor(c.id)
+            .map((t) => t.id)
+            .join(',')}
         >
           <CourseCard
             client:visible
@@ -26,7 +31,7 @@ const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slu
             title={c.data.title}
             eyebrow={c.data.subtitle}
             glyph={c.data.glyph}
-            meta={`${lessonsFor(c.id).length} уроков`}
+            meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
             progress={0}
           />
         </div>

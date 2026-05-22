@@ -39,9 +39,12 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
         <ul class="trainers">
           {trainers.map((t) => (
             <li>
-              <a href={withBase(`/practice/${course.id}/${t.id}`)}>
-                <strong>{t.data.title}</strong>
-                <span>{t.data.description}</span>
+              <a href={withBase(`/practice/${course.id}/${t.id}`)} data-trainer={t.id}>
+                <div class="tinfo">
+                  <strong>{t.data.title}</strong>
+                  <span>{t.data.description}</span>
+                </div>
+                <span class="tbadge" aria-label="результат" />
               </a>
             </li>
           ))}
@@ -53,8 +56,9 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
   </section>
 
   <script>
-    import { hydrateRoadmap } from '../../lib/progress/hydrate';
+    import { hydrateRoadmap, hydrateTrainerList } from '../../lib/progress/hydrate';
     hydrateRoadmap();
+    hydrateTrainerList();
   </script>
 </BaseLayout>
 
@@ -88,23 +92,44 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
     gap: 12px;
   }
   .trainers a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 14px;
     padding: 16px 18px;
     border-radius: var(--r-md);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    transition: transform 0.2s;
+    transition: transform 0.2s, border-color 0.2s;
   }
   .trainers a:hover {
     transform: translateY(-2px);
+  }
+  .trainers a[data-done='true'] {
+    border-color: rgba(52, 211, 153, 0.5);
+  }
+  .tinfo {
+    flex: 1;
   }
   .trainers strong {
     display: block;
     font-family: var(--font-display);
     font-size: 15px;
   }
-  .trainers span {
+  .tinfo span {
     font-size: 13px;
     color: var(--text-3);
+  }
+  .tbadge:empty {
+    display: none;
+  }
+  .tbadge {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.14);
+    padding: 5px 10px;
+    border-radius: var(--r-full);
   }
 </style>

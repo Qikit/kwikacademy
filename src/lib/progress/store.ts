@@ -10,13 +10,18 @@ function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 }
 
+/** Fresh empty state — never share EMPTY_STATE's nested objects across stores. */
+function emptyState(): ProgressState {
+  return structuredClone(EMPTY_STATE);
+}
+
 function migrate(raw: unknown): ProgressState {
   // version 1 is current; future versions branch here before returning.
-  if (!raw || typeof raw !== 'object') return { ...EMPTY_STATE };
+  if (!raw || typeof raw !== 'object') return emptyState();
   const r = raw as Partial<ProgressState>;
-  if (r.version !== 1) return { ...EMPTY_STATE };
+  if (r.version !== 1) return emptyState();
   return {
-    ...EMPTY_STATE,
+    ...emptyState(),
     ...r,
     lessonsDone: Array.isArray(r.lessonsDone) ? r.lessonsDone : [],
     lessonPositions: r.lessonPositions ?? {},
@@ -25,13 +30,13 @@ function migrate(raw: unknown): ProgressState {
 }
 
 function read(): ProgressState {
-  if (!isBrowser()) return { ...EMPTY_STATE };
+  if (!isBrowser()) return emptyState();
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ...EMPTY_STATE };
+    if (!raw) return emptyState();
     return migrate(JSON.parse(raw));
   } catch {
-    return { ...EMPTY_STATE };
+    return emptyState();
   }
 }
 
@@ -60,6 +65,14 @@ export function createStore() {
       persist();
     },
     getTrainerResult: (slug: string): TrainerResult | null => state.trainerResults[slug] ?? null,
+    isTrainerDone: (slug: string) => slug in state.trainerResults,
+    getOverallProgress(lessonSlugs: string[], trainerSlugs: string[]): number {
+      const total = lessonSlugs.length + trainerSlugs.length;
+      if (total === 0) return 0;
+      const doneLessons = lessonSlugs.filter((s) => state.lessonsDone.includes(s)).length;
+      const doneTrainers = trainerSlugs.filter((s) => s in state.trainerResults).length;
+      return Math.round(((doneLessons + doneTrainers) / total) * 100);
+    },
     getTheme: (): ThemeChoice | null => state.theme,
     setTheme(theme: ThemeChoice) {
       state.theme = theme;

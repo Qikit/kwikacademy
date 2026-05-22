@@ -1,16 +1,33 @@
 import { createStore } from './store';
 
-/** Update course-card outlines (.kc-fill) from stored progress, per course. */
+const split = (v: string | undefined) => (v || '').split(',').filter(Boolean);
+
+/** Update course-card outlines (.kc-fill) from stored progress: lessons + trainers. */
 export function hydrateCourseCards() {
   const store = createStore();
   document.querySelectorAll<HTMLElement>('[data-course][data-lesson-slugs]').forEach((slot) => {
-    const slugs = (slot.dataset.lessonSlugs || '').split(',').filter(Boolean);
-    if (slugs.length === 0) return;
-    const pct = store.getCourseProgress(slugs);
+    const lessonSlugs = split(slot.dataset.lessonSlugs);
+    const trainerSlugs = split(slot.dataset.trainerSlugs);
+    if (lessonSlugs.length + trainerSlugs.length === 0) return;
+    const pct = store.getOverallProgress(lessonSlugs, trainerSlugs);
     const fill = slot.querySelector<SVGRectElement>('.kc-fill');
     const label = slot.querySelector<HTMLElement>('.kc-pct');
     if (fill) fill.style.strokeDasharray = `${pct} 100`;
     if (label) label.textContent = `${pct}%`;
+  });
+}
+
+/** Mark finished trainers in a topic's trainer list with a badge and best score. */
+export function hydrateTrainerList() {
+  const store = createStore();
+  document.querySelectorAll<HTMLElement>('[data-trainer]').forEach((el) => {
+    const slug = el.dataset.trainer;
+    if (!slug) return;
+    const result = store.getTrainerResult(slug);
+    if (!result) return;
+    el.dataset.done = 'true';
+    const badge = el.querySelector<HTMLElement>('.tbadge');
+    if (badge) badge.textContent = `✓ ${result.score}/${result.total}`;
   });
 }
 

@@ -22,6 +22,22 @@ describe('progressStore', () => {
     expect(s.getCourseProgress(['l1', 'l2', 'l3', 'l4'])).toBe(25);
   });
 
+  it('counts lessons and trainers together in overall progress', () => {
+    const s = createStore();
+    s.markLessonDone('l1');
+    s.recordTrainerResult({ trainerSlug: 't1', score: 0, total: 1, completedAt: 1 });
+    s.recordTrainerResult({ trainerSlug: 't2', score: 2, total: 2, completedAt: 2 });
+    // 1 lesson done of [l1,l2] + 2 trainers done of [t1,t2,t3] = 3/5 = 60%
+    expect(s.getOverallProgress(['l1', 'l2'], ['t1', 't2', 't3'])).toBe(60);
+  });
+
+  it('marks a finished trainer as done regardless of score', () => {
+    const s = createStore();
+    s.recordTrainerResult({ trainerSlug: 't1', score: 0, total: 3, completedAt: 1 });
+    expect(s.isTrainerDone('t1')).toBe(true);
+    expect(s.isTrainerDone('t2')).toBe(false);
+  });
+
   it('records best trainer result only', () => {
     const s = createStore();
     s.recordTrainerResult({ trainerSlug: 't1', score: 3, total: 5, completedAt: 1 });

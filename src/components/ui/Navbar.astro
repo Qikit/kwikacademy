@@ -1,18 +1,29 @@
 ---
 import ThemeToggle from './ThemeToggle.tsx';
+import Icon from './Icon.astro';
 import { withBase } from '../../lib/url';
 
 const links = [
-  { href: withBase('/topics'), label: 'Темы' },
-  { href: withBase('/progress'), label: 'Прогресс' },
-  { href: withBase('/about'), label: 'О проекте' },
+  { href: withBase('/'), label: 'Главная', icon: 'home' as const },
+  { href: withBase('/topics'), label: 'Темы', icon: 'layers' as const },
+  { href: withBase('/progress'), label: 'Прогресс', icon: 'target' as const },
 ];
 ---
 
 <header class="bar">
-  <a class="logo" href={withBase('/')}>KwikAcademy</a>
+  <a class="logo" href={withBase('/')}>
+    <span class="logo-mark"><Icon name="graduation-cap" size={18} /></span>
+    KwikAcademy
+  </a>
   <nav class="pill">
-    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    {
+      links.map((l) => (
+        <a href={l.href}>
+          <Icon name={l.icon} size={15} />
+          <span>{l.label}</span>
+        </a>
+      ))
+    }
   </nav>
   <ThemeToggle client:load />
 </header>
@@ -28,9 +39,22 @@ const links = [
     padding: 16px clamp(16px, 4vw, 40px);
   }
   .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 16px;
+  }
+  .logo-mark {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    color: #fff;
+    background: var(--grad-aurora);
   }
   .pill {
     display: flex;
@@ -43,19 +67,26 @@ const links = [
     border: 1px solid var(--glass-border);
   }
   .pill a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     font-size: 13px;
     font-weight: 600;
-    padding: 8px 16px;
+    padding: 8px 15px;
     border-radius: var(--r-full);
     color: var(--text-2);
     transition: color 0.2s, background 0.2s;
   }
   .pill a:hover {
     color: var(--c-purple);
+    background: var(--track);
   }
-  @media (max-width: 560px) {
+  @media (max-width: 600px) {
+    .pill a span {
+      display: none;
+    }
     .pill a {
-      padding: 8px 11px;
+      padding: 9px;
     }
   }
 </style>

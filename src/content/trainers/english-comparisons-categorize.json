@@ -1,0 +1,76 @@
+{
+  "course": "english",
+  "lesson": "english-comparisons",
+  "title": "Какая степень — -er/-est, more/most или неправильная?",
+  "description": "Распредели прилагательные по трём корзинам в зависимости от способа образования степени.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "er", "label": "-er / the -est" },
+      { "id": "more", "label": "more / the most" },
+      { "id": "irregular", "label": "Неправильные" }
+    ],
+    "items": [
+      {
+        "text": "tall",
+        "category": "er",
+        "explain": "1 слог — стандартное добавление -er / -est: tall → taller → the tallest."
+      },
+      {
+        "text": "good",
+        "category": "irregular",
+        "explain": "Неправильная степень: good → better → the best. Правила слогов к ней не применяются."
+      },
+      {
+        "text": "expensive",
+        "category": "more",
+        "explain": "3 слога — всегда через more / the most: more expensive / the most expensive."
+      },
+      {
+        "text": "happy",
+        "category": "er",
+        "explain": "2 слога на -y — через -ier / -iest (после согласной y → i): happy → happier → the happiest."
+      },
+      {
+        "text": "bad",
+        "category": "irregular",
+        "explain": "Неправильная: bad → worse → the worst. Не «badder», не «more bad»."
+      },
+      {
+        "text": "big",
+        "category": "er",
+        "explain": "1 слог CVC под ударением — удваиваем согласную: big → bigger → the biggest."
+      },
+      {
+        "text": "careful",
+        "category": "more",
+        "explain": "2 слога, не на -y — через more / the most: more careful / the most careful."
+      },
+      {
+        "text": "far",
+        "category": "irregular",
+        "explain": "Неправильная: far → farther / further → the farthest / the furthest. Две формы для разных смыслов."
+      },
+      {
+        "text": "interesting",
+        "category": "more",
+        "explain": "4 слога — через more / the most: more interesting / the most interesting."
+      },
+      {
+        "text": "cheap",
+        "category": "er",
+        "explain": "1 слог — стандартное добавление: cheap → cheaper → the cheapest."
+      },
+      {
+        "text": "little",
+        "category": "irregular",
+        "explain": "Неправильная: little → less → the least. С исчисляемыми вместо less — fewer."
+      },
+      {
+        "text": "modern",
+        "category": "more",
+        "explain": "2 слога, окончание не -y — через more / the most: more modern / the most modern."
+      }
+    ]
+  }
+}

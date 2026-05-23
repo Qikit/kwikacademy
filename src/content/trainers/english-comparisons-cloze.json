@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-comparisons",
+  "title": "Поставь правильную степень",
+  "description": "Впиши сравнительную или превосходную форму прилагательного / наречия.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Today is ___ (cold) than yesterday.",
+        "answers": ["colder"],
+        "explain": "cold — 1 слог, через -er. Сравнение двух дней → сравнительная, без the."
+      },
+      {
+        "text": "This is ___ (expensive) restaurant in town.",
+        "answers": ["the most expensive"],
+        "explain": "expensive — 3 слога, через the most. «In town» = группа → превосходная, обязательный the."
+      },
+      {
+        "text": "She is ___ (happy) than she was last year.",
+        "answers": ["happier"],
+        "explain": "happy — 2 слога на -y, после согласной y → i: happier. Сравнение во времени → сравнительная."
+      },
+      {
+        "text": "The weather is ___ (good) today than yesterday.",
+        "answers": ["better"],
+        "explain": "good — неправильная: good → better → the best. Сравнение двух дней → сравнительная без the."
+      },
+      {
+        "text": "December is ___ (cold) month of the year.",
+        "answers": ["the coldest"],
+        "explain": "Превосходная из группы (months) → the + cold-est."
+      },
+      {
+        "text": "We have ___ (little) time than I thought.",
+        "answers": ["less"],
+        "explain": "little → less → the least. С неисчисляемым time — less, не fewer."
+      },
+      {
+        "text": "He runs ___ (fast) than me.",
+        "answers": ["faster"],
+        "explain": "fast — короткое наречие, ведёт себя как 1-сложное прилагательное: faster / the fastest."
+      },
+      {
+        "text": "Please explain ___ (clearly) — I didn't catch the last part.",
+        "answers": ["more clearly"],
+        "explain": "clearly — наречие на -ly, через more. «Clearlier» не существует."
+      },
+      {
+        "text": "This laptop is as ___ (fast) as the old one.",
+        "answers": ["fast"],
+        "explain": "Между as ... as — основная форма, не сравнительная. «As fast as» — равенство."
+      },
+      {
+        "text": "The ___ (much) you work, the ___ (good) the result.",
+        "answers": ["more", "better"],
+        "explain": "Двойная сравнительная: the + comparative, the + comparative. much → more, good → better."
+      }
+    ]
+  }
+}

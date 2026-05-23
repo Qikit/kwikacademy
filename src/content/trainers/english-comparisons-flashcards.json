@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-comparisons",
+  "title": "Степени сравнения — flashcards",
+  "description": "Неправильные степени, орфография и ключевые конструкции.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "good / well",
+        "back": "good (прилаг.) → better → the best. well (наречие) → better → the best. «This coffee is better.» «He plays better than me.» Не «more good» / «more well».",
+        "hint": "неправильная"
+      },
+      {
+        "front": "bad / badly",
+        "back": "bad (прилаг.) → worse → the worst. badly (наречие) → worse → the worst. «This is the worst deadline.» «He sings worse than her.»",
+        "hint": "неправильная"
+      },
+      {
+        "front": "far",
+        "back": "far → farther / further → the farthest / the furthest. farther — про физическое расстояние (the farthest house). further — переносное «дополнительный» (further information, further questions). В UK further чаще для обоих.",
+        "hint": "две формы"
+      },
+      {
+        "front": "little / much",
+        "back": "little → less → the least (с неисчисляемыми: less time, less money). much / many → more → the most. С исчисляемыми вместо less — fewer (fewer books, fewer bugs).",
+        "hint": "less vs fewer"
+      },
+      {
+        "front": "big — CVC",
+        "back": "big → bigger → the biggest. Короткое CVC (согласная-гласная-согласная) под ударением удваивает последнюю согласную. То же: thin → thinner, hot → hotter, fat → fatter, sad → sadder.",
+        "hint": "удвоение"
+      },
+      {
+        "front": "late — немая -e",
+        "back": "late → later → the latest. Молчаливое -e не дублируется, просто добавляется -r / -st. То же: nice → nicer → the nicest, large → larger → the largest, safe → safer → the safest.",
+        "hint": "немая e"
+      },
+      {
+        "front": "happy — -y → -i",
+        "back": "happy → happier → the happiest. -y после согласной превращается в -i перед -er / -est. То же: easy → easier, busy → busier, heavy → heavier, lucky → luckier.",
+        "hint": "-y превращается"
+      },
+      {
+        "front": "expensive — длинное",
+        "back": "expensive → more expensive → the most expensive. 3+ слога — всегда через more / the most. Никаких «expensiver» / «expensivest». То же: interesting, difficult, beautiful, important.",
+        "hint": "3 слога"
+      },
+      {
+        "front": "fast — наречие",
+        "back": "fast (короткое наречие) → faster → the fastest. Как у прилагательного, без -ly. То же: hard → harder, late → later, early → earlier (через -ier).",
+        "hint": "короткое наречие"
+      },
+      {
+        "front": "carefully — наречие на -ly",
+        "back": "carefully → more carefully → the most carefully. Наречия на -ly идут через more / the most. То же: quickly, slowly, clearly, efficiently. Исключение: well → better → the best.",
+        "hint": "-ly через more"
+      },
+      {
+        "front": "as ... as",
+        "back": "as + основная форма + as = равенство. «She is as tall as me.» Между as идёт основная форма, не сравнительная: «as fast as», не «as faster as». Отрицание: not as ... as / not so ... as.",
+        "hint": "равенство"
+      },
+      {
+        "front": "less ... than",
+        "back": "less + adj + than — обратная сравнительная, обычно с длинными прилагательными: «less interesting than I hoped». С короткими чаще используют not as ... as: «not as fast as» вместо «less fast than».",
+        "hint": "меньше Y"
+      },
+      {
+        "front": "much / a bit + comparative",
+        "back": "Модификаторы степени: much, a lot, far — намного; slightly, a bit — чуть-чуть. Ставятся перед сравнительной: «much faster», «a bit better», «far more interesting». Нельзя «very faster» — very идёт только с основной формой.",
+        "hint": "усилители"
+      },
+      {
+        "front": "the more, the merrier",
+        "back": "Двойная сравнительная: «the + comparative, the + comparative» = «чем ..., тем ...». «The harder you work, the better the result.» «The cleaner the code, the easier the review.» Артикль the обязателен в обеих частях.",
+        "hint": "двойная"
+      },
+      {
+        "front": "the с превосходной",
+        "back": "Перед превосходной — обязательно the: «the best», «the tallest», «the most interesting». Исключение: после притяжательного — без the (my best friend, our biggest mistake). После be в идиомах: «Honesty is best.»",
+        "hint": "артикль"
+      },
+      {
+        "front": "than vs then",
+        "back": "than — для сравнения: «better than yesterday». then — для последовательности: «We finished, then we left.» По звуку похожи, по смыслу разные. После сравнительной — всегда than.",
+        "hint": "ловушка"
+      }
+    ]
+  }
+}

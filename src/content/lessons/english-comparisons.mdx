@@ -2,12 +2,437 @@
 course: english
 order: 9
 phase: "Фаза 1 · Бытовой английский"
-title: "Сравнения — степени прилагательных"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "bigger, the biggest, as ... as — сравнение объектов."
-placeholder: true
-tags: [english]
+title: "Сравнения — степени сравнения прилагательных и наречий"
+eyebrow: "Грамматика · уровень A2"
+readingMinutes: 23
+summary: "Два способа сделать «-ее» и «самый» — короткий через -er/-est и длинный через more/most. Орфография, неправильные степени, as ... as и модификаторы вроде much faster."
+tags: [comparisons, adjectives, grammar, A2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Сравнения — степени прилагательных» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Scale from '../../components/lesson/Scale.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем уметь сравнивать
+
+Половина оценочных высказываний — это сравнения. «Эта квартира дороже», «он бегает быстрее меня», «сегодня холоднее, чем вчера», «самый длинный отчёт за месяц». Без сравнительной и превосходной степени остаётся либо сухая констатация («это дорого»), либо клишированные обороты вроде «more than expected», за которыми не видно сути.
+
+В русском у нас тоже два способа сделать степень: суффикс («длиннее», «теплее») и аналитика («более длинный», «более тёплый»). В английском та же логика: короткие прилагательные берут суффикс `-er / -est`, длинные — конструкцию `more / the most`. Проблема в том, что русскоязычные регулярно ошибаются в трёх местах: смешивают оба способа («more better»), забывают артикль `the` перед превосходной («best player» вместо «the best player») и не различают `farther / further`, `less / fewer`, `as ... as / -er than`.
+
+Этот урок даёт правила выбора и орфографии так, чтобы форма приходила автоматически, и закрывает типовые ошибки, по которым русскоязычного слышно сразу.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Сколько слогов в прилагательном — столько и решает. **1 слог** (и часть 2-сложных на `-y`) → `-er / the -est`. **3 слога и больше** → `more / the most`. **Перед превосходной — всегда `the`**. Никогда не оба способа сразу: либо `bigger`, либо `more big` (последнее — неверно для big), но не `more bigger`.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Сравнительная степень
+
+Используется, чтобы сказать «X больше / меньше / лучше, чем Y». Структура: `X is [comparative] than Y`.
+
+| Тип прилагательного | Как образуется | Пример |
+| --- | --- | --- |
+| 1 слог | adj + `-er` | tall → taller, fast → faster |
+| 2 слога, окончание `-y` | adj без `-y` + `-ier` | happy → happier, easy → easier |
+| 2 слога (большинство) | `more` + adj | careful → more careful |
+| 3 слога и больше | `more` + adj | interesting → more interesting, expensive → more expensive |
+
+После сравнительной — `than`: `She is taller than me. The new flat is more expensive than the old one.`
+
+### Превосходная степень
+
+Используется, чтобы сказать «самый / наиболее ... из группы». Структура: `the [superlative] (in / of ...)`.
+
+| Тип прилагательного | Как образуется | Пример |
+| --- | --- | --- |
+| 1 слог | `the` + adj + `-est` | the tallest, the fastest |
+| 2 слога, окончание `-y` | `the` + adj без `-y` + `-iest` | the happiest, the easiest |
+| 2 слога (большинство) | `the most` + adj | the most careful |
+| 3 слога и больше | `the most` + adj | the most interesting, the most expensive |
+
+Артикль `the` обязателен: «He is the best player», не «He is best player». Исключения — после притяжательного местоимения (`my best friend`) или после `be` в значении «лучшее из всего» (`Honesty is best`, идиоматично).
+
+### Орфография -er / -est
+
+| Правило | Положительная | Сравнительная | Превосходная |
+| --- | --- | --- | --- |
+| Молчаливое `-e` исчезает | late | later | the latest |
+| То же | nice | nicer | the nicest |
+| Короткий CVC удваивает согласную | big | bigger | the biggest |
+| То же | thin | thinner | the thinnest |
+| То же | hot | hotter | the hottest |
+| `-y` после согласной → `-ier / -iest` | happy | happier | the happiest |
+| То же | easy | easier | the easiest |
+| `-y` после гласной — остаётся | grey | greyer | the greyest |
+| Обычное добавление | tall | taller | the tallest |
+| То же | cheap | cheaper | the cheapest |
+
+CVC = согласная + гласная + согласная в конце слова под ударением. `big` (b-i-g) — удваиваем. `cool` (c-oo-l) — две гласные, не удваиваем. `cold` (c-o-l-d) — заканчивается на две согласные, не удваиваем.
+
+### Неправильные степени
+
+Эти формы надо запомнить — правила к ним не применяются.
+
+| Положительная | Сравнительная | Превосходная |
+| --- | --- | --- |
+| good | better | the best |
+| bad | worse | the worst |
+| far | farther / further | the farthest / the furthest |
+| little | less | the least |
+| much / many | more | the most |
+| old (для членов семьи) | elder | the eldest |
+
+`elder / eldest` — только перед существительным и только про старшинство в семье: `my elder brother`. В остальных случаях — `older / oldest`.
+
+### Наречия
+
+- Короткие наречия (`fast`, `hard`, `early`, `late`, `soon`) ведут себя как короткие прилагательные: `faster, the fastest, harder, the hardest`.
+- Наречия на `-ly` (`carefully`, `quickly`, `slowly`) — через `more / the most`: `more carefully, the most carefully`.
+- Исключение: `well → better → the best` (как у прилагательного `good`).
+- `badly → worse → the worst`.
+
+`He runs faster than me. She speaks more clearly than I do. The team finished the task the most efficiently of all departments.`
+
+### Конструкции
+
+- **`as ... as`** — равенство: `She is as tall as her sister.` Между as — основная форма, не сравнительная.
+- **`not as ... as` / `not so ... as`** — неравенство в сторону меньше: `He's not as fast as her.`
+- **`less ... than`** — меньше по качеству: `It's less interesting than I thought.` Работает с длинными прилагательными.
+- **`the + comparative, the + comparative`** — двойная сравнительная: «чем ..., тем ...». `The more, the merrier. The harder you work, the better the result.`
+- **Модификаторы при сравнительной**: `much`, `a lot`, `far`, `slightly`, `a bit`. Идут перед сравнительной формой. `Much faster. A bit better. Far more interesting.` Нельзя `very faster` — `very` сочетается только с основной формой (`very fast`).
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Логика «короткое слово — суффикс, длинное — отдельное слово» работает в обоих языках одинаково. Главное расхождение — артикль the при превосходной, которого в русском просто нет, и неправильные формы (better, worse), которые не вычисляются из основы.">
+  <div slot="ru">
+    <strong>Быстрый — быстрее — самый быстрый.</strong><br/>
+    Короткое прилагательное → суффикс `-ее` и слово «самый».<br/><br/>
+    <strong>Интересный — более интересный — самый интересный.</strong><br/>
+    Длинное прилагательное → отдельное «более / самый», без суффикса.
+  </div>
+  <div slot="en">
+    <strong>Fast — faster — the fastest.</strong><br/>
+    1 слог → суффикс `-er / -est` + обязательный `the`.<br/><br/>
+    <strong>Interesting — more interesting — the most interesting.</strong><br/>
+    3+ слога → `more / the most`, без суффикса.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+Степени сравнения — это шкала интенсивности между «меньше Y» и «самый из всех».
+
+<Scale
+  axis="Шкала сравнения"
+  leftLabel="меньше / слабее"
+  rightLabel="больше / сильнее"
+  items={[
+    { position: 0, label: "less ... than", note: "меньше Y" },
+    { position: 20, label: "not as ... as", note: "слабее Y" },
+    { position: 45, label: "as ... as", note: "равно Y" },
+    { position: 70, label: "-er than / more ... than", note: "сильнее Y" },
+    { position: 85, label: "much -er than", note: "намного сильнее" },
+    { position: 100, label: "the -est / the most", note: "максимум" },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Сравнительная (`-er` / `more`)
+
+<RuleList rules={[
+  "<strong>Сравнение двух объектов или групп.</strong> Базовая конструкция: <code>X + be + comparative + than + Y</code>. <em>This route is faster than the highway.</em>",
+  "<strong>Сравнение с самим собой во времени.</strong> <em>I'm taller now than I was last year.</em>",
+  "<strong>Сравнение с подразумеваемым Y.</strong> <code>than Y</code> можно опустить, если контекст очевиден. <em>Could you speak more slowly, please?</em>",
+  "<strong>С модификаторами степени.</strong> much, a lot, far, slightly, a bit + comparative. <em>The new laptop is much faster.</em>",
+]} />
+
+### Превосходная (`the -est` / `the most`)
+
+<RuleList rules={[
+  "<strong>Один объект — максимум из группы.</strong> Группа задаётся через <code>in</code> (место, организация) или <code>of</code> (множество). <em>She is the tallest in the family. This is the cheapest of all options.</em>",
+  "<strong>Артикль the обязателен.</strong> Без the — грамматическая ошибка. <em>He's the best player on the team.</em>",
+  "<strong>После притяжательного — без the.</strong> <em>my best friend, our biggest mistake.</em>",
+  "<strong>С наречиями степени: by far, easily, much.</strong> <em>This is by far the best episode.</em>",
+]} />
+
+### Равенство и обратные конструкции
+
+<RuleList rules={[
+  "<strong>as + adj + as</strong> — равенство. Прилагательное в основной форме. <em>The new flat is as expensive as the old one.</em>",
+  "<strong>not as / not so + adj + as</strong> — неравенство в сторону меньше. <em>This route isn't as fast as the highway.</em>",
+  "<strong>less + adj + than</strong> — обратная сравнительная. Чаще с длинными прилагательными. <em>The presentation was less interesting than I hoped.</em>",
+  "<strong>the + comparative, the + comparative</strong> — двойная сравнительная: «чем ..., тем ...». <em>The harder you work, the better the result.</em>",
+]} />
+
+### Наречия
+
+<RuleList rules={[
+  "<strong>Короткие наречия (fast, hard, late, early, soon)</strong> — как прилагательные: -er / the -est. <em>He drives faster than me.</em>",
+  "<strong>Наречия на -ly</strong> — через more / the most. <em>She explains more clearly than the textbook.</em>",
+  "<strong>well → better → the best</strong>. Не «more well». <em>He plays the guitar better than me.</em>",
+  "<strong>badly → worse → the worst</strong>. <em>The team performed worse than last quarter.</em>",
+]} />
+
+## 7. Примеры
+
+### Сравнительная — короткие прилагательные
+
+<Example ru="Этот маршрут быстрее, чем шоссе.">This route is faster than the highway.</Example>
+<Example ru="Сегодня холоднее, чем вчера.">Today is colder than yesterday.</Example>
+<Example ru="Моя сестра выше меня.">My sister is taller than me.</Example>
+<Example ru="Эта сумка дешевле другой.">This bag is cheaper than the other one.</Example>
+<Example ru="Кофе горячее чая.">The coffee is hotter than the tea.</Example>
+
+### Сравнительная — длинные прилагательные
+
+<Example ru="Этот фильм интереснее книги.">The film is more interesting than the book.</Example>
+<Example ru="Квартира в центре дороже, чем на окраине.">A flat in the centre is more expensive than one on the outskirts.</Example>
+<Example ru="Презентация была убедительнее, чем отчёт.">The presentation was more convincing than the report.</Example>
+
+### Превосходная — короткие
+
+<Example ru="Это самый высокий дом в городе.">This is the tallest building in the city.</Example>
+<Example ru="Декабрь — самый холодный месяц года.">December is the coldest month of the year.</Example>
+<Example ru="Это самый дешёвый вариант из всех.">This is the cheapest of all options.</Example>
+
+### Превосходная — длинные
+
+<Example ru="Это самая интересная статья за неделю.">This is the most interesting article of the week.</Example>
+<Example ru="Самый дорогой ремонт — переделывать дважды.">The most expensive repair is doing it twice.</Example>
+<Example ru="Презентация была самой убедительной на встрече.">The presentation was the most convincing at the meeting.</Example>
+
+### Неправильные степени
+
+<Example ru="Сегодня погода лучше, чем вчера.">The weather is better today than yesterday.</Example>
+<Example ru="Это худший дедлайн в году.">This is the worst deadline of the year.</Example>
+<Example ru="Мне нужна дополнительная информация.">I need further information.</Example>
+<Example ru="У нас меньше времени, чем я думал.">We have less time than I thought.</Example>
+<Example ru="Это самая длинная пробежка за месяц.">This is the longest run of the month.</Example>
+
+### as ... as, less ... than, двойная
+
+<Example ru="Этот ноутбук такой же быстрый, как старый.">This laptop is as fast as the old one.</Example>
+<Example ru="Презентация оказалась менее интересной, чем я ожидал.">The presentation was less interesting than I expected.</Example>
+<Example ru="Чем больше людей, тем веселее.">The more, the merrier.</Example>
+<Example ru="Чем чище код, тем легче ревью.">The cleaner the code, the easier the review.</Example>
+
+### Наречия и модификаторы
+
+<Example ru="Он бегает гораздо быстрее меня.">He runs much faster than me.</Example>
+<Example ru="Объясни, пожалуйста, медленнее.">Please explain more slowly.</Example>
+<Example ru="Команда сработала эффективнее в этом спринте.">The team performed more efficiently this sprint.</Example>
+<Example ru="Сборка стала немного быстрее после рефакторинга.">The build became a bit faster after the refactoring.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="-er / the -est (короткие)" rightLabel="more / the most (длинные)">
+  <div slot="left">
+    <strong>tall → taller → the tallest</strong><br/>1 слог.<br/><br/>
+    <strong>happy → happier → the happiest</strong><br/>2 слога на -y.<br/><br/>
+    <strong>big → bigger → the biggest</strong><br/>1 слог CVC — удвоение.<br/><br/>
+    <strong>fast → faster → the fastest</strong><br/>Короткое наречие — как прилагательное.
+  </div>
+  <div slot="right">
+    <strong>expensive → more expensive → the most expensive</strong><br/>3 слога.<br/><br/>
+    <strong>interesting → more interesting → the most interesting</strong><br/>4 слога.<br/><br/>
+    <strong>careful → more careful → the most careful</strong><br/>2 слога, но не на -y.<br/><br/>
+    <strong>carefully → more carefully → the most carefully</strong><br/>Наречие на -ly.
+  </div>
+</Compare>
+
+Двусложные прилагательные на стыке двух правил — `quiet`, `clever`, `simple`, `narrow`, `gentle` — допускают оба варианта. `quieter` и `more quiet` оба возможны, `cleverer` и `more clever` тоже. В современном разговорном английском короткий вариант звучит привычнее, длинный — формальнее.
+
+<Compare leftLabel="better (сравнительная)" rightLabel="the best (превосходная)">
+  <div slot="left">
+    <strong>This coffee is better than that one.</strong><br/>Сравнение двух — без the.<br/><br/>
+    <strong>The new version is better than the old.</strong><br/>Два объекта, есть than.
+  </div>
+  <div slot="right">
+    <strong>This is the best coffee in town.</strong><br/>Максимум из группы — обязательно the.<br/><br/>
+    <strong>The new version is the best we've shipped.</strong><br/>Максимум, the обязательно.
+  </div>
+</Compare>
+
+<Compare leftLabel="less (uncountable)" rightLabel="fewer (countable)">
+  <div slot="left">
+    <strong>less time</strong> — время неисчисляемо.<br/>
+    <strong>less money</strong> — деньги в массе.<br/>
+    <strong>less coffee</strong> — кофе как жидкость.
+  </div>
+  <div slot="right">
+    <strong>fewer books</strong> — книги считаются.<br/>
+    <strong>fewer people</strong> — люди считаются.<br/>
+    <strong>fewer bugs</strong> — баги считаются.
+  </div>
+</Compare>
+
+В разговорной речи `less books` встречается, но в письменной форме и в формальном контексте это считается ошибкой. С исчисляемыми — `fewer`.
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора способа">
+1 слог → всегда `-er / -est`. 3 слога и больше → всегда `more / the most`. 2 слога — смотри окончание: на `-y` → `-ier / -iest` (happy → happier), всё остальное (`careful, modern, useful`) → `more / the most`. На спорные двусложные (`quiet`, `clever`, `simple`) допустимы оба варианта — выбирай короткий, если сомневаешься.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему the обязателен с превосходной">
+Превосходная степень по смыслу указывает на единственный объект из группы: «самый высокий» = ровно один. Это и есть классическая работа определённого артикля — выделить конкретный, уже известный из контекста элемент. Поэтому `the best player` — единственная грамматическая форма: артикль не украшение, а часть конструкции. Сравнительная же говорит «больше, чем Y», то есть может относиться к множеству объектов («любой из этих ноутбуков быстрее старого»), и определённости там нет — артикль не нужен. Исключения вроде `my best friend` работают потому, что притяжательное местоимение само по себе уже даёт определённость и забирает роль артикля.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Нужна сравнительная (X сильнее/слабее Y) или превосходная (X — максимум)?", yes: "Превосходная — добавь the. Сравнительная — без the. К вопросу 2.", no: "К вопросу 2 в любом случае." },
+  { q: "Сколько слогов в прилагательном?", yes: "1 слог → -er / the -est, к вопросу 3 (орфография). 3+ слогов → more / the most, к вопросу 5.", no: "2 слога — к вопросу 4." },
+  { q: "Слово заканчивается на -y, -e или CVC?", yes: "-y → -ier / -iest (happy → happier). -e → just +r / +st (nice → nicer). CVC под ударением → удвой согласную (big → bigger).", no: "Обычное добавление: tall → taller, cold → colder." },
+  { q: "Двусложное прилагательное оканчивается на -y?", yes: "Через -ier / -iest (happy → happier, easy → easier).", no: "Через more / the most (careful → more careful). Для спорных (quiet, clever, simple) допустимы оба варианта." },
+  { q: "Нужен модификатор степени (намного, чуть, гораздо)?", yes: "much / a lot / far / slightly / a bit + comparative. Не «very + comparative» — very идёт только с основной формой.", no: "Готово — пользуйся выбранной формой." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| She is more better than him | She is better than him | Двойная сравнительная: либо `better`, либо `more good` (последнее тоже неверно, нужно `better`). Никогда оба сразу. |
+| He is best player on the team | He is the best player on the team | Перед превосходной — обязательный `the`. |
+| This film is expensiver | This film is more expensive | `expensive` — 3 слога, через `more`. Окончание `-er` тут не работает. |
+| Happyer / happyest | Happier / happiest | После согласной `-y` превращается в `-i` перед суффиксом. |
+| Bigest / runing | Biggest / running | CVC под ударением → удваиваем согласную перед `-est / -ing`. |
+| I have less books than you | I have fewer books than you | `less` — для неисчисляемых (time, money). С исчисляемыми — `fewer`. |
+| He runs good | He runs well | После глагола действия — наречие `well`, не прилагательное `good`. |
+| She is as faster as him | She is as fast as him | Между `as ... as` идёт основная форма, не сравнительная. |
+| He's taller than I am taller | He's taller than I am / He's taller than me | Во второй части сравнения сравнительная форма не повторяется. |
+| Better than then | Better than than | (опечатка примера) — путаница `than` (для сравнения) и `then` (затем). `Better than that. Then we left.` |
+| I need more further information | I need further information | `further` уже несёт смысл «дополнительный», `more` тут лишнее. |
+| The most longest movie | The longest movie | Тоже двойная превосходная: либо `the longest`, либо `the most long` (последнее неверно для `long`). |
+| She is very faster than him | She is much faster than him | `very` сочетается только с основной формой (`very fast`). С сравнительной — `much / far / a lot`. |
+| My older brother (если про старшинство в семье) | My elder brother | Для старшинства внутри семьи — `elder / eldest`. В остальных случаях `older / oldest` нормально. |
+
+## 13. Шпаргалка
+
+**Орфография -er / -est:**
+
+| Окончание / тип | Правило | Пример |
+| --- | --- | --- |
+| Обычное 1-сложное | + -er / -est | tall → taller → the tallest |
+| Молчаливое -e | + -r / -st | late → later → the latest |
+| CVC под ударением | удвоить согласную | big → bigger → the biggest |
+| -y после согласной | -y → -i + -er / -est | happy → happier → the happiest |
+| -y после гласной | оставить -y | grey → greyer → the greyest |
+| 2 слога (большинство) | more / the most | careful → more careful → the most careful |
+| 3+ слогов | more / the most | expensive → more expensive → the most expensive |
+
+**Неправильные:**
+
+| Положительная | Сравнительная | Превосходная |
+| --- | --- | --- |
+| good / well | better | the best |
+| bad / badly | worse | the worst |
+| far | farther (расстояние) / further (доп.) | the farthest / the furthest |
+| little | less | the least |
+| much / many | more | the most |
+| old (семья) | elder | the eldest |
+
+**Конструкции:** `X is -er than Y` · `X is the -est in/of Z` · `as ... as` · `not as / not so ... as` · `less ... than` · `the more, the merrier` · `much / a bit / far / slightly + comparative`.
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "comparative", meaning: "сравнительная степень — больше / меньше" },
+  { term: "superlative", meaning: "превосходная степень — самый / наиболее" },
+  { term: "positive (degree)", meaning: "положительная (основная) форма прилагательного" },
+  { term: "than", meaning: "чем — связка после сравнительной" },
+  { term: "then", meaning: "тогда / затем — не путать с than" },
+  { term: "as ... as", meaning: "такой же ..., как — равенство" },
+  { term: "not as ... as / not so ... as", meaning: "не такой ..., как — неравенство в сторону меньше" },
+  { term: "less ... than", meaning: "менее ..., чем — обратная сравнительная" },
+  { term: "the more, the merrier", meaning: "чем больше, тем веселее — двойная сравнительная" },
+  { term: "modifier", meaning: "модификатор степени: much, far, a lot, slightly, a bit" },
+  { term: "tall / taller / the tallest", meaning: "высокий / выше / самый высокий" },
+  { term: "fast / faster / the fastest", meaning: "быстрый / быстрее / самый быстрый" },
+  { term: "big / bigger / the biggest", meaning: "большой / больше / самый большой (CVC + удвоение)" },
+  { term: "thin / thinner / the thinnest", meaning: "тонкий / тоньше / самый тонкий (CVC)" },
+  { term: "hot / hotter / the hottest", meaning: "горячий / горячее / самый горячий (CVC)" },
+  { term: "late / later / the latest", meaning: "поздний / позже / последний по времени (немая -e)" },
+  { term: "nice / nicer / the nicest", meaning: "приятный / приятнее / самый приятный (немая -e)" },
+  { term: "happy / happier / the happiest", meaning: "счастливый / счастливее / самый счастливый (-y → -i)" },
+  { term: "easy / easier / the easiest", meaning: "лёгкий / легче / самый лёгкий (-y → -i)" },
+  { term: "cheap / cheaper / the cheapest", meaning: "дешёвый / дешевле / самый дешёвый" },
+  { term: "expensive / more expensive / the most expensive", meaning: "дорогой / дороже / самый дорогой (3 слога)" },
+  { term: "interesting / more interesting / the most interesting", meaning: "интересный / интереснее / самый интересный (4 слога)" },
+  { term: "careful / more careful / the most careful", meaning: "аккуратный / аккуратнее / самый аккуратный (2 слога, не на -y)" },
+  { term: "carefully / more carefully / the most carefully", meaning: "аккуратно / аккуратнее / наиболее аккуратно (наречие на -ly)" },
+  { term: "good / better / the best", meaning: "хороший / лучше / лучший — неправильная степень" },
+  { term: "bad / worse / the worst", meaning: "плохой / хуже / худший — неправильная степень" },
+  { term: "far / farther / the farthest", meaning: "далеко / дальше / самый дальний — про расстояние" },
+  { term: "far / further / the furthest", meaning: "далее / дополнительный / в наибольшей мере — переносное и расстояние" },
+  { term: "little / less / the least", meaning: "мало / меньше / наименее — с неисчисляемыми" },
+  { term: "much / many / more / the most", meaning: "много / больше / больше всего — с неисчисл. и исчисл. соответственно" },
+  { term: "few / fewer / the fewest", meaning: "мало / меньше / наименьшее количество — с исчисляемыми" },
+  { term: "well / better / the best", meaning: "хорошо / лучше / лучше всего — наречие к good" },
+  { term: "badly / worse / the worst", meaning: "плохо / хуже / хуже всего — наречие к bad" },
+  { term: "elder / the eldest", meaning: "старший / старший из / самый старший — для членов семьи" },
+  { term: "much / a lot / far + comparative", meaning: "гораздо / намного — усилители сравнительной" },
+  { term: "slightly / a bit + comparative", meaning: "слегка / чуть-чуть — ослабители сравнительной" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Неправильные степени и правила</span>
+    <span class="kc-trainer-hint">15 карточек: good-better-best, орфография, наречия</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Прилагательное → его степени</span>
+    <span class="kc-trainer-hint">Соотнеси основную форму с сравнительной и превосходной</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">-er/-est, more/most или неправильные?</span>
+    <span class="kc-trainer-hint">Разложи прилагательные по трём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную степень</span>
+    <span class="kc-trainer-hint">Впиши форму прилагательного или наречия</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери сравнение</span>
+    <span class="kc-trainer-hint">Расставь слова — including than, the, as ... as</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 105-110 (Comparison: comparative and superlative, irregular forms, as ... as).
+- **Swan M., Practical English Usage** — §134-140 (comparison of adjectives and adverbs, less / fewer, farther / further).
+- **Cambridge Dictionary Grammar** — comparative and superlative adjectives, adverbs of degree.
+- **BBC Learning English — Grammar Reference** — Comparatives and superlatives, the more the merrier.

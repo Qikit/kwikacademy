@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-comparisons",
+  "title": "Сравнения — правила в контексте",
+  "description": "Выбери правильную форму прилагательного или наречия.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "This route is ___ than the highway.",
+        "options": ["more fast", "faster", "fastest", "more faster"],
+        "correctIndex": 1,
+        "explain": "fast — 1 слог, через -er. Сравнение двух объектов → сравнительная, без the. «More faster» — двойная степень, ошибка."
+      },
+      {
+        "prompt": "December is ___ month of the year.",
+        "options": ["coldest", "colder", "the coldest", "the most cold"],
+        "correctIndex": 2,
+        "explain": "Превосходная из группы (months of the year) → the + adj-est. cold — 1 слог, через -est. «The most cold» неверно — короткие прилагательные не идут через more."
+      },
+      {
+        "prompt": "This film is ___ than the book.",
+        "options": ["interestinger", "more interesting", "the most interesting", "more interestinger"],
+        "correctIndex": 1,
+        "explain": "interesting — 4 слога, через more. Сравнение двух → without the. «Interestinger» не существует."
+      },
+      {
+        "prompt": "She is ___ in her family.",
+        "options": ["the happiest", "the most happy", "happier", "the happyest"],
+        "correctIndex": 0,
+        "explain": "Превосходная из группы (in family) → the + happy-iest. После согласной -y превращается в -i. «The happyest» — орфографическая ошибка."
+      },
+      {
+        "prompt": "We have ___ time than I thought.",
+        "options": ["fewer", "less", "lesser", "more less"],
+        "correctIndex": 1,
+        "explain": "time — неисчисляемое → less, не fewer. «Lesser» существует, но это другое слово (a lesser evil). «More less» — двойная степень."
+      },
+      {
+        "prompt": "He runs ___ than his brother.",
+        "options": ["more fast", "faster", "more faster", "the fastest"],
+        "correctIndex": 1,
+        "explain": "fast — короткое наречие (без -ly), ведёт себя как прилагательное: faster / the fastest. Сравнение двух → without the."
+      },
+      {
+        "prompt": "Please explain ___, I didn't catch it.",
+        "options": ["slower", "more slowly", "slowlier", "the slowest"],
+        "correctIndex": 1,
+        "explain": "slowly — наречие на -ly, идёт через more / the most. «Slowlier» не существует. «Slower» — допустимо в разговорном, но строго грамматически — more slowly."
+      },
+      {
+        "prompt": "The build is ___ faster after the refactoring.",
+        "options": ["very", "much", "more", "the"],
+        "correctIndex": 1,
+        "explain": "Модификатор перед сравнительной — much / a lot / far / slightly / a bit. «Very» сочетается только с основной формой (very fast), но не с сравнительной."
+      },
+      {
+        "prompt": "I need ___ information about the project.",
+        "options": ["further", "farther", "more further", "the furthest"],
+        "correctIndex": 0,
+        "explain": "further — для абстрактного «дополнительный, дополнительная информация». farther — про физическое расстояние. «More further» — двойная степень."
+      },
+      {
+        "prompt": "The new flat is as ___ as the old one.",
+        "options": ["expensiver", "more expensive", "expensive", "the most expensive"],
+        "correctIndex": 2,
+        "explain": "Между as ... as идёт основная форма, не сравнительная. «As expensive as» — равенство."
+      },
+      {
+        "prompt": "He plays the guitar ___ than me.",
+        "options": ["more good", "gooder", "better", "the best"],
+        "correctIndex": 2,
+        "explain": "После глагола нужно наречие (well), сравнительная от well — better (неправильная, совпадает с good → better). Сравнение двух → without the."
+      },
+      {
+        "prompt": "___ you work, ___ the result.",
+        "options": ["More / more", "The harder / the better", "Harder / better", "The more / the most"],
+        "correctIndex": 1,
+        "explain": "Двойная сравнительная конструкция: «the + comparative, the + comparative» = «чем ..., тем ...». Артикль the обязателен в обеих частях."
+      }
+    ]
+  }
+}

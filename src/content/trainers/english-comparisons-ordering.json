@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-comparisons",
+  "title": "Собери сравнение",
+  "description": "Расставь слова в правильном порядке. Внимание к the, than, as ... as.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["than", "is", "the", "highway", "this", "route", "faster"],
+        "answer": ["this", "route", "is", "faster", "than", "the", "highway"],
+        "translation": "Этот маршрут быстрее, чем шоссе.",
+        "explain": "Сравнительная: X + be + comparative + than + Y. fast → faster (1 слог), без the."
+      },
+      {
+        "words": ["the", "city", "tallest", "in", "this", "is", "the", "building"],
+        "answer": ["this", "is", "the", "tallest", "building", "in", "the", "city"],
+        "translation": "Это самое высокое здание в городе.",
+        "explain": "Превосходная: the + tall-est + сущ. + in/of + группа. Артикль the обязателен."
+      },
+      {
+        "words": ["than", "more", "is", "the", "the", "expensive", "old", "one", "flat", "new"],
+        "answer": ["the", "new", "flat", "is", "more", "expensive", "than", "the", "old", "one"],
+        "translation": "Новая квартира дороже старой.",
+        "explain": "expensive — 3 слога, через more, не -er. Сравнение двух → without the перед more expensive."
+      },
+      {
+        "words": ["the", "of", "this", "options", "all", "is", "cheapest"],
+        "answer": ["this", "is", "the", "cheapest", "of", "all", "options"],
+        "translation": "Это самый дешёвый из всех вариантов.",
+        "explain": "Превосходная: the + cheap-est + of + множество. «Of all options» = группа сравнения."
+      },
+      {
+        "words": ["the", "than", "today", "yesterday", "better", "weather", "is"],
+        "answer": ["the", "weather", "is", "better", "today", "than", "yesterday"],
+        "translation": "Сегодня погода лучше, чем вчера.",
+        "explain": "good → better (неправильная). Сравнение во времени, без the перед better."
+      },
+      {
+        "words": ["as", "is", "as", "she", "tall", "her", "sister"],
+        "answer": ["she", "is", "as", "tall", "as", "her", "sister"],
+        "translation": "Она такого же роста, как её сестра.",
+        "explain": "Равенство: as + основная форма (tall, не taller) + as + Y."
+      },
+      {
+        "words": ["than", "much", "the", "is", "faster", "old", "laptop", "new", "the", "one"],
+        "answer": ["the", "new", "laptop", "is", "much", "faster", "than", "the", "old", "one"],
+        "translation": "Новый ноутбук намного быстрее старого.",
+        "explain": "Модификатор much перед сравнительной: much + faster. Не «very faster»."
+      },
+      {
+        "words": ["the", "the", "better", "harder", "the", "you", "result", "work"],
+        "answer": ["the", "harder", "you", "work", "the", "better", "the", "result"],
+        "translation": "Чем усерднее работаешь, тем лучше результат.",
+        "explain": "Двойная сравнительная: the + comparative, the + comparative. hard → harder, good → better."
+      }
+    ]
+  }
+}

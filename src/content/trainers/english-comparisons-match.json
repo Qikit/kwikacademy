@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-comparisons",
+  "title": "Прилагательное → его степени",
+  "description": "Подбери к основной форме правильную пару сравнительной и превосходной.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "good",
+        "right": "better / the best",
+        "explain": "Неправильная степень: good → better → the best. Не «more good», не «gooder»."
+      },
+      {
+        "left": "bad",
+        "right": "worse / the worst",
+        "explain": "Неправильная степень: bad → worse → the worst. Не «badder», не «more bad»."
+      },
+      {
+        "left": "big",
+        "right": "bigger / the biggest",
+        "explain": "CVC под ударением (b-i-g) — удваиваем последнюю согласную перед -er / -est."
+      },
+      {
+        "left": "happy",
+        "right": "happier / the happiest",
+        "explain": "После согласной -y превращается в -i перед суффиксом: happy → happier, easy → easier."
+      },
+      {
+        "left": "expensive",
+        "right": "more expensive / the most expensive",
+        "explain": "3+ слога — всегда через more / the most. «Expensiver» не существует."
+      },
+      {
+        "left": "far",
+        "right": "farther / the farthest (расстояние)",
+        "explain": "far → farther / the farthest для физического расстояния. Для абстрактного «дополнительный» — further / the furthest."
+      },
+      {
+        "left": "little (uncountable)",
+        "right": "less / the least",
+        "explain": "С неисчисляемыми (time, money) — less / the least. С исчисляемыми (books, bugs) — fewer / the fewest."
+      },
+      {
+        "left": "carefully",
+        "right": "more carefully / the most carefully",
+        "explain": "Наречия на -ly идут через more / the most. Исключение — well (well → better → the best)."
+      },
+      {
+        "left": "late",
+        "right": "later / the latest",
+        "explain": "Молчаливое -e не дублируется, просто +r / +st. То же: nice → nicer, large → larger."
+      },
+      {
+        "left": "well",
+        "right": "better / the best",
+        "explain": "well — наречие от good, формы у них совпадают: better / the best. «He plays the guitar better than me.»"
+      }
+    ]
+  }
+}

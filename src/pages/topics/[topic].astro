@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Roadmap from '../../components/course/Roadmap.astro';
+import Icon from '../../components/ui/Icon.astro';
 import { withBase } from '../../lib/url';
 
 export async function getStaticPaths() {
@@ -19,6 +20,8 @@ const nodes = lessons.map((l) => ({
   title: l.data.title,
   order: l.data.order,
   href: withBase(`/learn/${course.id}/${l.id}`),
+  phase: l.data.phase,
+  placeholder: l.data.placeholder,
 }));
 
 const trainers = (await getCollection('trainers')).filter((t) => t.data.course === course.id);
@@ -44,7 +47,10 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
                   <strong>{t.data.title}</strong>
                   <span>{t.data.description}</span>
                 </div>
-                <span class="tbadge" aria-label="результат" />
+                <span class="tbadge" aria-label="результат">
+                  <Icon name="check" size={14} />
+                  <b class="tscore" />
+                </span>
               </a>
             </li>
           ))}
@@ -119,10 +125,10 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
     font-size: 13px;
     color: var(--text-3);
   }
-  .tbadge:empty {
-    display: none;
-  }
   .tbadge {
+    display: none;
+    align-items: center;
+    gap: 5px;
     flex-shrink: 0;
     font-family: var(--font-mono);
     font-size: 12px;
@@ -131,5 +137,8 @@ const trainers = (await getCollection('trainers')).filter((t) => t.data.course =
     background: rgba(52, 211, 153, 0.14);
     padding: 5px 10px;
     border-radius: var(--r-full);
+  }
+  .trainers a[data-done='true'] .tbadge {
+    display: inline-flex;
   }
 </style>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Check, ArrowRight } from 'lucide-react';
 import { createStore } from '../../lib/progress/store';
 
 export default function LessonComplete({ slug, nextHref }: { slug: string; nextHref?: string }) {
@@ -27,13 +28,27 @@ export default function LessonComplete({ slug, nextHref }: { slug: string; nextH
           fontSize: 13,
           color: '#fff',
           background: done ? '#34d399' : 'var(--grad-blue-purple)',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
         }}
       >
-        {done ? '✓ Урок пройден' : 'Отметить пройденным'}
+        {done && <Check size={16} />}
+        {done ? 'Урок пройден' : 'Отметить пройденным'}
       </button>
       {nextHref && (
-        <a href={nextHref} style={{ fontSize: 13, fontWeight: 600, color: 'var(--c-purple)' }}>
-          Следующий урок →
+        <a
+          href={nextHref}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            fontSize: 13,
+            fontWeight: 600,
+            color: 'var(--c-purple)',
+          }}
+        >
+          Следующий урок <ArrowRight size={15} />
         </a>
       )}
     </div>

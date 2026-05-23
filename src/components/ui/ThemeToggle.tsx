@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Sun, Moon } from 'lucide-react';
 import { createStore } from '../../lib/progress/store';
 import { applyTheme } from '../../lib/theme';
 
@@ -31,11 +32,12 @@ export default function ThemeToggle() {
         WebkitBackdropFilter: 'blur(8px)',
         cursor: 'pointer',
         color: 'var(--text-2)',
-        fontSize: 16,
-        lineHeight: 1,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      {theme === 'light' ? '☾' : '☀'}
+      {theme === 'light' ? <Moon size={17} /> : <Sun size={17} />}
     </button>
   );
 }

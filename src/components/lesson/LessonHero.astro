@@ -1,4 +1,5 @@
 ---
+import Icon from '../ui/Icon.astro';
 interface Props {
   eyebrow: string;
   title: string;
@@ -10,7 +11,7 @@ const { eyebrow, title, readingMinutes } = Astro.props;
 <header class="lhero">
   <p class="eyebrow">{eyebrow}</p>
   <h1>{title}</h1>
-  <p class="rt">⏱ {readingMinutes} мин чтения</p>
+  <p class="rt"><Icon name="clock" size={14} /> {readingMinutes} мин чтения</p>
 </header>
 
 <style>
@@ -23,6 +24,9 @@ const { eyebrow, title, readingMinutes } = Astro.props;
     margin: 12px 0;
   }
   .rt {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 12px;
     color: var(--text-3);
   }

@@ -1,4 +1,5 @@
-import { useId, useRef } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { createStore } from '../../lib/progress/store';
 
 export interface CourseCardProps {
   href: string;
@@ -6,12 +7,27 @@ export interface CourseCardProps {
   eyebrow: string;
   glyph: string;
   meta: string; // e.g. "17 уроков"
-  progress: number; // 0..100
+  lessonSlugs: string[];
+  trainerSlugs: string[];
 }
 
-export default function CourseCard({ href, title, eyebrow, glyph, meta, progress }: CourseCardProps) {
+export default function CourseCard({
+  href,
+  title,
+  eyebrow,
+  glyph,
+  meta,
+  lessonSlugs,
+  trainerSlugs,
+}: CourseCardProps) {
   const spot = useRef<HTMLDivElement>(null);
   const gradId = useId().replace(/:/g, '');
+  // Read progress on the client so React owns the value (no external DOM patching to clobber).
+  const [pct, setPct] = useState(0);
+
+  useEffect(() => {
+    setPct(createStore().getOverallProgress(lessonSlugs, trainerSlugs));
+  }, [lessonSlugs, trainerSlugs]);
 
   function onMove(e: React.MouseEvent<HTMLAnchorElement>) {
     const el = spot.current;
@@ -20,8 +36,6 @@ export default function CourseCard({ href, title, eyebrow, glyph, meta, progress
     el.style.left = `${e.clientX - r.left}px`;
     el.style.top = `${e.clientY - r.top}px`;
   }
-
-  const pct = Math.max(0, Math.min(100, Math.round(progress)));
 
   return (
     <a className="kc-stack" href={href} onMouseMove={onMove}>

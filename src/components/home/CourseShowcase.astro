@@ -17,35 +17,20 @@ const trainersFor = (slug: string) => trainers.filter((t) => t.data.course === s
   <div class="cards">
     {
       courses.map((c) => (
-        <div
-          class="slot"
-          data-course={c.id}
-          data-lesson-slugs={lessonsFor(c.id)
-            .map((l) => l.id)
-            .join(',')}
-          data-trainer-slugs={trainersFor(c.id)
-            .map((t) => t.id)
-            .join(',')}
-        >
-          <CourseCard
-            client:visible
-            href={withBase(`/topics/${c.id}`)}
-            title={c.data.title}
-            eyebrow={c.data.subtitle}
-            glyph={c.data.glyph}
-            meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
-            progress={0}
-          />
-        </div>
+        <CourseCard
+          client:visible
+          href={withBase(`/topics/${c.id}`)}
+          title={c.data.title}
+          eyebrow={c.data.subtitle}
+          glyph={c.data.glyph}
+          meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
+          lessonSlugs={lessonsFor(c.id).map((l) => l.id)}
+          trainerSlugs={trainersFor(c.id).map((t) => t.id)}
+        />
       ))
     }
   </div>
 </section>
-
-<script>
-  import { hydrateCourseCards } from '../../lib/progress/hydrate';
-  hydrateCourseCards();
-</script>
 
 <style>
   .showcase {

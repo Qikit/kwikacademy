@@ -1,0 +1,89 @@
+{
+  "course": "english",
+  "lesson": "english-conditionals",
+  "title": "Условные предложения — правила",
+  "description": "Выбери правильную форму в if-clause или main clause.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "If it ___ tomorrow, we'll stay home.",
+        "options": ["rains", "will rain", "rained", "would rain"],
+        "correctIndex": 0,
+        "explain": "First conditional: в if-clause — Present Simple. После if НИКОГДА will, даже если действие в будущем."
+      },
+      {
+        "prompt": "If I ___ a car, I would drive to work.",
+        "options": ["have", "will have", "had", "had had"],
+        "correctIndex": 2,
+        "explain": "Second conditional (нереальное настоящее): if + Past Simple, would + V. На самом деле машины нет."
+      },
+      {
+        "prompt": "If I had known, I ___ come.",
+        "options": ["would", "will", "would have", "had"],
+        "correctIndex": 2,
+        "explain": "Third conditional: if + Past Perfect, would HAVE + V3. Голый «would come» — частая ошибка, это Second, не Third."
+      },
+      {
+        "prompt": "If you ___ water to 100°C, it boils.",
+        "options": ["heat", "will heat", "heated", "would heat"],
+        "correctIndex": 0,
+        "explain": "Zero conditional: общая истина → if + Present, Present."
+      },
+      {
+        "prompt": "If I ___ you, I would accept the offer.",
+        "options": ["was", "were", "am", "would be"],
+        "correctIndex": 1,
+        "explain": "В формальной идиоме «If I were you» — were для всех лиц. Was допустим в разговоре, но were — норма."
+      },
+      {
+        "prompt": "If I ___ harder back then, I would have a better job now.",
+        "options": ["studied", "had studied", "would study", "study"],
+        "correctIndex": 1,
+        "explain": "Mixed conditional 3→2: прошлое условие → настоящий результат. В if-clause — Past Perfect (had studied), в main — would + V."
+      },
+      {
+        "prompt": "I wish I ___ a car — I'm tired of taking the bus.",
+        "options": ["have", "had", "would have", "had had"],
+        "correctIndex": 1,
+        "explain": "wish о настоящем → Past Simple. «Жаль, что сейчас нет машины.»"
+      },
+      {
+        "prompt": "I wish I ___ harder in school.",
+        "options": ["studied", "had studied", "would study", "study"],
+        "correctIndex": 1,
+        "explain": "wish о прошлом → Past Perfect (had + V3). «Жаль, что тогда не учился.»"
+      },
+      {
+        "prompt": "___ it rains, we'll go on a picnic.",
+        "options": ["If", "Unless", "In case", "Provided"],
+        "correctIndex": 1,
+        "explain": "Unless = if not. «Не будет дождя — поедем». Если, наоборот, «если пойдёт дождь — поедем» — смысл странный."
+      },
+      {
+        "prompt": "Take an umbrella ___ it rains.",
+        "options": ["if", "unless", "in case", "provided that"],
+        "correctIndex": 2,
+        "explain": "In case = на всякий случай, превентивно. «Возьми зонт на случай дождя.» После in case — Present Simple."
+      },
+      {
+        "prompt": "If you ___ me, I ___ have helped.",
+        "options": ["told / would", "had told / would", "had told / could", "told / could"],
+        "correctIndex": 2,
+        "explain": "Third conditional: if + Past Perfect (had told), main — could HAVE + V3 (could have helped). «Мог бы помочь» — could have."
+      },
+      {
+        "prompt": "I wish you ___ interrupting me!",
+        "options": ["stopped", "would stop", "had stopped", "stop"],
+        "correctIndex": 1,
+        "explain": "wish + would про чужое поведение, которое раздражает. «Хочу, чтобы ты прекратил перебивать.»"
+      },
+      {
+        "prompt": "If she ___ here, she would have helped us last week.",
+        "options": ["was", "were", "had been", "would be"],
+        "correctIndex": 2,
+        "explain": "Прошлый результат (would have helped last week) + нереальное прошлое → Third: if + Past Perfect (had been)."
+      }
+    ]
+  }
+}

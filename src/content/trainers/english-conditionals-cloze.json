@@ -1,0 +1,63 @@
+{
+  "course": "english",
+  "lesson": "english-conditionals",
+  "title": "Впиши обе формы условного",
+  "description": "Поставь правильные формы в if-clause и main clause. Два пропуска в каждом предложении.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "If it ___ (rain) tomorrow, I ___ (stay) home.",
+        "answers": ["rains", "will stay"],
+        "explain": "First conditional: if + Present Simple (rains), will + V (will stay). В if-clause никогда will.",
+        "hint": "реальное будущее"
+      },
+      {
+        "text": "If I ___ (have) a car, I ___ (drive) to work.",
+        "answers": ["had", "would drive"],
+        "explain": "Second conditional: if + Past Simple (had), would + V (would drive). Нереальная гипотеза о настоящем.",
+        "hint": "нереальное сейчас"
+      },
+      {
+        "text": "If I ___ (know), I ___ (come) earlier.",
+        "answers": ["had known", "would have come"],
+        "explain": "Third conditional: if + Past Perfect (had known), would have + V3 (would have come). Сожаление о прошлом."
+      },
+      {
+        "text": "If you ___ (press) this button, the lights ___ (turn) off.",
+        "answers": ["press", "turn"],
+        "explain": "Zero conditional: общая инструкция, всегда работает. В обеих частях Present Simple."
+      },
+      {
+        "text": "If I ___ (be) you, I ___ (accept) the offer.",
+        "answers": ["were", "would accept"],
+        "explain": "Second conditional с идиомой «If I were you». Were для всех лиц в формальной речи. В main — would + V."
+      },
+      {
+        "text": "If we ___ (leave) earlier, we ___ (catch) the train.",
+        "answers": ["had left", "would have caught"],
+        "explain": "Third conditional: упущенный поезд — нереальное прошлое. if + Past Perfect, would have + V3."
+      },
+      {
+        "text": "If I ___ (study) harder back then, I ___ (have) a better job now.",
+        "answers": ["had studied", "would have"],
+        "explain": "Mixed conditional 3→2: прошлое условие (had studied) + настоящий результат (would have now)."
+      },
+      {
+        "text": "Unless you ___ (hurry), you ___ (miss) the train.",
+        "answers": ["hurry", "will miss"],
+        "explain": "Unless = if not. После unless — Present Simple. В main — will + V. Это First conditional по структуре."
+      },
+      {
+        "text": "I wish I ___ (have) more time for hobbies.",
+        "answers": ["had"],
+        "explain": "wish о настоящем → Past Simple. «Жаль, что сейчас мало времени.»"
+      },
+      {
+        "text": "I wish you ___ (tell) me about the meeting yesterday.",
+        "answers": ["had told"],
+        "explain": "wish о прошлом → Past Perfect (had + V3). «Жаль, что вчера не сказал.»"
+      }
+    ]
+  }
+}

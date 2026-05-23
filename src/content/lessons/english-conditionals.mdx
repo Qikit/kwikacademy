@@ -2,12 +2,434 @@
 course: english
 order: 10
 phase: "Фаза 1 · Бытовой английский"
-title: "Conditionals — условные предложения"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Если — то. Все типы условных от нулевого до третьего."
-placeholder: true
-tags: [english]
+title: "Условные предложения — Zero, First, Second, Third, Mixed"
+eyebrow: "Грамматика · уровень B1"
+readingMinutes: 28
+summary: "Четыре типа условных и смешанный. Когда «если» — реальное, когда «если бы» — про настоящее, а когда — про упущенное прошлое. Wish, unless и почему в if-clause никогда нет will."
+tags: [conditionals, grammar, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Conditionals — условные предложения» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Timeline from '../../components/lesson/Timeline.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем разбираться в условных
+
+В русском одно «если» обслуживает почти всё. «Если он придёт, я останусь» — это про будущее. «Если бы он пришёл, я бы остался» — это уже про нереальное, но всё ещё не понятно, про настоящее ли это, или про упущенное прошлое. Контекст разруливает: добавишь «вчера» — значит, прошлое; добавишь «сейчас» — значит, настоящее.
+
+В английском под каждый смысл — своя конструкция. Реальная гипотеза о будущем — **First conditional**. Нереальное предположение о настоящем или будущем — **Second**. Сожаление об упущенном прошлом — **Third**. Общая закономерность, которая всегда так — **Zero**. А когда условие и результат живут в разных временных зонах — **Mixed**.
+
+Перепутаешь — фраза грамматически останется, но смысл сместится. «If I knew, I would tell you» и «If I had known, I would have told you» — это две разные истории. В первой я сейчас не знаю и поэтому не говорю. Во второй тогда не знал и поэтому тогда не сказал. Между ними годы и упущенный шанс.
+
+Этот урок — про то, как выбирать тип условного автоматически: сначала спросить себя про реальность («это вообще может произойти?»), потом про время («это про будущее, настоящее или прошлое?»), и только потом подбирать формулу.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Условное предложение состоит из двух частей: **if-clause** (условие) и **main clause** (результат). Тип условного определяется парой времён в этих частях. Чем «нереальнее» гипотеза, тем дальше в прошлое сдвигается время глагола: реальное будущее = Present + will; нереальное настоящее = Past + would; нереальное прошлое = Past Perfect + would have. **В if-clause никогда не ставится will** (исключение — крайне редкое «if you will be so kind»).
+</Callout>
+
+## 3. Формы и грамматика
+
+### Сводная таблица: пять типов условных
+
+| Тип | if-clause | Main clause | Смысл | Пример |
+| --- | --- | --- | --- | --- |
+| **Zero** | Present Simple | Present Simple | Общая истина, закон природы, инструкция | If you heat water to 100°C, it boils. |
+| **First** | Present Simple | will + V | Реальная гипотеза о будущем | If it rains, I'll stay home. |
+| **Second** | Past Simple | would + V | Нереальная гипотеза о настоящем или будущем | If I had a car, I would drive. |
+| **Third** | Past Perfect | would have + V3 | Нереальная гипотеза о прошлом (сожаление, упрёк) | If I had known, I would have come. |
+| **Mixed (3→2)** | Past Perfect | would + V | Прошлое условие → результат сейчас | If I had studied harder, I would have a better job now. |
+
+В First conditional вместо `will` в main clause можно поставить `can / may / might / should` или императив:
+
+- *If you see her, **tell** her hi.* — императив.
+- *If it rains, we **might** stay home.* — модальный.
+
+В Second conditional `were` традиционно ставится для всех лиц (`If I were you`), хотя в разговорной речи `If I was you` тоже встречается. В формальном письме — только `were`.
+
+### Сокращения
+
+- `I'd` = `I would` (Second/Third) или `I had` (Third). Различает контекст.
+- `I'd come` = `I would come` (Second). `I'd come` в `If I'd come, I would have...` = `If I had come...` (Third).
+- `would've` = `would have` (Third). На письме обычно `would have`.
+
+### Порядок частей
+
+`If`-часть может идти первой или второй. На смысл не влияет. Запятая нужна, если `if`-часть стоит первой:
+
+- *If it rains, I'll stay home.*
+- *I'll stay home if it rains.*
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русское «если бы» — один контейнер на все нереальные гипотезы. Английский разводит их по двум осям: реально ли это вообще + к какому времени относится. Поэтому при переводе с русского нельзя идти от союза — сначала ответь себе: «это могло быть, может быть или уже точно нет?» и «когда?» — и только потом выбирай формулу.">
+  <div slot="ru">
+    <strong>«Если он придёт».</strong> — Реально, про будущее. → First.<br/>
+    <strong>«Если бы он пришёл сейчас».</strong> — Нереально, про настоящее. → Second.<br/>
+    <strong>«Если бы он пришёл вчера».</strong> — Нереально, про прошлое. → Third.<br/>
+    <strong>«Если бы тогда пришёл — сейчас был бы здесь».</strong> — Прошлое условие, настоящий результат. → Mixed.<br/>
+    Один союз «если/если бы» — четыре английских конструкции.
+  </div>
+  <div slot="en">
+    <strong>If he comes, I'll stay.</strong> — First.<br/>
+    <strong>If he came now, I would stay.</strong> — Second.<br/>
+    <strong>If he had come yesterday, I would have stayed.</strong> — Third.<br/>
+    <strong>If he had come then, he would be here now.</strong> — Mixed (3→2).<br/>
+    Каждый смысл — своя пара времён.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+**Third conditional** — условие и результат оба в прошлом, оба не случились.
+
+<Timeline
+  caption="Third conditional: «не сделал тогда — не получил тогда»."
+  points={[
+    { at: 'past', label: 'не выучил вовремя', type: 'point' },
+    { at: 'now', label: '(сейчас)', type: 'point' },
+    { at: 'future', label: 'не сдал экзамен', type: 'point' },
+  ]}
+/>
+
+**Mixed (3→2)** — условие в прошлом, результат тянется в настоящее.
+
+<Timeline
+  caption="Mixed conditional: прошлое условие → текущий результат."
+  points={[
+    { at: 'past', label: 'если бы выучил тогда', type: 'point' },
+    { at: 'now', label: 'была бы работа лучше', type: 'ongoing' },
+    { at: 'future', label: '(сейчас и дальше)', type: 'point' },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Zero conditional — общие истины
+
+<RuleList rules={[
+  "<strong>Закон природы, физический факт.</strong> Всегда так, без исключений. <em>If you heat ice, it melts.</em>",
+  "<strong>Инструкция, последствие действия.</strong> Делаешь A — получаешь B. <em>If you press this button, the lights turn off.</em>",
+  "<strong>Привычка, регулярное правило.</strong> Каждый раз когда. <em>If I drink coffee at night, I can't sleep.</em>",
+  "<strong>В Zero вместо if часто работает when.</strong> Смысл почти не меняется — «каждый раз когда». <em>When you boil water, it produces steam.</em>",
+]} />
+
+### First conditional — реальное будущее
+
+<RuleList rules={[
+  "<strong>Реальное условие в будущем — план или прогноз.</strong> <em>If it rains tomorrow, we'll stay home.</em>",
+  "<strong>В main clause вместо will можно поставить can / may / might / should.</strong> Меняется уверенность или оттенок. <em>If you finish early, you can leave.</em>",
+  "<strong>Императив в main clause — для совета или инструкции.</strong> <em>If you see her, tell her hi.</em>",
+  "<strong>Угрозы, обещания, предупреждения.</strong> <em>If you touch this, I'll be angry.</em>",
+  "<strong>В if-clause никогда не ставится will.</strong> Только Present Simple (или Present Continuous / Present Perfect, если важен процесс или завершённость).",
+]} />
+
+### Second conditional — нереальное настоящее или будущее
+
+<RuleList rules={[
+  "<strong>Гипотеза, противоречащая текущей реальности.</strong> На самом деле этого нет. <em>If I had a car, I would drive to work.</em> (а машины нет)",
+  "<strong>Маловероятный сценарий будущего.</strong> Теоретически возможно, но вряд ли. <em>If I won the lottery, I would buy a house.</em>",
+  "<strong>Вежливый совет или предложение через «If I were you».</strong> Традиционно `were` для всех лиц. <em>If I were you, I'd accept the offer.</em>",
+  "<strong>Гипотетический вопрос.</strong> <em>What would you do if you lost your phone?</em>",
+  "<strong>Could / might вместо would в main clause — для меньшей уверенности.</strong> <em>If I had more time, I could finish the project.</em>",
+]} />
+
+### Third conditional — нереальное прошлое
+
+<RuleList rules={[
+  "<strong>Сожаление об упущенном.</strong> Тогда было можно — я не сделал. <em>If I had known, I would have come.</em>",
+  "<strong>Упрёк или критика прошлого решения.</strong> <em>If you had told me, I could have helped.</em>",
+  "<strong>Could have / might have / should have в main clause.</strong> Каждый меняет оттенок: «мог бы», «возможно бы», «следовало бы». <em>If we had left earlier, we might have caught the train.</em>",
+  "<strong>В if-clause — только Past Perfect (had + V3), без вариантов.</strong>",
+  "<strong>Часто используется для разбора того, что пошло не так.</strong> «Если бы тогда сделали по-другому».",
+]} />
+
+### Mixed conditionals — времена пересекаются
+
+<RuleList rules={[
+  "<strong>3rd → 2nd: прошлое условие → настоящий результат.</strong> If I had studied harder, I would have a better job now. (Тогда не учился — сейчас работа хуже.)",
+  "<strong>2nd → 3rd: текущая характеристика → прошлый результат.</strong> If I were taller, I would have been a basketball player. (Я невысокий вообще — поэтому тогда не стал.)",
+  "<strong>Маркеры в main clause выдают тип.</strong> «now», «today», «still» → результат сейчас (mixed 3→2). «then», «yesterday», «in 2010» → результат в прошлом.",
+  "<strong>Mixed работает только когда условие и результат явно в разных временных зонах.</strong> Если оба в прошлом — это Third. Если оба в настоящем/будущем — Second.",
+]} />
+
+### Unless и альтернативы if
+
+<RuleList rules={[
+  "<strong>Unless = if not.</strong> Заменяет отрицательное условие. <em>Unless it rains, we'll go = If it doesn't rain, we'll go.</em>",
+  "<strong>Provided that / as long as = «при условии что».</strong> Делает условие более формальным или строгим. <em>You can borrow the car, provided that you return it by 9.</em>",
+  "<strong>In case = «на всякий случай», НЕ «если».</strong> Это превентивное действие. <em>Take an umbrella in case it rains.</em> (Возьми зонт — на случай дождя. Не «если будет дождь».)",
+  "<strong>Suppose / supposing — «предположим что».</strong> Чаще в разговорной речи, во вступлении к гипотезе. <em>Suppose you lost your job — what would you do?</em>",
+]} />
+
+### I wish / If only — выражение сожаления
+
+<RuleList rules={[
+  "<strong>wish + Past Simple — о настоящем.</strong> Хочу, чтобы было иначе сейчас. <em>I wish I had a car.</em> (но у меня нет)",
+  "<strong>wish + Past Perfect — о прошлом.</strong> Жалею, что тогда сделал/не сделал. <em>I wish I had studied harder.</em>",
+  "<strong>wish + would — раздражение или просьба изменить поведение.</strong> Только про других, не про себя. <em>I wish you would stop interrupting me.</em>",
+  "<strong>If only — эмфатичнее wish, тот же набор форм.</strong> <em>If only I had known.</em>",
+  "<strong>После wish глагол be в формальной речи — всегда were.</strong> <em>I wish I were rich.</em>",
+]} />
+
+## 7. Примеры
+
+### Zero — общие истины
+
+<Example ru="Если нагреть воду до 100°C, она кипит.">If you heat water to 100°C, it boils.</Example>
+<Example ru="Если нажать эту кнопку, свет выключается.">If you press this button, the lights turn off.</Example>
+<Example ru="Если я пью кофе вечером, я не могу уснуть.">If I drink coffee at night, I can't sleep.</Example>
+<Example ru="Когда снимаешь деньги в чужом банкомате, обычно берут комиссию.">When you withdraw cash from another bank's ATM, they usually charge a fee.</Example>
+
+### First — реальное будущее
+
+<Example ru="Если завтра пойдёт дождь, я останусь дома.">If it rains tomorrow, I'll stay home.</Example>
+<Example ru="Если ты будешь готовиться, ты сдашь экзамен.">If you study, you'll pass the exam.</Example>
+<Example ru="Если увидишь её — передай привет.">If you see her, tell her hi.</Example>
+<Example ru="Если закончишь раньше — можешь уйти.">If you finish early, you can leave.</Example>
+<Example ru="Если дедлайн съедет, мы пересоберём релиз на пятницу.">If the deadline slips, we'll reschedule the release for Friday.</Example>
+
+### Second — нереальное настоящее
+
+<Example ru="Если бы у меня была машина, я бы ездил на работу.">If I had a car, I would drive to work.</Example>
+<Example ru="На твоём месте я бы согласился.">If I were you, I'd accept the offer.</Example>
+<Example ru="Если бы я выиграл в лотерею, купил бы дом.">If I won the lottery, I would buy a house.</Example>
+<Example ru="Что бы ты сделал, если бы потерял телефон?">What would you do if you lost your phone?</Example>
+<Example ru="Если бы у меня было больше времени, я бы доделал этот проект.">If I had more time, I could finish this project.</Example>
+
+### Third — нереальное прошлое
+
+<Example ru="Если бы я знал, я бы пришёл.">If I had known, I would have come.</Example>
+<Example ru="Если бы ты мне сказал, я бы помог.">If you had told me, I could have helped.</Example>
+<Example ru="Если бы мы вышли пораньше, мы бы успели на поезд.">If we had left earlier, we would have caught the train.</Example>
+<Example ru="Если бы команда поймала баг вовремя, релиз не пришлось бы откатывать.">If the team had caught the bug in time, we wouldn't have had to roll back the release.</Example>
+
+### Mixed — времена пересекаются
+
+<Example ru="Если бы я тогда учился усерднее, у меня была бы работа получше сейчас.">If I had studied harder, I would have a better job now.</Example>
+<Example ru="Если бы я был выше, я бы тогда стал баскетболистом.">If I were taller, I would have been a basketball player.</Example>
+<Example ru="Если бы ты не съел весь торт вчера, нам сейчас хватило бы на чай.">If you hadn't eaten the whole cake yesterday, we would have enough for tea now.</Example>
+
+### Unless и if-альтернативы
+
+<Example ru="Если не будет дождя, поедем на пикник.">Unless it rains, we'll go on a picnic.</Example>
+<Example ru="Можешь взять машину при условии, что вернёшь к девяти.">You can take the car, provided that you return it by 9.</Example>
+<Example ru="Возьми зонт на всякий случай.">Take an umbrella in case it rains.</Example>
+<Example ru="Предположим, ты потерял работу — что бы ты делал?">Suppose you lost your job — what would you do?</Example>
+
+### Wish / If only
+
+<Example ru="Жаль, что у меня нет машины.">I wish I had a car.</Example>
+<Example ru="Жаль, что я тогда не учился усерднее.">I wish I had studied harder.</Example>
+<Example ru="Хочу, чтобы ты перестал меня перебивать.">I wish you would stop interrupting me.</Example>
+<Example ru="Если бы только я тогда знал.">If only I had known.</Example>
+<Example ru="Жаль, что я не богат.">I wish I were rich.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="First (реально)" rightLabel="Second (нереально)">
+  <div slot="left">
+    <strong>If it rains tomorrow, I'll stay home.</strong><br/>Реальная вероятность — дождь может пойти.<br/><br/>
+    <strong>If I have time, I'll call you.</strong><br/>Это может случиться, говорю про реальный сценарий.<br/><br/>
+    <strong>If she comes, give her the keys.</strong><br/>Жду её, готовлю инструкцию на случай прихода.
+  </div>
+  <div slot="right">
+    <strong>If it rained tomorrow, I would stay home.</strong><br/>Звучит как гипотеза — будто дождь маловероятен.<br/><br/>
+    <strong>If I had time, I would call you.</strong><br/>На самом деле времени нет — это нереальная гипотеза.<br/><br/>
+    <strong>If she came, I would give her the keys.</strong><br/>Не жду, рассуждаю гипотетически.
+  </div>
+</Compare>
+
+<Compare leftLabel="Second (настоящее)" rightLabel="Third (прошлое)">
+  <div slot="left">
+    <strong>If I knew, I would tell you.</strong><br/>Сейчас не знаю — поэтому не говорю.<br/><br/>
+    <strong>If she were here, she would help.</strong><br/>Сейчас её нет — некому помочь.<br/><br/>
+    <strong>If I had a car, I would drive.</strong><br/>Машины нет сейчас.
+  </div>
+  <div slot="right">
+    <strong>If I had known, I would have told you.</strong><br/>Тогда не знал — поэтому тогда не сказал.<br/><br/>
+    <strong>If she had been there, she would have helped.</strong><br/>Тогда её не было — никто не помог.<br/><br/>
+    <strong>If I had had a car, I would have driven.</strong><br/>Тогда машины не было.
+  </div>
+</Compare>
+
+<Compare leftLabel="wish + Past Simple (настоящее)" rightLabel="wish + Past Perfect (прошлое)">
+  <div slot="left">
+    <strong>I wish I had a car.</strong><br/>Сейчас машины нет — жалею об этом сейчас.<br/><br/>
+    <strong>I wish I knew the answer.</strong><br/>Сейчас не знаю — досадно.<br/><br/>
+    <strong>I wish she lived closer.</strong><br/>Живёт далеко — это про текущее.
+  </div>
+  <div slot="right">
+    <strong>I wish I had bought a car.</strong><br/>Тогда не купил — жалею о прошлом решении.<br/><br/>
+    <strong>I wish I had studied harder.</strong><br/>Тогда не учился — жалею о прошлом поведении.<br/><br/>
+    <strong>I wish she had told me earlier.</strong><br/>Тогда не сказала — упущенный шанс.
+  </div>
+</Compare>
+
+<Compare leftLabel="if" rightLabel="unless">
+  <div slot="left">
+    <strong>If it rains, we'll stay home.</strong><br/>Условие положительное.<br/><br/>
+    <strong>If you don't hurry, you'll miss the train.</strong><br/>Двойное отрицание звучит тяжело.<br/><br/>
+    <strong>If she calls, tell her I'm busy.</strong><br/>На случай если позвонит.
+  </div>
+  <div slot="right">
+    <strong>Unless it rains, we'll go on a picnic.</strong><br/>«Если не будет дождя» = unless. Чище.<br/><br/>
+    <strong>Unless you hurry, you'll miss the train.</strong><br/>Одно отрицание через unless — естественнее.<br/><br/>
+    <strong>Don't use unless с double negative.</strong><br/>«Unless you don't come» — путаница смысла, избегать.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+**Нереальность = шаг назад во времени.** Реальное будущее (First) — Present + will. Чтобы стало нереальным про настоящее (Second) — сдвигаем оба глагола на одну ступень в прошлое: Past + would. Чтобы стало нереальным про прошлое (Third) — сдвигаем ещё на одну: Past Perfect + would have. Mixed — это когда условие и результат шагнули на разную глубину: в прошлое (had + V3) и в настоящее (would + V) одновременно.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английский использует Past для нереального настоящего">
+Past Simple в Second conditional («If I had a car») не означает реального прошлого — это формальный сигнал «дистанция от реальности». Английский использует ту же логику в других конструкциях: «He looked **as if** he **was** tired» — was здесь не про прошлое, а про дистанцию от факта (на самом деле, может, и не устал). «It's time you **went** home» — went не про прошлое, а про мягкое требование. Past — универсальный маркер «не сейчас, не здесь, не точно». В Third conditional эта дистанция усиливается до Past Perfect — двойной шаг назад: и нереальность, и реальное прошлое. Русский эту дистанцию передаёт частицей «бы», английский — сдвигом времени.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Это общая истина, закон природы или инструкция (всегда так)?", yes: "Zero conditional: if + Present, Present. «If you heat water, it boils.»", no: "к вопросу 2" },
+  { q: "Это реально возможно (про будущее)?", yes: "First conditional: if + Present, will + V. «If it rains, I'll stay home.»", no: "к вопросу 3 — это нереально" },
+  { q: "Нереально и про прошлое (упущенный шанс, сожаление)?", yes: "Third conditional: if + Past Perfect, would have + V3. «If I had known, I would have come.»", no: "к вопросу 4" },
+  { q: "Условие в прошлом, а результат — про сейчас?", yes: "Mixed conditional (3→2): if + Past Perfect, would + V. «If I had studied, I would have a better job now.»", no: "к вопросу 5" },
+  { q: "Нереально и про настоящее или будущее (гипотеза)?", yes: "Second conditional: if + Past Simple, would + V. «If I had a car, I would drive.» Для be — were для всех лиц.", no: "Перепроверь — что-то не сошлось. Уточни время и реальность условия." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| If he will come, I will stay | If he comes, I will stay | В if-clause никогда не ставится will. Только Present Simple. |
+| If I will have time, I'll call | If I have time, I'll call | То же правило — после if только Present, даже если действие в будущем. |
+| If I would know, I would tell you | If I knew, I would tell you | В if-clause Second conditional — Past Simple, а не would. Would — только в main clause. |
+| If I had a car, I will drive | If I had a car, I would drive | Second conditional: Past Simple + would. Will здесь не работает — это смешивает First и Second. |
+| If I had known, I would come | If I had known, I would have come | Third conditional требует would HAVE + V3, не голый would + V. Это о прошлом. |
+| If I would have known, I would have come | If I had known, I would have come | В if-clause Third — только Past Perfect (had + V3), без would. |
+| I wish I have a car | I wish I had a car | После wish про настоящее — Past Simple, не Present. Это формальный сдвиг для дистанции от реальности. |
+| I wish I would be rich | I wish I were rich | wish + would нельзя про себя — ничто не мешает мне самому. Про себя — wish + Past Simple. |
+| I wish I would have studied | I wish I had studied | После wish про прошлое — Past Perfect (had + V3), не would have. |
+| Unless you don't come, I'll be sad | Unless you come, I'll be sad | Unless уже = «if not». Двойное отрицание (unless + don't) почти всегда ошибка. |
+| If she would be here | If she were here | Second conditional: be → were для всех лиц в формальной речи. Would тут лишний. |
+| In case it will rain, take an umbrella | In case it rains, take an umbrella | После «in case» — Present Simple, без will. Хотя смысл про будущее. |
+| I hope he came tomorrow | I hope he comes tomorrow | После hope — обычное настоящее/будущее, не Past. Не путать с wish. |
+| If I was you, I would accept | If I were you, I would accept | В формальной речи и идиоме «If I were you» — were, не was. Was допустим в разговоре, но were — норма. |
+| When you will arrive, call me | When you arrive, call me | После when (и других союзов времени) — Present Simple, не будущее. Та же логика, что и в if. |
+
+## 13. Шпаргалка
+
+| Тип | If-clause | Main clause | Когда | Пример |
+| --- | --- | --- | --- | --- |
+| Zero | Present Simple | Present Simple | Общая истина | If you heat ice, it melts. |
+| First | Present Simple | will + V (или can / may / might / imperative) | Реальное будущее | If it rains, I'll stay. |
+| Second | Past Simple (were для be) | would + V (или could / might) | Нереальное настоящее / будущее | If I had a car, I would drive. |
+| Third | Past Perfect (had + V3) | would have + V3 (или could have / might have) | Нереальное прошлое, сожаление | If I had known, I would have come. |
+| Mixed 3→2 | Past Perfect | would + V | Прошлое условие, результат сейчас | If I had studied, I would have a better job now. |
+| Mixed 2→3 | Past Simple | would have + V3 | Текущая характеристика, прошлый результат | If I were taller, I would have been a basketball player. |
+| Wish / If only | + Past Simple | — | Сожаление о настоящем | I wish I had a car. |
+| Wish / If only | + Past Perfect | — | Сожаление о прошлом | I wish I had studied. |
+| Wish | + would + V | — | Раздражение про других | I wish you would stop. |
+| Unless | = if not | + will / Present | Отрицательное условие | Unless it rains, we'll go. |
+| In case | + Present | — | Превентивное действие | Take an umbrella in case it rains. |
+
+Сноска про продвинутое: **инверсия без if** существует и звучит формально — «Were I you, ...» = «If I were you, ...»; «Had I known, ...» = «If I had known, ...». Это для отдельного урока в Advanced. **Пассив в условных** (If the report had been finished...) — тема следующего урока. **Косвенная речь с условными** — урока про reported speech.
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "conditional sentence", meaning: "условное предложение — пара if-clause + main clause" },
+  { term: "if-clause", meaning: "придаточное условия, часть с if" },
+  { term: "main clause", meaning: "главное предложение, часть с результатом" },
+  { term: "Zero conditional", meaning: "нулевое условное: общая истина, if + Present, Present" },
+  { term: "First conditional", meaning: "первое условное: реальное будущее, if + Present, will + V" },
+  { term: "Second conditional", meaning: "второе условное: нереальное настоящее, if + Past, would + V" },
+  { term: "Third conditional", meaning: "третье условное: нереальное прошлое, if + Past Perfect, would have + V3" },
+  { term: "Mixed conditional", meaning: "смешанное условное: разные времена в if и main" },
+  { term: "real condition", meaning: "реальное условие — то, что может произойти" },
+  { term: "unreal / hypothetical", meaning: "нереальное, гипотетическое — то, чего нет или не было" },
+  { term: "unless", meaning: "если не — заменяет if + not в одном слове" },
+  { term: "provided that / as long as", meaning: "при условии что — формальный синоним if" },
+  { term: "in case", meaning: "на случай если — про превентивное действие, не условие" },
+  { term: "suppose / supposing", meaning: "предположим что — разговорное вступление к гипотезе" },
+  { term: "wish + Past Simple", meaning: "сожаление о настоящем: I wish I had..." },
+  { term: "wish + Past Perfect", meaning: "сожаление о прошлом: I wish I had done..." },
+  { term: "wish + would", meaning: "раздражение или просьба изменить поведение других" },
+  { term: "If only", meaning: "если бы только — эмфатичный аналог wish" },
+  { term: "would have + V3", meaning: "вспомогательная конструкция в Third conditional" },
+  { term: "could have + V3", meaning: "мог бы (но не сделал) — в main clause Third" },
+  { term: "might have + V3", meaning: "возможно, бы сделал — мягче чем would have" },
+  { term: "should have + V3", meaning: "следовало бы — упрёк или сожаление" },
+  { term: "had + V3 (Past Perfect)", meaning: "форма if-clause в Third conditional" },
+  { term: "If I were you", meaning: "идиома совета: на твоём месте я бы..." },
+  { term: "were (для всех лиц)", meaning: "формально-правильная форма be во Second conditional" },
+  { term: "result clause", meaning: "часть с результатом = main clause" },
+  { term: "hypothesis", meaning: "гипотеза, предположение" },
+  { term: "regret", meaning: "сожаление — ключевая эмоция Third conditional и wish" },
+  { term: "consequence", meaning: "следствие, результат условия" },
+  { term: "probability", meaning: "вероятность — насколько условие реально" },
+  { term: "remote possibility", meaning: "отдалённая возможность — характеристика Second conditional" },
+  { term: "counterfactual", meaning: "противоречащий факту — Second и Third conditional всегда counterfactual" },
+  { term: "inversion (Were I you...)", meaning: "инверсия без if — формальный книжный вариант, тема Advanced" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Типы и формулы</span>
+    <span class="kc-trainer-hint">Запомни четыре пары времён и ловушки</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Ситуация → тип условного</span>
+    <span class="kc-trainer-hint">Соотнеси контекст с подходящим типом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Zero / First / Second / Third</span>
+    <span class="kc-trainer-hint">Разложи предложения по четырём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши обе формы</span>
+    <span class="kc-trainer-hint">По два пропуска: if-clause и main clause</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери условное предложение</span>
+    <span class="kc-trainer-hint">Расставь слова — особенно with would have</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 38-41 (conditionals), Unit 41 (wish), Unit 42 (would).
+- **Swan M., Practical English Usage** — §258-262 (if and conditionals), §628 (wish).
+- **English Page — Conditional Tutorial** — englishpage.com/conditional/conditionalintro.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/conditionals

@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-conditionals",
+  "title": "Ситуация → тип условного",
+  "description": "Подбери тип условного к смыслу и контексту высказывания.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "Закон природы: «если нагреть лёд, он тает»",
+        "right": "Zero conditional",
+        "explain": "Общая истина, не зависящая от конкретной ситуации → Zero: if + Present, Present."
+      },
+      {
+        "left": "Прогноз на завтра: «если пойдёт дождь, останемся дома»",
+        "right": "First conditional",
+        "explain": "Реальное будущее, дождь возможен → First: if + Present, will + V."
+      },
+      {
+        "left": "Гипотеза о текущей ситуации: «если бы у меня была машина сейчас»",
+        "right": "Second conditional",
+        "explain": "Нереальное настоящее, машины фактически нет → Second: if + Past, would + V."
+      },
+      {
+        "left": "Сожаление: «если бы я тогда знал»",
+        "right": "Third conditional",
+        "explain": "Нереальное прошлое, упущенный шанс → Third: if + Past Perfect, would have + V3."
+      },
+      {
+        "left": "«Если бы я тогда учился — сейчас была бы работа лучше»",
+        "right": "Mixed conditional 3→2",
+        "explain": "Условие в прошлом, результат в настоящем → Mixed: if + Past Perfect, would + V. Маркер «сейчас» — типичный сигнал."
+      },
+      {
+        "left": "«I wish I had a car» — про настоящее",
+        "right": "wish + Past Simple",
+        "explain": "Сожаление о текущей ситуации (машины нет сейчас) → wish + Past Simple."
+      },
+      {
+        "left": "«I wish I had studied» — про прошлое",
+        "right": "wish + Past Perfect",
+        "explain": "Сожаление об упущенном тогда → wish + Past Perfect (had + V3)."
+      },
+      {
+        "left": "«Не будет дождя — поедем» (одно слово вместо if + not)",
+        "right": "unless",
+        "explain": "Unless = if not. «Unless it rains, we'll go» = «If it doesn't rain, we'll go»."
+      },
+      {
+        "left": "«Возьми зонт на всякий случай»",
+        "right": "in case",
+        "explain": "Превентивное действие, не условие. После in case — Present Simple. Не путать с if — это про подстраховку."
+      },
+      {
+        "left": "«I wish you would stop talking» — раздражение",
+        "right": "wish + would",
+        "explain": "wish + would — про чужое поведение, которое раздражает. Только про других, не про себя."
+      }
+    ]
+  }
+}

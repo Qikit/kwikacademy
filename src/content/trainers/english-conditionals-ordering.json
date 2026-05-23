@@ -1,0 +1,65 @@
+{
+  "course": "english",
+  "lesson": "english-conditionals",
+  "title": "Собери условное предложение",
+  "description": "Расставь слова в правильном порядке. Внимание к if-clause и месту would have.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["I'll", "stay", "if", "home", "it", "rains"],
+        "answer": ["if", "it", "rains", "I'll", "stay", "home"],
+        "translation": "Если пойдёт дождь, я останусь дома.",
+        "explain": "First conditional: if + Present Simple (rains), will + V (I'll stay). После if никогда will."
+      },
+      {
+        "words": ["had", "I", "drive", "would", "if", "a", "I", "car"],
+        "answer": ["if", "I", "had", "a", "car", "I", "would", "drive"],
+        "translation": "Если бы у меня была машина, я бы ездил.",
+        "explain": "Second conditional: if + Past Simple (had), would + V (would drive). Нереальное настоящее."
+      },
+      {
+        "words": ["I", "had", "would", "I", "if", "have", "known", "come"],
+        "answer": ["if", "I", "had", "known", "I", "would", "have", "come"],
+        "translation": "Если бы я знал, я бы пришёл.",
+        "explain": "Third conditional: if + Past Perfect (had known), would HAVE + V3 (would have come). Сожаление о прошлом."
+      },
+      {
+        "words": ["water", "it", "boils", "you", "heat", "if"],
+        "answer": ["if", "you", "heat", "water", "it", "boils"],
+        "translation": "Если нагреть воду, она кипит.",
+        "explain": "Zero conditional: общая истина → if + Present, Present."
+      },
+      {
+        "words": ["I", "would", "I", "you", "if", "accept", "were"],
+        "answer": ["if", "I", "were", "you", "I", "would", "accept"],
+        "translation": "На твоём месте я бы согласился.",
+        "explain": "Second conditional, идиома «If I were you». Were для всех лиц. В main — would + V."
+      },
+      {
+        "words": ["it", "we'll", "go", "rains", "unless"],
+        "answer": ["unless", "it", "rains", "we'll", "go"],
+        "translation": "Если не будет дождя, мы поедем.",
+        "explain": "Unless = if not. После unless — Present Simple (rains). В main — will + V (we'll go)."
+      },
+      {
+        "words": ["wish", "I", "I", "a", "had", "car"],
+        "answer": ["I", "wish", "I", "had", "a", "car"],
+        "translation": "Жаль, что у меня нет машины.",
+        "explain": "wish о настоящем → Past Simple (had). Это формальный сдвиг для дистанции от реальности."
+      },
+      {
+        "words": ["had", "studied", "I", "wish", "I", "harder"],
+        "answer": ["I", "wish", "I", "had", "studied", "harder"],
+        "translation": "Жаль, что я не учился усерднее.",
+        "explain": "wish о прошлом → Past Perfect (had + V3). Сожаление о тогдашнем поведении."
+      },
+      {
+        "words": ["had", "I", "have", "I", "now", "better", "studied", "would", "if", "a", "job"],
+        "answer": ["if", "I", "had", "studied", "I", "would", "have", "a", "better", "job", "now"],
+        "translation": "Если бы я учился, у меня была бы работа получше сейчас.",
+        "explain": "Mixed conditional 3→2: прошлое условие (had studied) + настоящий результат (would have now). Маркер «now» — сигнал."
+      }
+    ]
+  }
+}

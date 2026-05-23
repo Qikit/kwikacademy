@@ -1,0 +1,87 @@
+{
+  "course": "english",
+  "lesson": "english-conditionals",
+  "title": "Какой это тип условного?",
+  "description": "Распредели предложения по четырём корзинам: Zero, First, Second, Third (mixed относим к Third — там тоже Past Perfect в if-clause).",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "zero", "label": "Zero (общая истина)" },
+      { "id": "first", "label": "First (реальное будущее)" },
+      { "id": "second", "label": "Second (нереальное сейчас)" },
+      { "id": "third", "label": "Third / Mixed (нереальное прошлое)" }
+    ],
+    "items": [
+      {
+        "text": "If you heat ice, it melts.",
+        "category": "zero",
+        "explain": "Закон природы, всегда так → Zero: if + Present, Present."
+      },
+      {
+        "text": "If it rains tomorrow, I'll stay home.",
+        "category": "first",
+        "explain": "Реальное условие в будущем → First: if + Present, will + V."
+      },
+      {
+        "text": "If I had a car, I would drive to work.",
+        "category": "second",
+        "explain": "Нереальное настоящее (машины нет) → Second: if + Past, would + V."
+      },
+      {
+        "text": "If I had known, I would have come.",
+        "category": "third",
+        "explain": "Нереальное прошлое, сожаление → Third: if + Past Perfect, would have + V3."
+      },
+      {
+        "text": "If you press this button, the lights turn off.",
+        "category": "zero",
+        "explain": "Инструкция, всегда работает одинаково → Zero conditional."
+      },
+      {
+        "text": "If you study, you'll pass the exam.",
+        "category": "first",
+        "explain": "Реальный прогноз на будущее → First: Present + will."
+      },
+      {
+        "text": "If I were you, I'd accept the offer.",
+        "category": "second",
+        "explain": "Совет через гипотезу → Second. Were для всех лиц в формальной речи."
+      },
+      {
+        "text": "If we had left earlier, we would have caught the train.",
+        "category": "third",
+        "explain": "Прошлое условие + прошлый результат → Third: Past Perfect + would have + V3."
+      },
+      {
+        "text": "When you boil water, it produces steam.",
+        "category": "zero",
+        "explain": "Общая закономерность, when здесь работает как if в Zero."
+      },
+      {
+        "text": "If you finish early, you can leave.",
+        "category": "first",
+        "explain": "Реальное будущее с модальным can в main clause → First conditional."
+      },
+      {
+        "text": "If I won the lottery, I would buy a house.",
+        "category": "second",
+        "explain": "Маловероятное будущее, гипотеза → Second: Past + would."
+      },
+      {
+        "text": "If you had told me earlier, I could have helped.",
+        "category": "third",
+        "explain": "Нереальное прошлое с could have в main clause → Third conditional."
+      },
+      {
+        "text": "If I had studied harder, I would have a better job now.",
+        "category": "third",
+        "explain": "Mixed 3→2: прошлое условие (had studied) + настоящий результат (would have now). В if-clause Past Perfect, поэтому относим к корзине Third / Mixed."
+      },
+      {
+        "text": "Unless it rains, we'll go on a picnic.",
+        "category": "first",
+        "explain": "Unless = if not, реальное условие на будущее → First по структуре времён."
+      }
+    ]
+  }
+}

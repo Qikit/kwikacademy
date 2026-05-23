@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-conditionals",
+  "title": "Типы условных — flashcards",
+  "description": "Формулы четырёх типов условных, mixed и wish — плюс ключевые ловушки.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Zero conditional — формула и смысл",
+        "back": "if + Present Simple, Present Simple. Общая истина, закон природы, инструкция. «If you heat water to 100°C, it boils.» Часто if можно заменить на when — смысл «каждый раз когда».",
+        "hint": "всегда так"
+      },
+      {
+        "front": "First conditional — формула и смысл",
+        "back": "if + Present Simple, will + V. Реальное условие в будущем. «If it rains, I'll stay home.» В main clause можно ставить can / may / might / should или императив.",
+        "hint": "реальное будущее"
+      },
+      {
+        "front": "Second conditional — формула и смысл",
+        "back": "if + Past Simple, would + V. Нереальное настоящее или маловероятное будущее. «If I had a car, I would drive.» На самом деле машины нет.",
+        "hint": "нереальное сейчас"
+      },
+      {
+        "front": "Third conditional — формула и смысл",
+        "back": "if + Past Perfect, would have + V3. Нереальное прошлое — сожаление, упрёк. «If I had known, I would have come.» Тогда не знал, тогда не пришёл.",
+        "hint": "упущенный шанс"
+      },
+      {
+        "front": "Mixed conditional 3→2",
+        "back": "if + Past Perfect, would + V. Условие в прошлом, результат сейчас. «If I had studied harder, I would have a better job now.» Маркер now / today / still подсказывает mixed.",
+        "hint": "прошлое → сейчас"
+      },
+      {
+        "front": "Mixed conditional 2→3",
+        "back": "if + Past Simple, would have + V3. Текущая характеристика, прошлый результат. «If I were taller, I would have been a basketball player.» Я невысокий вообще — поэтому не стал тогда.",
+        "hint": "сейчас → прошлое"
+      },
+      {
+        "front": "Ловушка: will в if-clause",
+        "back": "В if-clause НИКОГДА не ставится will. «If he will come» — неверно. Правильно: «If he comes, I'll stay.» После if (и других союзов времени when, before, after, as soon as, until) — Present Simple, даже если действие в будущем.",
+        "hint": "никогда will после if"
+      },
+      {
+        "front": "Ловушка: were vs was во Second",
+        "back": "В формальной речи и идиоме «If I were you» — were для всех лиц, даже I/he/she/it. «If I were rich, I would travel.» В разговоре допустим was, но were — норма. То же после wish: «I wish I were taller.»",
+        "hint": "were для всех лиц"
+      },
+      {
+        "front": "Ловушка: would have + V3 в Third",
+        "back": "В main clause Third — обязательно would HAVE + V3, не голый would + V. «If I had known, I would have come.» Пропуск have — частая ошибка («would come» = Second, не Third).",
+        "hint": "have обязателен"
+      },
+      {
+        "front": "Unless = if not",
+        "back": "Unless заменяет if + not одним словом. «Unless it rains, we'll go» = «If it doesn't rain, we'll go». Не использовать unless вместе с отрицанием — двойное отрицание (Unless you don't come) почти всегда ошибка.",
+        "hint": "одно слово вместо двух"
+      },
+      {
+        "front": "In case ≠ if",
+        "back": "In case = «на всякий случай», превентивное действие. «Take an umbrella in case it rains.» — Возьми зонт на случай дождя, а не «если будет дождь». После in case — Present Simple, без will, даже если про будущее.",
+        "hint": "превентив, не условие"
+      },
+      {
+        "front": "wish + Past Simple — про настоящее",
+        "back": "Сожаление о текущей ситуации. «I wish I had a car» = у меня сейчас нет машины, жалею об этом. Past Simple здесь — формальный сдвиг для дистанции от реальности, а не реальное прошлое.",
+        "hint": "сейчас нет — жаль"
+      },
+      {
+        "front": "wish + Past Perfect — про прошлое",
+        "back": "Сожаление об упущенном тогда. «I wish I had studied harder» = тогда не учился, жалею. Past Perfect (had + V3) — для прошедшего сожаления, не для настоящего.",
+        "hint": "тогда не — жаль сейчас"
+      },
+      {
+        "front": "wish + would — раздражение",
+        "back": "«I wish you would stop interrupting» — раздражение из-за чужого поведения или просьба измениться. ТОЛЬКО про других людей, не про себя. «I wish I would stop» — неверно, ничто не мешает мне самому.",
+        "hint": "только про других"
+      },
+      {
+        "front": "If only — эмфатичнее wish",
+        "back": "Та же грамматика, что у wish: Past Simple (настоящее), Past Perfect (прошлое), would (про других). «If only I had known.» — сильнее, чем «I wish I had known.»",
+        "hint": "эмоциональный вариант wish"
+      },
+      {
+        "front": "Modal-варианты в main clause",
+        "back": "В First — can/may/might/should/imperative. «If you finish early, you can leave.» Во Second — could/might вместо would. «If I had time, I could help.» В Third — could have / might have / should have. «I could have helped.» = мог бы (но не сделал).",
+        "hint": "не только will/would"
+      }
+    ]
+  }
+}

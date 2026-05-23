@@ -7,5 +7,6 @@
   "order": 0,
   "accent": "light",
   "estimatedHours": 1,
-  "tags": ["demo"]
+  "tags": ["demo"],
+  "hidden": true
 }

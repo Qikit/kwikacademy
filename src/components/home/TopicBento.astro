@@ -2,7 +2,9 @@
 import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/url';
 
-const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
+const courses = (await getCollection('courses'))
+  .filter((c) => !c.data.hidden)
+  .sort((a, b) => a.data.order - b.data.order);
 const gradVar = (g: string) => `var(--grad-${g})`;
 ---
 

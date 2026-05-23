@@ -1,0 +1,11 @@
+{
+  "title": "Java",
+  "subtitle": "Программирование",
+  "description": "Фундамент JVM: ООП, коллекции, многопоточность, экосистема. База, на которой держится индустрия.",
+  "glyph": "JV",
+  "gradient": "amber-coral",
+  "order": 3,
+  "accent": "light",
+  "estimatedHours": 45,
+  "tags": ["JVM", "OOP"]
+}

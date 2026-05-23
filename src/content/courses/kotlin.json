@@ -1,0 +1,11 @@
+{
+  "title": "Kotlin",
+  "subtitle": "Программирование",
+  "description": "Идиоматичный Kotlin с нуля: типы, корутины, DSL, бэкенд. Язык, на котором приятно писать.",
+  "glyph": "KT",
+  "gradient": "purple-pink",
+  "order": 2,
+  "accent": "light",
+  "estimatedHours": 40,
+  "tags": ["JVM", "Backend"]
+}

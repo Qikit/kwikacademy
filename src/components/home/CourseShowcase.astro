@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import CourseCard from '../course/CourseCard.tsx';
 import { withBase } from '../../lib/url';
 
-const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
+const courses = (await getCollection('courses'))
+  .filter((c) => !c.data.hidden)
+  .sort((a, b) => a.data.order - b.data.order);
 const lessons = await getCollection('lessons');
 const trainers = await getCollection('trainers');
 const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slug);

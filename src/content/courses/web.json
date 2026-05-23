@@ -1,0 +1,11 @@
+{
+  "title": "Современный веб",
+  "subtitle": "Фронтенд",
+  "description": "Как делают мощные сайты сегодня: HTML/CSS на новом уровне, анимации, перформанс, инструменты сборки.",
+  "glyph": "</>",
+  "gradient": "aurora",
+  "order": 5,
+  "accent": "light",
+  "estimatedHours": 30,
+  "tags": ["CSS", "Web"]
+}

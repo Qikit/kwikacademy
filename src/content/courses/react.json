@@ -1,0 +1,11 @@
+{
+  "title": "React",
+  "subtitle": "Фронтенд",
+  "description": "Современный React: компоненты, хуки, состояние, производительность. Интерфейсы, которые живут.",
+  "glyph": "RE",
+  "gradient": "teal-blue",
+  "order": 4,
+  "accent": "light",
+  "estimatedHours": 35,
+  "tags": ["UI", "Hooks"]
+}

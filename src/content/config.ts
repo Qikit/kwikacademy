@@ -13,6 +13,7 @@ const courses = defineCollection({
     accent: z.enum(['light', 'dark']).default('light'),
     estimatedHours: z.number().nonnegative().default(0),
     tags: z.array(z.string()).default([]),
+    hidden: z.boolean().default(false),
   }),
 });
 
@@ -23,10 +24,12 @@ const lessons = defineCollection({
     order: z.number().int(),
     title: z.string(),
     eyebrow: z.string().default(''),
+    phase: z.string().default(''),
     readingMinutes: z.number().int().positive().default(5),
     summary: z.string().default(''),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    placeholder: z.boolean().default(false),
   }),
 });
 

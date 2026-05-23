@@ -1,0 +1,11 @@
+{
+  "title": "Базы данных",
+  "subtitle": "Технологии",
+  "description": "SQL и не только: реляционная модель, индексы, транзакции, проектирование схем. Данные под контролем.",
+  "glyph": "DB",
+  "gradient": "teal-blue",
+  "order": 7,
+  "accent": "light",
+  "estimatedHours": 30,
+  "tags": ["SQL", "Design"]
+}

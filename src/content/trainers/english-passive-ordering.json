@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-passive",
+  "title": "Собери пассивное предложение",
+  "description": "Расставь слова в правильном порядке. Везде пассив be + V3 в нужном времени.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["built", "in", "the", "1990", "bridge", "was"],
+        "answer": ["the", "bridge", "was", "built", "in", "1990"],
+        "translation": "Этот мост был построен в 1990 году.",
+        "explain": "Past Simple passive: subject + was/were + V3 + обстоятельство. The bridge — единственное → was. build → built."
+      },
+      {
+        "words": ["spoken", "here", "English", "is"],
+        "answer": ["English", "is", "spoken", "here"],
+        "translation": "Здесь говорят на английском.",
+        "explain": "Present Simple passive: subject + is/are + V3 + обстоятельство. English → is. speak → spoken."
+      },
+      {
+        "words": ["road", "being", "the", "now", "is", "repaired"],
+        "answer": ["the", "road", "is", "being", "repaired", "now"],
+        "translation": "Дорогу сейчас ремонтируют.",
+        "explain": "Present Continuous passive: subject + is/are + being + V3 + обстоятельство. The road → is being repaired."
+      },
+      {
+        "words": ["report", "the", "been", "has", "finished"],
+        "answer": ["the", "report", "has", "been", "finished"],
+        "translation": "Отчёт сдан.",
+        "explain": "Present Perfect passive: subject + has/have + been + V3. The report — единственное → has been finished."
+      },
+      {
+        "words": ["signed", "must", "this", "be", "form"],
+        "answer": ["this", "form", "must", "be", "signed"],
+        "translation": "Эту форму нужно подписать.",
+        "explain": "Модальный пассив: subject + modal + be + V3. После must — be (без to), потом V3 (signed)."
+      },
+      {
+        "words": ["a", "I", "given", "was", "book"],
+        "answer": ["I", "was", "given", "a", "book"],
+        "translation": "Мне подарили книгу.",
+        "explain": "Пассив с двумя дополнениями: получатель (I) становится subject, не «To me was given». give → given. Past Simple passive."
+      },
+      {
+        "words": ["letter", "the", "before", "had", "called", "sent", "I", "been"],
+        "answer": ["the", "letter", "had", "been", "sent", "before", "I", "called"],
+        "translation": "Письмо было отправлено до того, как я позвонил.",
+        "explain": "Past Perfect passive: subject + had + been + V3. Действие до другого прошедшего момента (called в Past Simple)."
+      },
+      {
+        "words": ["done", "the", "will", "tomorrow", "work", "be"],
+        "answer": ["the", "work", "will", "be", "done", "tomorrow"],
+        "translation": "Работа будет сделана завтра.",
+        "explain": "Future Simple passive: subject + will + be + V3 + обстоятельство. do → done. Will не меняется по лицам."
+      },
+      {
+        "words": ["was", "by", "this", "written", "Shakespeare", "play"],
+        "answer": ["this", "play", "was", "written", "by", "Shakespeare"],
+        "translation": "Эта пьеса написана Шекспиром.",
+        "explain": "Past Simple passive с by + agent. Автор важен → by Shakespeare остаётся. write → wrote → written."
+      },
+      {
+        "words": ["being", "was", "cake", "when", "the", "I", "baked", "arrived"],
+        "answer": ["the", "cake", "was", "being", "baked", "when", "I", "arrived"],
+        "translation": "Когда я пришёл, торт ещё пекли.",
+        "explain": "Past Continuous passive (фон) + Past Simple (прерывание). Was + being + V3 для процесса; arrived в Past Simple."
+      }
+    ]
+  }
+}

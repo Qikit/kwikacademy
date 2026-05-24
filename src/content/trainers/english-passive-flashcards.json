@@ -1,0 +1,116 @@
+{
+  "course": "english",
+  "lesson": "english-passive",
+  "title": "Формулы пассива и третьи формы",
+  "description": "be + V3 во всех временах и ключевые V3 неправильных глаголов, которые часто идут в пассив.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Present Simple passive",
+        "back": "am / is / are + V3. «English is spoken here.» «Letters are delivered every morning.» Согласование по новому подлежащему: walls — are, document — is.",
+        "hint": "регулярные факты"
+      },
+      {
+        "front": "Past Simple passive",
+        "back": "was / were + V3. «The bridge was built in 1990.» «The contracts were signed last week.» Маркеры: yesterday, last week, in 1990.",
+        "hint": "завершённый факт прошлого"
+      },
+      {
+        "front": "Present Continuous passive",
+        "back": "am / is / are **being** + V3. «The road is being repaired.» «Three projects are being reviewed.» Без being получится Present Simple passive — другой смысл.",
+        "hint": "процесс сейчас"
+      },
+      {
+        "front": "Past Continuous passive",
+        "back": "was / were being + V3. «The cake was being baked when I arrived.» Процесс шёл в моменте прошлого, его прервало другое действие в Past Simple.",
+        "hint": "процесс в моменте прошлого"
+      },
+      {
+        "front": "Present Perfect passive",
+        "back": "have / has been + V3. «The report has been finished.» «The tickets have been booked.» Акцент на результате, релевантном сейчас. Has — для he/she/it/single noun.",
+        "hint": "результат сейчас"
+      },
+      {
+        "front": "Past Perfect passive",
+        "back": "had been + V3. «The letter had been sent before I called.» Действие закончилось до другого момента в прошлом.",
+        "hint": "предпрошедшее"
+      },
+      {
+        "front": "Future Simple passive",
+        "back": "will be + V3. «The work will be done tomorrow.» «The results will be announced on Monday.» Will не меняется по лицам.",
+        "hint": "будущий факт"
+      },
+      {
+        "front": "Future Perfect passive",
+        "back": "will have been + V3. «The project will have been completed by Friday.» Будет завершено к моменту в будущем. Маркер: by + время.",
+        "hint": "к моменту в будущем"
+      },
+      {
+        "front": "Modal passive",
+        "back": "modal + be + V3 (без to). «This form must be signed.» «The bug should be fixed.» «Payments can be made online.» После любого модального — be, потом V3.",
+        "hint": "должен / стоит / можно"
+      },
+      {
+        "front": "By + agent vs опустить by",
+        "back": "Оставляй by, если важно (The play was written by Shakespeare). Опускай, если очевиден или неизвестен (He was arrested. My bike was stolen.). Для инструмента — with, не by (broken with a hammer).",
+        "hint": "когда нужен by"
+      },
+      {
+        "front": "Пассив с двумя дополнениями",
+        "back": "give / send / tell / offer / show / teach / lend — два варианта. «She gave me a book» → I was given a book (получатель = subject, чаще) или A book was given to me (вещь = subject, формальнее).",
+        "hint": "два варианта"
+      },
+      {
+        "front": "write → wrote → written",
+        "back": "writing / wrote / written. Пассив: «The letter was written yesterday.» «The novel has been written by a Booker winner.» Частая ошибка: writed (нет такой формы).",
+        "hint": "V3 — написанный"
+      },
+      {
+        "front": "build → built → built",
+        "back": "building / built / built. V2 и V3 совпадают. Пассив: «The bridge was built in 1990.» «New offices are being built downtown.»",
+        "hint": "V3 — построенный"
+      },
+      {
+        "front": "give → gave → given",
+        "back": "giving / gave / given. Пассив с двумя дополнениями: «I was given a book.» «A book was given to me.» Часто после offer, award, hand: «He was offered a job.»",
+        "hint": "V3 — данный"
+      },
+      {
+        "front": "take → took → taken",
+        "back": "taking / took / taken. Пассив: «The keys were taken from the table.» «My seat was taken by someone.»",
+        "hint": "V3 — взятый"
+      },
+      {
+        "front": "do → did → done",
+        "back": "doing / did / done. Пассив: «The work will be done tomorrow.» «It must be done today.» В перфекте: «Everything has been done.»",
+        "hint": "V3 — сделанный"
+      },
+      {
+        "front": "make → made → made",
+        "back": "making / made / made. V2 и V3 совпадают. Пассив: «The decision has been made.» «The cake was made by my grandmother.» Часто с decision, agreement, mistake.",
+        "hint": "V3 — сделанный (создан)"
+      },
+      {
+        "front": "send → sent → sent",
+        "back": "sending / sent / sent. V2 и V3 совпадают. Пассив: «The letter was sent yesterday.» «Invitations have been sent to all guests.»",
+        "hint": "V3 — отправленный"
+      },
+      {
+        "front": "speak → spoke → spoken",
+        "back": "speaking / spoke / spoken. Пассив: «English is spoken here.» «Russian is spoken by millions.»",
+        "hint": "V3 — сказанный"
+      },
+      {
+        "front": "break → broke → broken",
+        "back": "breaking / broke / broken. Пассив: «The window was broken last night.» «Records are being broken every season.»",
+        "hint": "V3 — сломанный"
+      },
+      {
+        "front": "Что нельзя в пассив",
+        "back": "Непереходные глаголы — sleep, come, arrive, happen, die, fall, exist, belong. Пассив требует прямого объекта. «It happened in 2020» — только актив, никак не «It was happened».",
+        "hint": "intransitive verbs"
+      }
+    ]
+  }
+}

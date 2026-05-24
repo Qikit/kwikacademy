@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-passive",
+  "title": "Поставь правильную форму пассива",
+  "description": "Раскрой скобки в нужном времени и залоге. Везде пассив be + V3.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "This bridge ___ (build) in 1990.",
+        "answers": ["was built"],
+        "explain": "Past Simple passive: was/were + V3. build → built. Маркер «in 1990» = прошлое.",
+        "hint": "Past Simple passive"
+      },
+      {
+        "text": "English ___ (speak) in many countries.",
+        "answers": ["is spoken"],
+        "explain": "Present Simple passive: am/is/are + V3. speak → spoke → spoken. English — единственное число → is.",
+        "hint": "Present Simple passive"
+      },
+      {
+        "text": "The road ___ (repair) right now — they started on Monday.",
+        "answers": ["is being repaired"],
+        "explain": "Present Continuous passive: is/are + being + V3. «Right now» + процесс.",
+        "hint": "процесс сейчас"
+      },
+      {
+        "text": "The report ___ (finish) — you can read it.",
+        "answers": ["has been finished"],
+        "explain": "Present Perfect passive: has/have + been + V3. Результат актуален сейчас. The report — единственное → has.",
+        "hint": "результат сейчас"
+      },
+      {
+        "text": "The letter ___ (send) before I called.",
+        "answers": ["had been sent"],
+        "explain": "Past Perfect passive: had + been + V3. До другого прошедшего момента (called). send → sent → sent.",
+        "hint": "до другого момента в прошлом"
+      },
+      {
+        "text": "The work ___ (do) tomorrow.",
+        "answers": ["will be done"],
+        "explain": "Future Simple passive: will + be + V3. do → did → done. Маркер «tomorrow».",
+        "hint": "будущий факт"
+      },
+      {
+        "text": "By Friday the project ___ (complete).",
+        "answers": ["will have been completed"],
+        "explain": "Future Perfect passive: will + have + been + V3. Маркер «by Friday» = завершено к будущему моменту.",
+        "hint": "к моменту в будущем"
+      },
+      {
+        "text": "This form ___ (must / sign) before submission.",
+        "answers": ["must be signed"],
+        "explain": "Модальный пассив: модальный + be + V3. После must — be (без to), потом V3.",
+        "hint": "modal passive"
+      },
+      {
+        "text": "The cake ___ (bake) when I arrived.",
+        "answers": ["was being baked"],
+        "explain": "Past Continuous passive: was/were + being + V3. Процесс шёл в моменте прошлого, прерван приходом.",
+        "hint": "процесс в моменте прошлого"
+      },
+      {
+        "text": "I ___ (give) a book for my birthday — I love it.",
+        "answers": ["was given"],
+        "explain": "Пассив с двумя дополнениями: получатель (I) становится subject. give → gave → given. Past Simple passive.",
+        "hint": "получатель = subject"
+      },
+      {
+        "text": "The contracts ___ (sign) last night by the CEO.",
+        "answers": ["were signed"],
+        "explain": "Past Simple passive с множественным subject: were + V3. The contracts во множественном числе. By + agent сохранён, так как важно кто.",
+        "hint": "Past Simple passive, plural"
+      },
+      {
+        "text": "The problem ___ (can / solve) easily — don't worry.",
+        "answers": ["can be solved"],
+        "explain": "Модальный пассив возможности: can + be + V3. solve → solved (правильный глагол).",
+        "hint": "modal passive"
+      }
+    ]
+  }
+}

@@ -2,12 +2,438 @@
 course: english
 order: 12
 phase: "Фаза 1 · Бытовой английский"
-title: "Passive Voice — пассив"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Когда важно действие, а не исполнитель — is done, was made, will be built."
-placeholder: true
-tags: [english]
+title: "Passive Voice — пассивный залог"
+eyebrow: "Грамматика · уровень B1"
+readingMinutes: 26
+summary: "Конструкция be + V3 во всех временах. Когда выбирать пассив, когда оставлять by + agent, как звучит «было сделано» по-английски без калек с русского."
+tags: [passive, grammar, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Passive Voice — пассив» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем пассив
+
+В русском пассив есть, но звучит он гибко: «строится дом», «дом был построен», «дом строят» — три формы под одну ситуацию, и часть из них в живой речи легко превращается в актив без потери смысла («они строят дом»). В английском пассив устроен жёстче: одна базовая конструкция `be + V3` во всех временах, и её грамматическая дисциплина не прощает приблизительности.
+
+Без пассива не получится написать ни одного нормального формального текста. Инструкции к технике, новости, отчёты, научные статьи, описания процессов, юридические документы, политики компаний — там пассив базовая ткань языка. «The form must be signed before submission.», «The package was delivered yesterday.», «The bug has been fixed.» — выкинь пассив, придётся придумывать активного героя, которого в реальности нет, или который не важен.
+
+Перепутаешь форму — фраза не сломается, но прозвучит коряво или сменит смысл. «The cake was baking when I arrived» (пирог сам пёкся) ≠ «The cake was being baked when I arrived» (его пекли, когда я пришёл). Этот урок про то, как собирать пассив осознанно во всех временах, как решать, оставлять ли `by + agent`, и где русскоязычные регулярно спотыкаются.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Пассив — это **be + V3** (третья форма глагола, past participle). Время передаётся формой `be`: `is done` (Present Simple), `was done` (Past Simple), `is being done` (Present Continuous), `has been done` (Present Perfect), `will be done` (Future Simple), `must be done` (модальный пассив). Смысловой глагол всегда стоит в V3 и не меняется.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Преобразование Active → Passive
+
+Три шага:
+
+1. **Объект** активного предложения становится **подлежащим** пассивного.
+2. **Глагол** превращается в `be + V3` в том же времени.
+3. **Подлежащее** активного либо уходит в `by + agent`, либо опускается.
+
+`Shakespeare wrote the play.` → `The play was written by Shakespeare.`
+
+Объект *the play* стал подлежащим. Глагол *wrote* (Past Simple) → *was written* (be в Past Simple + V3). Подлежащее *Shakespeare* ушло в *by Shakespeare* — здесь оно важно, поэтому остаётся.
+
+### Пассив во всех временах
+
+| Время | Активная формула | Пассивная формула | Пример пассива |
+| --- | --- | --- | --- |
+| Present Simple | V / V-s | am / is / are + V3 | English **is spoken** here. |
+| Past Simple | V2 | was / were + V3 | The bridge **was built** in 1990. |
+| Present Continuous | am / is / are + V-ing | am / is / are **being** + V3 | The road **is being repaired**. |
+| Past Continuous | was / were + V-ing | was / were **being** + V3 | The cake **was being baked** when I arrived. |
+| Present Perfect | have / has + V3 | have / has **been** + V3 | The report **has been finished**. |
+| Past Perfect | had + V3 | had **been** + V3 | The letter **had been sent** before I called. |
+| Future Simple | will + V | will **be** + V3 | The work **will be done** tomorrow. |
+| Future Perfect | will have + V3 | will have **been** + V3 | The project **will have been completed** by Friday. |
+| be going to | am / is / are going to + V | am / is / are going to **be** + V3 | The decision **is going to be made** soon. |
+
+Future Continuous (`will be being done`) теоретически существует, но в живом языке избегается из-за уродливого «be being». Если очень нужно — обычно перефразируют активом или Future Continuous активом с другим подлежащим.
+
+### Модальный пассив
+
+После любого модального — `be + V3`. Сам модальный не меняется, время передаётся контекстом или модальной формой прошлого (`could have been done`, `should have been done` — тема урока про conditionals).
+
+- `must be done` — должно быть сделано.
+- `should be checked` — стоит проверить (буквально «должно быть проверено»).
+- `can be solved` — может быть решено.
+- `could be improved` — могло бы быть улучшено.
+- `may be delayed` — может быть отложено.
+- `might be cancelled` — может быть отменено.
+- `has to be approved` — нужно одобрить.
+
+### Отрицание и вопрос
+
+Отрицание и вопрос строятся по тем же правилам, что и в активе соответствующего времени — потому что `be` (или вспомогательный модальный) сам по себе является auxiliary.
+
+- `The report wasn't finished on time.` — Past Simple passive, отрицание через was + not.
+- `Has the report been finished?` — Present Perfect passive, вопрос через инверсию has и подлежащего.
+- `Will the work be done tomorrow?` — Future Simple passive, инверсия will.
+- `Must this form be signed?` — модальный пассив, инверсия модального.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русский пассив гибче английского: одно и то же значение можно передать через -ся («дом строится»), через краткое причастие («дом построен»), через активную безличную конструкцию («дом построили»). Английский такой гибкости не даёт — у него есть одна формула `be + V3`, и её приходится склонять по временам. При переводе с русского нельзя идти за формой слова — нужно определить время и собрать `be` в нужной форме.">
+  <div slot="ru">
+    <strong>«Этот мост построен в 1990 году».</strong><br/>
+    Краткое причастие — действие завершено, акцент на состоянии.<br/>
+    «Этот мост построили в 1990 году».<br/>
+    Неопределённо-личная конструкция — кто построил, не важно.<br/>
+    «Мост строится прямо сейчас».<br/>
+    Возвратная форма на -ся — процесс.<br/>
+    Все три — про одно и то же, выбор стилистический.
+  </div>
+  <div slot="en">
+    <strong>The bridge was built in 1990.</strong> — Past Simple passive, факт.<br/>
+    <strong>The bridge is being built right now.</strong> — Present Continuous passive, процесс.<br/>
+    <strong>The bridge has been built.</strong> — Present Perfect passive, акцент на результате.<br/>
+    Каждое время — своя форма `be + V3`. Никаких -ся, никаких безличных оборотов.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+Когда выбирать пассив — это вопрос фокуса, а не формы. Дерево ниже помогает решить, нужен ли он в конкретной фразе.
+
+<DecisionTree nodes={[
+  { q: "Известен ли субъект действия и важно ли его упомянуть?", yes: "к вопросу 2", no: "Пассив. Без by — субъект не нужен. The window was broken." },
+  { q: "Хочешь ли подчеркнуть объект или результат, а не исполнителя?", yes: "Пассив, при необходимости с by + agent. The play was written by Shakespeare.", no: "к вопросу 3" },
+  { q: "Это формальный, научный, новостной или инструктивный текст?", yes: "Пассив — стилистическая норма. The tests were conducted in 2023.", no: "к вопросу 4" },
+  { q: "Описываешь процесс или последовательность шагов без конкретного исполнителя?", yes: "Пассив. First, the data is collected; then it is analysed.", no: "Скорее всего, нужен актив — это естественнее в разговорной речи." },
+]} />
+
+## 6. Смысл и использование
+
+### Active → Passive: механика преобразования
+
+<RuleList rules={[
+  "<strong>Объект активной фразы становится подлежащим пассивной.</strong> «They built the bridge» → «The bridge was built». Объект (the bridge) поднимается в начало.",
+  "<strong>Глагол превращается в be + V3 в том же времени.</strong> Активный built (Past Simple) → пассивный was built (be в Past Simple + V3).",
+  "<strong>Подлежащее активной уходит в by + agent или опускается.</strong> «Shakespeare wrote the play» → «The play was written by Shakespeare» (важно, кто). «They cleaned the room» → «The room was cleaned» (неважно, кто).",
+  "<strong>Время и согласование лиц берутся у нового подлежащего.</strong> «They paint the walls» → «The walls are painted». Walls — множественное → are, не is.",
+  "<strong>Только переходные глаголы переводятся в пассив.</strong> Глаголы без прямого объекта (sleep, come, arrive, happen, die) пассива не образуют. «Это случилось» — It happened (актив), нельзя «It was happened».",
+]} />
+
+### Пассив во временах
+
+<RuleList rules={[
+  "<strong>Present Simple passive (is / are + V3).</strong> Факт, правило, регулярное действие. <em>English is spoken in many countries. The post is delivered every morning.</em>",
+  "<strong>Past Simple passive (was / were + V3).</strong> Завершённый факт в прошлом. <em>The package was delivered yesterday. The houses were built in the 1970s.</em>",
+  "<strong>Present Continuous passive (is / are being + V3).</strong> Процесс происходит сейчас. <em>The road is being repaired this week. Three projects are being reviewed at the moment.</em>",
+  "<strong>Past Continuous passive (was / were being + V3).</strong> Процесс шёл в моменте прошлого. <em>The cake was being baked when I arrived. The contracts were being signed all afternoon.</em>",
+  "<strong>Present Perfect passive (has / have been + V3).</strong> Завершённое действие с релевантным результатом. <em>The report has been finished. The tickets have been booked.</em>",
+  "<strong>Past Perfect passive (had been + V3).</strong> Действие закончилось до другого момента в прошлом. <em>The letter had been sent before I called. The flat had been cleaned by the time guests arrived.</em>",
+  "<strong>Future Simple passive (will be + V3).</strong> Будущий факт. <em>The work will be done tomorrow. The results will be announced on Monday.</em>",
+  "<strong>Future Perfect passive (will have been + V3).</strong> Будет завершено к моменту в будущем. <em>The project will have been completed by Friday.</em>",
+  "<strong>be going to passive.</strong> Заранее принятое решение или прогноз по признакам. <em>The decision is going to be made soon.</em>",
+]} />
+
+### Модальный пассив
+
+<RuleList rules={[
+  "<strong>Любой модальный + be + V3.</strong> Модальный не меняется по лицам, после него — be, потом V3. <em>This form must be signed. The bug should be fixed today. Payments can be made online.</em>",
+  "<strong>must be — обязательство или сильное предположение.</strong> <em>Helmets must be worn on site. The package must be delivered by Friday.</em>",
+  "<strong>should be — рекомендация или ожидание.</strong> <em>Backups should be made weekly. The report should be ready by tonight.</em>",
+  "<strong>can / could / may / might be — возможность.</strong> <em>The problem can be solved easily. The meeting might be postponed.</em>",
+  "<strong>has to be — внешняя обязанность.</strong> <em>The application has to be submitted by 5 PM.</em>",
+  "<strong>have to be в прошлом — had to be.</strong> <em>The flight had to be cancelled because of fog.</em>",
+]} />
+
+### By + agent: оставлять или опускать
+
+<RuleList rules={[
+  "<strong>Оставляй by + agent, если информация о субъекте важна.</strong> Автор, изобретатель, ответственный, конкретный исполнитель. <em>The play was written by Shakespeare. The theory was developed by Einstein.</em>",
+  "<strong>Опускай by, если субъект очевиден или обобщён.</strong> «English is spoken here» — понятно, что говорят люди. «He was arrested» — понятно, что полицией. «The road is being repaired» — рабочими. <em>The form is signed at the bottom.</em>",
+  "<strong>Опускай by, если субъект неизвестен.</strong> Когда не знаешь, кто сделал, — пассив идеально подходит. <em>My bike was stolen last night. The window has been broken.</em>",
+  "<strong>Опускай by с someone / people / they.</strong> Если в активе подлежащее — пустое «кто-то», в пассиве его просто отбрасывают. «Someone took my keys» → «My keys were taken» (обычно), не «My keys were taken by someone».",
+  "<strong>Используй with, а не by, для инструмента.</strong> By — исполнитель (живой или организация). With — орудие. <em>The window was broken with a hammer by a stranger.</em>",
+]} />
+
+### Пассив с двумя дополнениями
+
+Глаголы `give`, `send`, `tell`, `offer`, `show`, `teach`, `lend`, `pay`, `promise`, `bring`, `award` имеют два дополнения: получателя и вещь. Из такой активной фразы получается **два варианта пассива** — какое из двух дополнений станет подлежащим.
+
+<RuleList rules={[
+  "<strong>Получатель как подлежащее — обычно предпочтительнее в английском.</strong> «She gave me a book» → <em>I was given a book.</em> Так чаще говорят, особенно в разговорной речи.",
+  "<strong>Вещь как подлежащее — возможно, но звучит формальнее.</strong> «She gave me a book» → <em>A book was given to me.</em> Получатель уходит в to me. Обычно используется в формальных текстах или когда вещь важнее.",
+  "<strong>В русском «мне дали книгу» — это калька неработающая.</strong> Нельзя сказать «To me was given a book». Правильно: <em>I was given a book.</em> — получатель = подлежащее.",
+  "<strong>Если вещь важна сама по себе — её можно вынести в начало.</strong> <em>The prize was awarded to three winners. The keys were handed to the owner.</em>",
+]} />
+
+### Когда пассив, когда актив (стилистика)
+
+<RuleList rules={[
+  "<strong>Пассив — норма в формальных, научных, новостных и инструктивных текстах.</strong> Там акцент на действии и результате, а не на герое. <em>The vaccine was developed in record time. The findings were published in 2024.</em>",
+  "<strong>Пассив — для описания процессов и инструкций.</strong> <em>First, the dough is mixed. Then it is left to rise for an hour.</em>",
+  "<strong>Пассив — когда нужно избежать обвинения.</strong> «Mistakes were made» вместо «We made mistakes» — корпоративный приём ухода от ответственности. Это известный стилистический эффект, использовать осознанно.",
+  "<strong>Не злоупотребляй пассивом в разговорной речи и письмах.</strong> «The cake was eaten by me» звучит странно — естественнее «I ate the cake». В живой речи английский предпочитает актив.",
+  "<strong>Не переводи каждое русское «-ся» в пассив.</strong> «Дверь открывается» — иногда это пассив (The door is opened by the porter at 8), иногда возвратная семантика (The door opens easily — актив).",
+]} />
+
+## 7. Примеры
+
+### Present Simple passive
+
+<Example ru="Этот документ подписывают внизу.">This document is signed at the bottom.</Example>
+<Example ru="Английский язык преподают в большинстве школ.">English is taught in most schools.</Example>
+<Example ru="Письма доставляют утром.">Letters are delivered in the morning.</Example>
+<Example ru="Отчёты сдаются каждую пятницу.">Reports are submitted every Friday.</Example>
+
+### Past Simple passive
+
+<Example ru="Этот мост построили в 1990 году.">The bridge was built in 1990.</Example>
+<Example ru="Договор подписали вчера вечером.">The contract was signed last night.</Example>
+<Example ru="У меня украли велосипед на прошлой неделе.">My bike was stolen last week.</Example>
+<Example ru="Бэклог разобрали за два дня.">The backlog was cleared in two days.</Example>
+
+### Present Continuous passive
+
+<Example ru="Дорогу ремонтируют на этой неделе.">The road is being repaired this week.</Example>
+<Example ru="Мою машину сейчас обслуживают в сервисе.">My car is being serviced at the moment.</Example>
+<Example ru="Сейчас рассматривают три заявки.">Three applications are being reviewed now.</Example>
+
+### Past Continuous passive
+
+<Example ru="Когда я пришёл, торт ещё пекли.">When I arrived, the cake was still being baked.</Example>
+<Example ru="Договоры подписывали весь вечер.">The contracts were being signed all evening.</Example>
+
+### Present Perfect passive
+
+<Example ru="Отчёт уже сдан.">The report has been finished.</Example>
+<Example ru="Билеты забронированы — можно собираться.">The tickets have been booked — we can start packing.</Example>
+<Example ru="Этот баг уже починили.">This bug has been fixed.</Example>
+
+### Past Perfect passive
+
+<Example ru="Письмо было отправлено до того, как я позвонил.">The letter had been sent before I called.</Example>
+<Example ru="К приходу гостей квартиру уже убрали.">The flat had been cleaned by the time the guests arrived.</Example>
+
+### Future Simple / Future Perfect passive
+
+<Example ru="Работу сделают завтра.">The work will be done tomorrow.</Example>
+<Example ru="Результаты объявят в понедельник.">The results will be announced on Monday.</Example>
+<Example ru="К пятнице проект уже закроют.">The project will have been completed by Friday.</Example>
+
+### Модальный пассив
+
+<Example ru="Эту форму нужно подписать.">This form must be signed.</Example>
+<Example ru="Шлемы обязательны на стройке.">Helmets must be worn on site.</Example>
+<Example ru="Эту проблему можно легко решить.">The problem can be solved easily.</Example>
+<Example ru="Резервные копии стоит делать еженедельно.">Backups should be made weekly.</Example>
+<Example ru="Заявку нужно подать до пяти вечера.">The application has to be submitted by 5 PM.</Example>
+<Example ru="Совещание могут перенести.">The meeting might be postponed.</Example>
+
+### Пассив с двумя дополнениями
+
+<Example ru="Мне подарили книгу на день рождения.">I was given a book for my birthday.</Example>
+<Example ru="Ему предложили работу в Берлине.">He was offered a job in Berlin.</Example>
+<Example ru="Нам показали новый офис.">We were shown the new office.</Example>
+<Example ru="Премию вручили трём победителям.">The prize was awarded to three winners.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="Active" rightLabel="Passive (то же время)">
+  <div slot="left">
+    <strong>The team finished the report.</strong><br/>Past Simple — фокус на команде.<br/><br/>
+    <strong>Someone is repairing the road.</strong><br/>Present Continuous — есть исполнитель, но он не важен.<br/><br/>
+    <strong>They have fixed the bug.</strong><br/>Present Perfect — кто-то сделал.<br/><br/>
+    <strong>The boss will sign the contract.</strong><br/>Future Simple — указан конкретный исполнитель.
+  </div>
+  <div slot="right">
+    <strong>The report was finished by the team.</strong><br/>Past Simple passive — фокус на отчёте.<br/><br/>
+    <strong>The road is being repaired.</strong><br/>Present Continuous passive — by опущен, исполнитель не нужен.<br/><br/>
+    <strong>The bug has been fixed.</strong><br/>Present Perfect passive — важен результат.<br/><br/>
+    <strong>The contract will be signed (by the boss).</strong><br/>Future Simple passive — by можно опустить, если очевидно.
+  </div>
+</Compare>
+
+<Compare leftLabel="Past Simple passive" rightLabel="Present Perfect passive">
+  <div slot="left">
+    <strong>The window was broken last night.</strong><br/>Конкретное время в прошлом — was + V3.<br/><br/>
+    <strong>The cake was baked yesterday.</strong><br/>Завершённое в прошлом, известно когда.
+  </div>
+  <div slot="right">
+    <strong>The window has been broken.</strong><br/>Время не указано — важен результат (окно сейчас разбито).<br/><br/>
+    <strong>The cake has been baked — try a slice.</strong><br/>Результат актуален: торт готов и есть прямо сейчас.
+  </div>
+</Compare>
+
+<Compare leftLabel="Present Continuous passive" rightLabel="Past Continuous passive">
+  <div slot="left">
+    <strong>The road is being repaired this week.</strong><br/>Процесс идёт сейчас.<br/><br/>
+    <strong>Three projects are being reviewed at the moment.</strong><br/>Длительный процесс в настоящем.
+  </div>
+  <div slot="right">
+    <strong>The road was being repaired when I drove past.</strong><br/>Процесс шёл в моменте прошлого.<br/><br/>
+    <strong>The contracts were being signed when the fire alarm went off.</strong><br/>Процесс был прерван событием в прошлом.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Сборка пассива за три шага">
+Чтобы собрать пассив, иди в порядке: **время → форма be → V3**. Сначала определи время предложения (это решает, в какой форме будет `be`: is/are, was/were, has been, will be и т.д.). Потом ставь `be` в нужной форме. Потом — V3 смыслового глагола. Если глагол неправильный — V3 берёшь из таблицы (write → written, give → given, take → taken, do → done). Это всё. Никаких изменений основного глагола, никаких -ing там, где их быть не должно.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английский так дисциплинирован в пассиве">
+У английского глагола исторически развилась чёткая трёхчастная система: V1 (do), V2 (did), V3 (done). V3 одновременно работает как причастие — отсюда и `have done` (Perfect), и `be done` (Passive). Эта симметрия удобна для языка: одна форма участвует в двух конструкциях, нагрузка распределена. Русский пошёл другим путём: возвратная форма на -ся, краткое причастие, безличный оборот — три способа выразить то, что в английском упаковано в одну формулу `be + V3`. Поэтому английский пассив звучит «механически точно», а русский — «гибко». Злоупотребление пассивом в английском — известный стилистический грех (его критикуют все руководства по стилю), потому что он утяжеляет текст и убирает живого героя. Используй пассив, когда герой не важен или не нужен, — и возвращайся в актив, когда есть кого назвать.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Глагол переходный (можно задать вопрос «что?»: написать что, построить что, отправить что)?", yes: "к вопросу 2", no: "Пассив невозможен. Sleep, come, arrive, happen — только актив. «Это случилось» — It happened, не «It was happened»." },
+  { q: "Важно ли упомянуть исполнителя?", yes: "Пассив с by + agent. The play was written by Shakespeare.", no: "к вопросу 3" },
+  { q: "Какое время у действия?", yes: "Present Simple → is/are + V3. Past Simple → was/were + V3. Present Continuous → is/are being + V3. Present Perfect → has/have been + V3. Past Perfect → had been + V3. Future Simple → will be + V3. Future Perfect → will have been + V3.", no: "Уточни время по контексту и маркерам, как в уроках про времена." },
+  { q: "Это модальная конструкция (must, should, can, could, may, might, has to)?", yes: "Модальный + be + V3. Must be signed, should be checked, can be solved.", no: "к вопросу 5" },
+  { q: "У глагола два дополнения (give, send, tell, offer, show, teach, lend)?", yes: "Можно два варианта: получатель как subject (I was given a book) — чаще. Вещь как subject (A book was given to me) — формальнее.", no: "Один объект → один вариант пассива." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| The report was finish yesterday | The report was finished yesterday | После be — V3, не V1. finish → finished (правильный глагол). |
+| The letter was writed yesterday | The letter was written yesterday | write — неправильный глагол. V3 = written, не writed. См. урок про прошедшее. |
+| The cake is baking right now (имелся в виду процесс пассива) | The cake is being baked right now | Present Continuous passive = is/are + **being** + V3. Без being получается актив с другим смыслом. |
+| The report have been finished | The report has been finished | The report — единственное число → has, не have. Согласование берётся у подлежащего пассива. |
+| The bug is fixed by us yesterday | The bug was fixed by us yesterday | Маркер «yesterday» = прошлое → was, не is. Be ставится в нужное время. |
+| It was happened in 2020 | It happened in 2020 | happen — непереходный глагол. Пассив с ним невозможен. Только актив. |
+| To me was given a book | I was given a book | Получатель становится подлежащим: I was given. Калька «to me was» — неработающая. |
+| English is speak here | English is spoken here | После be — V3 (spoken), не V1 (speak). speak → spoke → spoken. |
+| The form must to be signed | The form must be signed | После модального — be (без to), потом V3. Must to — двойная ошибка: модальный + to + be. |
+| The window was broken with a thief | The window was broken by a thief | by — для исполнителя (живой человек / организация). with — для инструмента (with a hammer). |
+| It is being being done | It is being done | Continuous passive = is + being + V3. Two being подряд — невозможно. |
+| The road is repaired now (имелся в виду процесс) | The road is being repaired now | «Now» + процесс → Present Continuous passive (is being repaired). Is repaired = статичный факт. |
+
+## 13. Шпаргалка
+
+| Время | Формула пассива | Пример |
+| --- | --- | --- |
+| Present Simple | am / is / are + V3 | English is spoken here. |
+| Past Simple | was / were + V3 | The bridge was built in 1990. |
+| Present Continuous | am / is / are being + V3 | The road is being repaired. |
+| Past Continuous | was / were being + V3 | The cake was being baked. |
+| Present Perfect | have / has been + V3 | The report has been finished. |
+| Past Perfect | had been + V3 | The letter had been sent. |
+| Future Simple | will be + V3 | The work will be done tomorrow. |
+| Future Perfect | will have been + V3 | The project will have been completed by Friday. |
+| be going to | am / is / are going to be + V3 | The decision is going to be made. |
+| Modal passive | modal + be + V3 | This form must be signed. |
+| Modal passive (past hint) | modal + have been + V3 | It should have been checked. |
+| Negative / Question | строится у формы be | Has the report been finished? — The report wasn't finished. |
+| By + agent | оставлять, если важно | The play was written by Shakespeare. |
+| With + instrument | для орудия, не исполнителя | The window was broken with a hammer. |
+| Двойное дополнение | получатель → subject | I was given a book. |
+| Непереходные глаголы | пассив невозможен | It happened. (не «It was happened».) |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "passive voice", meaning: "пассивный (страдательный) залог" },
+  { term: "active voice", meaning: "активный (действительный) залог" },
+  { term: "be + V3", meaning: "формула пассива: вспомогательный be + третья форма" },
+  { term: "V3 / past participle", meaning: "третья форма глагола (done, written, given, taken, made)" },
+  { term: "by + agent", meaning: "by + исполнитель — кто совершил действие" },
+  { term: "with + instrument", meaning: "with + инструмент — чем сделано" },
+  { term: "agent", meaning: "исполнитель действия в пассивной конструкции" },
+  { term: "transitive verb", meaning: "переходный глагол — берёт прямое дополнение, может в пассив" },
+  { term: "intransitive verb", meaning: "непереходный глагол (sleep, come, arrive, happen) — пассива не имеет" },
+  { term: "is/are spoken", meaning: "Present Simple passive" },
+  { term: "was/were built", meaning: "Past Simple passive" },
+  { term: "is being repaired", meaning: "Present Continuous passive" },
+  { term: "was being baked", meaning: "Past Continuous passive" },
+  { term: "has/have been done", meaning: "Present Perfect passive" },
+  { term: "had been sent", meaning: "Past Perfect passive" },
+  { term: "will be done", meaning: "Future Simple passive" },
+  { term: "will have been completed", meaning: "Future Perfect passive" },
+  { term: "must be signed", meaning: "модальный пассив — обязательство" },
+  { term: "should be checked", meaning: "модальный пассив — рекомендация" },
+  { term: "can be solved", meaning: "модальный пассив — возможность" },
+  { term: "write → wrote → written", meaning: "писать / написал / написанный" },
+  { term: "build → built → built", meaning: "строить / построил / построенный" },
+  { term: "give → gave → given", meaning: "давать / дал / данный" },
+  { term: "take → took → taken", meaning: "брать / взял / взятый" },
+  { term: "do → did → done", meaning: "делать / сделал / сделанный" },
+  { term: "make → made → made", meaning: "делать (создавать) / сделал / сделанный" },
+  { term: "send → sent → sent", meaning: "отправлять / отправил / отправленный" },
+  { term: "bring → brought → brought", meaning: "приносить / принёс / принесённый" },
+  { term: "speak → spoke → spoken", meaning: "говорить / сказал / сказанный" },
+  { term: "break → broke → broken", meaning: "ломать / сломал / сломанный" },
+  { term: "steal → stole → stolen", meaning: "красть / украл / украденный" },
+  { term: "deliver", meaning: "доставлять — обычно в пассиве (is delivered)" },
+  { term: "sign", meaning: "подписывать — частый глагол в пассиве (must be signed)" },
+  { term: "submit", meaning: "подавать (заявку, документ) — has to be submitted" },
+  { term: "approve", meaning: "одобрять — has to be approved" },
+  { term: "review", meaning: "пересматривать, рецензировать — is being reviewed" },
+  { term: "announce", meaning: "объявлять — will be announced" },
+  { term: "complete", meaning: "завершать — will have been completed" },
+  { term: "postpone", meaning: "переносить (на потом) — might be postponed" },
+  { term: "cancel", meaning: "отменять — had to be cancelled" },
+  { term: "Reported passive (deferred)", meaning: "конструкция «It is said that...», «She is believed to be...» — урок 13 Reported speech." },
+  { term: "Causative have/get (deferred)", meaning: "«I had my hair cut», «I got the car repaired» — урок 21 Advanced." },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Формулы пассива и V3</span>
+    <span class="kc-trainer-hint">Запомни be + V3 во всех временах и ключевые третьи формы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Active → Passive</span>
+    <span class="kc-trainer-hint">Соотнеси активные предложения с пассивными вариантами</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Какое время пассива?</span>
+    <span class="kc-trainer-hint">Разложи предложения по четырём корзинам времён</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную форму пассива</span>
+    <span class="kc-trainer-hint">Раскрой скобки в нужном времени be + V3</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери пассивное предложение</span>
+    <span class="kc-trainer-hint">Расставь слова в правильном порядке</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 42-46 (Passive).
+- **Swan M., Practical English Usage** — §407-417 (passive structures, passive with two objects, by + agent).
+- **English Page — Passive Voice overview** — englishpage.com/verbpage/activepassive.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/passive-voice

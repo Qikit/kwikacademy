@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-passive",
+  "title": "Active → Passive",
+  "description": "Соотнеси активное предложение с правильным пассивным вариантом в том же времени.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "They built the bridge in 1990.",
+        "right": "The bridge was built in 1990.",
+        "explain": "Past Simple → Past Simple passive: was/were + V3. Объект (the bridge) становится subject, агент (they) опускается."
+      },
+      {
+        "left": "Shakespeare wrote this play.",
+        "right": "This play was written by Shakespeare.",
+        "explain": "Past Simple passive с by + agent: автор важен, поэтому Shakespeare остаётся через by."
+      },
+      {
+        "left": "Workers are repairing the road.",
+        "right": "The road is being repaired.",
+        "explain": "Present Continuous → Present Continuous passive: is/are + being + V3. Workers опускаются как очевидные."
+      },
+      {
+        "left": "Someone has stolen my bike.",
+        "right": "My bike has been stolen.",
+        "explain": "Present Perfect → Present Perfect passive: has/have + been + V3. Someone в пассиве обычно опускается."
+      },
+      {
+        "left": "They will announce the results on Monday.",
+        "right": "The results will be announced on Monday.",
+        "explain": "Future Simple → Future Simple passive: will + be + V3. They опускается."
+      },
+      {
+        "left": "You must sign this form.",
+        "right": "This form must be signed.",
+        "explain": "Модальный пассив: must + be + V3. После любого модального — be, потом V3."
+      },
+      {
+        "left": "She gave me a book.",
+        "right": "I was given a book.",
+        "explain": "Пассив с двумя дополнениями: получатель (me → I) становится subject. Вариант «A book was given to me» тоже возможен, но реже."
+      },
+      {
+        "left": "They are signing the contracts.",
+        "right": "The contracts are being signed.",
+        "explain": "Present Continuous passive с множественным subject: are + being + V3."
+      },
+      {
+        "left": "The team had finished the report before the call.",
+        "right": "The report had been finished before the call.",
+        "explain": "Past Perfect → Past Perfect passive: had + been + V3. Действие до момента в прошлом."
+      },
+      {
+        "left": "They will have completed the project by Friday.",
+        "right": "The project will have been completed by Friday.",
+        "explain": "Future Perfect → Future Perfect passive: will + have + been + V3. Маркер by + время."
+      }
+    ]
+  }
+}

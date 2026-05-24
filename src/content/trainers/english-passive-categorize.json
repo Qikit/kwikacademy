@@ -1,0 +1,87 @@
+{
+  "course": "english",
+  "lesson": "english-passive",
+  "title": "Какое время пассива?",
+  "description": "Распредели пассивные предложения по четырём корзинам: Present, Past, Future, Modal passive.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "present", "label": "Present passive (Simple / Continuous / Perfect)" },
+      { "id": "past", "label": "Past passive (Simple / Continuous / Perfect)" },
+      { "id": "future", "label": "Future passive (Simple / Perfect)" },
+      { "id": "modal", "label": "Modal passive (must / should / can / could)" }
+    ],
+    "items": [
+      {
+        "text": "English is spoken in many countries.",
+        "category": "present",
+        "explain": "is + V3 → Present Simple passive. Регулярный факт настоящего."
+      },
+      {
+        "text": "The bridge was built in 1990.",
+        "category": "past",
+        "explain": "was + V3 + маркер «in 1990» → Past Simple passive."
+      },
+      {
+        "text": "The road is being repaired this week.",
+        "category": "present",
+        "explain": "is being + V3 → Present Continuous passive. Процесс идёт сейчас."
+      },
+      {
+        "text": "The work will be done tomorrow.",
+        "category": "future",
+        "explain": "will be + V3 → Future Simple passive. Маркер «tomorrow»."
+      },
+      {
+        "text": "This form must be signed.",
+        "category": "modal",
+        "explain": "must + be + V3 → модальный пассив. Обязательство."
+      },
+      {
+        "text": "The cake was being baked when I arrived.",
+        "category": "past",
+        "explain": "was being + V3 → Past Continuous passive. Процесс в моменте прошлого, прерванный приходом."
+      },
+      {
+        "text": "The report has been finished.",
+        "category": "present",
+        "explain": "has been + V3 → Present Perfect passive. Результат актуален сейчас."
+      },
+      {
+        "text": "The project will have been completed by Friday.",
+        "category": "future",
+        "explain": "will have been + V3 → Future Perfect passive. Маркер «by Friday»."
+      },
+      {
+        "text": "The problem can be solved easily.",
+        "category": "modal",
+        "explain": "can + be + V3 → модальный пассив. Возможность."
+      },
+      {
+        "text": "The letter had been sent before I called.",
+        "category": "past",
+        "explain": "had been + V3 → Past Perfect passive. До другого момента в прошлом."
+      },
+      {
+        "text": "Backups should be made weekly.",
+        "category": "modal",
+        "explain": "should + be + V3 → модальный пассив. Рекомендация."
+      },
+      {
+        "text": "The decision is going to be made soon.",
+        "category": "future",
+        "explain": "is going to be + V3 → пассив с be going to для будущего. Заранее принятое намерение."
+      },
+      {
+        "text": "Letters are delivered every morning.",
+        "category": "present",
+        "explain": "are + V3 → Present Simple passive. Маркер регулярности «every morning»."
+      },
+      {
+        "text": "The contracts were signed last night.",
+        "category": "past",
+        "explain": "were + V3 + «last night» → Past Simple passive. Контракты во множественном числе → were."
+      }
+    ]
+  }
+}

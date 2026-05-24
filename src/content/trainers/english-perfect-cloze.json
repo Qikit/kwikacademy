@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-perfect",
+  "title": "Поставь Perfect-форму",
+  "description": "Раскрой скобки. Внимание к точке отсчёта (сейчас / момент прошлого / момент будущего) и контрасту PP vs PS.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "I ___ (just / finish) the report — here it is.",
+        "answers": ["have just finished"],
+        "explain": "just + результат к настоящему → Present Perfect. just встаёт между have и V3."
+      },
+      {
+        "text": "She ___ (live) here since 2019.",
+        "answers": ["has lived"],
+        "explain": "since + точка, период не закончился → Present Perfect: has lived. Допустим и Continuous (has been living), но базовая форма — обычный Perfect."
+      },
+      {
+        "text": "By the time I ___ (arrive), they ___ (already / leave).",
+        "answers": ["arrived", "had already left"],
+        "explain": "After by the time — Past Simple (arrived). Уход случился ДО прихода, маркер already → Past Perfect (had already left)."
+      },
+      {
+        "text": "I ___ (read) three books last month.",
+        "answers": ["read"],
+        "explain": "last month — завершённый период → Past Simple. read — V2 совпадает с V1 по написанию, но читается «рэд»."
+      },
+      {
+        "text": "By next year I ___ (work) here for ten years.",
+        "answers": ["will have been working"],
+        "explain": "by + будущее + for + длительность → Future Perfect Continuous: will have been + V-ing."
+      },
+      {
+        "text": "How long ___ you ___ (wait)?",
+        "answers": ["have", "been waiting"],
+        "explain": "How long...? + процесс до сейчас → Present Perfect Continuous: have you been + V-ing."
+      },
+      {
+        "text": "She ___ (never / try) sushi before today.",
+        "answers": ["had never tried"],
+        "explain": "Опыт до момента в прошлом (before today) → Past Perfect: had + V3. never встаёт между had и V3."
+      },
+      {
+        "text": "By the time you ___ (come), I ___ (clean) the flat.",
+        "answers": ["come", "will have cleaned"],
+        "explain": "After by the time о будущем — Present Simple (come). Главная часть — Future Perfect: will have + V3."
+      },
+      {
+        "text": "It's the first time I ___ (eat) sushi.",
+        "answers": ["have eaten"],
+        "explain": "Конструкция «It's the first time + Present Perfect», не Past Simple."
+      },
+      {
+        "text": "I ___ (know) him for years — we met at university.",
+        "answers": ["have known"],
+        "explain": "know — state verb, Continuous недопустим. Длительность до сейчас → обычный Present Perfect."
+      }
+    ]
+  }
+}

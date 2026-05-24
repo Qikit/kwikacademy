@@ -1,0 +1,91 @@
+{
+  "course": "english",
+  "lesson": "english-perfect",
+  "title": "Perfect-формы — flashcards",
+  "description": "Шесть Perfect-форм: формула, маркеры, пример. Плюс пары контраста, где русскоязычные путают чаще всего.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Present Perfect",
+        "back": "have/has + V3. Маркеры: just, already, yet, ever, never, recently, this week, since, for. «I have lost my keys» — потерял, и сейчас их нет.",
+        "hint": "результат к настоящему"
+      },
+      {
+        "front": "Present Perfect Continuous",
+        "back": "have/has been + V-ing. Маркеры: for, since, all day, How long...?. «I have been studying English for five years» — длительность процесса до сейчас.",
+        "hint": "процесс до настоящего"
+      },
+      {
+        "front": "Past Perfect",
+        "back": "had + V3. Маркеры: by + время, by the time, before, after, when (раннее). «By 8 PM I had finished the report» — к восьми уже было сделано.",
+        "hint": "до момента прошлого"
+      },
+      {
+        "front": "Past Perfect Continuous",
+        "back": "had been + V-ing. Маркеры: for + момент прошлого, before + момент прошлого. «She had been working for five years before she got promoted» — длительность до момента в прошлом.",
+        "hint": "длительность до момента прошлого"
+      },
+      {
+        "front": "Future Perfect",
+        "back": "will have + V3. Маркеры: by + будущее, by the time, in + период. «By Friday I will have finished the report» — к пятнице будет готово.",
+        "hint": "готово к моменту будущего"
+      },
+      {
+        "front": "Future Perfect Continuous",
+        "back": "will have been + V-ing. Маркеры: by + будущее + for + длительность. «By 2030 I will have been working here for 10 years» — к 2030 году буду работать здесь 10 лет.",
+        "hint": "длительность к моменту будущего"
+      },
+      {
+        "front": "since vs for",
+        "back": "since + точка начала (since 2019, since Monday, since 7 AM). for + длительность (for two hours, for three days, for ten years). «I've lived here since 2019» / «I've lived here for five years».",
+        "hint": "путаница маркеров"
+      },
+      {
+        "front": "already / yet / just",
+        "back": "already (уже) — между have/has и V3 или в конце утверждения: «She has already left». yet (ещё / уже) — в конце отрицания или вопроса: «Has she left yet?». just (только что) — между have/has и V3: «She has just arrived».",
+        "hint": "наречия Present Perfect"
+      },
+      {
+        "front": "have been to vs have gone to",
+        "back": "have been to = был и вернулся: «I have been to Paris twice». have gone to = уехал и сейчас там: «She has gone to the bank» (её здесь нет). Русское «был» / «уехал» эту разницу не передаёт.",
+        "hint": "критичный контраст"
+      },
+      {
+        "front": "Present Perfect vs Past Simple",
+        "back": "Незавершённый период (today, this week) → Present Perfect. Завершённый (yesterday, last week, in 2020, ago) → Past Simple. «I have read three books this week» / «I read three books last week». Yesterday с Present Perfect — невозможно.",
+        "hint": "главный контраст"
+      },
+      {
+        "front": "Present Perfect vs Present Perfect Continuous",
+        "back": "Perfect = результат (штуки): «I have read three books». Perfect Continuous = процесс (длительность): «I have been reading for two hours». How long...? обычно → Continuous.",
+        "hint": "результат vs процесс"
+      },
+      {
+        "front": "Past Perfect — когда нужен и когда нет",
+        "back": "Нужен, когда два прошедших действия и порядок важен: «When I arrived, she had already left». НЕ нужен, если after / before уже задают порядок: «After I finished, I went home» — Past Simple достаточно.",
+        "hint": "не везде где «уже»"
+      },
+      {
+        "front": "State verbs в Perfect",
+        "back": "know, love, want, believe, mean, own, understand — НЕ идут в Continuous. С длительностью — только обычный Perfect: «I have known him for years» (не «I have been knowing»).",
+        "hint": "статика без Continuous"
+      },
+      {
+        "front": "It's the first time...",
+        "back": "Фиксированная конструкция требует Present Perfect, не Past Simple. «It's the first time I have eaten sushi» / «It's the second time she has called today». Не «I ate» / «she called».",
+        "hint": "конструкция-исключение"
+      },
+      {
+        "front": "By the time + Present Simple",
+        "back": "После by the time / when / before / after — Present Simple, даже если речь о будущем. Главная часть — will have + V3: «By the time you arrive, I will have cleaned the flat». НЕ «By the time you will arrive».",
+        "hint": "придаточное времени"
+      },
+      {
+        "front": "had had / have had",
+        "back": "Два had / have had подряд — нормально. Первое — вспомогательный, второе — V3 от have. «I had had breakfast before the call» (Past Perfect от have breakfast). «I have had three coffees today» (Present Perfect от have).",
+        "hint": "не описка"
+      }
+    ]
+  }
+}

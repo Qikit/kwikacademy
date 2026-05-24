@@ -1,0 +1,65 @@
+{
+  "course": "english",
+  "lesson": "english-perfect",
+  "title": "Собери Perfect-предложение",
+  "description": "Расставь слова в правильном порядке. Внимание к месту наречий (just, already, never) и к вопросительному порядку.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["just", "the", "I", "finished", "have", "report"],
+        "answer": ["I", "have", "just", "finished", "the", "report"],
+        "translation": "Я только что закончил отчёт.",
+        "explain": "Present Perfect: have + V3. just встаёт между вспомогательным have и V3 (finished)."
+      },
+      {
+        "words": ["ever", "Japan", "to", "you", "been", "have", "?"],
+        "answer": ["have", "you", "ever", "been", "to", "Japan", "?"],
+        "translation": "Ты когда-нибудь был в Японии?",
+        "explain": "Вопрос Present Perfect: have + подлежащее + ever + V3. been to — «бывал и вернулся»."
+      },
+      {
+        "words": ["already", "she", "I", "left", "had", "arrived", "when"],
+        "answer": ["when", "I", "arrived", "she", "had", "already", "left"],
+        "translation": "Когда я пришёл, она уже ушла.",
+        "explain": "Раннее — Past Perfect (had left), позднее — Past Simple (arrived). already встаёт между had и V3."
+      },
+      {
+        "words": ["five", "for", "studying", "I", "English", "been", "have", "years"],
+        "answer": ["I", "have", "been", "studying", "English", "for", "five", "years"],
+        "translation": "Я учу английский пять лет.",
+        "explain": "Present Perfect Continuous: have + been + V-ing. for + длительность ставится в конце."
+      },
+      {
+        "words": ["Friday", "have", "by", "I", "finished", "next", "will", "the", "report"],
+        "answer": ["by", "next", "Friday", "I", "will", "have", "finished", "the", "report"],
+        "translation": "К следующей пятнице я закончу отчёт.",
+        "explain": "Future Perfect: will + have + V3. Обстоятельство времени «by next Friday» может стоять в начале."
+      },
+      {
+        "words": ["you", "How", "have", "been", "long", "waiting", "?"],
+        "answer": ["How", "long", "have", "you", "been", "waiting", "?"],
+        "translation": "Как долго ты ждёшь?",
+        "explain": "Вопрос Present Perfect Continuous: How long + have + подлежащее + been + V-ing."
+      },
+      {
+        "words": ["had", "she", "company", "the", "before", "working", "for", "been", "got", "she", "promoted", "years", "five", "at"],
+        "answer": ["she", "had", "been", "working", "at", "the", "company", "for", "five", "years", "before", "she", "got", "promoted"],
+        "translation": "Она работала в компании пять лет, прежде чем её повысили.",
+        "explain": "Past Perfect Continuous (had been + V-ing) для длительности до момента прошлого (got promoted, Past Simple)."
+      },
+      {
+        "words": ["here", "have", "by", "I", "been", "for", "will", "ten", "working", "years", "2030"],
+        "answer": ["by", "2030", "I", "will", "have", "been", "working", "here", "for", "ten", "years"],
+        "translation": "К 2030 году я буду работать здесь десять лет.",
+        "explain": "Future Perfect Continuous: will + have + been + V-ing. By + момент будущего в начале, for + длительность в конце."
+      },
+      {
+        "words": ["yet", "she", "arrived", "has", "n't"],
+        "answer": ["she", "has", "n't", "arrived", "yet"],
+        "translation": "Она ещё не пришла.",
+        "explain": "Отрицание Present Perfect: hasn't (has + n't) + V3. yet ставится в конце отрицания."
+      }
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "course": "english",
+  "lesson": "english-perfect",
+  "title": "Какой Perfect — по точке отсчёта",
+  "description": "Распредели предложения по четырём корзинам. Все Continuous-варианты (Present / Past / Future Perfect Continuous) — в одной корзине.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "present-perfect", "label": "Present Perfect" },
+      { "id": "past-perfect", "label": "Past Perfect" },
+      { "id": "future-perfect", "label": "Future Perfect" },
+      { "id": "perfect-continuous", "label": "Perfect Continuous (любой)" }
+    ],
+    "items": [
+      {
+        "text": "I have just finished the report.",
+        "category": "present-perfect",
+        "explain": "just + результат к настоящему → Present Perfect."
+      },
+      {
+        "text": "By 8 PM I had finished the report.",
+        "category": "past-perfect",
+        "explain": "by + момент прошлого → Past Perfect (had + V3)."
+      },
+      {
+        "text": "By next Friday I will have finished the report.",
+        "category": "future-perfect",
+        "explain": "by + момент будущего → Future Perfect (will have + V3)."
+      },
+      {
+        "text": "I have been studying English for five years.",
+        "category": "perfect-continuous",
+        "explain": "for + длительность процесса до сейчас → Present Perfect Continuous."
+      },
+      {
+        "text": "Have you ever been to Japan?",
+        "category": "present-perfect",
+        "explain": "ever + опыт жизни → Present Perfect."
+      },
+      {
+        "text": "When I arrived, she had already left.",
+        "category": "past-perfect",
+        "explain": "Уход случился ДО прихода (already в прошлом контексте) → Past Perfect."
+      },
+      {
+        "text": "She had been working at the company for five years before she got promoted.",
+        "category": "perfect-continuous",
+        "explain": "Длительность до момента прошлого → Past Perfect Continuous."
+      },
+      {
+        "text": "By 2030 I will have been working here for ten years.",
+        "category": "perfect-continuous",
+        "explain": "by + будущее + for + длительность → Future Perfect Continuous."
+      },
+      {
+        "text": "I have lived here since 2019.",
+        "category": "present-perfect",
+        "explain": "since + точка, период не закончился, state-near глагол → Present Perfect (Continuous тоже допустим, но базовая форма — обычный Perfect)."
+      },
+      {
+        "text": "The train had left before we got to the station.",
+        "category": "past-perfect",
+        "explain": "Поезд ушёл раньше нашего прихода — раннее в Past Perfect, позднее в Past Simple."
+      },
+      {
+        "text": "By the time you arrive, I will have cleaned the flat.",
+        "category": "future-perfect",
+        "explain": "by the time + Present Simple → главная часть Future Perfect (will have + V3)."
+      },
+      {
+        "text": "You look tired — have you been running?",
+        "category": "perfect-continuous",
+        "explain": "Видимые следы недавнего процесса → Present Perfect Continuous."
+      },
+      {
+        "text": "I have never tried sushi.",
+        "category": "present-perfect",
+        "explain": "never + общий опыт жизни → Present Perfect."
+      },
+      {
+        "text": "In two months we will have moved to the new office.",
+        "category": "future-perfect",
+        "explain": "in + период (от сейчас) и завершённость к моменту → Future Perfect."
+      }
+    ]
+  }
+}

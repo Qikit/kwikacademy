@@ -1,0 +1,95 @@
+{
+  "course": "english",
+  "lesson": "english-perfect",
+  "title": "Perfect-времена — правила в контексте",
+  "description": "Выбери правильную форму. Особое внимание контрасту Present Perfect vs Past Simple и парам been to / gone to.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "I ___ this film yesterday.",
+        "options": ["have seen", "saw", "had seen", "have been seeing"],
+        "correctIndex": 1,
+        "explain": "yesterday — завершённый период прошлого → Past Simple. Present Perfect с yesterday невозможен."
+      },
+      {
+        "prompt": "She ___ to Paris twice — she loves it there.",
+        "options": ["has gone", "has been", "went", "had been"],
+        "correctIndex": 1,
+        "explain": "twice + сейчас она здесь → has been to (был и вернулся). has gone to означало бы «уехала и сейчас там»."
+      },
+      {
+        "prompt": "She ___ to the bank — she'll be back in 10 minutes.",
+        "options": ["has been", "has gone", "went", "had gone"],
+        "correctIndex": 1,
+        "explain": "Сейчас её здесь нет, она в банке → has gone to. has been to означало бы «была и вернулась»."
+      },
+      {
+        "prompt": "How long ___ you ___ English?",
+        "options": ["did / study", "have / studied", "have / been studying", "had / studied"],
+        "correctIndex": 2,
+        "explain": "How long...? + процесс до сейчас → Present Perfect Continuous: have been + V-ing. Акцент на длительности."
+      },
+      {
+        "prompt": "By 8 PM I ___ the report.",
+        "options": ["finished", "have finished", "had finished", "was finishing"],
+        "correctIndex": 2,
+        "explain": "by + момент прошлого → Past Perfect (had + V3). К восьми уже было сделано."
+      },
+      {
+        "prompt": "When I ___ home, she ___ already.",
+        "options": ["came / left", "came / had left", "had come / left", "have come / have left"],
+        "correctIndex": 1,
+        "explain": "Раннее действие (уход) — Past Perfect (had left), позднее (приход) — Past Simple (came). already встаёт между had и V3."
+      },
+      {
+        "prompt": "By next Friday I ___ the report.",
+        "options": ["will finish", "will have finished", "will be finishing", "finish"],
+        "correctIndex": 1,
+        "explain": "by + момент будущего → Future Perfect (will have + V3). К пятнице будет готово."
+      },
+      {
+        "prompt": "By the time you ___, I ___ the flat.",
+        "options": ["will arrive / will clean", "arrive / will have cleaned", "arrive / clean", "will arrive / clean"],
+        "correctIndex": 1,
+        "explain": "После by the time — Present Simple (правило придаточного времени). Главная часть — Future Perfect: will have + V3."
+      },
+      {
+        "prompt": "I ___ him for ten years — we met at university.",
+        "options": ["have been knowing", "am knowing", "have known", "had known"],
+        "correctIndex": 2,
+        "explain": "know — state verb, в Continuous не идёт. С длительностью до сейчас — Present Perfect, не Continuous."
+      },
+      {
+        "prompt": "It's the first time I ___ sushi — it's great.",
+        "options": ["eat", "ate", "have eaten", "am eating"],
+        "correctIndex": 2,
+        "explain": "Фиксированная конструкция «It's the first time + Present Perfect». Не Past Simple."
+      },
+      {
+        "prompt": "She ___ at the company for five years before she got promoted.",
+        "options": ["worked", "was working", "had been working", "has been working"],
+        "correctIndex": 2,
+        "explain": "Длительность до момента в прошлом (got promoted) → Past Perfect Continuous (had been + V-ing)."
+      },
+      {
+        "prompt": "I ___ here since 2019.",
+        "options": ["live", "am living", "have lived", "lived"],
+        "correctIndex": 2,
+        "explain": "since + точка отсчёта в прошлом и период не закончился до сейчас → Present Perfect (или Continuous: «have been living»). Past Simple невозможен."
+      },
+      {
+        "prompt": "She ___ yet.",
+        "options": ["didn't arrive", "hasn't arrived", "hasn't been arriving", "doesn't arrive"],
+        "correctIndex": 1,
+        "explain": "yet в отрицании → Present Perfect: hasn't + V3."
+      },
+      {
+        "prompt": "Your eyes are red. ___ you ___?",
+        "options": ["Did / cry", "Have / cried", "Have / been crying", "Had / been crying"],
+        "correctIndex": 2,
+        "explain": "Видимые следы недавнего процесса (красные глаза) → Present Perfect Continuous: Have you been crying?"
+      }
+    ]
+  }
+}

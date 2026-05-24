@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-perfect",
+  "title": "Маркер → Perfect-форма",
+  "description": "Подбери, к какой Perfect-форме ведёт маркер или конструкция.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "just (только что)",
+        "right": "Present Perfect",
+        "explain": "just — типичный маркер Present Perfect: «She has just arrived». Действие только что завершилось, результат жив сейчас."
+      },
+      {
+        "left": "for two hours (со мной говорят сейчас)",
+        "right": "Present Perfect Continuous",
+        "explain": "for + длительность с акцентом на процессе до настоящего → Present Perfect Continuous: «I have been waiting for two hours»."
+      },
+      {
+        "left": "by 8 PM yesterday",
+        "right": "Past Perfect",
+        "explain": "by + момент прошлого = к этому моменту уже было сделано → Past Perfect: «By 8 PM I had finished»."
+      },
+      {
+        "left": "before she got promoted (длительность)",
+        "right": "Past Perfect Continuous",
+        "explain": "Длительность до момента в прошлом (got promoted) → Past Perfect Continuous: «She had been working for five years before she got promoted»."
+      },
+      {
+        "left": "by next Friday",
+        "right": "Future Perfect",
+        "explain": "by + момент будущего = к этому моменту будет готово → Future Perfect: «By next Friday I will have finished»."
+      },
+      {
+        "left": "by 2030, for ten years",
+        "right": "Future Perfect Continuous",
+        "explain": "by + будущее + for + длительность → Future Perfect Continuous: «By 2030 I will have been working here for ten years»."
+      },
+      {
+        "left": "yesterday",
+        "right": "Past Simple (никакой Perfect)",
+        "explain": "yesterday отрицает связь с настоящим — Present Perfect недопустим. Это всегда Past Simple."
+      },
+      {
+        "left": "ever (в вопросе про опыт)",
+        "right": "Present Perfect",
+        "explain": "«Have you ever been to Japan?» — общий опыт жизни без конкретного момента → Present Perfect."
+      },
+      {
+        "left": "How long have you ___?",
+        "right": "Present Perfect Continuous",
+        "explain": "Вопрос How long...? почти всегда требует Continuous (для глаголов действия): «How long have you been waiting?»."
+      },
+      {
+        "left": "since 2019",
+        "right": "Present Perfect (или Continuous)",
+        "explain": "since + точка отсчёта в прошлом и период не закончился до сейчас → Present Perfect. С процессом — Continuous: «I have been living here since 2019»."
+      }
+    ]
+  }
+}

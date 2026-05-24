@@ -2,12 +2,497 @@
 course: english
 order: 11
 phase: "Фаза 1 · Бытовой английский"
-title: "Все Perfect времена глубоко"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Present, Past, Future Perfect и Perfect Continuous — связь действий во времени."
-placeholder: true
-tags: [english]
+title: "Все Perfect-времена глубоко — Present, Past, Future + Continuous"
+eyebrow: "Грамматика · уровень B1-B2"
+readingMinutes: 28
+summary: "Шесть Perfect-форм в одной системе. Точка отсчёта, процесс против результата и почему русское «уже сделал» легко срывается не в то время."
+tags: [perfect, tenses, grammar, B1, B2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Все Perfect времена глубоко» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import Timeline from '../../components/lesson/Timeline.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем Perfect-времена
+
+В русском «уже сделал», «уже делал», «уже сделаю» и «уже буду делать» — четыре варианта на грани взаимозаменяемости. Контекст и наречие «уже» / «к этому моменту» решают, что имеется в виду. В английском под каждый оттенок — отдельная форма, и их шесть: Present Perfect, Present Perfect Continuous, Past Perfect, Past Perfect Continuous, Future Perfect, Future Perfect Continuous.
+
+Все шесть устроены одинаково: у каждого есть **точка отсчёта** (сейчас / момент в прошлом / момент в будущем) и **действие, которое к этой точке уже завершилось или ещё длится**. Не важно когда — важно «к чему привязано». Простой и Continuous из других уроков такую привязку не делают: они либо констатируют факт, либо описывают процесс «вообще» или «в моменте». Perfect же говорит про связь действия с точкой во времени — про результат, который к этой точке существует.
+
+Перепутать Perfect с Simple — самая частая ошибка русскоязычных. «I have seen this film yesterday» — грамматически невозможно, а в голове звучит нормально, потому что в русском «я уже видел этот фильм вчера» не вызывает протеста. Этот урок про то, как ставить выбор автоматически и не сваливаться в Past Simple там, где нужен Present Perfect (и обратно).
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Все Perfect-времена строятся как **«вспомогательный have/has/had/will have» + V3 (past participle)**. Continuous-варианты добавляют посередине **been + V-ing**: «have been doing», «had been doing», «will have been doing». Смысл всегда один: к **точке отсчёта** (сейчас / тогда / тогда в будущем) действие либо уже завершилось (результат — Perfect), либо длится / только что закончилось с акцентом на длительность (процесс — Perfect Continuous).
+</Callout>
+
+## 3. Формы и грамматика
+
+### Present Perfect
+
+`have / has` + V3.
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / you / we / they | I have worked | I haven't worked | Have I worked? |
+| he / she / it | She has worked | She hasn't worked | Has she worked? |
+
+Маркеры: `just`, `already`, `yet`, `ever`, `never`, `before`, `recently`, `lately`, `so far`, `this week / month / year`, `since + точка`, `for + длительность`.
+
+### Present Perfect Continuous
+
+`have / has + been + V-ing`.
+
+| Лицо | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+| I / you / we / they | I have been working | I haven't been working | Have I been working? |
+| he / she / it | She has been working | She hasn't been working | Has she been working? |
+
+Маркеры: `for + длительность`, `since + точка`, `all day / morning / week`, `lately`, `recently`, `How long...?`. С state verbs (know, love, want, believe, mean, own) **обычно не используется** — там Present Perfect.
+
+### Past Perfect
+
+`had` + V3. По лицам не меняется.
+
+| Все лица | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+|  | I had finished | I hadn't finished | Had I finished? |
+
+Маркеры: `by + время в прошлом`, `by the time`, `before`, `after`, `when` (с акцентом на «до того, как»), `already`, `just`, `never`, `ever` (в прошлом контексте).
+
+### Past Perfect Continuous
+
+`had + been + V-ing`. По лицам не меняется.
+
+| Все лица | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+|  | I had been working | I hadn't been working | Had I been working? |
+
+Маркеры: `for + длительность` + момент прошлого, `since + точка` + момент прошлого, `before + момент прошлого`.
+
+### Future Perfect
+
+`will have` + V3.
+
+| Все лица | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+|  | I will have finished | I won't have finished | Will I have finished? |
+
+Маркеры: `by + момент будущего`, `by the time + Present Simple`, `before + момент будущего`, `in + период` (in two days).
+
+### Future Perfect Continuous
+
+`will have been + V-ing`.
+
+| Все лица | Утверждение | Отрицание | Вопрос |
+| --- | --- | --- | --- |
+|  | I will have been working | I won't have been working | Will I have been working? |
+
+Маркеры: `by + момент будущего` + `for + длительность`. Используется редко — обычно в формулировках вроде «к 2030 году я уже буду здесь работать 10 лет».
+
+### Сокращения и тонкости
+
+- `I've`, `you've`, `he's`, `she's`, `we've`, `they've` — Present Perfect. `he's` = `he has` или `he is` — различается по V3 / V-ing после.
+- `I'd worked` = `I had worked` (Past Perfect). Не путать с `I'd work` = `I would work`.
+- `I'll have done` = `I will have done`. В разговорной речи — почти всегда сокращённо.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="В русском маркер «уже» / «к этому моменту» работает поверх любого времени глагола. В английском маркер встроен в форму: have/had/will have делает «уже» обязательным элементом грамматики. Поэтому нельзя сказать «I have seen her yesterday» — yesterday отрицает связь с настоящим, а Present Perfect её требует.">
+  <div slot="ru">
+    <strong>«Я уже прочитал эту книгу».</strong><br/>
+    Связь с сейчас: «прочитал, и теперь знаю, о чём она».<br/>
+    <strong>«Я уже прочитал, когда ты пришёл».</strong><br/>
+    Связь с моментом в прошлом: «к твоему приходу был дочитан».<br/>
+    <strong>«К пятнице я её уже прочитаю».</strong><br/>
+    Связь с моментом в будущем: «к пятнице будет дочитана».<br/>
+    Глагол меняется по времени, а смысл «к точке X — готово» сохраняется через «уже» и «к».
+  </div>
+  <div slot="en">
+    <strong>I have read this book.</strong> — Present Perfect, точка отсчёта — сейчас.<br/>
+    <strong>I had read it when you came.</strong> — Past Perfect, точка отсчёта — момент прошлого (came).<br/>
+    <strong>I will have read it by Friday.</strong> — Future Perfect, точка отсчёта — момент будущего (Friday).<br/>
+    Три разные формы для одной идеи «к точке X — готово».
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+**Present Perfect** — действие где-то в прошлом, его результат жив сейчас. Точка отсчёта = настоящий момент.
+
+<Timeline
+  caption="Present Perfect: действие закончилось, но результат связан с настоящим."
+  points={[
+    { at: 'past', label: 'я это сделал', type: 'point' },
+    { at: 'now', label: 'результат жив', type: 'ongoing' },
+    { at: 'future', label: '(к этому ещё не дошли)', type: 'point' },
+  ]}
+/>
+
+**Past Perfect** — действие закончилось до другой точки в прошлом. Стрелка идёт «в прошлое прошлого».
+
+<Timeline
+  caption="Past Perfect: я закончил раньше, чем случилось другое прошлое действие."
+  points={[
+    { at: 'past', label: 'я уже закончил', type: 'point' },
+    { at: 'now', label: 'случилось другое (Past Simple)', type: 'point' },
+    { at: 'future', label: '(сейчас вне сцены)', type: 'point' },
+  ]}
+/>
+
+**Future Perfect** — действие будет завершено к моменту в будущем. Точка отсчёта — будущая дата / событие.
+
+<Timeline
+  caption="Future Perfect: к моменту в будущем — будет уже готово."
+  points={[
+    { at: 'past', label: '(сейчас работаю)', type: 'duration' },
+    { at: 'now', label: 'продолжаю', type: 'duration' },
+    { at: 'future', label: 'к пятнице — готово', type: 'point' },
+  ]}
+/>
+
+**Present Perfect Continuous** — длинный процесс, который шёл (и, возможно, идёт) до настоящего. Акцент на длительности.
+
+<Timeline
+  caption="Present Perfect Continuous: процесс растянут до настоящего, важна длительность."
+  points={[
+    { at: 'past', label: 'начал давно', type: 'point' },
+    { at: 'now', label: 'до сих пор / только что закончил', type: 'ongoing' },
+    { at: 'future', label: '(вне сцены)', type: 'point' },
+  ]}
+/>
+
+## 6. Смысл и использование
+
+### Когда Present Perfect
+
+<RuleList rules={[
+  "<strong>Действие в прошлом с результатом в настоящем.</strong> Не важно когда — важен факт «есть результат». <em>I have lost my keys.</em> (значит, ключей нет сейчас.)",
+  "<strong>Опыт жизни — было / не было хоть раз.</strong> Маркеры ever / never / before. <em>Have you ever been to Japan?</em>",
+  "<strong>Только что произошло (recent past).</strong> Маркеры just, recently, lately. <em>She has just finished the report.</em>",
+  "<strong>В незавершённый период.</strong> today, this week, this month, this year. Период ещё не закончился — внутри него ставится Present Perfect. <em>I have read three books this month.</em>",
+  "<strong>С already / yet.</strong> already = «уже» (обычно в утверждении), yet = «ещё» / «уже» (в отрицании или вопросе). <em>She has already left. — Has she left yet?</em>",
+  "<strong>С since / for, обозначающими период, не закончившийся к сейчас.</strong> since 2019, for ten years. <em>I have lived here since 2019.</em>",
+  "<strong>«It's the first time I have...».</strong> Особая конструкция — всегда Present Perfect, не Past Simple. <em>It's the first time I have eaten sushi.</em>",
+]} />
+
+### Когда Present Perfect Continuous
+
+<RuleList rules={[
+  "<strong>Действие началось в прошлом и длится до настоящего.</strong> Акцент на длительности, не на результате. <em>I have been studying English for five years.</em>",
+  "<strong>Действие только что закончилось, и его следы видны сейчас.</strong> Часто с visible result: запах, мокрые волосы, усталое лицо. <em>You look tired — have you been running?</em>",
+  "<strong>Вопрос How long...?</strong> почти всегда требует Continuous (если глагол не state). <em>How long have you been waiting?</em>",
+  "<strong>Контраст с Present Perfect:</strong> результат vs процесс. <em>I have read three books</em> (результат, штуки). <em>I have been reading for two hours</em> (процесс, длительность).",
+  "<strong>State verbs (know, love, want, believe, mean, own) — без Continuous.</strong> Здесь используется обычный Present Perfect. <em>I have known him for years</em>, не «I have been knowing».",
+]} />
+
+### Когда Past Perfect
+
+<RuleList rules={[
+  "<strong>Два прошедших действия — раннее в Past Perfect, позднее в Past Simple.</strong> Past Perfect выделяет то, что было до. <em>When I arrived, she had already left.</em>",
+  "<strong>С маркерами by + время в прошлом / by the time.</strong> К этому моменту уже было сделано. <em>By 8 PM I had finished the report.</em>",
+  "<strong>С never, ever, just, already, yet — в прошлом контексте.</strong> <em>I had never seen such a sunset before.</em>",
+  "<strong>В косвенной речи — сдвиг назад от Present Perfect или Past Simple.</strong> <em>She said she had finished.</em> (прямая речь: «I have finished» или «I finished»).",
+  "<strong>НЕ нужен, если порядок очевиден из after / before или из контекста.</strong> Past Simple достаточно. <em>After I finished, I went home.</em>",
+]} />
+
+### Когда Past Perfect Continuous
+
+<RuleList rules={[
+  "<strong>Длительное действие, которое шло до момента в прошлом.</strong> Акцент на «сколько длилось». <em>She had been working at the company for five years before she got promoted.</em>",
+  "<strong>Действие закончилось перед моментом в прошлом, и его следы видны в этом моменте.</strong> <em>His eyes were red — he had been crying.</em>",
+  "<strong>Контраст с Past Perfect:</strong> результат vs длительность. <em>I had written three letters</em> (штуки). <em>I had been writing all morning</em> (процесс).",
+  "<strong>State verbs — обычно Past Perfect, не Continuous.</strong> <em>I had known him for years before he told me.</em>",
+]} />
+
+### Когда Future Perfect
+
+<RuleList rules={[
+  "<strong>К моменту в будущем действие будет завершено.</strong> Обязателен маркер «к моменту». <em>By next Friday I will have finished the report.</em>",
+  "<strong>После by the time — Present Simple (правило придаточного), главная часть — will have + V3.</strong> <em>By the time you arrive, I will have cleaned the flat.</em>",
+  "<strong>Часто с in + период.</strong> in two months, in a year. <em>In two months we will have moved to the new office.</em>",
+]} />
+
+### Когда Future Perfect Continuous
+
+<RuleList rules={[
+  "<strong>К моменту в будущем действие будет длиться столько-то времени.</strong> Обязателен и «к моменту», и «for + длительность». <em>By 2030 I will have been working here for ten years.</em>",
+  "<strong>Редкая форма.</strong> В разговорной речи чаще заменяется на Present Perfect Continuous + future marker: <em>By next month I will have been studying Spanish for a year</em> ≈ <em>Next month it'll be a year that I'm learning Spanish.</em>",
+]} />
+
+### Контраст Present Perfect vs Past Simple — углубление
+
+Самый частый источник ошибок. Различает три фактора:
+
+- **Период.** Незавершённый (today, this week, this year) → Present Perfect. Завершённый (yesterday, last week, in 2020, two hours ago) → Past Simple. *I have read three books this week.* / *I read three books last week.*
+- **Связь с настоящим.** Если важен результат сейчас — Present Perfect. Если просто факт в прошлом — Past Simple. *I have lost my keys* (нет сейчас). / *I lost my keys yesterday but found them in the evening* (потерял и нашёл, история закончена).
+- **Конкретный момент в вопросе.** Когда вопрос о времени — Past Simple. *When did you go?* / *Have you ever been?* — общий опыт без привязки к моменту.
+
+### have been to vs have gone to
+
+- **have been to** — был и вернулся. *I have been to Paris twice.* (сейчас не в Париже, но был.)
+- **have gone to** — уехал и сейчас там. *She has gone to the bank.* (сейчас её здесь нет, она там.)
+- В русском оба переводятся «был / уехал», и разница теряется. В английском она критична.
+
+### Упомянем кратко (для будущих уроков)
+
+- **Passive Perfect** (`has been done`, `had been done`, `will have been done`) — то же самое, но в страдательном залоге. Подробнее — урок 12 про passive voice.
+- **Perfect modals** (`must have done`, `could have done`, `should have done`) — модальный + Perfect. Разбирается в уроке modals и в уроке conditionals (III тип условного).
+
+## 7. Примеры
+
+### Результат и опыт — Present Perfect
+
+<Example ru="Я потерял ключи.">I have lost my keys.</Example>
+<Example ru="Она только что закончила отчёт.">She has just finished the report.</Example>
+<Example ru="Ты когда-нибудь был в Японии?">Have you ever been to Japan?</Example>
+<Example ru="Я никогда не пробовал суши.">I have never tried sushi.</Example>
+<Example ru="На этой неделе я прочитал три книги.">I have read three books this week.</Example>
+<Example ru="Они живут в этом доме с 2019 года.">They have lived in this house since 2019.</Example>
+
+### Процесс и длительность — Present Perfect Continuous
+
+<Example ru="Я учу английский пять лет.">I have been studying English for five years.</Example>
+<Example ru="Ты выглядишь уставшим — ты бегал?">You look tired — have you been running?</Example>
+<Example ru="Сколько ты ждёшь?">How long have you been waiting?</Example>
+<Example ru="Шёл дождь всё утро.">It has been raining all morning.</Example>
+<Example ru="Она работает над этим проектом два месяца.">She has been working on this project for two months.</Example>
+
+### Прошлое прошлого — Past Perfect
+
+<Example ru="К восьми вечера я уже закончил отчёт.">By 8 PM I had finished the report.</Example>
+<Example ru="Когда я пришёл, она уже ушла.">When I arrived, she had already left.</Example>
+<Example ru="Я никогда раньше не видел такого заката.">I had never seen such a sunset before.</Example>
+<Example ru="Поезд ушёл до того, как мы добрались до станции.">The train had left before we got to the station.</Example>
+<Example ru="Она сказала, что закончила.">She said she had finished.</Example>
+
+### Длительность в прошлом — Past Perfect Continuous
+
+<Example ru="Она работала в компании пять лет, прежде чем её повысили.">She had been working at the company for five years before she got promoted.</Example>
+<Example ru="Его глаза покраснели — он плакал.">His eyes were red — he had been crying.</Example>
+<Example ru="Я ждал автобус полчаса, когда он наконец подошёл.">I had been waiting for the bus for half an hour when it finally came.</Example>
+
+### Готово к будущему — Future Perfect
+
+<Example ru="К следующей пятнице я закончу отчёт.">By next Friday I will have finished the report.</Example>
+<Example ru="Когда ты приедешь, я уберу квартиру.">By the time you arrive, I will have cleaned the flat.</Example>
+<Example ru="Через два месяца мы переедем в новый офис.">In two months we will have moved to the new office.</Example>
+
+### Длительность в будущем — Future Perfect Continuous
+
+<Example ru="К 2030 году я буду работать здесь десять лет.">By 2030 I will have been working here for ten years.</Example>
+<Example ru="К концу месяца она будет учить испанский год.">By the end of the month she will have been studying Spanish for a year.</Example>
+
+### Present Perfect vs Past Simple — контраст
+
+<Example ru="Я был в Париже дважды (вообще).">I have been to Paris twice.</Example>
+<Example ru="Я был в Париже в 2020 году.">I went to Paris in 2020.</Example>
+<Example ru="Она уехала в банк (сейчас её здесь нет).">She has gone to the bank.</Example>
+<Example ru="Она ездила в банк утром (вернулась).">She went to the bank in the morning.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="Present Perfect" rightLabel="Past Simple">
+  <div slot="left">
+    <strong>I have lost my keys.</strong><br/>Потерял — и сейчас их нет. Результат в настоящем.<br/><br/>
+    <strong>I have read three books this week.</strong><br/>This week ещё не закончилась → Present Perfect.<br/><br/>
+    <strong>Have you ever been to Japan?</strong><br/>Общий опыт без конкретного момента.<br/><br/>
+    <strong>She has just arrived.</strong><br/>Just = только что → Present Perfect.<br/><br/>
+    <strong>I have lived here since 2019.</strong><br/>До сих пор живу — Present Perfect с since.
+  </div>
+  <div slot="right">
+    <strong>I lost my keys yesterday but found them.</strong><br/>История закончена, маркер yesterday → Past Simple.<br/><br/>
+    <strong>I read three books last week.</strong><br/>Last week — завершённый период → Past Simple.<br/><br/>
+    <strong>When did you go to Japan?</strong><br/>Вопрос о конкретном моменте → Past Simple.<br/><br/>
+    <strong>She arrived at 7.</strong><br/>Конкретное время → Past Simple.<br/><br/>
+    <strong>I lived in Berlin for ten years.</strong><br/>Период закончился, сейчас не там → Past Simple.
+  </div>
+</Compare>
+
+<Compare leftLabel="Present Perfect" rightLabel="Present Perfect Continuous">
+  <div slot="left">
+    <strong>I have read three books this month.</strong><br/>Результат в штуках, акцент на «сколько сделано».<br/><br/>
+    <strong>She has written the report.</strong><br/>Отчёт готов — есть результат.<br/><br/>
+    <strong>I have known him for years.</strong><br/>State verb — только Perfect, не Continuous.<br/><br/>
+    <strong>I have lived here since 2019.</strong><br/>Допустимо и так, и через Continuous — оттенок слабее.
+  </div>
+  <div slot="right">
+    <strong>I have been reading for two hours.</strong><br/>Длительность процесса, а не штук.<br/><br/>
+    <strong>She has been writing the report all day.</strong><br/>Акцент на процессе, отчёт может быть ещё не готов.<br/><br/>
+    <strong>I have been knowing him...</strong><br/>Невозможно: state verbs не идут в Continuous.<br/><br/>
+    <strong>I have been living here since 2019.</strong><br/>Тот же смысл, чуть больше акцента на «непрерывно живу».
+  </div>
+</Compare>
+
+<Compare leftLabel="Past Perfect" rightLabel="Past Simple">
+  <div slot="left">
+    <strong>When I arrived, she had already left.</strong><br/>Она ушла ДО моего прихода — порядок важен.<br/><br/>
+    <strong>The train had left before we got to the station.</strong><br/>Сначала уехал поезд — потом мы подошли.<br/><br/>
+    <strong>By 8 PM I had finished the report.</strong><br/>«By + момент» — типичный маркер Past Perfect.
+  </div>
+  <div slot="right">
+    <strong>When I arrived, she left.</strong><br/>Сначала пришёл — потом ушла. Последовательность, а не предшествование.<br/><br/>
+    <strong>After I finished, I went home.</strong><br/>After уже задаёт порядок — Perfect не нужен.<br/><br/>
+    <strong>I finished the report at 8 PM.</strong><br/>Просто факт «закончил в восемь» — Past Simple хватает.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак выбора">
+Прежде чем выбирать форму, найди в предложении **точку отсчёта**. Сейчас → Present Perfect (или Continuous). Момент прошлого → Past Perfect (или Continuous). Момент будущего → Future Perfect (или Continuous). Дальше задай второй вопрос: «процесс или результат?» — Continuous для процесса/длительности, обычный Perfect для результата. Если точки отсчёта нет (просто факт «вчера сделал») — никакого Perfect, это Simple.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английскому нужна Perfect-система">
+Английский глагол не делает того, что русский делает аспектом и приставками. У русского «делал» и «сделал» — две разные формы одного глагола, и одна сразу сообщает «процесс / незавершённость», а другая — «результат / завершённость». Английский этой разницы в самом глаголе не имеет. Он построил её через грамматическую конструкцию: have / had / will have + V3. По сути это маркер «связи с точкой отсчёта»: что-то сделано — и это релевантно сейчас / тогда / тогда-в-будущем. Continuous-вариант добавляет «и этот процесс длился столько-то». Это не «русская избыточность» и не педантизм — это единственный способ для английского сказать, что у действия есть «послевкусие» в нужной точке времени. Поэтому переучиваться приходится не на новую форму, а на новую категорию мышления: каждый раз, говоря о прошлом, спрашивать себя «а это всё ещё имеет значение к точке отсчёта?».
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Есть маркер завершённого прошлого (yesterday, last week, in 2020, ago)?", yes: "Past Simple, никакого Perfect. Маркер отрицает связь с настоящим.", no: "к вопросу 2" },
+  { q: "Точка отсчёта — настоящий момент (just, already, yet, ever, never, recently, this week, since/for до сейчас)?", yes: "Present Perfect — или Continuous, если важна длительность процесса.", no: "к вопросу 3" },
+  { q: "Точка отсчёта — момент в прошлом (by 8, by the time, when X happened, before/after X)?", yes: "Past Perfect — или Continuous, если важна длительность до этого момента. Если порядок очевиден из after/before — хватит Past Simple.", no: "к вопросу 4" },
+  { q: "Точка отсчёта — момент в будущем (by Friday, by 2030, in two months, by the time + Present)?", yes: "Future Perfect — или Continuous, если важна длительность.", no: "к вопросу 5" },
+  { q: "Глагол — state verb (know, love, want, believe, mean, own)?", yes: "Continuous недопустим. Только обычный Perfect — Present / Past / Future.", no: "к вопросу 6" },
+  { q: "Главное — длительность или процесс к точке отсчёта (How long...?, видимые следы процесса, акцент на «всё это время»)?", yes: "Continuous-вариант Perfect.", no: "Обычный Perfect — акцент на результате или штуках." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I have seen this film yesterday | I saw this film yesterday | yesterday отрицает связь с настоящим → Past Simple, не Present Perfect. Никогда вместе. |
+| I have lived in Berlin in 2018 | I lived in Berlin in 2018 | «in 2018» — завершённый период → Past Simple. Present Perfect требует незавершённого периода. |
+| When have you arrived? | When did you arrive? | Вопрос о конкретном моменте → Past Simple. Present Perfect не любит «когда?». |
+| I have been to Paris last summer | I went to Paris last summer | «last summer» — завершённый период → Past Simple. been to само по себе не делает Present Perfect возможным с прошлыми маркерами. |
+| She has gone to Paris twice | She has been to Paris twice | gone to = «уехала и пока там». twice = «была дважды и вернулась» → been to. |
+| I am knowing him for years | I have known him for years | know — state verb, Continuous недопустим. «Сколько знаю» — Present Perfect, не Present Continuous. |
+| I have been knowing him for years | I have known him for years | State verb и в Perfect Continuous тоже не идёт. Только Present Perfect. |
+| When I came, she left (имелось: к моменту прихода ушла) | When I came, she had left | Без Past Perfect получается «я пришёл — потом она ушла». С Past Perfect — «к моему приходу её уже не было». |
+| I had finished the report yesterday | I finished the report yesterday | Past Perfect нужен только когда есть другое прошедшее действие, и порядок важен. Без него — Past Simple. |
+| By the time you will arrive, I will have cleaned | By the time you arrive, I will have cleaned | После by the time / when / before / after — Present Simple, даже если о будущем. |
+| I have been waiting since two hours | I have been waiting for two hours | since + точка (since 2 PM), for + длительность (for two hours). Перепутаны. |
+| He yet hasn't come | He hasn't come yet | yet ставится в конце вопроса или отрицания. |
+| I already have done it | I have already done it | already встаёт между have и V3 (или в конце). |
+| It's the first time I saw such a thing | It's the first time I have seen such a thing | Конструкция «It's the first/second time...» требует Present Perfect, не Past Simple. |
+| Look! It has been raining (если идёт прямо сейчас) | Look! It is raining | Present Perfect Continuous — для процесса, который шёл до сейчас (часто уже закончился). Если прямо сейчас в моменте — Present Continuous. |
+
+## 13. Шпаргалка
+
+| Время | Формула | Маркеры | Зачем |
+| --- | --- | --- | --- |
+| Present Perfect | have/has + V3 | just, already, yet, ever, never, recently, this week, since, for | Результат / опыт к настоящему |
+| Present Perfect Continuous | have/has + been + V-ing | for, since, all day, How long...?, lately | Процесс / длительность до настоящего |
+| Past Perfect | had + V3 | by + время, by the time, before, after, when (раннее) | Действие до момента в прошлом |
+| Past Perfect Continuous | had + been + V-ing | for + момент прошлого, before + момент прошлого | Длительность до момента в прошлом |
+| Future Perfect | will have + V3 | by + будущее, by the time, in + период | Будет готово к моменту будущего |
+| Future Perfect Continuous | will have been + V-ing | by + будущее + for + длительность | Будет длиться столько-то к моменту будущего |
+| Past Simple (для контраста) | V2 / Ved | yesterday, last week, in 2020, ago | Просто факт в завершённом прошлом |
+
+| Различие | Правило |
+| --- | --- |
+| since vs for | since + точка (since Monday); for + длительность (for three days) |
+| already / yet / just | already между have/has и V3 или в конце; yet в конце отрицания/вопроса; just между have/has и V3 |
+| have been to / have gone to | been to = был и вернулся; gone to = уехал и пока там |
+| Незавершённый vs завершённый период | this week → Present Perfect; last week → Past Simple |
+| State verb + длительность | только Present Perfect (know, love, want), не Continuous |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "Present Perfect", meaning: "настоящее совершённое — have/has + V3" },
+  { term: "Present Perfect Continuous", meaning: "настоящее совершённое длительное — have/has been + V-ing" },
+  { term: "Past Perfect", meaning: "прошедшее совершённое — had + V3" },
+  { term: "Past Perfect Continuous", meaning: "прошедшее совершённое длительное — had been + V-ing" },
+  { term: "Future Perfect", meaning: "будущее совершённое — will have + V3" },
+  { term: "Future Perfect Continuous", meaning: "будущее совершённое длительное — will have been + V-ing" },
+  { term: "V3 / past participle", meaning: "третья форма глагола (done, gone, seen, written)" },
+  { term: "auxiliary have/has/had/will have", meaning: "вспомогательный глагол Perfect-форм" },
+  { term: "point of reference", meaning: "точка отсчёта — сейчас, момент прошлого или момент будущего" },
+  { term: "result vs process", meaning: "результат (обычный Perfect) vs процесс/длительность (Perfect Continuous)" },
+  { term: "state verb", meaning: "глагол состояния (know, love, want, believe, mean, own) — не идёт в Continuous" },
+  { term: "since + точка", meaning: "с какого момента (since 2019, since Monday)" },
+  { term: "for + длительность", meaning: "в течение какого срока (for two hours, for ten years)" },
+  { term: "just", meaning: "только что — с Present Perfect и Past Perfect" },
+  { term: "already", meaning: "уже — в утверждении, между have/has и V3" },
+  { term: "yet", meaning: "ещё / уже — в конце отрицания или вопроса" },
+  { term: "ever", meaning: "когда-нибудь — в вопросах об опыте" },
+  { term: "never", meaning: "никогда — в утверждении с Perfect" },
+  { term: "before (наречие)", meaning: "раньше, прежде — c Present Perfect и Past Perfect" },
+  { term: "recently / lately", meaning: "недавно / в последнее время — с Present Perfect" },
+  { term: "so far", meaning: "до сих пор, на данный момент" },
+  { term: "this week / month / year", meaning: "на этой неделе / в этом месяце / в этом году — незавершённый период" },
+  { term: "yesterday / last week / in 2020 / ago", meaning: "маркеры завершённого прошлого — ТОЛЬКО Past Simple, никогда не Perfect" },
+  { term: "by + время", meaning: "к (8 часам, пятнице) — маркер Past Perfect и Future Perfect" },
+  { term: "by the time + Present Simple", meaning: "к тому моменту, как — придаточное времени для Future Perfect" },
+  { term: "How long...?", meaning: "Как долго...? — обычно с Perfect Continuous" },
+  { term: "It's the first/second time + Present Perfect", meaning: "это первый/второй раз, когда... — фиксированная конструкция" },
+  { term: "have been to", meaning: "был и вернулся (I have been to Paris)" },
+  { term: "have gone to", meaning: "уехал и сейчас там (She has gone to the bank)" },
+  { term: "I've / he's / she's / we've / they've", meaning: "сокращения Present Perfect; he's = he has или he is (различается по V3 / V-ing)" },
+  { term: "I'd worked / I'd work", meaning: "I'd worked = I had worked (Past Perfect); I'd work = I would work (условное)" },
+  { term: "will have done", meaning: "Future Perfect — будет сделано к моменту будущего" },
+  { term: "will have been doing", meaning: "Future Perfect Continuous — будет длиться к моменту будущего" },
+  { term: "косвенная речь (reported speech)", meaning: "Past Perfect используется при сдвиге Present Perfect или Past Simple назад" },
+  { term: "passive perfect", meaning: "has/had/will have + been + V3 — пассив в Perfect, тема следующего урока" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-perfect-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Шесть форм и их маркеры</span>
+    <span class="kc-trainer-hint">Формула, маркер, пример — для каждой Perfect-формы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-perfect-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Маркер → форма</span>
+    <span class="kc-trainer-hint">Соотнеси маркер с правильной Perfect-формой</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-perfect-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Какой Perfect?</span>
+    <span class="kc-trainer-hint">Разложи предложения по точке отсчёта</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-perfect-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором, контрасты PP vs PS</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-perfect-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Поставь правильную форму</span>
+    <span class="kc-trainer-hint">Раскрой скобки в Perfect-форме</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-perfect-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Длинные конструкции — Future Perfect Continuous и др.</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 7-16, 22-23 (Present Perfect, Past Perfect, Future Perfect и их Continuous-варианты).
+- **Swan M., Practical English Usage** — §455-462 (perfect tenses), §211 (future perfect), §495 (since / for).
+- **English Page** — englishpage.com/verbpage/verbtenseintro.html (обзор всех 12 времён, включая Perfect-сетку).
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/present-perfect (и параллельные страницы past-perfect, future-perfect).

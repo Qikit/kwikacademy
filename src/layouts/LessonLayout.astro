@@ -4,22 +4,33 @@ import LessonHero from '../components/lesson/LessonHero.astro';
 import LessonComplete from '../components/lesson/LessonComplete.tsx';
 import ReadingAids from '../components/lesson/ReadingAids.astro';
 
+import Icon from '../components/ui/Icon.astro';
 interface Props {
   title: string;
   eyebrow: string;
   readingMinutes: number;
   slug: string;
   nextHref?: string;
+  placeholder?: boolean;
 }
-const { title, eyebrow, readingMinutes, slug, nextHref } = Astro.props;
+const { title, eyebrow, readingMinutes, slug, nextHref, placeholder } = Astro.props;
 ---
 
 <BaseLayout title={`${title} — KwikAcademy`}>
-  <ReadingAids />
+  {!placeholder && <ReadingAids />}
   <article class="lesson">
     <LessonHero eyebrow={eyebrow} title={title} readingMinutes={readingMinutes} />
     <div class="prose"><slot /></div>
-    <LessonComplete client:visible slug={slug} nextHref={nextHref} />
+    {
+      placeholder ? (
+        <div class="soon-panel">
+          <Icon name="sparkles" size={22} />
+          <p>Урок в разработке — материал появится здесь позже.</p>
+        </div>
+      ) : (
+        <LessonComplete client:visible slug={slug} nextHref={nextHref} />
+      )
+    }
   </article>
 </BaseLayout>
 
@@ -58,5 +69,53 @@ const { title, eyebrow, readingMinutes, slug, nextHref } = Astro.props;
     border: 1px solid var(--glass-border);
     border-radius: 6px;
     padding: 2px 6px;
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  .prose :global(th) {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-3);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .prose :global(td) {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-2);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .prose :global(td:first-child) {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--c-purple);
+    padding-left: 16px;
+    margin: 16px 0;
+    color: var(--text-2);
+  }
+  .soon-panel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    padding: 18px 20px;
+    border-radius: var(--r-md);
+    background: var(--glass-bg);
+    border: 1px dashed var(--glass-border);
+    color: var(--c-purple);
+  }
+  .soon-panel p {
+    color: var(--text-2);
+    font-size: 14px;
   }
 </style>

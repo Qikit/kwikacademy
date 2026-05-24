@@ -24,7 +24,9 @@ const trainersFor = (slug: string) => trainers.filter((t) => t.data.course === s
           eyebrow={c.data.subtitle}
           glyph={c.data.glyph}
           meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
-          lessonSlugs={lessonsFor(c.id).map((l) => l.id)}
+          lessonSlugs={lessonsFor(c.id)
+            .filter((l) => !l.data.placeholder)
+            .map((l) => l.id)}
           trainerSlugs={trainersFor(c.id).map((t) => t.id)}
         />
       ))

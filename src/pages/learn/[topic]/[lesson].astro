@@ -28,6 +28,7 @@ const nextHref = next ? withBase(`/learn/${next.data.course}/${next.id}`) : unde
   readingMinutes={lesson.data.readingMinutes}
   slug={lesson.id}
   nextHref={nextHref}
+  placeholder={lesson.data.placeholder}
 >
   <Content />
 </LessonLayout>

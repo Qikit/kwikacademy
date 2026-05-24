@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TrainerShell from './TrainerShell';
+import TrainerShell, { type TrainerNav } from './TrainerShell';
 import { scoreMatch } from '../../lib/trainers/score';
 
 export interface MatchPair {
@@ -16,13 +16,21 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export default function Match({ slug, pairs }: { slug: string; pairs: MatchPair[] }) {
+export default function Match({
+  slug,
+  pairs,
+  nav,
+}: {
+  slug: string;
+  pairs: MatchPair[];
+  nav?: TrainerNav;
+}) {
   const correct = Object.fromEntries(pairs.map((p) => [p.left, p.right]));
   const [rights] = useState(() => shuffle(pairs.map((p) => p.right)));
   const [picked, setPicked] = useState<Record<string, string>>({});
 
   return (
-    <TrainerShell slug={slug} total={pairs.length}>
+    <TrainerShell slug={slug} total={pairs.length} nav={nav}>
       {({ finish }) => {
         function set(left: string, right: string) {
           setPicked((p) => ({ ...p, [left]: right }));

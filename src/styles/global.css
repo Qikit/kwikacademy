@@ -246,10 +246,58 @@ a {
   background: var(--grad-blue-purple);
   transition: width 0.3s;
 }
+.kc-course-trk {
+  margin-bottom: 28px;
+}
+.kc-course-trk-head {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.kc-q-trk {
+  margin-bottom: 24px;
+}
 .kc-trainer-result {
   text-align: center;
-  padding: 48px 0;
+  padding: 40px 0;
   color: var(--text-2);
+}
+.kc-result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+.kc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 20px;
+  border-radius: var(--r-full);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.kc-btn:hover {
+  transform: translateY(-2px);
+}
+.kc-btn-primary {
+  color: #fff;
+  background: var(--grad-blue-purple);
+}
+.kc-btn-ghost {
+  color: var(--text);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
 }
 .kc-pct-big {
   font-family: var(--font-display);

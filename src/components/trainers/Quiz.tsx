@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TrainerShell from './TrainerShell';
+import TrainerShell, { type TrainerNav } from './TrainerShell';
 import { scoreQuiz } from '../../lib/trainers/score';
 
 export interface QuizQuestion {
@@ -9,12 +9,20 @@ export interface QuizQuestion {
   explain?: string;
 }
 
-export default function Quiz({ slug, questions }: { slug: string; questions: QuizQuestion[] }) {
+export default function Quiz({
+  slug,
+  questions,
+  nav,
+}: {
+  slug: string;
+  questions: QuizQuestion[];
+  nav?: TrainerNav;
+}) {
   const [picks, setPicks] = useState<number[]>([]);
   const [revealed, setRevealed] = useState(false);
 
   return (
-    <TrainerShell slug={slug} total={questions.length}>
+    <TrainerShell slug={slug} total={questions.length} nav={nav}>
       {({ index, next, finish }) => {
         const q = questions[index];
         const picked = picks[index];

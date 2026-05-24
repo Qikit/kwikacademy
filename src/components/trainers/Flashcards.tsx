@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TrainerShell from './TrainerShell';
+import TrainerShell, { type TrainerNav } from './TrainerShell';
 
 export interface Flashcard {
   front: string;
@@ -7,11 +7,19 @@ export interface Flashcard {
   hint?: string;
 }
 
-export default function Flashcards({ slug, cards }: { slug: string; cards: Flashcard[] }) {
+export default function Flashcards({
+  slug,
+  cards,
+  nav,
+}: {
+  slug: string;
+  cards: Flashcard[];
+  nav?: TrainerNav;
+}) {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <TrainerShell slug={slug} total={cards.length}>
+    <TrainerShell slug={slug} total={cards.length} nav={nav}>
       {({ index, next, finish }) => {
         const c = cards[index];
 

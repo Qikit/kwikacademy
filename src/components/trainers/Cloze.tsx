@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TrainerShell from './TrainerShell';
+import TrainerShell, { type TrainerNav } from './TrainerShell';
 import { scoreCloze } from '../../lib/trainers/score';
 
 export interface ClozeItem {
@@ -7,11 +7,19 @@ export interface ClozeItem {
   answers: string[];
 }
 
-export default function Cloze({ slug, items }: { slug: string; items: ClozeItem[] }) {
+export default function Cloze({
+  slug,
+  items,
+  nav,
+}: {
+  slug: string;
+  items: ClozeItem[];
+  nav?: TrainerNav;
+}) {
   const [inputs, setInputs] = useState<string[][]>(() => items.map((it) => it.answers.map(() => '')));
 
   return (
-    <TrainerShell slug={slug} total={items.length}>
+    <TrainerShell slug={slug} total={items.length} nav={nav}>
       {({ index, next, finish }) => {
         const it = items[index];
         const parts = it.text.split('___');

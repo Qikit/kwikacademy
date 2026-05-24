@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import TrainerLoader from '../../../components/trainers/TrainerLoader.tsx';
+import { withBase } from '../../../lib/url';
 
 export async function getStaticPaths() {
   const trainers = await getCollection('trainers');
@@ -12,12 +13,24 @@ export async function getStaticPaths() {
 }
 
 const { trainer } = Astro.props;
+
+const courseTrainers = (await getCollection('trainers'))
+  .filter((t) => t.data.course === trainer.data.course)
+  .sort((a, b) => a.id.localeCompare(b.id));
+const idx = courseTrainers.findIndex((t) => t.id === trainer.id);
+const next = courseTrainers[idx + 1];
+
+const nav = {
+  backHref: withBase(`/topics/${trainer.data.course}`),
+  nextHref: next ? withBase(`/practice/${trainer.data.course}/${next.id}`) : undefined,
+  courseTrainerSlugs: courseTrainers.map((t) => t.id),
+};
 ---
 
 <BaseLayout title={`${trainer.data.title} — KwikAcademy`}>
   <section style="max-width:600px;margin:0 auto;padding:48px 24px 96px;">
     <p class="eyebrow">Тренажёр</p>
     <h1 style="font-size:clamp(28px,5vw,42px);font-weight:800;margin:12px 0 32px;">{trainer.data.title}</h1>
-    <TrainerLoader client:load slug={trainer.id} data={trainer.data.data} />
+    <TrainerLoader client:load slug={trainer.id} data={trainer.data.data} nav={nav} />
   </section>
 </BaseLayout>

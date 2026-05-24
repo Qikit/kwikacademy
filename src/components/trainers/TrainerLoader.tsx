@@ -2,6 +2,7 @@ import Quiz, { type QuizQuestion } from './Quiz';
 import Flashcards, { type Flashcard } from './Flashcards';
 import Cloze, { type ClozeItem } from './Cloze';
 import Match, { type MatchPair } from './Match';
+import { type TrainerNav } from './TrainerShell';
 
 export type TrainerData =
   | { type: 'quiz'; questions: QuizQuestion[] }
@@ -9,15 +10,23 @@ export type TrainerData =
   | { type: 'cloze'; items: ClozeItem[] }
   | { type: 'match'; pairs: MatchPair[] };
 
-export default function TrainerLoader({ slug, data }: { slug: string; data: TrainerData }) {
+export default function TrainerLoader({
+  slug,
+  data,
+  nav,
+}: {
+  slug: string;
+  data: TrainerData;
+  nav?: TrainerNav;
+}) {
   switch (data.type) {
     case 'quiz':
-      return <Quiz slug={slug} questions={data.questions} />;
+      return <Quiz slug={slug} questions={data.questions} nav={nav} />;
     case 'flashcards':
-      return <Flashcards slug={slug} cards={data.cards} />;
+      return <Flashcards slug={slug} cards={data.cards} nav={nav} />;
     case 'cloze':
-      return <Cloze slug={slug} items={data.items} />;
+      return <Cloze slug={slug} items={data.items} nav={nav} />;
     case 'match':
-      return <Match slug={slug} pairs={data.pairs} />;
+      return <Match slug={slug} pairs={data.pairs} nav={nav} />;
   }
 }

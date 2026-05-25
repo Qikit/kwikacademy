@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import LessonHero from '../components/lesson/LessonHero.astro';
 import LessonComplete from '../components/lesson/LessonComplete.tsx';
 import ReadingAids from '../components/lesson/ReadingAids.astro';
-
+import ExportMenu from '../components/lesson/ExportMenu.tsx';
 import Icon from '../components/ui/Icon.astro';
 interface Props {
   title: string;
@@ -28,7 +28,10 @@ const { title, eyebrow, readingMinutes, slug, nextHref, placeholder } = Astro.pr
           <p>Урок в разработке — материал появится здесь позже.</p>
         </div>
       ) : (
-        <LessonComplete client:visible slug={slug} nextHref={nextHref} />
+        <>
+          <ExportMenu client:visible title={title} eyebrow={eyebrow} slug={slug} />
+          <LessonComplete client:visible slug={slug} nextHref={nextHref} />
+        </>
       )
     }
   </article>

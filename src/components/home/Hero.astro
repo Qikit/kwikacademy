@@ -1,16 +1,41 @@
 ---
 import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 import { withBase } from '../../lib/url';
+
+const line1 = ['Знания,', 'которые'];
 ---
 
 <section class="hero">
-  <p class="eyebrow">Учись свободно · без регистрации</p>
-  <h1>Знания, которые <em>дышат</em></h1>
-  <p class="sub">
-    Глубокие уроки и живые тренажёры по английскому, коду, ИИ и бизнесу. Прогресс хранится у тебя на устройстве.
+  <p class="eyebrow">
+    <Icon name="sparkles" size={13} /> Учись свободно · без регистрации
   </p>
+
+  <h1>
+    {
+      line1.map((w, i) => (
+        <span class="word" style={`--d:${i * 0.09}s`}>
+          {w}
+        </span>
+      ))
+    }
+    <span class="accent-wrap">
+      <span class="word accent" style="--d:0.18s">дышат</span>
+      <svg class="squiggle" viewBox="0 0 220 18" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M2 12 C 40 4, 70 16, 110 9 S 180 3, 218 11" />
+      </svg>
+    </span>
+  </h1>
+
+  <p class="sub">
+    Глубокие уроки и живые тренажёры по английскому, коду, ИИ и бизнесу. Прогресс хранится у тебя на
+    устройстве — никаких аккаунтов.
+  </p>
+
   <div class="cta">
-    <Button href={withBase('/topics')}>Начать →</Button>
+    <Button href={withBase('/topics')}>
+      Начать <Icon name="arrow-right" size={16} />
+    </Button>
     <Button href={withBase('/topics')} variant="glass">Каталог тем</Button>
   </div>
 </section>
@@ -19,23 +44,79 @@ import { withBase } from '../../lib/url';
   .hero {
     max-width: 900px;
     margin: 0 auto;
-    padding: clamp(48px, 9vw, 110px) 24px 48px;
+    padding: clamp(40px, 8vw, 96px) 24px 40px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
   }
   h1 {
-    font-size: clamp(40px, 7vw, 72px);
+    font-size: clamp(40px, 7.5vw, 76px);
     font-weight: 800;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    margin-top: 16px;
+    line-height: 1.04;
   }
-  h1 em {
-    font-style: normal;
-    background: var(--grad-aurora);
+  .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.5em) rotate(2deg);
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    animation-delay: var(--d);
+  }
+  @keyframes rise {
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(0);
+    }
+  }
+  .accent-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .accent {
+    background: linear-gradient(120deg, #6c7cf0, #a16cf0, #f06cc0, #6c7cf0);
+    background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation:
+      rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards,
+      shimmer 6s linear infinite 0.9s;
+    animation-delay: var(--d), 0.9s;
+  }
+  @keyframes shimmer {
+    to {
+      background-position: 300% 0;
+    }
+  }
+  .squiggle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.18em;
+    width: 100%;
+    height: 0.32em;
+    overflow: visible;
+  }
+  .squiggle path {
+    fill: none;
+    stroke: var(--c-pink);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 240;
+    stroke-dashoffset: 240;
+    animation: draw 0.9s ease forwards 1s;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
   .sub {
-    margin-top: 18px;
-    max-width: 480px;
+    margin-top: 22px;
+    max-width: 470px;
     color: var(--text-2);
     font-size: 15px;
   }
@@ -44,5 +125,17 @@ import { withBase } from '../../lib/url';
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .word,
+    .accent {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .squiggle path {
+      stroke-dashoffset: 0;
+      animation: none;
+    }
   }
 </style>

@@ -1,0 +1,77 @@
+{
+  "course": "english",
+  "lesson": "english-reported-speech",
+  "title": "Что это в reported",
+  "description": "Распредели reported-предложения по четырём типам исходной речи: statement, yes/no question, wh-question, imperative.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "statement", "label": "Statement" },
+      { "id": "yesno", "label": "Yes/No question" },
+      { "id": "wh", "label": "Wh-question" },
+      { "id": "imperative", "label": "Imperative" }
+    ],
+    "items": [
+      {
+        "text": "He said he was tired.",
+        "category": "statement",
+        "explain": "said + (that) + S + V — пересказ утверждения «I am tired»."
+      },
+      {
+        "text": "She asked if I had finished.",
+        "category": "yesno",
+        "explain": "asked + if + S + V — пересказ yes/no question «Have you finished?»."
+      },
+      {
+        "text": "Mum told me to wait.",
+        "category": "imperative",
+        "explain": "told + obj + to + V — пересказ приказа «Wait»."
+      },
+      {
+        "text": "He asked where I lived.",
+        "category": "wh",
+        "explain": "asked + wh-word + S + V — пересказ wh-question «Where do you live?»."
+      },
+      {
+        "text": "She said she would come the next day.",
+        "category": "statement",
+        "explain": "said + S + would V — пересказ утверждения «I will come tomorrow»."
+      },
+      {
+        "text": "He asked whether we were going.",
+        "category": "yesno",
+        "explain": "asked + whether + S + V — пересказ yes/no question «Are you going?»."
+      },
+      {
+        "text": "Dad told me not to be late.",
+        "category": "imperative",
+        "explain": "told + obj + not to + V — пересказ отрицательного приказа «Don't be late»."
+      },
+      {
+        "text": "The teacher asked why we hadn't done the homework.",
+        "category": "wh",
+        "explain": "asked + why + S + V — пересказ wh-question «Why haven't you done the homework?»."
+      },
+      {
+        "text": "She said she had been working all day.",
+        "category": "statement",
+        "explain": "said + S + had been + V-ing — пересказ «I have been working all day»."
+      },
+      {
+        "text": "He asked when the meeting would start.",
+        "category": "wh",
+        "explain": "asked + when + S + V — пересказ «When will the meeting start?»."
+      },
+      {
+        "text": "She advised me to see a doctor.",
+        "category": "imperative",
+        "explain": "advised + obj + to + V — пересказ совета «You should see a doctor» / «See a doctor»."
+      },
+      {
+        "text": "He asked if I could help him.",
+        "category": "yesno",
+        "explain": "asked + if + S + V — пересказ «Can you help me?». can → could."
+      }
+    ]
+  }
+}

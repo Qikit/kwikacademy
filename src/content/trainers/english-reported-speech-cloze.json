@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-reported-speech",
+  "title": "Reported speech — пропуски",
+  "description": "Раскрой прямую речь в reported или вставь недостающий глагол / союз.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "«I work in Moscow» → He said he ___ in Moscow.",
+        "answers": ["worked"],
+        "explain": "Present Simple (work) → Past Simple (worked). Стандартный backshift."
+      },
+      {
+        "text": "«I have lost my keys» → She said she ___ her keys.",
+        "answers": ["had lost"],
+        "explain": "Present Perfect (have lost) → Past Perfect (had lost). my → her."
+      },
+      {
+        "text": "«I'll call you tomorrow» → He said he would call me the ___ day.",
+        "answers": ["next", "following"],
+        "explain": "tomorrow → the next day / the following day. Оба варианта работают."
+      },
+      {
+        "text": "«Are you ready?» → He asked ___ I was ready.",
+        "answers": ["if", "whether"],
+        "explain": "Reported yes/no question: asked + if/whether + S + V. Без знака вопроса."
+      },
+      {
+        "text": "«Where do you live?» → She asked where I ___.",
+        "answers": ["lived"],
+        "explain": "Reported wh-question: прямой порядок, без do, backshift (live → lived). Не «where did I live»."
+      },
+      {
+        "text": "«Don't be late» → Mum ___ me not to be late.",
+        "answers": ["told"],
+        "explain": "Imperative → told + obj + (not) to + V. tell обязательно с объектом."
+      },
+      {
+        "text": "He ___ me that the meeting had been moved.",
+        "answers": ["told"],
+        "explain": "tell с объектом (told me). Если без объекта — нужно say (He said the meeting had been moved)."
+      },
+      {
+        "text": "«I must finish this report» → He said he ___ finish that report.",
+        "answers": ["had to"],
+        "explain": "must (обязанность) → had to. this → that."
+      },
+      {
+        "text": "«Can you help me?» → She asked if I ___ help her.",
+        "answers": ["could"],
+        "explain": "can → could. Reported yes/no question: asked + if + S + V, прямой порядок."
+      },
+      {
+        "text": "«Please wait» → He ___ me to wait.",
+        "answers": ["asked"],
+        "explain": "Просьба (вежливо) → ask + obj + to + V. Для жёсткого приказа — told."
+      }
+    ]
+  }
+}

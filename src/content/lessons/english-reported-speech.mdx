@@ -3,11 +3,418 @@ course: english
 order: 13
 phase: "Фаза 1 · Бытовой английский"
 title: "Reported Speech — косвенная речь"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Как пересказывать чужие слова и согласовывать времена."
-placeholder: true
-tags: [english]
+eyebrow: "Грамматика · уровень B1"
+readingMinutes: 26
+summary: "Как пересказать чужие слова: сдвиг времени, лиц, обстоятельств. Reported statements, questions и imperatives — без типичной русской инверсии в придаточных."
+tags: [reported-speech, grammar, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Reported Speech — косвенная речь» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем косвенная речь
+
+Прямая речь — это кавычки и точная цитата: «She said, „I am tired“». Косвенная речь (reported speech) — пересказ: «She said she was tired». Без неё нельзя обсуждать диалоги, рассказывать, что сказал коллега, передавать новости, писать отчёты о встречах. Любой пересказ разговора — это reported speech.
+
+В русском пересказ устроен почти как прямая речь: «Он сказал, что устал», «Она спросила, где я живу». Времена согласуются мягко: можно сказать «Он сказал, что устаёт» (настоящее в придаточном после прошедшего в главном), и никто не споткнётся. Английский так не работает. Если в главном предложении прошедшее время (`said`, `asked`, `told`), то и придаточное чаще всего сдвигается «на шаг назад» во времени — это **backshift**, согласование времён. Плюс меняются лица, указатели времени и места.
+
+Перепутать — фраза не сломается, поймут. Но звучит ломано. «He said he is tired» вместо «He said he was tired» сразу выдаёт нерод­ного. А в вопросах русскоязычные регулярно ломают конструкцию: «He asked where did I live» — калька с английского прямого вопроса, в reported так нельзя. Этот урок про три кита косвенной речи: что сдвигается (backshift), что заменяется (лица, обстоятельства), и какие три формы есть у самих конструкций (statements, questions, imperatives).
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+При пересказе после reporting verb в прошедшем времени (`said`, `told`, `asked`) всё в придаточном сдвигается **«на шаг назад» во времени**: Present → Past, Past → Past Perfect, will → would, can → could, must → had to. Параллельно меняются **лица** (I → he/she, my → his/her), **обстоятельства времени** (today → that day, tomorrow → the next day, now → then) и **места** (here → there, this → that). У вопросов и приказов — отдельные шаблоны: yes/no question через `if/whether` с прямым порядком, wh-question с прямым порядком, приказ через `told/asked + obj + to + V`.
+</Callout>
+
+## 3. Формы и грамматика
+
+### Таблица backshift — главное
+
+| Прямая речь (в кавычках) | Reported (после said) |
+| --- | --- |
+| Present Simple — *«I work»* | Past Simple — *said he worked* |
+| Present Continuous — *«I am working»* | Past Continuous — *said he was working* |
+| Present Perfect — *«I have worked»* | Past Perfect — *said he had worked* |
+| Present Perfect Continuous — *«I have been working»* | Past Perfect Continuous — *said he had been working* |
+| Past Simple — *«I worked»* | Past Perfect — *said he had worked* |
+| Past Continuous — *«I was working»* | Past Perfect Continuous — *said he had been working* |
+| Past Perfect — *«I had worked»* | Past Perfect (не сдвигается дальше) — *said he had worked* |
+| Future `will` — *«I will come»* | `would` — *said he would come* |
+| Future `going to` — *«I am going to come»* | *was/were going to* — *said he was going to come* |
+| `can` — *«I can swim»* | `could` — *said he could swim* |
+| `may` (возможность) — *«It may rain»* | `might` — *said it might rain* |
+| `must` (обязанность) — *«I must go»* | `had to` — *said he had to go* |
+| `must` (дедукция) — *«He must be tired»* | `must` (не сдвигается) — *said he must be tired* |
+| `shall` — *«I shall help»* | `should / would` — *said he would help* |
+| `could / would / might / should / ought to` | без изменений — *said he could / would / might do it* |
+
+### Указатели времени и места
+
+| Прямая | Reported |
+| --- | --- |
+| today | that day |
+| tonight | that night |
+| this morning | that morning |
+| yesterday | the day before / the previous day |
+| tomorrow | the next day / the following day |
+| last week | the previous week / the week before |
+| next month | the following month / the next month |
+| now | then |
+| ago | before / earlier |
+| here | there |
+| this (book) | that (book) |
+| these (keys) | those (keys) |
+
+### Лица и притяжательные
+
+Меняются по логике пересказа. *He said, «I lost my keys»* → *He said he had lost his keys.* *She said to me, «You are wrong»* → *She said I was wrong.* *They said, «We will help you»* (мне) → *They said they would help me.*
+
+### Reporting verbs — короткий перечень
+
+- **say** — без объекта: *He said (that)...*. Нельзя *«He said me»*.
+- **tell** — с объектом обязательно: *He told me (that)...*. Нельзя *«He told that»*.
+- **ask** — для вопросов и просьб: *He asked me (where I lived) / (to wait)*.
+- **explain to / mention to** — требуют `to + obj`: *He explained to me that...*.
+- **suggest** — без объекта, с `V-ing` или `that S should V`: *He suggested going / He suggested that we should go*.
+- **advise / recommend / warn / order / urge / beg / remind** — с объектом и `to + V`: *She advised me to wait*.
+- **promise / agree / offer / threaten / refuse** — с `to + V`: *He promised to call*.
+- **complain / deny / insist** — с `that` или `V-ing`: *He denied taking the money / He denied that he had taken the money*.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="В русском после «он сказал» можно ставить любое время в придаточном — оно описывает реальный момент действия. В английском после `said` придаточное ставится «на шаг назад», даже если действие всё ещё актуально. Это не логика, а правило грамматики: точка отсчёта сдвинулась в прошлое, и всё в придаточном сдвигается синхронно.">
+  <div slot="ru">
+    <strong>Он сказал, что устал.</strong> — прошедшее в придаточном.<br/>
+    <strong>Он сказал, что устаёт</strong> — настоящее, и это нормально.<br/>
+    <strong>Он сказал, что приедет завтра.</strong> — будущее.<br/>
+    <strong>Он спросил, где я живу.</strong> — прямой порядок («где я живу»), без «где живу ли я».<br/>
+    Времена не сдвигаются жёстко, порядок в вопросе остаётся прямым.
+  </div>
+  <div slot="en">
+    <strong>He said he was tired.</strong> — Past, потому что said — Past.<br/>
+    <strong>He said he got tired easily.</strong> — обычно Past Simple, даже если устаёт и сейчас.<br/>
+    <strong>He said he would come the next day.</strong> — will → would, tomorrow → the next day.<br/>
+    <strong>He asked where I lived.</strong> — прямой порядок (where + S + V), без вспомогательного `did`.<br/>
+    Backshift почти всегда обязателен, в вопросе — прямой порядок без аукса.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+Перед тем как преобразовывать прямую речь в косвенную, определи **тип исходного высказывания**. От типа зависит шаблон.
+
+<DecisionTree nodes={[
+  { q: "Что в кавычках — утверждение (нет вопросительного слова, нет команды)?", yes: "Reported statement: said (that) + придаточное с backshift. tell — только с obj.", no: "к вопросу 2" },
+  { q: "Это вопрос yes/no (без вопросительного слова: Are you...? Do you...? Have you...?)?", yes: "Reported yes/no question: asked (obj) if/whether + S + V с прямым порядком и backshift.", no: "к вопросу 3" },
+  { q: "Это wh-вопрос (Where? When? Why? How? What? Who?)?", yes: "Reported wh-question: asked (obj) wh-word + S + V с прямым порядком и backshift. БЕЗ did/do/does.", no: "к вопросу 4" },
+  { q: "Это приказ / просьба / совет (повелительное наклонение: Wait. Don't go. Please help me.)?", yes: "Reported imperative: told / asked / advised / ordered + obj + (not) to + V.", no: "Проверь ещё раз — обычно это один из четырёх типов." },
+]} />
+
+## 6. Смысл и использование
+
+### Reported statements — пересказ утверждений
+
+<RuleList rules={[
+  "<strong>say (that) + придаточное</strong> — без объекта. <em>He said (that) he was tired.</em> Союз `that` опциональный в неформальной речи.",
+  "<strong>tell + obj + (that)</strong> — с объектом обязательно. <em>He told me (that) he was tired.</em> Нельзя «He told that», нельзя «He said me that».",
+  "<strong>Backshift применяй ко всему</strong>: глаголу, модальному, придаточному внутри придаточного. Каждое время — на шаг назад. <em>«I have been working since 2020» → He said he had been working since 2020.</em>",
+  "<strong>could, would, might, should, ought to, used to</strong> — уже backshifted, не сдвигаются дальше. <em>«I could help» → He said he could help.</em>",
+  "<strong>must (дедукция)</strong> — не сдвигается, остаётся must. <em>«He must be tired» → She said he must be tired.</em> must (обязанность) → had to.",
+]} />
+
+### Reported yes/no questions
+
+<RuleList rules={[
+  "<strong>Шаблон:</strong> S + asked (obj) + <strong>if / whether</strong> + S + V (прямой порядок) + backshift. <em>«Are you ready?» → He asked if I was ready.</em>",
+  "<strong>if и whether</strong> взаимозаменяемы в большинстве случаев. whether чуть формальнее и обязателен перед `or not` в начале (whether or not), перед `to + V` (whether to go), после предлога (about whether).",
+  "<strong>НЕТ вспомогательного do/does/did</strong> в придаточном. <em>«Do you live here?» → He asked if I lived there.</em> НЕ «He asked if did I live there».",
+  "<strong>НЕТ инверсии</strong>. Подлежащее перед глаголом, как в утверждении. <em>«Have you finished?» → She asked if I had finished.</em>",
+  "<strong>Вопросительный знак — не ставится</strong>. Это уже не вопрос, а пересказ. <em>He asked if I was ready.</em> (точка, не «?»).",
+]} />
+
+### Reported wh-questions
+
+<RuleList rules={[
+  "<strong>Шаблон:</strong> S + asked (obj) + wh-word (where / when / why / how / what / who / which) + S + V (прямой порядок) + backshift. <em>«Where do you live?» → He asked where I lived.</em>",
+  "<strong>НЕТ do/does/did</strong>. <em>«What did you do?» → She asked what I had done.</em> НЕ «what did I do».",
+  "<strong>НЕТ инверсии</strong>. <em>«When will you come?» → He asked when I would come.</em> НЕ «when would I come».",
+  "<strong>Если вопросительное слово — подлежащее (Who came? What happened?)</strong>, порядок и так прямой, do-support и в прямом вопросе не было. <em>«Who called?» → She asked who had called.</em>",
+  "<strong>Вопросительный знак — не ставится.</strong>",
+]} />
+
+### Reported imperatives — приказы, просьбы, советы
+
+<RuleList rules={[
+  "<strong>Положительный приказ:</strong> told / asked / ordered / advised + obj + <strong>to + V</strong>. <em>«Wait» → He told me to wait.</em>",
+  "<strong>Отрицательный приказ:</strong> told + obj + <strong>not to + V</strong>. <em>«Don't be late» → He told me not to be late.</em> НЕ «told me to don't be late».",
+  "<strong>Просьба — ask</strong> (нейтрально, вежливо). <em>«Please help me» → He asked me to help him.</em>",
+  "<strong>Приказ — tell / order / command</strong> (категорично). <em>«Stop talking» → The teacher told us to stop talking.</em>",
+  "<strong>Совет — advise / urge / recommend</strong> (мягче). <em>«You should see a doctor» → She advised me to see a doctor.</em>",
+  "<strong>Угроза / обещание / отказ — threaten / promise / refuse + to + V</strong>. <em>«I'll call the police» → He threatened to call the police.</em>",
+]} />
+
+### Когда backshift НЕ нужен (опционально)
+
+<RuleList rules={[
+  "<strong>Reporting verb в Present</strong> (he says, she tells me) — backshift не нужен. <em>He says he is tired.</em>",
+  "<strong>Универсальные истины и факты</strong>, остающиеся верными — допустимо сохранить Present. <em>The teacher said the Earth is round.</em> (можно и `was`, но `is` естественнее).",
+  "<strong>Текущая релевантность</strong> — если действие всё ещё актуально, Present можно оставить. <em>She said she works in Moscow.</em> (если она там и сейчас работает).",
+  "<strong>could / would / might / should / ought to / used to</strong> — уже модальные прошлого, не сдвигаются дальше.",
+  "<strong>2nd и 3rd conditional</strong> — внутренние времена не сдвигаются глубже. <em>«If I had money, I would buy it» → He said if he had money, he would buy it.</em>",
+]} />
+
+## 7. Примеры
+
+### Reported statements — бытовое
+
+<Example ru="Она сказала, что устала.">She said she was tired.</Example>
+<Example ru="Мама сказала мне, что ужин будет в семь.">Mum told me dinner would be at seven.</Example>
+<Example ru="Брат сказал, что потерял ключи.">My brother said he had lost his keys.</Example>
+<Example ru="Подруга сказала, что переезжает в Питер на следующей неделе.">My friend said she was moving to St Petersburg the following week.</Example>
+<Example ru="Сосед сказал, что слышал какой-то шум ночью.">The neighbour said he had heard some noise that night.</Example>
+<Example ru="Папа сказал, что хочет рано лечь.">Dad said he wanted to go to bed early.</Example>
+
+### Reported statements — офис
+
+<Example ru="Коллега сказал мне, что встреча перенесена.">My colleague told me the meeting had been moved.</Example>
+<Example ru="Босс сказал, что проект сдадим на следующей неделе.">The boss said we would deliver the project the following week.</Example>
+<Example ru="Тимлид сказал, что ревью закончит к пятнице.">The team lead said he would finish the review by Friday.</Example>
+<Example ru="HR сказал нам, что мы должны заполнить форму.">HR told us we had to fill in the form.</Example>
+
+### Reported yes/no questions
+
+<Example ru="Он спросил, готов ли я.">He asked if I was ready.</Example>
+<Example ru="Она спросила, живу ли я в Москве.">She asked whether I lived in Moscow.</Example>
+<Example ru="Мама спросила, поел ли я.">Mum asked if I had eaten.</Example>
+<Example ru="Коллега спросил, видел ли я письмо.">My colleague asked if I had seen the email.</Example>
+<Example ru="Босс спросил, успеем ли мы к дедлайну.">The boss asked whether we would make it by the deadline.</Example>
+
+### Reported wh-questions
+
+<Example ru="Он спросил, где я живу.">He asked where I lived.</Example>
+<Example ru="Она спросила, когда я вернусь.">She asked when I would be back.</Example>
+<Example ru="Папа спросил, почему я не позвонил.">Dad asked why I hadn't called.</Example>
+<Example ru="Тимлид спросил, сколько времени займёт задача.">The team lead asked how long the task would take.</Example>
+<Example ru="Коллега спросила, кто прислал это письмо.">My colleague asked who had sent that email.</Example>
+
+### Reported imperatives
+
+<Example ru="Мама сказала мне подождать.">Mum told me to wait.</Example>
+<Example ru="Папа сказал не опаздывать.">Dad told me not to be late.</Example>
+<Example ru="Друг попросил помочь ему с переездом.">My friend asked me to help him with the move.</Example>
+<Example ru="Босс приказал нам остаться.">The boss ordered us to stay.</Example>
+<Example ru="Врач посоветовал мне больше спать.">The doctor advised me to sleep more.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="Прямая речь" rightLabel="Reported (косвенная)">
+  <div slot="left">
+    <strong>He said, «I am tired».</strong><br/>Statement в кавычках, Present Simple.<br/><br/>
+    <strong>She asked, «Are you ready?».</strong><br/>Yes/no question с инверсией.<br/><br/>
+    <strong>He asked, «Where do you live?».</strong><br/>Wh-question с вспомогательным do.<br/><br/>
+    <strong>Mum said, «Don't be late».</strong><br/>Отрицательное повелительное.
+  </div>
+  <div slot="right">
+    <strong>He said (that) he was tired.</strong><br/>Present → Past, без кавычек, that опциональный.<br/><br/>
+    <strong>She asked if I was ready.</strong><br/>if + прямой порядок, без аукса, без знака вопроса.<br/><br/>
+    <strong>He asked where I lived.</strong><br/>Wh-word + прямой порядок, БЕЗ do, без знака вопроса.<br/><br/>
+    <strong>Mum told me not to be late.</strong><br/>tell + obj + not to + V.
+  </div>
+</Compare>
+
+<Compare leftLabel="say (без obj)" rightLabel="tell (с obj)">
+  <div slot="left">
+    <strong>He said (that) he was busy.</strong><br/>say без объекта — допустимо.<br/><br/>
+    <strong>He said to me (that) he was busy.</strong><br/>say + to + obj — тоже допустимо, но формальнее.<br/><br/>
+    <strong>«He said me that...»</strong><br/>НЕВЕРНО. say + me без `to` не работает.
+  </div>
+  <div slot="right">
+    <strong>He told me (that) he was busy.</strong><br/>tell с прямым объектом — норма.<br/><br/>
+    <strong>«He told that he was busy»</strong><br/>НЕВЕРНО. tell без объекта не работает.<br/><br/>
+    <strong>He told the truth.</strong><br/>Исключения: tell the truth / a lie / a story / a joke / the time — устойчивые сочетания, объект — сама вещь.
+  </div>
+</Compare>
+
+<Compare leftLabel="if / whether" rightLabel="когда что">
+  <div slot="left">
+    <strong>He asked if I was ready.</strong><br/>Обычная косвенная yes/no — чаще `if`, неформально.<br/><br/>
+    <strong>I don't know if she will come.</strong><br/>В разговорной речи `if` доминирует.
+  </div>
+  <div slot="right">
+    <strong>He asked whether I was ready or not.</strong><br/>Перед `or not` в начале — только `whether`.<br/><br/>
+    <strong>She asked whether to go or stay.</strong><br/>Перед `to + V` — только `whether`.<br/><br/>
+    <strong>The question is whether we can finish in time.</strong><br/>После предлога / в позиции подлежащего — `whether`.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак запоминания">
+Запомни простой ритм: **глагол — на шаг назад, обстоятельства — на шаг назад, лица — под рассказчика**. Present → Past, Past → Past Perfect, will → would, can → could, must (долг) → had to. today → that day, tomorrow → the next day, here → there, this → that. I → he/she, my → his/her, you → I/me (если говорят мне). Это работает на 90% случаев. Остальные 10% — исключения (must-дедукция, универсальные истины, уже-backshifted модальные).
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему английский требует backshift">
+Backshift — не педантизм и не «согласование ради согласования». Он отражает сдвиг точки отсчёта. Прямая речь живёт в моменте говорения: «I am tired» — это сейчас, относительно момента, когда фраза произносилась. Когда мы пересказываем это спустя время, момент «сейчас» того, кто говорил, уже в прошлом. Английский эту сдвинутую перспективу маркирует в самом глаголе: was tired = «было в момент того высказывания», had lost = «уже было потеряно к моменту того высказывания», would come = «было намерением, направленным в будущее от точки того высказывания». Русскому это не нужно — у нас точка отсчёта плавающая, мы можем пересказывать «изнутри» оригинального момента. Английский же привязывает время глагола к точке репортинга: если она в прошлом — всё в придаточном тоже в прошлом, иначе нарушается грамматическая логика последовательности. Поэтому «He said he is tired» носитель слышит как «он сказал — он сейчас устал», что синтаксически режет ухо: события не в одной плоскости времени.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Reporting verb в Present (he says, she tells)?", yes: "Backshift НЕ нужен. Время в придаточном остаётся как было. He says he is tired.", no: "к вопросу 2" },
+  { q: "Это утверждение в кавычках (нет вопросительного слова, нет повелительного)?", yes: "Reported statement: said (that) + придаточное с backshift; tell — только с obj.", no: "к вопросу 3" },
+  { q: "Это yes/no question (Are you...? Do you...? Have you...?)?", yes: "asked (obj) + if/whether + S + V (прямой порядок, без do/does/did, без знака вопроса).", no: "к вопросу 4" },
+  { q: "Это wh-question (Where / When / Why / What / How / Who)?", yes: "asked (obj) + wh-word + S + V (прямой порядок, без do/does/did, без знака вопроса).", no: "к вопросу 5" },
+  { q: "Это повелительное (приказ / просьба / совет)?", yes: "told/asked/advised/ordered + obj + (not) to + V. Без `that I should`.", no: "Проверь — обычно один из четырёх типов." },
+  { q: "В исходнике must для обязанности?", yes: "В reported → had to (had to + V).", no: "к вопросу 7" },
+  { q: "В исходнике must для дедукции (He must be tired)?", yes: "Остаётся must — не сдвигается.", no: "Применяй обычный backshift по таблице." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| He asked where did I live | He asked where I lived | В reported wh-question — прямой порядок, без вспомогательного `did`. |
+| He asked if did I have time | He asked if I had time | В reported yes/no question — прямой порядок, без `did`. Backshift: have → had. |
+| He told that he was busy | He told me that he was busy | tell требует объект (told me / told us / told her). Без объекта — say. |
+| He said me that he was busy | He told me / He said to me | say без `to` не берёт прямой объект. Либо `said to me`, либо `told me`. |
+| He said he is tired | He said he was tired | После `said` (Past) — backshift: is → was. Реликт сейчас допустим только для универсальных истин и говорящего сейчас. |
+| She said she will come tomorrow | She said she would come the next day | will → would, tomorrow → the next day / the following day. Обстоятельства сдвигаются вместе со временем. |
+| He told me to don't be late | He told me not to be late | Отрицательный imperative — `not to + V`, а не `to don't + V`. |
+| He said me to wait | He told me to wait / He asked me to wait | Приказ / просьба — через `tell` или `ask` с объектом, не через `say`. |
+| She asked if I have finished | She asked if I had finished | После asked (Past) — backshift: have finished → had finished. |
+| He said he must to leave (обязанность) | He said he had to leave | must (обязанность) в reported → had to. |
+| He said he had to be tired | He said he must be tired | must (дедукция) НЕ сдвигается. Остаётся must в reported. |
+| She said she could to swim | She said she could swim | could не сдвигается дальше, и после модального — без `to`. |
+| He asked me where do I work | He asked me where I worked | Прямой порядок (where I worked), backshift (work → worked), без `do`. |
+| He said me «I am tired» | He said, «I am tired» / He said to me, «I am tired» | В прямой речи `say` без объекта или с `to + obj`. |
+
+## 13. Шпаргалка
+
+| Что преобразовать | Прямая → Reported |
+| --- | --- |
+| Present Simple | → Past Simple (work → worked) |
+| Present Continuous | → Past Continuous (am working → was working) |
+| Present Perfect | → Past Perfect (have worked → had worked) |
+| Past Simple | → Past Perfect (worked → had worked) |
+| Past Continuous | → Past Perfect Continuous (was working → had been working) |
+| will | → would |
+| going to | → was/were going to |
+| can | → could |
+| may (возможность) | → might |
+| must (обязанность) | → had to |
+| must (дедукция) | → must (не меняется) |
+| could / would / might / should / ought to | без изменений |
+| today / tonight / this morning | → that day / that night / that morning |
+| yesterday | → the day before / the previous day |
+| tomorrow | → the next day / the following day |
+| now | → then |
+| ago | → before / earlier |
+| here / this / these | → there / that / those |
+| I / my | → he/she / his/her (под рассказчика) |
+| you (к слушателю) | → I / me / us (под рассказчика) |
+
+| Шаблон | Конструкция |
+| --- | --- |
+| Statement | S + said (that) + S + V (backshift). tell — только с obj. |
+| Yes/no question | S + asked (obj) + if/whether + S + V (прямой порядок, без do, без `?`). |
+| Wh-question | S + asked (obj) + wh-word + S + V (прямой порядок, без do, без `?`). |
+| Imperative (+) | S + told/asked/advised + obj + to + V. |
+| Imperative (−) | S + told/asked + obj + not to + V. |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "reported speech / indirect speech", meaning: "косвенная речь — пересказ чужих слов" },
+  { term: "direct speech", meaning: "прямая речь — точная цитата в кавычках" },
+  { term: "backshift", meaning: "сдвиг времени «на шаг назад» в reported после прошедшего reporting verb" },
+  { term: "reporting verb", meaning: "глагол пересказа: say, tell, ask, explain, suggest, advise и др." },
+  { term: "say + (that)", meaning: "сказать что-то — без объекта (He said he was tired)" },
+  { term: "tell + obj + (that)", meaning: "сказать кому-то — с объектом (He told me he was tired)" },
+  { term: "ask + (obj)", meaning: "спросить — для вопросов и просьб" },
+  { term: "explain to + obj", meaning: "объяснить кому-то — требует `to`" },
+  { term: "suggest + V-ing / that S should V", meaning: "предложить — без `to + V` напрямую" },
+  { term: "advise / recommend + obj + to V", meaning: "посоветовать / рекомендовать кому-то сделать" },
+  { term: "warn + obj + (not) to V", meaning: "предупредить кого-то (не) делать" },
+  { term: "order / command + obj + to V", meaning: "приказать кому-то сделать" },
+  { term: "promise + to V / that S would V", meaning: "пообещать — без объекта обязательно" },
+  { term: "refuse + to V", meaning: "отказаться сделать" },
+  { term: "threaten + to V", meaning: "пригрозить сделать" },
+  { term: "deny + V-ing / that", meaning: "отрицать (что сделал)" },
+  { term: "complain + that", meaning: "пожаловаться, что" },
+  { term: "insist + on V-ing / that S should V", meaning: "настоять на" },
+  { term: "if / whether", meaning: "союзы для reported yes/no question" },
+  { term: "that (союз)", meaning: "необязательный союз в reported statement; опускается в неформальной речи" },
+  { term: "had to (вместо must)", meaning: "обязанность в прошлом / в reported после Past reporting verb" },
+  { term: "would (вместо will)", meaning: "будущее в reported после Past reporting verb" },
+  { term: "could (вместо can)", meaning: "способность / разрешение в reported" },
+  { term: "might (вместо may)", meaning: "возможность в reported" },
+  { term: "the next day / the following day", meaning: "tomorrow в reported" },
+  { term: "the day before / the previous day", meaning: "yesterday в reported" },
+  { term: "that day / that night / that morning", meaning: "today / tonight / this morning в reported" },
+  { term: "then (вместо now)", meaning: "обстоятельство времени в reported" },
+  { term: "before / earlier (вместо ago)", meaning: "давность в reported" },
+  { term: "there (вместо here)", meaning: "место в reported" },
+  { term: "that / those (вместо this / these)", meaning: "указатель в reported" },
+  { term: "embedded question", meaning: "встроенный вопрос с прямым порядком (where I lived), не «where did I live»" },
+  { term: "reported imperative", meaning: "пересказ приказа — told/asked + obj + to + V" },
+  { term: "universal truth (исключение)", meaning: "вечная истина в reported может не сдвигаться: He said the Earth is round" },
+  { term: "current relevance (исключение)", meaning: "если действие актуально и сейчас, Present допустим: She said she lives in Moscow" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Backshift и пары</span>
+    <span class="kc-trainer-hint">Прямая речь → reported, обстоятельства, reporting verbs</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Прямое → косвенное</span>
+    <span class="kc-trainer-hint">Соотнеси прямую речь с её reported аналогом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Что это в исходнике</span>
+    <span class="kc-trainer-hint">Statement, yes/no, wh-question, imperative</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором, ловушки порядка и reporting verb</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Раскрой прямую речь</span>
+    <span class="kc-trainer-hint">Преобразуй или вставь недостающий глагол / союз</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери reported</span>
+    <span class="kc-trainer-hint">Reported statements, questions, imperatives</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 47-48 (reported speech, reported questions).
+- **Swan M., Practical English Usage** — §509-515 (indirect speech, backshift, reporting verbs).
+- **English Page** — englishpage.com/minitutorials/reportedspeech.html
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/grammar/english-grammar-reference/reported-speech

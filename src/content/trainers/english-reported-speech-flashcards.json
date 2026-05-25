@@ -1,0 +1,101 @@
+{
+  "course": "english",
+  "lesson": "english-reported-speech",
+  "title": "Reported Speech — backshift и пары",
+  "description": "Сдвиг времён, обстоятельства, reporting verbs — ключевые соответствия прямая → косвенная.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Present Simple → ?",
+        "back": "Present Simple → Past Simple. «I work here» → He said he worked there. Глагол на шаг назад.",
+        "hint": "work → worked"
+      },
+      {
+        "front": "Present Continuous → ?",
+        "back": "Present Continuous → Past Continuous. «I am working» → He said he was working. am/is/are → was/were.",
+        "hint": "am working → was working"
+      },
+      {
+        "front": "Present Perfect → ?",
+        "back": "Present Perfect → Past Perfect. «I have finished» → She said she had finished. have/has → had.",
+        "hint": "have → had"
+      },
+      {
+        "front": "Past Simple → ?",
+        "back": "Past Simple → Past Perfect. «I worked yesterday» → He said he had worked the day before. V2 → had + V3.",
+        "hint": "worked → had worked"
+      },
+      {
+        "front": "will → ?",
+        "back": "will → would. «I will help» → He said he would help. Future в reported почти всегда would.",
+        "hint": "will → would"
+      },
+      {
+        "front": "can → ?",
+        "back": "can → could. «I can swim» → He said he could swim. could уже backshifted, дальше не сдвигается.",
+        "hint": "can → could"
+      },
+      {
+        "front": "must (обязанность) → ?",
+        "back": "must (обязанность) → had to. «I must leave» → He said he had to leave. Обязанность в прошлом — had to.",
+        "hint": "must → had to"
+      },
+      {
+        "front": "must (дедукция) → ?",
+        "back": "must (дедукция) НЕ сдвигается, остаётся must. «He must be tired» → She said he must be tired. Догадка по признакам — без сдвига.",
+        "hint": "must → must"
+      },
+      {
+        "front": "may (возможность) → ?",
+        "back": "may (возможность) → might. «It may rain» → He said it might rain. may → might для возможности.",
+        "hint": "may → might"
+      },
+      {
+        "front": "tomorrow → ?",
+        "back": "tomorrow → the next day / the following day. «I'll come tomorrow» → He said he would come the next day.",
+        "hint": "обстоятельство"
+      },
+      {
+        "front": "yesterday → ?",
+        "back": "yesterday → the day before / the previous day. «I saw her yesterday» → He said he had seen her the day before.",
+        "hint": "обстоятельство"
+      },
+      {
+        "front": "today / tonight → ?",
+        "back": "today → that day; tonight → that night. «I'll call tonight» → She said she would call that night.",
+        "hint": "обстоятельство"
+      },
+      {
+        "front": "now → ?",
+        "back": "now → then. «I am busy now» → He said he was busy then. Момент-сейчас сдвигается в момент-тогда.",
+        "hint": "обстоятельство"
+      },
+      {
+        "front": "here / this → ?",
+        "back": "here → there; this → that; these → those. «I live here, in this flat» → He said he lived there, in that flat. Место и указатели — на шаг назад.",
+        "hint": "место и указатели"
+      },
+      {
+        "front": "say vs tell",
+        "back": "say — без объекта (He said that...). tell — с объектом обязательно (He told me that...). Нельзя «He said me», нельзя «He told that».",
+        "hint": "reporting verb"
+      },
+      {
+        "front": "Reported yes/no question",
+        "back": "asked (obj) + if / whether + S + V (прямой порядок, без do/does/did, без `?`). «Are you ready?» → He asked if I was ready.",
+        "hint": "шаблон"
+      },
+      {
+        "front": "Reported wh-question",
+        "back": "asked (obj) + wh-word + S + V (прямой порядок, без do/does/did, без `?`). «Where do you live?» → He asked where I lived.",
+        "hint": "шаблон"
+      },
+      {
+        "front": "Reported imperative (+ / −)",
+        "back": "Положительный: told/asked/advised + obj + to + V. «Wait» → He told me to wait. Отрицательный: + not to + V. «Don't be late» → He told me not to be late.",
+        "hint": "приказ / просьба"
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "course": "english",
+  "lesson": "english-reported-speech",
+  "title": "Reported speech — правила",
+  "description": "Выбери правильный reported-вариант. Внимание к backshift, порядку слов и выбору reporting verb.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "«I am tired» → He said ___",
+        "options": [
+          "he is tired",
+          "he was tired",
+          "he had been tired",
+          "he were tired"
+        ],
+        "correctIndex": 1,
+        "explain": "Present Simple (am) → Past Simple (was). Лицо: I → he."
+      },
+      {
+        "prompt": "«I will help you» → She said ___",
+        "options": [
+          "she will help me",
+          "she would help me",
+          "she would helped me",
+          "she helps me"
+        ],
+        "correctIndex": 1,
+        "explain": "will → would. you (мне) → me. После would — начальная форма (help)."
+      },
+      {
+        "prompt": "«Where do you live?» → He asked ___",
+        "options": [
+          "where do I live",
+          "where did I live",
+          "where I lived",
+          "where I live"
+        ],
+        "correctIndex": 2,
+        "explain": "Reported wh-question: прямой порядок (where + S + V), без do/did, backshift (live → lived)."
+      },
+      {
+        "prompt": "«Are you ready?» → He asked ___",
+        "options": [
+          "are I ready",
+          "was I ready",
+          "if I was ready",
+          "if was I ready"
+        ],
+        "correctIndex": 2,
+        "explain": "Reported yes/no question: asked + if + S + V (прямой порядок), без инверсии, backshift (are → was)."
+      },
+      {
+        "prompt": "«Don't be late» → Mum told me ___",
+        "options": [
+          "to don't be late",
+          "don't be late",
+          "not to be late",
+          "not be late"
+        ],
+        "correctIndex": 2,
+        "explain": "Отрицательный imperative: told + obj + not to + V. Никаких to + don't."
+      },
+      {
+        "prompt": "He ___ that he was busy.",
+        "options": [
+          "told",
+          "said me",
+          "said",
+          "told that"
+        ],
+        "correctIndex": 2,
+        "explain": "say без объекта — допустимо (He said that...). tell обязательно с объектом (He told me that...). «said me» и «told that» невозможны."
+      },
+      {
+        "prompt": "«I have finished» → She said ___",
+        "options": [
+          "she has finished",
+          "she had finished",
+          "she finished",
+          "she was finished"
+        ],
+        "correctIndex": 1,
+        "explain": "Present Perfect (have finished) → Past Perfect (had finished). Это стандартный backshift."
+      },
+      {
+        "prompt": "«I must leave now» → He said ___",
+        "options": [
+          "he must leave now",
+          "he had to leave now",
+          "he had to leave then",
+          "he must to leave then"
+        ],
+        "correctIndex": 2,
+        "explain": "must (обязанность) → had to. now → then. Оба маркера сдвигаются вместе."
+      },
+      {
+        "prompt": "«I'll come tomorrow» → She said she would come ___",
+        "options": [
+          "tomorrow",
+          "the day before",
+          "the next day",
+          "yesterday"
+        ],
+        "correctIndex": 2,
+        "explain": "tomorrow в reported → the next day / the following day. Точка отсчёта сдвинулась в прошлое."
+      },
+      {
+        "prompt": "«Help me, please» → He asked me ___",
+        "options": [
+          "help him",
+          "to help him",
+          "that I help him",
+          "help me"
+        ],
+        "correctIndex": 1,
+        "explain": "Просьба → ask + obj + to + V. me (того, кого просили) → him (рассказчик пересказывает за себя)."
+      },
+      {
+        "prompt": "«Why didn't you call?» → Dad asked ___",
+        "options": [
+          "why didn't I call",
+          "why I hadn't called",
+          "why I didn't call",
+          "why hadn't I called"
+        ],
+        "correctIndex": 1,
+        "explain": "Reported wh-question: прямой порядок (why + S + V), без do/did. Past Simple (didn't call) → Past Perfect (hadn't called)."
+      },
+      {
+        "prompt": "«He must be tired» → She said ___",
+        "options": [
+          "he had to be tired",
+          "he must be tired",
+          "he was must be tired",
+          "he might be tired"
+        ],
+        "correctIndex": 1,
+        "explain": "must в значении дедукции («наверное») НЕ сдвигается. Остаётся must в reported."
+      }
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "course": "english",
+  "lesson": "english-reported-speech",
+  "title": "Прямая → косвенная речь",
+  "description": "Подбери reported-вариант к фразе в прямой речи — с правильным backshift и обстоятельствами.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "«I am tired»",
+        "right": "He said he was tired.",
+        "explain": "Present Simple (am) → Past Simple (was). Лицо: I → he."
+      },
+      {
+        "left": "«I have lost my keys»",
+        "right": "He said he had lost his keys.",
+        "explain": "Present Perfect → Past Perfect (have → had). my → his."
+      },
+      {
+        "left": "«I will come tomorrow»",
+        "right": "He said he would come the next day.",
+        "explain": "will → would, tomorrow → the next day. Будущее и обстоятельство сдвинулись синхронно."
+      },
+      {
+        "left": "«Are you ready?»",
+        "right": "He asked if I was ready.",
+        "explain": "Yes/no question → asked + if + S + V (прямой порядок). Are → was. Без знака вопроса."
+      },
+      {
+        "left": "«Where do you live?»",
+        "right": "He asked where I lived.",
+        "explain": "Wh-question → asked + wh-word + S + V (прямой порядок, без do). live → lived."
+      },
+      {
+        "left": "«Don't be late»",
+        "right": "Mum told me not to be late.",
+        "explain": "Отрицательный imperative → told + obj + not to + V. Не «told me to don't»."
+      },
+      {
+        "left": "«Please help me»",
+        "right": "He asked me to help him.",
+        "explain": "Просьба → ask + obj + to + V. me (того, кого просили) → him (рассказчика теперь)."
+      },
+      {
+        "left": "«I must leave now»",
+        "right": "She said she had to leave then.",
+        "explain": "must (обязанность) → had to. now → then."
+      },
+      {
+        "left": "«I can swim»",
+        "right": "She said she could swim.",
+        "explain": "can → could. could не сдвигается дальше."
+      },
+      {
+        "left": "«He must be tired»",
+        "right": "She said he must be tired.",
+        "explain": "must (дедукция) НЕ сдвигается. Остаётся must в reported."
+      }
+    ]
+  }
+}

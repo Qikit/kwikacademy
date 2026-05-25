@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-reported-speech",
+  "title": "Собери reported",
+  "description": "Расставь слова в правильном порядке. Reported statements, questions и imperatives — внимание к порядку и backshift.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["said", "tired", "was", "he", "he"],
+        "answer": ["he", "said", "he", "was", "tired"],
+        "translation": "Он сказал, что устал.",
+        "explain": "Reported statement: S + said + S + V (Past). Союз `that` опущен — допустимо."
+      },
+      {
+        "words": ["lost", "had", "she", "said", "she", "keys", "her"],
+        "answer": ["she", "said", "she", "had", "lost", "her", "keys"],
+        "translation": "Она сказала, что потеряла ключи.",
+        "explain": "Present Perfect (have lost) → Past Perfect (had lost). my → her."
+      },
+      {
+        "words": ["asked", "lived", "where", "he", "I"],
+        "answer": ["he", "asked", "where", "I", "lived"],
+        "translation": "Он спросил, где я живу.",
+        "explain": "Reported wh-question: asked + wh-word + S + V (прямой порядок). Без do и без знака вопроса. live → lived."
+      },
+      {
+        "words": ["if", "ready", "asked", "she", "was", "I"],
+        "answer": ["she", "asked", "if", "I", "was", "ready"],
+        "translation": "Она спросила, готов ли я.",
+        "explain": "Reported yes/no question: asked + if + S + V. Прямой порядок, без инверсии."
+      },
+      {
+        "words": ["told", "to", "wait", "me", "he"],
+        "answer": ["he", "told", "me", "to", "wait"],
+        "translation": "Он сказал мне подождать.",
+        "explain": "Reported imperative (+): told + obj + to + V. tell обязательно с объектом."
+      },
+      {
+        "words": ["not", "late", "me", "told", "be", "to", "mum"],
+        "answer": ["mum", "told", "me", "not", "to", "be", "late"],
+        "translation": "Мама сказала мне не опаздывать.",
+        "explain": "Reported imperative (−): told + obj + not to + V. Никаких to + don't."
+      },
+      {
+        "words": ["come", "she", "would", "the", "day", "said", "next", "she"],
+        "answer": ["she", "said", "she", "would", "come", "the", "next", "day"],
+        "translation": "Она сказала, что приедет на следующий день.",
+        "explain": "will → would. tomorrow → the next day. Обстоятельство и время сдвигаются вместе."
+      },
+      {
+        "words": ["asked", "to", "him", "me", "help", "she"],
+        "answer": ["she", "asked", "me", "to", "help", "him"],
+        "translation": "Она попросила меня помочь ему.",
+        "explain": "Просьба → ask + obj + to + V. Внимание к лицам: me / him."
+      }
+    ]
+  }
+}

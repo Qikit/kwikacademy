@@ -150,15 +150,18 @@ const links = [
         background 0.2s;
     }
     /* Collapsed: compact icon strip anchored to the right of the bar, leaving
-       room for the theme toggle (38px button + 12px gap). */
+       room for the theme toggle (44px button + 12px gap). */
     .pill[data-open='false'] {
-      right: 66px;
+      right: 72px;
       width: 152px;
       padding: 6px;
       gap: 4px;
       border-radius: var(--r-full);
       flex-direction: row;
       justify-content: flex-end;
+    }
+    .pill[data-open='false'] a {
+      justify-content: center;
     }
     .pill[data-open='false'] a span {
       max-width: 0;

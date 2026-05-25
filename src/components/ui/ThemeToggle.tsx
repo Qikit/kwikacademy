@@ -23,8 +23,8 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label="Переключить тему"
       style={{
-        width: 38,
-        height: 38,
+        width: 44,
+        height: 44,
         borderRadius: '50%',
         border: '1px solid var(--glass-border)',
         background: 'var(--glass-bg)',

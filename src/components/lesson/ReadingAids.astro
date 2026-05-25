@@ -18,8 +18,7 @@ import Icon from '../ui/Icon.astro';
     const max = doc.scrollHeight - doc.clientHeight;
     const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
     if (fill) fill.style.width = pct + '%';
-    // show bubble only near the bottom, where it won't cover the reading flow
-    if (btn) btn.classList.toggle('show', pct > 78);
+    if (btn) btn.classList.toggle('show', doc.scrollTop > doc.clientHeight * 0.5);
   }
 
   btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));

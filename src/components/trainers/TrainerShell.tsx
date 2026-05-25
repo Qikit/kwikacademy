@@ -19,6 +19,7 @@ export interface ReviewItem {
 export interface ShellRenderProps {
   index: number;
   total: number;
+  attempt: number;
   next: () => void;
   prev: () => void;
   canGoBack: boolean;
@@ -40,6 +41,7 @@ export default function TrainerShell({
   const [finished, setFinished] = useState<null | number>(null);
   const [review, setReview] = useState<ReviewItem[]>([]);
   const [courseDone, setCourseDone] = useState(0);
+  const [attempt, setAttempt] = useState(0);
 
   const courseTotal = nav?.courseTrainerSlugs.length ?? 0;
 
@@ -69,6 +71,7 @@ export default function TrainerShell({
     setIndex(0);
     setFinished(null);
     setReview([]);
+    setAttempt((a) => a + 1);
   }
 
   return (
@@ -138,7 +141,7 @@ export default function TrainerShell({
               Тренажёры курса: {courseDone} / {courseTotal}
             </div>
           )}
-          {children({ index, total, next, prev, canGoBack: index > 0, finish })}
+          {children({ index, total, attempt, next, prev, canGoBack: index > 0, finish })}
         </>
       )}
     </div>

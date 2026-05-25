@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import TrainerShell, { type ReviewItem, type TrainerNav } from './TrainerShell';
+import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
 import { scoreOrdering } from '../../lib/trainers/score';
 
 export interface OrderingItem {
@@ -28,6 +28,15 @@ export default function Ordering({
   items: OrderingItem[];
   nav?: TrainerNav;
 }) {
+  return (
+    <TrainerShell slug={slug} total={items.length} nav={nav}>
+      {(shell) => <OrderingBody key={shell.attempt} items={items} shell={shell} />}
+    </TrainerShell>
+  );
+}
+
+function OrderingBody({ items, shell }: { items: OrderingItem[]; shell: ShellRenderProps }) {
+  const { finish } = shell;
   const shuffled = useMemo(
     () => items.map((it) => shuffle(it.words.map((w, idx) => ({ w, idx })))),
     [items],
@@ -76,117 +85,112 @@ export default function Ordering({
     });
   }
 
+  const allAssembled = items.every(
+    (it, i) => (assembled.get(i)?.length ?? 0) === it.words.length,
+  );
+  function reveal() {
+    if (!allAssembled) {
+      setWarn(true);
+      return;
+    }
+    setRevealed(true);
+  }
+  function complete() {
+    const userAnswers = new Map<number, string[]>();
+    for (const [idx, tokens] of assembled.entries()) {
+      userAnswers.set(
+        idx,
+        tokens.map((t) => t.w),
+      );
+    }
+    const score = scoreOrdering(items, userAnswers).score;
+    const review: ReviewItem[] = items.map((it, i) => {
+      const userSeq = (assembled.get(i) ?? []).map((t) => t.w);
+      const isOk =
+        userSeq.length === it.answer.length &&
+        it.answer.every((w, j) => w.trim().toLowerCase() === (userSeq[j] ?? '').trim().toLowerCase());
+      const explainParts = [it.translation, it.explain, it.hint].filter(Boolean).join(' · ');
+      return {
+        prompt: `Слова: ${it.words.join(' / ')}`,
+        userAnswer: userSeq.join(' ') || '—',
+        correctAnswer: it.answer.join(' '),
+        correct: isOk,
+        explain: explainParts || undefined,
+      };
+    });
+    finish(score, review);
+  }
+
   return (
-    <TrainerShell slug={slug} total={items.length} nav={nav}>
-      {({ finish }) => {
-        const allAssembled = items.every(
-          (it, i) => (assembled.get(i)?.length ?? 0) === it.words.length,
-        );
-        function reveal() {
-          if (!allAssembled) {
-            setWarn(true);
-            return;
-          }
-          setRevealed(true);
-        }
-        function complete() {
-          const userAnswers = new Map<number, string[]>();
-          for (const [idx, tokens] of assembled.entries()) {
-            userAnswers.set(
-              idx,
-              tokens.map((t) => t.w),
-            );
-          }
-          const score = scoreOrdering(items, userAnswers).score;
-          const review: ReviewItem[] = items.map((it, i) => {
-            const userSeq = (assembled.get(i) ?? []).map((t) => t.w);
-            const isOk =
-              userSeq.length === it.answer.length &&
-              it.answer.every((w, j) => w.trim().toLowerCase() === (userSeq[j] ?? '').trim().toLowerCase());
-            const explainParts = [it.translation, it.explain, it.hint].filter(Boolean).join(' · ');
-            return {
-              prompt: `Слова: ${it.words.join(' / ')}`,
-              userAnswer: userSeq.join(' ') || '—',
-              correctAnswer: it.answer.join(' '),
-              correct: isOk,
-              explain: explainParts || undefined,
-            };
-          });
-          finish(score, review);
-        }
+    <div className="kc-ordering">
+      {items.map((it, i) => {
+        const a = assembled.get(i) ?? [];
+        const av = available.get(i) ?? [];
+        const userSeq = a.map((t) => t.w);
+        const correct = revealed && userSeq.length === it.answer.length &&
+          it.answer.every((w, j) => w.trim().toLowerCase() === (userSeq[j] ?? '').trim().toLowerCase());
         return (
-          <div className="kc-ordering">
-            {items.map((it, i) => {
-              const a = assembled.get(i) ?? [];
-              const av = available.get(i) ?? [];
-              const userSeq = a.map((t) => t.w);
-              const correct = revealed && userSeq.length === it.answer.length &&
-                it.answer.every((w, j) => w.trim().toLowerCase() === (userSeq[j] ?? '').trim().toLowerCase());
-              return (
-                <div
-                  key={i}
-                  className={`kc-ord-item ${revealed && correct ? 'is-ok' : ''} ${revealed && !correct ? 'is-no' : ''}`}
+          <div
+            key={i}
+            className={`kc-ord-item ${revealed && correct ? 'is-ok' : ''} ${revealed && !correct ? 'is-no' : ''}`}
+          >
+            <div className="kc-ord-target">
+              {a.length === 0 && <span className="kc-ord-placeholder">— нажми слова ниже —</span>}
+              {a.map((t) => (
+                <button
+                  type="button"
+                  key={t.idx}
+                  className="kc-ord-token kc-ord-token-target"
+                  onClick={() => moveToAvailable(i, t)}
+                  disabled={revealed}
                 >
-                  <div className="kc-ord-target">
-                    {a.length === 0 && <span className="kc-ord-placeholder">— нажми слова ниже —</span>}
-                    {a.map((t) => (
-                      <button
-                        type="button"
-                        key={t.idx}
-                        className="kc-ord-token kc-ord-token-target"
-                        onClick={() => moveToAvailable(i, t)}
-                        disabled={revealed}
-                      >
-                        {t.w}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="kc-ord-pool">
-                    {av.map((t) => (
-                      <button
-                        type="button"
-                        key={t.idx}
-                        className="kc-ord-token"
-                        onClick={() => moveToAssembled(i, t)}
-                        disabled={revealed}
-                      >
-                        {t.w}
-                      </button>
-                    ))}
-                  </div>
-                  {revealed && (
-                    <div className="kc-ord-feedback">
-                      <div>
-                        <strong>Правильный порядок:</strong> {it.answer.join(' ')}
-                      </div>
-                      {it.translation && (
-                        <div className="kc-ord-translation">{it.translation}</div>
-                      )}
-                      {it.hint && <div className="kc-ord-hint">{it.hint}</div>}
-                    </div>
-                  )}
+                  {t.w}
+                </button>
+              ))}
+            </div>
+            <div className="kc-ord-pool">
+              {av.map((t) => (
+                <button
+                  type="button"
+                  key={t.idx}
+                  className="kc-ord-token"
+                  onClick={() => moveToAssembled(i, t)}
+                  disabled={revealed}
+                >
+                  {t.w}
+                </button>
+              ))}
+            </div>
+            {revealed && (
+              <div className="kc-ord-feedback">
+                <div>
+                  <strong>Правильный порядок:</strong> {it.answer.join(' ')}
                 </div>
-              );
-            })}
-            {warn && !revealed && (
-              <div className="kc-warn" role="alert">
-                Собери все предложения до конца — пустых не должно быть.
+                {it.translation && (
+                  <div className="kc-ord-translation">{it.translation}</div>
+                )}
+                {it.hint && <div className="kc-ord-hint">{it.hint}</div>}
               </div>
             )}
-            <div className="kc-ord-actions">
-              {!revealed ? (
-                <button type="button" className="kc-retry" onClick={reveal}>
-                  Проверить
-                </button>
-              ) : (
-                <button type="button" className="kc-retry" onClick={complete}>
-                  Завершить
-                </button>
-              )}
-            </div>
           </div>
         );
-      }}
-    </TrainerShell>
+      })}
+      {warn && !revealed && (
+        <div className="kc-warn" role="alert">
+          Собери все предложения до конца — пустых не должно быть.
+        </div>
+      )}
+      <div className="kc-ord-actions">
+        {!revealed ? (
+          <button type="button" className="kc-retry" onClick={reveal}>
+            Проверить
+          </button>
+        ) : (
+          <button type="button" className="kc-retry" onClick={complete}>
+            Завершить
+          </button>
+        )}
+      </div>
+    </div>
   );
 }

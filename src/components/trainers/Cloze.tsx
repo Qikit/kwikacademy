@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import TrainerShell, { type ReviewItem, type TrainerNav } from './TrainerShell';
+import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
 
 export interface ClozeItem {
   text: string;
@@ -24,78 +24,81 @@ export default function Cloze({
   items: ClozeItem[];
   nav?: TrainerNav;
 }) {
+  return (
+    <TrainerShell slug={slug} total={items.length} nav={nav}>
+      {(shell) => <ClozeBody key={shell.attempt} items={items} shell={shell} />}
+    </TrainerShell>
+  );
+}
+
+function ClozeBody({ items, shell }: { items: ClozeItem[]; shell: ShellRenderProps }) {
+  const { index, next, prev, canGoBack, finish } = shell;
   const [inputs, setInputs] = useState<string[][]>(() => items.map((it) => it.answers.map(() => '')));
   const [results, setResults] = useState<(ItemResult | undefined)[]>(() => items.map(() => undefined));
 
+  const it = items[index];
+  const isLast = index === items.length - 1;
+  const r = results[index];
+
+  function setVal(b: number, v: string) {
+    if (r) return;
+    const copy = inputs.map((row) => [...row]);
+    copy[index][b] = v;
+    setInputs(copy);
+  }
+
+  function check(): boolean {
+    const current = inputs[index];
+    if (current.some((v) => v.trim() === '')) return false;
+    const perBlank = it.answers.map((ans, i) => norm(ans) === norm(current[i] ?? ''));
+    const itemCorrect = perBlank.every(Boolean);
+    const updated = [...results];
+    updated[index] = { correct: perBlank, itemCorrect };
+    setResults(updated);
+    return true;
+  }
+
+  function advance() {
+    if (!isLast) {
+      next();
+      return;
+    }
+    const review: ReviewItem[] = items.map((item, i) => {
+      const filled = item.text.split('___').reduce<string>((acc, part, j) => {
+        if (j === 0) return part;
+        const ans = item.answers[j - 1];
+        return acc + ` [${ans}] ` + part;
+      }, '');
+      const userFilled = item.text.split('___').reduce<string>((acc, part, j) => {
+        if (j === 0) return part;
+        const v = (inputs[i][j - 1] ?? '').trim() || '—';
+        return acc + ` [${v}] ` + part;
+      }, '');
+      return {
+        prompt: item.text,
+        userAnswer: userFilled,
+        correctAnswer: filled,
+        correct: results[i]?.itemCorrect ?? false,
+        explain: item.explain,
+      };
+    });
+    const score = results.reduce<number>((acc, x) => acc + (x?.itemCorrect ? 1 : 0), 0);
+    finish(score, review);
+  }
+
   return (
-    <TrainerShell slug={slug} total={items.length} nav={nav}>
-      {({ index, next, prev, canGoBack, finish }) => {
-        const it = items[index];
-        const isLast = index === items.length - 1;
-        const r = results[index];
-
-        function setVal(b: number, v: string) {
-          if (r) return;
-          const copy = inputs.map((row) => [...row]);
-          copy[index][b] = v;
-          setInputs(copy);
-        }
-
-        function check(): boolean {
-          const current = inputs[index];
-          if (current.some((v) => v.trim() === '')) return false;
-          const perBlank = it.answers.map((ans, i) => norm(ans) === norm(current[i] ?? ''));
-          const itemCorrect = perBlank.every(Boolean);
-          const updated = [...results];
-          updated[index] = { correct: perBlank, itemCorrect };
-          setResults(updated);
-          return true;
-        }
-
-        function advance() {
-          if (!isLast) {
-            next();
-            return;
-          }
-          const review: ReviewItem[] = items.map((item, i) => {
-            const filled = item.text.split('___').reduce<string>((acc, part, j) => {
-              if (j === 0) return part;
-              const ans = item.answers[j - 1];
-              return acc + ` [${ans}] ` + part;
-            }, '');
-            const userFilled = item.text.split('___').reduce<string>((acc, part, j) => {
-              if (j === 0) return part;
-              const v = (inputs[i][j - 1] ?? '').trim() || '—';
-              return acc + ` [${v}] ` + part;
-            }, '');
-            return {
-              prompt: item.text,
-              userAnswer: userFilled,
-              correctAnswer: filled,
-              correct: results[i]?.itemCorrect ?? false,
-              explain: item.explain,
-            };
-          });
-          const score = results.reduce<number>((acc, x) => acc + (x?.itemCorrect ? 1 : 0), 0);
-          finish(score, review);
-        }
-
-        return (
-          <ItemView
-            key={index}
-            item={it}
-            values={inputs[index]}
-            result={r}
-            isLast={isLast}
-            canGoBack={canGoBack}
-            onChangeValue={setVal}
-            onCheck={check}
-            onPrev={prev}
-            onAdvance={advance}
-          />
-        );
-      }}
-    </TrainerShell>
+    <ItemView
+      key={index}
+      item={it}
+      values={inputs[index]}
+      result={r}
+      isLast={isLast}
+      canGoBack={canGoBack}
+      onChangeValue={setVal}
+      onCheck={check}
+      onPrev={prev}
+      onAdvance={advance}
+    />
   );
 }
 

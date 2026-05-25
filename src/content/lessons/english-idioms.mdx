@@ -3,11 +3,460 @@ course: english
 order: 15
 phase: "Фаза 1 · Бытовой английский"
 title: "Идиомы — бытовые выражения"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Живые выражения, которые делают речь естественной."
-placeholder: true
-tags: [english]
+eyebrow: "Лексика · уровень B1-B2"
+readingMinutes: 24
+summary: "Фиксированные выражения, смысл которых не выводится из слов. Тематические пачки, регистр, ловушки дословного перевода и различия UK / US."
+tags: [idioms, vocabulary, B1, B2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Идиомы — бытовые выражения» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем учить идиомы
+
+Грамматику и базовый словарь можно довести до уверенного B1 и всё равно звучать как переводной учебник. Не из-за ошибок, а из-за отсутствия идиоматики. Носитель скажет `I'm under the weather today, I'll skip the call`. Изучивший — `I feel a bit unwell today, I will not join the call`. Понять можно оба варианта, но первый звучит как человек, второй — как машинный перевод.
+
+Идиома — это фиксированное выражение, смысл которого нельзя сложить из значений отдельных слов. `Kick the bucket` буквально «пнуть ведро», а на деле — «умереть». `It's raining cats and dogs` — «льёт как из ведра». `Piece of cake` — «раз плюнуть». Если переводить дословно, получится бред или, что хуже, противоположный смысл. Зато если знать сходу — речь сразу теплеет, появляется лёгкость, носитель перестаёт говорить с тобой медленно.
+
+Опасность не только в непонимании. Большинство идиом помечены как **informal**: они уместны в дружеской переписке, чате с коллегой, разговоре в кафе — и неуместны в резюме, юридическом письме, официальном пресс-релизе. `I threw in the towel and quit my job` звучит живо в чате другу и неуместно в заявлении об увольнении. Поэтому к каждой идиоме держи в голове две вещи: что она значит и где её можно сказать.
+
+Этот урок — про 30–40 ходовых идиом по бытовым тематикам, про то, как не попасться на дословный перевод, про регистр и про различия между британским и американским вариантами там, где это критично.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Идиома — это **единый блок**. Учи её целиком: форму, смысл, регистр, типичный контекст. Никогда не переводи дословно — почти всегда промах. И никогда не таскай идиому из бытового регистра в формальный текст: «I'm going to bite the bullet and submit this report» — годится для чата, не для официального письма клиенту.
+</Callout>
+
+## 3. Карта ходовых идиом
+
+Базовый набор по тематикам. В колонке «Регистр» informal означает, что в формальном письме идиому лучше не использовать. В колонке «Регион» помечены только идиомы с заметным перекосом — без пометки идиома работает по обе стороны Атлантики.
+
+### Эмоции и состояние
+
+| Идиома | Значение | Пример | Регистр / регион |
+| --- | --- | --- | --- |
+| feel under the weather | приболеть, неважно себя чувствовать | I'm feeling under the weather, I'll work from home. | informal |
+| on cloud nine | на седьмом небе от счастья | She's been on cloud nine since the offer. | informal |
+| down in the dumps | подавлен, в плохом настроении | He's been down in the dumps after the rejection. | informal |
+| lose one's cool | выйти из себя, потерять самообладание | I lost my cool during the meeting and regret it. | informal |
+| keep one's chin up | держаться, не падать духом | Tough week, but chin up — Friday's close. | informal |
+| butterflies in one's stomach | мандраж перед важным | I had butterflies before the interview. | informal |
+| have a heart of gold | очень добрый человек | My grandma has a heart of gold. | neutral |
+
+### Действия и опыт
+
+| Идиома | Значение | Пример | Регистр / регион |
+| --- | --- | --- | --- |
+| hit the books | сесть за учёбу всерьёз | Exams next week, time to hit the books. | informal |
+| hit the road | отправиться в путь, выезжать | It's late — let's hit the road. | informal |
+| bite the bullet | стиснуть зубы, сделать неприятное | I bit the bullet and finally called the dentist. | informal |
+| break a leg | удачи! (артистам перед выступлением) | Break a leg tonight! | informal, контекст сцены |
+| piece of cake | раз плюнуть, очень легко | The test was a piece of cake. | informal |
+| walk on eggshells | ходить по тонкому льду в общении | I'm walking on eggshells around my new boss. | informal |
+| learn the ropes | освоить процесс изнутри | Give her a month to learn the ropes. | neutral |
+| call it a day | заканчивать на сегодня | I'm tired — let's call it a day. | neutral |
+
+### Время и темп
+
+| Идиома | Значение | Пример | Регистр / регион |
+| --- | --- | --- | --- |
+| in the blink of an eye | в мгновение ока | The kids grew up in the blink of an eye. | neutral |
+| once in a blue moon | крайне редко | We only see each other once in a blue moon. | informal |
+| kill time | убивать время | I'm just killing time before my train. | informal |
+| time flies | время летит | Time flies when you're busy. | informal |
+| beat around the bush | ходить вокруг да около | Stop beating around the bush — just tell me. | informal |
+| cut to the chase | переходить к делу | Let me cut to the chase: we can't afford it. | informal |
+| in the long run | в долгосрочной перспективе | It'll pay off in the long run. | neutral |
+
+### Деньги и ценность
+
+| Идиома | Значение | Пример | Регистр / регион |
+| --- | --- | --- | --- |
+| cost an arm and a leg | стоить целое состояние | These tickets cost an arm and a leg. | informal |
+| break the bank | разорить, слишком дорого | A new laptop won't break the bank. | informal |
+| foot the bill | оплатить счёт (за всех) | Her dad footed the bill for the wedding. | informal |
+| on a shoestring | на скудный бюджет | They built the startup on a shoestring. | informal |
+| pay through the nose | переплачивать | We paid through the nose for that flat. | informal |
+| cheapskate | жадина (ругательно) | Don't be such a cheapskate, split the tab. | informal, грубовато |
+
+### Отношения и коммуникация
+
+| Идиома | Значение | Пример | Регистр / регион |
+| --- | --- | --- | --- |
+| see eye to eye (with) | сходиться во мнениях | We don't always see eye to eye, but it works. | neutral |
+| on the same page | одинаково понимать ситуацию | Let's make sure we're on the same page. | neutral |
+| get along with | ладить | I get along with my team really well. | neutral |
+| give someone the cold shoulder | намеренно игнорировать | She's been giving me the cold shoulder all day. | informal |
+| hit it off | сразу найти общий язык | We hit it off at the meet-up. | informal |
+| have a chip on one's shoulder | быть в обиде, искать ссоры | He has a chip on his shoulder about his old job. | informal |
+
+### Решения и результат
+
+| Идиома | Значение | Пример | Регистр / регион |
+| --- | --- | --- | --- |
+| hit the nail on the head | точно подметить | You hit the nail on the head with that comment. | neutral |
+| miss the boat | упустить возможность | I missed the boat on that course. | informal |
+| jump on the bandwagon | присоединиться к моде | Everyone's jumping on the AI bandwagon. | informal, часто негатив |
+| throw in the towel | сдаться, опустить руки | After three rewrites I almost threw in the towel. | informal |
+| go the extra mile | приложить дополнительные усилия | She always goes the extra mile for clients. | neutral |
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Идиомы есть в обоих языках, и логика у них одинаковая: смысл не выводится из слов, а живёт за выражением как культурный пакет. Поэтому идиома редко переводится идиомой один в один — приходится либо подбирать русский эквивалент по смыслу, либо описывать значение. И в обе стороны работает одно ограничение: ставить разговорный оборот в официальный текст — стилистический промах.">
+  <div slot="ru">
+    <strong>«На седьмом небе от счастья»</strong> — буквально «на седьмом небе», на деле — «очень счастлив».<br/>
+    <strong>«Как в воду глядел»</strong> — никто не глядел и не вода.<br/>
+    <strong>«Бить баклуши»</strong> — без баклуш, просто бездельничать.<br/>
+    Дословный перевод этих выражений на английский даст полную бессмыслицу.
+  </div>
+  <div slot="en">
+    <strong>on cloud nine</strong> ≈ «на седьмом небе» (число другое, смысл тот же).<br/>
+    <strong>hit the nail on the head</strong> ≈ «попасть в точку».<br/>
+    <strong>kill time</strong> ≈ «убивать время» — редкий случай дословного совпадения.<br/>
+    Картинки разные, функция одна: компактно передать состояние или оценку.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+В этом уроке схема нерелевантна: у идиом нет ветвящегося правила, есть только набор и контекст. Карта по тематикам выше (раздел 3) уже выполняет эту роль — она и есть «визуальная сетка», по которой удобно держать материал в голове. Дерево решений ниже (раздел 11) добавит логику выбора регистра и региона.
+
+## 6. Как использовать каждую тематику
+
+### Эмоции и состояние
+
+<RuleList rules={[
+  "<strong>under the weather</strong> — лёгкое недомогание (простуда, головная боль). Не для «у меня температура 39» — там просто <em>I'm sick</em>.",
+  "<strong>on cloud nine</strong> и <strong>down in the dumps</strong> — крайние полюса настроения. Между ними обычно говорят буквально (<em>I'm fine / tired / a bit sad</em>).",
+  "<strong>lose one's cool</strong> — про потерю самообладания в моменте, не про хронический характер. <em>He always loses his cool</em> — про сцены, а не про темперамент.",
+  "<strong>keep one's chin up</strong> — поддержка, обращение. Сам про себя говоришь <em>I'm trying to keep my chin up</em>; другому — <em>chin up!</em>",
+  "<strong>butterflies in one's stomach</strong> — мандраж перед чем-то конкретным (экзамен, свидание, выступление), а не общая тревожность.",
+  "<strong>have a heart of gold</strong> — почти комплимент. Используется и в нейтральных текстах, и в личной речи.",
+]} />
+
+### Действия и опыт
+
+<RuleList rules={[
+  "<strong>hit the books</strong> и <strong>hit the road</strong> похожи структурно, но <em>hit the books</em> = «сесть за учёбу», <em>hit the road</em> = «выехать». Перепутать — типичная ошибка.",
+  "<strong>bite the bullet</strong> — про неприятное, но необходимое. Не про лёгкое решение.",
+  "<strong>break a leg</strong> — артистам перед выходом на сцену или близкое к тому: перед презентацией, выступлением, концертом. В обычной ситуации «удачи!» = <em>good luck</em>.",
+  "<strong>piece of cake</strong> / <strong>a walk in the park</strong> — оценка задачи как лёгкой. Осторожно: если собеседник эту же задачу считает сложной, фраза прозвучит снисходительно.",
+  "<strong>walk on eggshells</strong> — про осторожность в общении, когда боишься задеть. Не про дипломатичность вообще.",
+  "<strong>learn the ropes</strong> — войти в курс дела. Уместно и в нейтральном офисном контексте (онбординг, новая роль).",
+  "<strong>call it a day</strong> — нейтральный способ закончить рабочую сессию. Без снисходительности — звучит и в чате с другом, и в созвоне с командой.",
+]} />
+
+### Время и темп
+
+<RuleList rules={[
+  "<strong>in the blink of an eye</strong> — про скорость («моргнуть не успел»). Не про редкость.",
+  "<strong>once in a blue moon</strong> — про редкость. Голубая луна здесь — астрономическое явление, дословно переводить не нужно.",
+  "<strong>beat around the bush</strong> vs <strong>cut to the chase</strong> — противоположности. Первое — оттягивать, второе — переходить к сути.",
+  "<strong>time flies</strong> — ремарка ни о чём конкретном, реакция «как быстро прошло». Часто используется самостоятельным предложением.",
+  "<strong>in the long run</strong> — «в долгосрочной перспективе». Подходит и для нейтральных деловых текстов, не строго informal.",
+]} />
+
+### Деньги и ценность
+
+<RuleList rules={[
+  "<strong>cost an arm and a leg</strong> и <strong>pay through the nose</strong> — обе про «очень дорого», но первая — про цену предмета, вторая — про твою боль от переплаты.",
+  "<strong>break the bank</strong> чаще встречается в отрицании: <em>it won't break the bank</em> = «не разорит», т. е. вполне доступно.",
+  "<strong>foot the bill</strong> — оплатить счёт целиком (за всех). Если просто платишь за себя — <em>pay for / cover</em>.",
+  "<strong>on a shoestring</strong> — про скудный бюджет проекта. <em>On a shoestring budget</em> — частая расширенная форма.",
+  "<strong>cheapskate</strong> — оценочное, граничит с грубостью. В лицо лучше не бросать без причины и юмора.",
+]} />
+
+### Отношения и коммуникация
+
+<RuleList rules={[
+  "<strong>see eye to eye</strong> — про согласие во мнениях, не про физический зрительный контакт. <em>We don't always see eye to eye</em> = «не во всём сходимся».",
+  "<strong>on the same page</strong> — про общее понимание ситуации или плана. Уместно и в нейтральном рабочем контексте.",
+  "<strong>get along with</strong> — про мирные отношения. <em>I get along with my neighbours</em> — нормальные отношения, не больше и не меньше.",
+  "<strong>give someone the cold shoulder</strong> — намеренное игнорирование. Не про случайно не заметил.",
+  "<strong>hit it off (with)</strong> — мгновенно подружились. После with — местоимение или имя: <em>I hit it off with her instantly</em>.",
+  "<strong>have a chip on one's shoulder</strong> — носить старую обиду, легко обижаться. Оценочное, в лицо не говорят.",
+]} />
+
+### Решения и результат
+
+<RuleList rules={[
+  "<strong>hit the nail on the head</strong> — реакция на удачное замечание. Подходит и в неформальной речи, и в нейтральном офисном.",
+  "<strong>miss the boat</strong> — про упущенную возможность, которую уже не вернуть.",
+  "<strong>jump on the bandwagon</strong> — присоединиться к моде. Часто с неодобрительным оттенком: «попрыгал куда все».",
+  "<strong>throw in the towel</strong> — сдаться, прекратить попытки. Из бокса (бросить полотенце на ринг).",
+  "<strong>go the extra mile</strong> — приложить усилий больше, чем требуется. Положительная оценка.",
+]} />
+
+## 7. Примеры в живом контексте
+
+### Бытовое
+
+<Example ru="Что-то приболел, поработаю из дома сегодня.">I'm feeling under the weather, I'll work from home today.</Example>
+<Example ru="Она на седьмом небе от счастья — наконец-то ей предложили роль.">She's on cloud nine — she finally got the part.</Example>
+<Example ru="Эти билеты на концерт стоят целое состояние.">These concert tickets cost an arm and a leg.</Example>
+<Example ru="Мы видимся раз в сто лет, давай хоть на этот раз выберемся.">We see each other once in a blue moon — let's actually meet this time.</Example>
+<Example ru="Перестань ходить вокруг да около, просто скажи как есть.">Stop beating around the bush and just tell me.</Example>
+<Example ru="Время летит — кажется, мы переехали только вчера.">Time flies — it feels like we moved in yesterday.</Example>
+<Example ru="Поздно уже, давай выезжать.">It's late, let's hit the road.</Example>
+<Example ru="Я ходил по тонкому льду с этим разговором, мама ещё расстроена.">I was walking on eggshells in that conversation — mum's still upset.</Example>
+<Example ru="Тест оказался раз плюнуть.">The test was a piece of cake.</Example>
+<Example ru="У моей бабушки золотое сердце.">My grandma has a heart of gold.</Example>
+<Example ru="Удачи на спектакле сегодня!">Break a leg tonight!</Example>
+<Example ru="Я тебя угощаю — за всё плачу я.">My treat — I'm footing the bill.</Example>
+
+### Офис в общем виде
+
+<Example ru="Давайте убедимся, что мы понимаем ситуацию одинаково, прежде чем идти к клиенту.">Let's make sure we're on the same page before we go to the client.</Example>
+<Example ru="Дай ей месяц освоиться, она потом потянет это сама.">Give her a month to learn the ropes, she'll handle it on her own after that.</Example>
+<Example ru="Я вышел из себя на созвоне и теперь жалею.">I lost my cool on the call and now I regret it.</Example>
+<Example ru="Окей, на сегодня заканчиваем.">Okay, let's call it a day.</Example>
+<Example ru="Ты точно подметил насчёт нагрузки на сервер.">You hit the nail on the head about the server load.</Example>
+<Example ru="Мы упустили шанс на тот тендер ещё в марте.">We missed the boat on that tender back in March.</Example>
+<Example ru="Она всегда работает сверх нормы для клиентов.">She always goes the extra mile for clients.</Example>
+<Example ru="Я сжал зубы и наконец-то отправил это письмо.">I bit the bullet and finally sent that email.</Example>
+<Example ru="Мы не всегда сходимся во мнениях, но команда работает.">We don't always see eye to eye, but the team works.</Example>
+
+### IT в нейтральном виде
+
+<Example ru="Я сдался после третьей переписки — пусть кто-то другой добивает баг.">I threw in the towel after the third rewrite — let someone else fix this bug.</Example>
+<Example ru="Все ринулись на хайп вокруг новой библиотеки, не разобравшись.">Everyone jumped on the bandwagon around that new library without checking it.</Example>
+<Example ru="Эта рефакторинг окупится в долгосрочной перспективе.">This refactor will pay off in the long run.</Example>
+<Example ru="Мы с новым тимлидом сразу нашли общий язык на онбординге.">I hit it off with the new tech lead during onboarding.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="UK (British English)" rightLabel="US (American English)">
+  <div slot="left">
+    <strong>chips</strong> — картофель фри (тёплые, толстые).<br/>
+    <strong>crisps</strong> — чипсы из пачки.<br/>
+    <strong>lift</strong> — лифт.<br/>
+    <strong>flat</strong> — квартира.<br/>
+    <strong>holiday</strong> — отпуск.<br/>
+    <strong>queue</strong> — очередь.<br/>
+    <strong>football</strong> — то, что в US называют soccer.<br/>
+    <strong>at the weekend</strong> — на выходных.<br/>
+    <strong>rubber</strong> — ластик.
+  </div>
+  <div slot="right">
+    <strong>fries</strong> — картофель фри.<br/>
+    <strong>chips</strong> — чипсы из пачки (ловушка для британцев).<br/>
+    <strong>elevator</strong> — лифт.<br/>
+    <strong>apartment</strong> — квартира.<br/>
+    <strong>vacation</strong> — отпуск.<br/>
+    <strong>line</strong> — очередь.<br/>
+    <strong>football</strong> — американский футбол; европейский — soccer.<br/>
+    <strong>on the weekend</strong> — на выходных.<br/>
+    <strong>eraser</strong> — ластик. <em>rubber в US — презерватив, ловушка.</em>
+  </div>
+</Compare>
+
+<Compare leftLabel="Идиома (informal)" rightLabel="Нейтральный аналог (formal-friendly)">
+  <div slot="left">
+    <strong>bite the bullet and submit the report</strong><br/>Чат с коллегой — живо и нормально.<br/><br/>
+    <strong>cost an arm and a leg</strong><br/>«Эти билеты стоят целое состояние» в разговоре.<br/><br/>
+    <strong>throw in the towel</strong><br/>«Я сдался» эмоционально, в личной речи.<br/><br/>
+    <strong>break the bank</strong><br/>«Это не разорит» — лёгкий тон.
+  </div>
+  <div slot="right">
+    <strong>force myself to submit the report</strong><br/>В письме руководителю — нейтрально.<br/><br/>
+    <strong>extremely expensive / very high price</strong><br/>В коммерческом предложении — по-деловому.<br/><br/>
+    <strong>give up / discontinue</strong><br/>В отчёте или официальном письме.<br/><br/>
+    <strong>affordable / within budget</strong><br/>В деловой переписке.
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак запоминания">
+Идиому всегда учи **в готовом примере**, а не списком из двух колонок. Слово «bullet» отдельно не подскажет тебе значения «bite the bullet». Запиши себе живую фразу из своей жизни — про твою задачу, твою боль, твоего коллегу. Если идиома пришла из текста или диалога, помни источник: это якорь и регистр одновременно. И всегда держи в голове три вопроса перед употреблением: «уверен ли я в смысле», «подходит ли это под этот регистр», «не звучу ли я снисходительно для собеседника».
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему идиомы такие разные">
+Идиома — это языковая капсула с культурным слоем внутри. <em>Break a leg</em> родилось в театре, где напрямую желать удачи считалось плохой приметой. <em>Throw in the towel</em> — из бокса: тренер бросал полотенце на ринг, чтобы остановить избиение. <em>Bite the bullet</em> — из военной хирургии, где раненым давали пулю прикусить вместо обезболивающего. Зная картинку, идиому помнишь без зубрёжки. Поэтому идиомы плохо переводятся: за выражением стоит целый контекст, которого у твоего русского эквивалента нет. И поэтому же они культурно-связаны: <em>once in a blue moon</em> опирается на астрономическое явление, известное в англоязычной культуре; в русском похожего идиома нет, есть «раз в сто лет».
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "Текст формальный (резюме, юр. документ, официальное письмо клиенту)?", yes: "Идиому из бытового списка — НЕ ставить. Нужен нейтральный синоним: very expensive, give up, conclude, agree.", no: "к вопросу 2" },
+  { q: "Идиома связана с конкретным контекстом (break a leg перед сценой, hit the books перед экзаменами)?", yes: "Использовать только в этом контексте. В обычной ситуации — буквальный аналог (good luck, study).", no: "к вопросу 3" },
+  { q: "Идиома может прозвучать снисходительно (piece of cake, a walk in the park) для собеседника, у которого реальная сложность?", yes: "Не использовать в реакции на его трудность. Сказать про свой опыт — нормально.", no: "к вопросу 4" },
+  { q: "Идиома или слово с региональным перекосом (chips/fries, lift/elevator, rubber)?", yes: "Уточнить регион аудитории. Особенно осторожно с rubber — в US значит другое.", no: "к вопросу 5" },
+  { q: "Уверен в фиксированной форме (предлог, артикль, мн. ч.)?", yes: "Можно использовать.", no: "Проверить в словаре. Идиомы не толерантны к импровизации: a piece of cake, не pieces of cake." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| Don't worry, let's kick the bucket | (не использовать в этом смысле) | <em>kick the bucket</em> = умереть, не «расслабиться». Калька «откинуть», «сбросить» — ловушка. |
+| The weather is bad, I feel under the weather | I have a cold today | <em>under the weather</em> = недомогание, а не «плохая погода». Привязка к слову weather путает новичка. |
+| Once in a blue moon happens here | We get snow only once in a blue moon | <em>once in a blue moon</em> = «крайне редко» (про частоту события), не «голубая луна» как явление. |
+| In my CV: I bit the bullet and led the team | In my CV: I took responsibility for leading the team | Идиома informal — в резюме неуместна, заменить на нейтральную формулировку. |
+| Let's hit the books and drive to the lake | Let's hit the road and drive to the lake | <em>hit the books</em> = «сесть за учёбу», а <em>hit the road</em> = «выезжать». Похожая форма, разный смысл. |
+| Break a leg on your morning run | Good luck on your morning run | <em>break a leg</em> работает только в контексте сцены / выступления. Для бытового пожелания — <em>good luck</em>. |
+| These pieces of cake (про задачи) | These were a piece of cake | Идиома фиксирована в ед. ч.: <em>a piece of cake</em>, не <em>pieces</em>. |
+| It cost an arm and the leg | It cost an arm and a leg | Идиома фиксирована: <em>an arm and a leg</em>, не <em>the leg</em>. |
+| I depend from the budget — break the bank | I depend on the budget — it won't break the bank | <em>depend on</em> (не <em>from</em>), <em>won't break the bank</em> = «не разорит» (часто в отрицании). |
+| Don't be cheapskate | Don't be a cheapskate | Перед существительным-оценкой нужен артикль <em>a</em>. |
+| We hit it off her instantly | We hit it off (with her) instantly | <em>hit it off</em> идёт либо без объекта, либо с <em>with</em>. Прямого дополнения нет. |
+| I want a rubber (в US-аптеке, имея в виду ластик) | I want an eraser (в US) / I want a rubber (в UK) | В US <em>rubber</em> = презерватив. Региональная ловушка с серьёзными последствиями. |
+| Let's queue up (в US-баре) | Let's get in line (в US) | <em>queue</em> — британское, в US непривычно. Не ошибка по сути, но звучит инородно. |
+| He's on cloud seven | He's on cloud nine | Идиома фиксирована на «девять», не «семь». Калька с русского «на седьмом небе». |
+| I'm walking on eggs | I'm walking on eggshells | Правильная форма — <em>eggshells</em> (скорлупа), не <em>eggs</em>. |
+
+## 13. Шпаргалка
+
+| Тема | Идиома | Значение | Регистр |
+| --- | --- | --- | --- |
+| Состояние | under the weather | неважно себя чувствовать | informal |
+| Состояние | on cloud nine | очень счастлив | informal |
+| Состояние | down in the dumps | подавлен | informal |
+| Состояние | lose one's cool | выйти из себя | informal |
+| Состояние | butterflies in stomach | мандраж | informal |
+| Состояние | have a heart of gold | очень добрый | neutral |
+| Действия | hit the books | сесть за учёбу | informal |
+| Действия | hit the road | выезжать | informal |
+| Действия | bite the bullet | сделать неприятное | informal |
+| Действия | break a leg | удачи (на сцене) | informal, контекст |
+| Действия | piece of cake | очень легко | informal |
+| Действия | walk on eggshells | осторожно в общении | informal |
+| Действия | learn the ropes | освоиться | neutral |
+| Действия | call it a day | заканчивать на сегодня | neutral |
+| Время | in the blink of an eye | в мгновение ока | neutral |
+| Время | once in a blue moon | крайне редко | informal |
+| Время | kill time | убивать время | informal |
+| Время | time flies | время летит | informal |
+| Время | beat around the bush | ходить вокруг да около | informal |
+| Время | cut to the chase | переходить к сути | informal |
+| Время | in the long run | в долгосрочной перспективе | neutral |
+| Деньги | cost an arm and a leg | стоить целое состояние | informal |
+| Деньги | break the bank | разорить | informal |
+| Деньги | foot the bill | оплатить за всех | informal |
+| Деньги | on a shoestring | на скудный бюджет | informal |
+| Деньги | pay through the nose | переплачивать | informal |
+| Деньги | cheapskate | жадина | informal, грубовато |
+| Отношения | see eye to eye | сходиться во мнениях | neutral |
+| Отношения | on the same page | понимать одинаково | neutral |
+| Отношения | get along with | ладить | neutral |
+| Отношения | give the cold shoulder | игнорировать намеренно | informal |
+| Отношения | hit it off (with) | сразу найти язык | informal |
+| Решения | hit the nail on the head | точно подметить | neutral |
+| Решения | miss the boat | упустить возможность | informal |
+| Решения | jump on the bandwagon | присоединиться к моде | informal, негатив |
+| Решения | throw in the towel | сдаться | informal |
+| Решения | go the extra mile | приложить доп. усилия | neutral |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "idiom", meaning: "идиома — фиксированное выражение, смысл которого не выводится из суммы слов" },
+  { term: "informal", meaning: "разговорный регистр — для дружеской и бытовой речи, не для официальных текстов" },
+  { term: "neutral", meaning: "нейтральный регистр — уместен и в разговоре, и в неформальной деловой переписке" },
+  { term: "regional", meaning: "региональный — различается между UK и US (или другими вариантами)" },
+  { term: "feel under the weather", meaning: "приболеть, неважно себя чувствовать" },
+  { term: "on cloud nine", meaning: "на седьмом небе от счастья" },
+  { term: "down in the dumps", meaning: "подавлен, в плохом настроении" },
+  { term: "lose one's cool", meaning: "выйти из себя, потерять самообладание" },
+  { term: "keep one's chin up", meaning: "держаться, не падать духом" },
+  { term: "butterflies in one's stomach", meaning: "мандраж перед важным событием" },
+  { term: "have a heart of gold", meaning: "иметь золотое сердце (очень добрый человек)" },
+  { term: "hit the books", meaning: "сесть за учёбу всерьёз" },
+  { term: "hit the road", meaning: "отправляться в путь, выезжать" },
+  { term: "bite the bullet", meaning: "стиснуть зубы, сделать неприятное" },
+  { term: "break a leg", meaning: "удачи! (артистам перед выступлением)" },
+  { term: "piece of cake", meaning: "раз плюнуть, очень легко" },
+  { term: "walk on eggshells", meaning: "ходить по тонкому льду в общении" },
+  { term: "learn the ropes", meaning: "освоить процесс изнутри" },
+  { term: "call it a day", meaning: "заканчивать работу на сегодня" },
+  { term: "in the blink of an eye", meaning: "в мгновение ока" },
+  { term: "once in a blue moon", meaning: "крайне редко" },
+  { term: "kill time", meaning: "убивать время в ожидании чего-то" },
+  { term: "time flies", meaning: "время летит" },
+  { term: "beat around the bush", meaning: "ходить вокруг да около" },
+  { term: "cut to the chase", meaning: "перейти к сути, без предисловий" },
+  { term: "in the long run", meaning: "в долгосрочной перспективе" },
+  { term: "cost an arm and a leg", meaning: "стоить целое состояние" },
+  { term: "break the bank", meaning: "разорить (часто в отрицании: it won't break the bank)" },
+  { term: "foot the bill", meaning: "оплатить счёт целиком, обычно за всех" },
+  { term: "on a shoestring", meaning: "на очень скудный бюджет" },
+  { term: "pay through the nose", meaning: "переплачивать, отдавать втридорога" },
+  { term: "cheapskate", meaning: "жадина (informal, оценочное)" },
+  { term: "see eye to eye (with)", meaning: "сходиться во мнениях" },
+  { term: "on the same page", meaning: "одинаково понимать ситуацию" },
+  { term: "get along with", meaning: "ладить с кем-то" },
+  { term: "give someone the cold shoulder", meaning: "намеренно игнорировать" },
+  { term: "hit it off (with)", meaning: "сразу найти общий язык" },
+  { term: "have a chip on one's shoulder", meaning: "быть в обиде, легко идти на конфликт" },
+  { term: "hit the nail on the head", meaning: "попасть в точку, точно подметить" },
+  { term: "miss the boat", meaning: "упустить возможность" },
+  { term: "jump on the bandwagon", meaning: "присоединиться к модной тенденции (часто с неодобрением)" },
+  { term: "throw in the towel", meaning: "сдаться, прекратить попытки" },
+  { term: "go the extra mile", meaning: "приложить дополнительные усилия" },
+  { term: "chips (UK) / fries (US)", meaning: "картофель фри" },
+  { term: "crisps (UK) / chips (US)", meaning: "чипсы из пачки" },
+  { term: "lift (UK) / elevator (US)", meaning: "лифт" },
+  { term: "flat (UK) / apartment (US)", meaning: "квартира" },
+  { term: "holiday (UK) / vacation (US)", meaning: "отпуск" },
+  { term: "queue (UK) / line (US)", meaning: "очередь" },
+  { term: "rubber (UK) / eraser (US)", meaning: "ластик. В US rubber означает презерватив — ловушка" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Идиома → смысл и пример</span>
+    <span class="kc-trainer-hint">Запомни значение, пример и регистр</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Идиома → значение</span>
+    <span class="kc-trainer-hint">Соотнеси выражение с его смыслом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">По тематике</span>
+    <span class="kc-trainer-hint">Разложи идиомы по четырём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Идиома в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши идиому</span>
+    <span class="kc-trainer-hint">Впиши недостающее ключевое слово</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение с идиомой</span>
+    <span class="kc-trainer-hint">Расставь слова — следи за фиксированной формой</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 137-145 (collocations, idioms with verbs).
+- **Swan M., Practical English Usage** — §305 (idioms, collocations and fixed expressions), §319 (informal language).
+- **Cambridge Dictionary — Idioms** — dictionary.cambridge.org/dictionary/english/idiom
+- **British Council LearnEnglish** — learnenglish.britishcouncil.org/vocabulary/english-idioms

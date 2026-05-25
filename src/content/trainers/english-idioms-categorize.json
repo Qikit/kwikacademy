@@ -1,0 +1,97 @@
+{
+  "course": "english",
+  "lesson": "english-idioms",
+  "title": "Идиомы по тематикам",
+  "description": "Разложи идиомы по четырём корзинам: состояние, действия, время / деньги, отношения / решения.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "state", "label": "Эмоции и состояние" },
+      { "id": "action", "label": "Действия и опыт" },
+      { "id": "timemoney", "label": "Время и деньги" },
+      { "id": "people", "label": "Отношения и решения" }
+    ],
+    "items": [
+      {
+        "text": "feel under the weather",
+        "category": "state",
+        "explain": "Описывает самочувствие — неважное, лёгкое недомогание. Тематически — эмоции и состояние."
+      },
+      {
+        "text": "on cloud nine",
+        "category": "state",
+        "explain": "Описывает крайнюю радость. Эмоциональное состояние человека."
+      },
+      {
+        "text": "butterflies in one's stomach",
+        "category": "state",
+        "explain": "Мандраж, физиологическое ощущение перед важным событием. Эмоциональное состояние."
+      },
+      {
+        "text": "lose one's cool",
+        "category": "state",
+        "explain": "Потерять самообладание — про эмоциональную реакцию в моменте."
+      },
+      {
+        "text": "hit the books",
+        "category": "action",
+        "explain": "Сесть за учёбу всерьёз — конкретное действие, начало работы над материалом."
+      },
+      {
+        "text": "bite the bullet",
+        "category": "action",
+        "explain": "Стиснуть зубы и сделать неприятное — про принятое действие, не про состояние."
+      },
+      {
+        "text": "call it a day",
+        "category": "action",
+        "explain": "Заканчивать работу на сегодня — действие завершения рабочей сессии."
+      },
+      {
+        "text": "walk on eggshells",
+        "category": "action",
+        "explain": "Осторожное поведение в общении — про осознанное действие, а не пассивное состояние."
+      },
+      {
+        "text": "cost an arm and a leg",
+        "category": "timemoney",
+        "explain": "Про очень высокую цену — тематика денег и ценности."
+      },
+      {
+        "text": "once in a blue moon",
+        "category": "timemoney",
+        "explain": "Описывает частоту события — тематика времени и темпа."
+      },
+      {
+        "text": "foot the bill",
+        "category": "timemoney",
+        "explain": "Оплатить счёт целиком — тематика денег и расходов."
+      },
+      {
+        "text": "time flies",
+        "category": "timemoney",
+        "explain": "Реакция «как быстро прошло» — тематика времени."
+      },
+      {
+        "text": "see eye to eye",
+        "category": "people",
+        "explain": "Сходиться во мнениях — про межличностное понимание."
+      },
+      {
+        "text": "throw in the towel",
+        "category": "people",
+        "explain": "Сдаться — решение прекратить попытки. Тематика выбора и результата."
+      },
+      {
+        "text": "give the cold shoulder",
+        "category": "people",
+        "explain": "Намеренное игнорирование — отношения между людьми."
+      },
+      {
+        "text": "hit the nail on the head",
+        "category": "people",
+        "explain": "Точно подметить — про коммуникацию и оценку чужого высказывания."
+      }
+    ]
+  }
+}

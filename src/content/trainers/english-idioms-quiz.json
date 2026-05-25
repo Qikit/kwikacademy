@@ -1,0 +1,95 @@
+{
+  "course": "english",
+  "lesson": "english-idioms",
+  "title": "Идиома в контексте",
+  "description": "Выбери подходящую идиому или её правильную форму.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "I won't come to the office today — I'm feeling ___.",
+        "options": ["under the weather", "on cloud nine", "down to earth", "on the same page"],
+        "correctIndex": 0,
+        "explain": "«Под погодой» = приболеть, неважно себя чувствовать. Контекст «won't come to the office» = недомогание."
+      },
+      {
+        "prompt": "Stop ___ and just tell me what you want.",
+        "options": ["calling it a day", "beating around the bush", "hitting the books", "footing the bill"],
+        "correctIndex": 1,
+        "explain": "«Перестань ходить вокруг да около» = beat around the bush. Контекст требует выражения «уход от прямого ответа»."
+      },
+      {
+        "prompt": "Don't worry — a coffee and a sandwich won't ___.",
+        "options": ["throw in the towel", "miss the boat", "break the bank", "go the extra mile"],
+        "correctIndex": 2,
+        "explain": "«Не разорит» = won't break the bank. Идиома про деньги, часто в отрицании = «вполне по карману»."
+      },
+      {
+        "prompt": "She got the offer she wanted — she's ___ now.",
+        "options": ["on cloud nine", "down in the dumps", "under the weather", "on the same page"],
+        "correctIndex": 0,
+        "explain": "«Очень счастлива» после желанного оффера = on cloud nine. Фиксировано «nine», не «seven»."
+      },
+      {
+        "prompt": "Before we present to the client, let's make sure we're ___.",
+        "options": ["on the same page", "on a shoestring", "in the long run", "out of the box"],
+        "correctIndex": 0,
+        "explain": "«Понимаем ситуацию одинаково» = on the same page. Регистр нейтральный, подходит для рабочей речи."
+      },
+      {
+        "prompt": "It's past midnight, let's ___ and continue tomorrow.",
+        "options": ["hit the books", "call it a day", "throw in the towel", "break a leg"],
+        "correctIndex": 1,
+        "explain": "«Заканчиваем на сегодня» = call it a day. Throw in the towel = «сдаться насовсем», что не подходит для «continue tomorrow»."
+      },
+      {
+        "prompt": "Choose the correct form: «We only see each other ___».",
+        "options": ["once in blue moon", "once in a blue moon", "once on a blue moon", "ones in a blue moon"],
+        "correctIndex": 1,
+        "explain": "Фиксированная форма: once in a blue moon — с артиклем «a». Без артикля или с «on» = ошибка."
+      },
+      {
+        "prompt": "You ___ — that's exactly the problem.",
+        "options": ["miss the boat", "hit the nail on the head", "bite the bullet", "walk on eggshells"],
+        "correctIndex": 1,
+        "explain": "«Попал в точку» как реакция на точное замечание = hit the nail on the head."
+      },
+      {
+        "prompt": "Choose the correct form before a friend's exam: «___ tomorrow!».",
+        "options": ["Break a leg", "Hit the road", "Throw in the towel", "Foot the bill"],
+        "correctIndex": 0,
+        "explain": "«Удачи!» перед важным выступлением / экзаменом = break a leg. Идиома пришла из театра, но используется и для экзаменов и собеседований."
+      },
+      {
+        "prompt": "He registered too late — he ___ on the discount.",
+        "options": ["hit the books", "missed the boat", "called it a day", "lost his cool"],
+        "correctIndex": 1,
+        "explain": "«Упустил возможность» (скидку) = miss the boat. Про невозвратность шанса."
+      },
+      {
+        "prompt": "The new project is starting, give her time to ___.",
+        "options": ["throw in the towel", "learn the ropes", "give the cold shoulder", "kill time"],
+        "correctIndex": 1,
+        "explain": "«Освоиться, войти в процесс» = learn the ropes. Уместно про онбординг новой сотрудницы."
+      },
+      {
+        "prompt": "Don't take it personally — she's been ___ all morning, she's just tired.",
+        "options": ["on cloud nine", "going the extra mile", "down in the dumps", "hitting the road"],
+        "correctIndex": 2,
+        "explain": "«В подавленном настроении» = down in the dumps. По контексту — объяснение её поведения, негативное состояние."
+      },
+      {
+        "prompt": "Choose the correct preposition: «I hit it ___ with the new tech lead instantly».",
+        "options": ["off", "out", "up", "on"],
+        "correctIndex": 0,
+        "explain": "Фиксированная форма: hit it off (with). После off — необязательное «with + имя». Другие предлоги ломают идиому."
+      },
+      {
+        "prompt": "After three rewrites of the same chapter, I almost ___.",
+        "options": ["broke the bank", "threw in the towel", "footed the bill", "missed the boat"],
+        "correctIndex": 1,
+        "explain": "«Сдался» после повторных неудачных попыток = throw in the towel. Идиома про прекращение усилий."
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-idioms",
+  "title": "Допиши идиому",
+  "description": "Впиши недостающее ключевое слово в идиоматическое выражение.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "I'm feeling under the ___ today, I'll skip the gym.",
+        "answers": ["weather"],
+        "explain": "feel under the weather = приболеть. Ключевое слово — weather, но идиома не про погоду, а про самочувствие."
+      },
+      {
+        "text": "She's been on cloud ___ since she got the offer.",
+        "answers": ["nine"],
+        "explain": "on cloud nine = на седьмом небе. Фиксировано «nine» — не «seven» (как в русском)."
+      },
+      {
+        "text": "Stop beating around the ___ — what do you actually want?",
+        "answers": ["bush"],
+        "explain": "beat around the bush = ходить вокруг да около. Фиксированная форма с «bush»."
+      },
+      {
+        "text": "These concert tickets cost an ___ and a leg.",
+        "answers": ["arm"],
+        "explain": "cost an arm and a leg = стоить целое состояние. Фиксированная связка an arm and a leg, в этом порядке."
+      },
+      {
+        "text": "Let's make sure we're on the same ___ before the client call.",
+        "answers": ["page"],
+        "explain": "on the same page = понимать одинаково. Аналогия с «читать одну и ту же страницу»."
+      },
+      {
+        "text": "After three rewrites I almost threw in the ___.",
+        "answers": ["towel"],
+        "explain": "throw in the towel = сдаться. Из бокса: тренер бросал полотенце на ринг, чтобы остановить бой."
+      },
+      {
+        "text": "Give her a month to learn the ___, she'll handle it on her own.",
+        "answers": ["ropes"],
+        "explain": "learn the ropes = освоиться, войти в процесс. Морская метафора: моряк-новичок учил, какая верёвка что делает."
+      },
+      {
+        "text": "We only see each other once in a ___ moon.",
+        "answers": ["blue"],
+        "explain": "once in a blue moon = крайне редко. Фиксированная форма с «blue»; калька на «голубая луна» в русском не работает."
+      },
+      {
+        "text": "You hit the ___ on the head — that's the actual problem.",
+        "answers": ["nail"],
+        "explain": "hit the nail on the head = попасть в точку. Метафора плотника, забивающего гвоздь точно по шляпке."
+      },
+      {
+        "text": "I bit the ___ and finally booked the dentist.",
+        "answers": ["bullet"],
+        "explain": "bite the bullet = стиснуть зубы и сделать неприятное. Из военной хирургии."
+      },
+      {
+        "text": "She always goes the extra ___ for her clients.",
+        "answers": ["mile"],
+        "explain": "go the extra mile = приложить дополнительные усилия. Положительная оценка."
+      },
+      {
+        "text": "I'm walking on ___ around my new boss — everything seems to upset him.",
+        "answers": ["eggshells"],
+        "explain": "walk on eggshells = ходить по тонкому льду в общении. Eggshells (скорлупа), не просто eggs."
+      }
+    ]
+  }
+}

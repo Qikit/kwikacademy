@@ -1,0 +1,59 @@
+{
+  "course": "english",
+  "lesson": "english-idioms",
+  "title": "Собери предложение с идиомой",
+  "description": "Расставь слова в правильном порядке. Следи за фиксированной формой идиомы.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["the", "feeling", "weather", "I'm", "under"],
+        "answer": ["I'm", "feeling", "under", "the", "weather"],
+        "translation": "Я приболел.",
+        "explain": "Фиксированная форма: feel under the weather. Артикль «the» перед weather обязателен — не feel under weather."
+      },
+      {
+        "words": ["bullet", "and", "called", "I", "the", "bit", "dentist", "the"],
+        "answer": ["I", "bit", "the", "bullet", "and", "called", "the", "dentist"],
+        "translation": "Я стиснул зубы и наконец-то позвонил дантисту.",
+        "explain": "Past Simple от bite — bit (неправильный глагол). Идиома bite the bullet с артиклем «the» перед bullet."
+      },
+      {
+        "words": ["beating", "around", "stop", "bush", "the"],
+        "answer": ["stop", "beating", "around", "the", "bush"],
+        "translation": "Перестань ходить вокруг да около.",
+        "explain": "После stop идёт -ing форма (beating). Фиксированная связка: around the bush, с артиклем «the»."
+      },
+      {
+        "words": ["page", "same", "we're", "on", "the"],
+        "answer": ["we're", "on", "the", "same", "page"],
+        "translation": "Мы одинаково понимаем ситуацию.",
+        "explain": "Фиксированная форма: on the same page. Перед same — артикль «the»."
+      },
+      {
+        "words": ["leg", "tonight", "a", "break", "!"],
+        "answer": ["break", "a", "leg", "tonight", "!"],
+        "translation": "Удачи сегодня вечером!",
+        "explain": "Императив (без подлежащего): break + a + leg. Артикль «a» обязателен — break leg будет ошибкой."
+      },
+      {
+        "words": ["bank", "won't", "break", "this", "the"],
+        "answer": ["this", "won't", "break", "the", "bank"],
+        "translation": "Это нас не разорит.",
+        "explain": "Идиома break the bank часто в отрицании = «не разорит, доступно». Артикль «the» перед bank обязателен."
+      },
+      {
+        "words": ["the", "ropes", "her", "month", "give", "to", "learn", "a"],
+        "answer": ["give", "her", "a", "month", "to", "learn", "the", "ropes"],
+        "translation": "Дай ей месяц освоиться.",
+        "explain": "Императив: give + объект + a month. Идиома learn the ropes с обязательным артиклем «the»."
+      },
+      {
+        "words": ["towel", "almost", "I", "the", "threw", "in"],
+        "answer": ["I", "almost", "threw", "in", "the", "towel"],
+        "translation": "Я почти сдался.",
+        "explain": "Past Simple от throw — threw (неправильный). Almost ставится перед смысловым глаголом. Артикль «the» перед towel."
+      }
+    ]
+  }
+}

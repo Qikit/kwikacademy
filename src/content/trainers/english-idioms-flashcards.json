@@ -1,0 +1,151 @@
+{
+  "course": "english",
+  "lesson": "english-idioms",
+  "title": "Идиомы — flashcards",
+  "description": "Идиома на лице карточки, значение и живой пример — на обороте. Помни про регистр.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "feel under the weather",
+        "back": "Приболеть, неважно себя чувствовать. «I'm feeling under the weather, I'll work from home today.» Регистр: informal. Не про погоду — про самочувствие.",
+        "hint": "состояние"
+      },
+      {
+        "front": "on cloud nine",
+        "back": "На седьмом небе от счастья. «She's on cloud nine — she finally got the part.» Регистр: informal. Фиксировано «nine», не «seven».",
+        "hint": "счастье"
+      },
+      {
+        "front": "down in the dumps",
+        "back": "Подавлен, в плохом настроении. «He's been down in the dumps after the rejection.» Регистр: informal. Полюс — обратный on cloud nine.",
+        "hint": "грусть"
+      },
+      {
+        "front": "lose one's cool",
+        "back": "Выйти из себя, потерять самообладание. «I lost my cool during the meeting.» Регистр: informal. Про сцену в моменте, не про темперамент в целом.",
+        "hint": "эмоция"
+      },
+      {
+        "front": "butterflies in one's stomach",
+        "back": "Мандраж перед важным событием. «I had butterflies before the interview.» Регистр: informal. Про конкретное событие (экзамен, выступление), а не про общую тревогу.",
+        "hint": "волнение"
+      },
+      {
+        "front": "have a heart of gold",
+        "back": "Иметь золотое сердце (очень добрый человек). «My grandma has a heart of gold.» Регистр: neutral. Подходит и в нейтральных текстах.",
+        "hint": "характер"
+      },
+      {
+        "front": "hit the books",
+        "back": "Сесть за учёбу всерьёз. «Exams next week, time to hit the books.» Регистр: informal. Не путать с hit the road = «выезжать».",
+        "hint": "учёба"
+      },
+      {
+        "front": "hit the road",
+        "back": "Отправиться в путь, выезжать. «It's late, let's hit the road.» Регистр: informal. Похожая форма на hit the books, но другой смысл.",
+        "hint": "движение"
+      },
+      {
+        "front": "bite the bullet",
+        "back": "Стиснуть зубы, сделать неприятное. «I bit the bullet and finally called the dentist.» Регистр: informal. Из военной хирургии, где раненым давали пулю прикусить.",
+        "hint": "неприятное действие"
+      },
+      {
+        "front": "break a leg",
+        "back": "Удачи! (артистам перед выступлением). «Break a leg tonight!» Регистр: informal, только в контексте сцены / выступления. Дословный перевод опасен.",
+        "hint": "пожелание"
+      },
+      {
+        "front": "piece of cake",
+        "back": "Раз плюнуть, очень легко. «The test was a piece of cake.» Регистр: informal. Осторожно с собеседником, которому задача даётся тяжело — прозвучит снисходительно.",
+        "hint": "лёгкость"
+      },
+      {
+        "front": "walk on eggshells",
+        "back": "Ходить по тонкому льду в общении. «I'm walking on eggshells around my new boss.» Регистр: informal. Eggshells (скорлупа), не просто eggs.",
+        "hint": "осторожность"
+      },
+      {
+        "front": "call it a day",
+        "back": "Заканчивать работу на сегодня. «I'm tired, let's call it a day.» Регистр: neutral. Подходит и для рабочих созвонов, не только для бытовой речи.",
+        "hint": "завершение"
+      },
+      {
+        "front": "once in a blue moon",
+        "back": "Крайне редко. «We only see each other once in a blue moon.» Регистр: informal. От астрономического явления; русский эквивалент — «раз в сто лет».",
+        "hint": "редкость"
+      },
+      {
+        "front": "beat around the bush",
+        "back": "Ходить вокруг да около. «Stop beating around the bush — just tell me.» Регистр: informal. Противоположность — cut to the chase (перейти к делу).",
+        "hint": "уход от темы"
+      },
+      {
+        "front": "cut to the chase",
+        "back": "Перейти к сути, без предисловий. «Let me cut to the chase: we can't afford it.» Регистр: informal. Из эпохи немого кино, где chase — экшен-сцена.",
+        "hint": "к сути"
+      },
+      {
+        "front": "cost an arm and a leg",
+        "back": "Стоить целое состояние. «These tickets cost an arm and a leg.» Регистр: informal. Фиксированная форма: an arm and a leg, не the leg / two legs.",
+        "hint": "дорого"
+      },
+      {
+        "front": "break the bank",
+        "back": "Разорить, слишком дорого. Чаще в отрицании: «A new laptop won't break the bank» = «не разорит, вполне по карману». Регистр: informal.",
+        "hint": "цена"
+      },
+      {
+        "front": "foot the bill",
+        "back": "Оплатить счёт целиком, обычно за всех. «Her dad footed the bill for the wedding.» Регистр: informal. Не путать с pay for (просто платить).",
+        "hint": "оплата"
+      },
+      {
+        "front": "on the same page",
+        "back": "Одинаково понимать ситуацию. «Let's make sure we're on the same page before the call.» Регистр: neutral. Уместно и в рабочей переписке.",
+        "hint": "согласие"
+      },
+      {
+        "front": "give someone the cold shoulder",
+        "back": "Намеренно игнорировать кого-то. «She's been giving me the cold shoulder all day.» Регистр: informal. Не про случайно не заметил — про осознанное игнорирование.",
+        "hint": "игнор"
+      },
+      {
+        "front": "hit it off (with)",
+        "back": "Сразу найти общий язык. «We hit it off at the meet-up.» / «I hit it off with the new tech lead.» Регистр: informal. После with — местоимение или имя, без with — без объекта.",
+        "hint": "знакомство"
+      },
+      {
+        "front": "hit the nail on the head",
+        "back": "Попасть в точку, точно подметить. «You hit the nail on the head about the server load.» Регистр: neutral. Уместно и в офисном контексте.",
+        "hint": "точность"
+      },
+      {
+        "front": "miss the boat",
+        "back": "Упустить возможность. «I missed the boat on that course — registration closed.» Регистр: informal. Про невозвратность шанса.",
+        "hint": "упущенный шанс"
+      },
+      {
+        "front": "throw in the towel",
+        "back": "Сдаться, прекратить попытки. «After three rewrites I almost threw in the towel.» Регистр: informal. Из бокса: тренер бросал полотенце на ринг, останавливая бой.",
+        "hint": "сдаться"
+      },
+      {
+        "front": "go the extra mile",
+        "back": "Приложить дополнительные усилия. «She always goes the extra mile for clients.» Регистр: neutral. Положительная оценка, подходит для отзывов о работе.",
+        "hint": "усилия"
+      },
+      {
+        "front": "UK chips vs US chips",
+        "back": "В UK chips — картофель фри (тёплые, толстые). В US chips — чипсы из пачки. UK crisps = US chips. Региональная ловушка в меню — закажешь не то, что ожидаешь.",
+        "hint": "регион"
+      },
+      {
+        "front": "UK rubber vs US rubber",
+        "back": "В UK rubber — ластик. В US rubber — презерватив (informal). В US за ластиком просят eraser. Ловушка с серьёзными последствиями в речи.",
+        "hint": "регион — ловушка"
+      }
+    ]
+  }
+}

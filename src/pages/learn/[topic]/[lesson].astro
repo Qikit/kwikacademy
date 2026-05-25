@@ -19,7 +19,10 @@ const siblings = (await getCollection('lessons'))
   .sort((a, b) => a.data.order - b.data.order);
 const idx = siblings.findIndex((l) => l.id === lesson.id);
 const next = siblings[idx + 1];
+const prev = idx > 0 ? siblings[idx - 1] : undefined;
 const nextHref = next ? withBase(`/learn/${next.data.course}/${next.id}`) : undefined;
+const prevHref = prev ? withBase(`/learn/${prev.data.course}/${prev.id}`) : undefined;
+const courseHref = withBase(`/topics/${lesson.data.course}`);
 ---
 
 <LessonLayout
@@ -27,6 +30,9 @@ const nextHref = next ? withBase(`/learn/${next.data.course}/${next.id}`) : unde
   eyebrow={lesson.data.eyebrow}
   readingMinutes={lesson.data.readingMinutes}
   slug={lesson.id}
+  courseHref={courseHref}
+  prevHref={prevHref}
+  prevTitle={prev?.data.title}
   nextHref={nextHref}
   placeholder={lesson.data.placeholder}
 >

@@ -1,0 +1,105 @@
+---
+import Icon from '../ui/Icon.astro';
+interface Props {
+  courseHref: string;
+  prevHref?: string;
+  prevTitle?: string;
+}
+const { courseHref, prevHref, prevTitle } = Astro.props;
+---
+
+<nav class="lesson-nav" aria-label="Навигация по курсу">
+  {
+    prevHref ? (
+      <a class="link prev" href={prevHref}>
+        <Icon name="arrow-left" size={16} />
+        <span class="label">
+          <span class="hint">Предыдущий урок</span>
+          {prevTitle && <span class="title">{prevTitle}</span>}
+        </span>
+      </a>
+    ) : (
+      <span class="placeholder" />
+    )
+  }
+  <a class="link course" href={courseHref}>
+    <Icon name="book-open" size={16} />
+    <span>К курсу</span>
+  </a>
+</nav>
+
+<style>
+  .lesson-nav {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 20px 0 8px;
+  }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: var(--r-full);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    backdrop-filter: blur(var(--glass-blur));
+    transition:
+      transform 0.2s,
+      background 0.2s,
+      border-color 0.2s;
+  }
+  .link:hover {
+    transform: translateY(-1px);
+    border-color: var(--c-purple);
+  }
+  .link.prev {
+    max-width: 60%;
+  }
+  .label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+    min-width: 0;
+  }
+  .hint {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .title {
+    font-size: 13px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  .course {
+    margin-left: auto;
+    color: var(--c-purple);
+  }
+  .placeholder {
+    flex: 1;
+  }
+  @media (max-width: 520px) {
+    .lesson-nav {
+      flex-wrap: wrap;
+    }
+    .link.prev {
+      max-width: none;
+      flex: 1;
+    }
+    .hint {
+      display: none;
+    }
+  }
+</style>

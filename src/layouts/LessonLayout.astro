@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import LessonHero from '../components/lesson/LessonHero.astro';
+import LessonNav from '../components/lesson/LessonNav.astro';
 import LessonComplete from '../components/lesson/LessonComplete.tsx';
 import ReadingAids from '../components/lesson/ReadingAids.astro';
 import ExportMenu from '../components/lesson/ExportMenu.tsx';
@@ -10,16 +11,20 @@ interface Props {
   eyebrow: string;
   readingMinutes: number;
   slug: string;
+  courseHref: string;
+  prevHref?: string;
+  prevTitle?: string;
   nextHref?: string;
   placeholder?: boolean;
 }
-const { title, eyebrow, readingMinutes, slug, nextHref, placeholder } = Astro.props;
+const { title, eyebrow, readingMinutes, slug, courseHref, prevHref, prevTitle, nextHref, placeholder } = Astro.props;
 ---
 
 <BaseLayout title={`${title} — KwikAcademy`}>
   {!placeholder && <ReadingAids />}
   <article class="lesson">
     <LessonHero eyebrow={eyebrow} title={title} readingMinutes={readingMinutes} />
+    <LessonNav courseHref={courseHref} prevHref={prevHref} prevTitle={prevTitle} />
     <div class="prose"><slot /></div>
     {
       placeholder ? (

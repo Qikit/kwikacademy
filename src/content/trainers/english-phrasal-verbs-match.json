@@ -1,0 +1,81 @@
+{
+  "course": "english",
+  "lesson": "english-phrasal-verbs",
+  "title": "Phrasal verb → значение",
+  "description": "Соотнеси фразовый глагол с переводом. Учить целиком — перевод по частям обычно не работает.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "get up",
+        "right": "вставать с кровати",
+        "explain": "Get up — intransitive PV, базовое утреннее действие. «I get up at seven.»"
+      },
+      {
+        "left": "look up",
+        "right": "искать в словаре",
+        "explain": "Look up — идиоматичный смысл «найти в справочнике». Прямой перевод «смотреть вверх» — ловушка. «Look up the word in the dictionary.»"
+      },
+      {
+        "left": "put up with",
+        "right": "терпеть, мириться",
+        "explain": "Put up with — three-particle non-separable PV. «I can't put up with this noise.»"
+      },
+      {
+        "left": "look after",
+        "right": "присматривать, ухаживать",
+        "explain": "Look after — non-separable. «Can you look after the kids?» Не путать с look for (искать) и look forward to (ждать)."
+      },
+      {
+        "left": "give up",
+        "right": "бросить (привычку), сдаться",
+        "explain": "Give up — separable. После give up следует V-ing: «I gave up smoking», не «to smoke»."
+      },
+      {
+        "left": "find out",
+        "right": "выяснить",
+        "explain": "Find out — обычно про информацию или факт. «I found out the truth.» / «I found out why it failed.»"
+      },
+      {
+        "left": "take off",
+        "right": "снять одежду / взлететь",
+        "explain": "Take off — два смысла: с одеждой (sep) и про самолёт (intr). Контекст подсказывает: «Take off your shoes.» / «The plane took off.»"
+      },
+      {
+        "left": "come up with",
+        "right": "придумать",
+        "explain": "Come up with — three-particle non-separable. Объект — идея, план, решение: «He came up with a great idea.»"
+      },
+      {
+        "left": "run out of",
+        "right": "закончились запасы",
+        "explain": "Run out of — обязательное of. «We're running out of milk / time / patience.»"
+      },
+      {
+        "left": "break down",
+        "right": "сломаться (машина) или психологически",
+        "explain": "Break down — intransitive. Про технику: «My car broke down.» Про человека: «She broke down in tears.»"
+      },
+      {
+        "left": "hang out",
+        "right": "тусоваться с друзьями",
+        "explain": "Hang out — intransitive, неформально. «We hang out at the cafe on Fridays.»"
+      },
+      {
+        "left": "look forward to",
+        "right": "ждать с нетерпением",
+        "explain": "Look forward to + V-ing. To здесь — предлог, не маркер инфинитива. «I look forward to seeing you», не «to see»."
+      },
+      {
+        "left": "take after",
+        "right": "быть похожим на родителя",
+        "explain": "Take after — non-separable, обычно про сходство с родственниками. «She takes after her mother.»"
+      },
+      {
+        "left": "turn down",
+        "right": "убавить громкость или отказать",
+        "explain": "Turn down — separable, два смысла: «Turn the music down.» (громкость) / «They turned down my offer.» (отказ)."
+      }
+    ]
+  }
+}

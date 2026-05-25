@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-phrasal-verbs",
+  "title": "Phrasal verbs — впиши частицу",
+  "description": "Заполни пропуск нужной частицей или формой PV. Один пропуск = одна частица.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "I usually get ___ at seven on weekdays.",
+        "answers": ["up"],
+        "explain": "Get up — «вставать с кровати», intransitive. Базовое утреннее действие."
+      },
+      {
+        "text": "Can you look ___ my dog while I'm away?",
+        "answers": ["after"],
+        "explain": "Look after — «присматривать, ухаживать», non-separable. Look for = искать; look up = искать в словаре."
+      },
+      {
+        "text": "I look forward ___ ___ you next Monday.",
+        "answers": ["to", "seeing"],
+        "explain": "Look forward to + V-ing. To здесь — предлог, не маркер инфинитива, поэтому seeing, не see."
+      },
+      {
+        "text": "He gave ___ smoking after his doctor warned him.",
+        "answers": ["up"],
+        "explain": "Give up — «бросить (привычку)». После give up — V-ing (smoking), не инфинитив."
+      },
+      {
+        "text": "Turn the music ___, please — the neighbours are sleeping.",
+        "answers": ["down"],
+        "explain": "Turn down — «убавить громкость». Separable: «turn the music down» = «turn down the music»."
+      },
+      {
+        "text": "We're running ___ ___ time — only ten minutes left.",
+        "answers": ["out", "of"],
+        "explain": "Run out of — «заканчиваются запасы». Обязательное of: «running out of milk / time / patience»."
+      },
+      {
+        "text": "She came ___ ___ a brilliant solution to the problem.",
+        "answers": ["up", "with"],
+        "explain": "Come up with — «придумать (идею, решение)». Three particles, non-separable. Объект — после всей конструкции."
+      },
+      {
+        "text": "My alarm went ___ at six, but I stayed in bed.",
+        "answers": ["off"],
+        "explain": "Go off (про будильник) — «зазвенел». Также: go off о еде = испортилась; о бомбе = взорвалась."
+      },
+      {
+        "text": "I can't put ___ ___ this constant noise anymore.",
+        "answers": ["up", "with"],
+        "explain": "Put up with — «терпеть, мириться». Three particles, целиком non-separable. Объект (noise) после всей конструкции."
+      },
+      {
+        "text": "Don't put ___ the dentist appointment — your tooth will only get worse.",
+        "answers": ["off"],
+        "explain": "Put off — «откладывать». Separable: «put off the appointment» = «put the appointment off»."
+      },
+      {
+        "text": "She really takes ___ her grandmother — same nose, same laugh.",
+        "answers": ["after"],
+        "explain": "Take after — «быть похожим на родственника», non-separable. Не путать с take off (снимать) и take up (заняться)."
+      },
+      {
+        "text": "I came ___ an old letter while cleaning the attic.",
+        "answers": ["across"],
+        "explain": "Come across — «встретить случайно» (вещь или человека). Non-separable. Подчёркивает случайность находки."
+      }
+    ]
+  }
+}

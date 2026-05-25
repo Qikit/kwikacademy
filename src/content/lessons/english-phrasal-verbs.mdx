@@ -3,11 +3,493 @@ course: english
 order: 14
 phase: "Фаза 1 · Бытовой английский"
 title: "Phrasal Verbs — фразовые глаголы"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "get up, look for, give up — глаголы, меняющие смысл с предлогом."
-placeholder: true
-tags: [english]
+eyebrow: "Лексика · уровень B1"
+readingMinutes: 24
+summary: "Глаголы с частицами, у которых смысл не складывается из частей. Когда разделять, когда нет, и почему look up — это не «смотреть вверх»."
+tags: [phrasal-verbs, vocabulary, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Phrasal Verbs — фразовые глаголы» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем учить phrasal verbs
+
+В разговорном английском фразовые глаголы — половина лексики. `Get up`, `look for`, `find out`, `turn on`, `give up`, `take off`, `hang out` — это не «продвинутые» слова, это базовый бытовой словарь, на котором живут субтитры сериалов, переписка в чатах и коридорные разговоры. Без них речь звучит как из учебника середины прошлого века: формально, чопорно, узнаваемо как ученическая.
+
+В русском в этой роли работают **приставочные глаголы**: при-ходить, у-ходить, под-ходить, об-ходить. Корень один, приставка меняет смысл. В английском роль приставки выполняет частица после глагола: `come`, `come in`, `come back`, `come up with`, `come across`. Корень один — а смыслов столько же, сколько частиц, и они часто никак не выводятся из «суммы частей». `Look up the word in the dictionary` ничего общего не имеет со «смотреть вверх»: это «найди слово в словаре».
+
+Главная сложность для русскоязычного — два разных пласта. Первый: запомнить значение целиком, не пытаясь перевести по частям. Второй: уметь правильно расставить частицу и объект в предложении — где-то их можно разделить, где-то нельзя, и с местоимением правила ужесточаются. Этот урок про базовый набор фразовых глаголов уровня B1 и про оба механических правила, без которых даже знакомые PV ставятся не туда.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Phrasal verb = **глагол + частица** (предлог или наречие), у которых **общий смысл часто идиоматичен**: целое не равно сумме частей. Учить надо парами (глагол + частица) с примером, как одно слово в словаре. Отдельно — механика порядка слов: **separable** можно разделить объектом, **non-separable** нельзя, **с местоимением separable обязаны разделяться**: `turn it on`, не «turn on it».
+</Callout>
+
+## 3. Базовый набор по группам
+
+Тридцать с лишним самых частотных PV уровня B1, отсортированных по «материнскому» глаголу. В колонке «тип» — `sep` (separable), `non-sep` (non-separable), `intr` (intransitive, без объекта).
+
+| Phrasal verb | Значение | Пример | Тип |
+| --- | --- | --- | --- |
+| **get up** | вставать (с кровати) | I get up at seven. | intr |
+| **get on** (a bus/train) | садиться в транспорт | She got on the bus at the next stop. | non-sep |
+| **get off** (a bus/train) | выходить из транспорта | Get off at the second stop. | non-sep |
+| **get in** (a car) | сесть в машину | He got in the car and drove off. | non-sep |
+| **get out of** (a car) | выйти из машины | I got out of the taxi at the corner. | non-sep |
+| **get over** (sth) | пережить, преодолеть | It took her a year to get over the breakup. | non-sep |
+| **get along with** (sb) | ладить с кем-то | I get along with my new colleagues. | non-sep |
+| **get back to** (sb) | вернуться с ответом | I'll get back to you tomorrow. | non-sep |
+| **get away** | уехать в отпуск; ускользнуть | We need to get away for a weekend. | intr |
+| **put on** | надевать; набирать вес | Put on a coat — it's cold. | sep |
+| **put off** | откладывать встречу/дело | Don't put off the dentist appointment. | sep |
+| **put up with** | мириться, терпеть | I can't put up with this noise. | non-sep |
+| **put away** | убирать на место | Put the dishes away after dinner. | sep |
+| **put out** | тушить (огонь, сигарету) | Firefighters put out the fire in an hour. | sep |
+| **look up** | искать в справочнике | Look up the word in the dictionary. | sep |
+| **look after** | присматривать, ухаживать | Can you look after the kids tonight? | non-sep |
+| **look for** | искать (потерянное) | I'm looking for my keys. | non-sep |
+| **look forward to** (+ V-ing) | ждать с нетерпением | I look forward to seeing you. | non-sep |
+| **look out** | будь осторожен | Look out! There's a car coming. | intr |
+| **look into** | расследовать, изучать | We're looking into the issue. | non-sep |
+| **turn on** | включать | Turn on the light, please. | sep |
+| **turn off** | выключать | Don't forget to turn off the oven. | sep |
+| **turn up** | прибавить громкость; появиться | Turn the music up. He turned up late. | sep / intr |
+| **turn down** | убавить громкость; отказать | They turned down my offer. | sep |
+| **turn into** | превратиться в | The argument turned into a fight. | non-sep |
+| **turn out** | оказаться | The meeting turned out to be useful. | intr |
+| **take off** | снимать одежду; взлетать | Take off your shoes. The plane took off. | sep / intr |
+| **take after** | быть похожим (на родителя) | She takes after her mother. | non-sep |
+| **take up** | начать заниматься; занять место | I took up running last year. | sep |
+| **take over** | взять на себя роль | Anna will take over the team next month. | sep |
+| **give up** | сдаваться; бросать привычку | I gave up smoking two years ago. | sep |
+| **give in** | уступить | After hours of arguing, he gave in. | intr |
+| **give away** | раздавать бесплатно | They gave away free samples. | sep |
+| **give back** | вернуть | Give the book back when you finish. | sep |
+| **go on** | продолжаться | Life goes on. The meeting went on for hours. | intr |
+| **go off** | звенеть (будильник); портиться | My alarm went off at six. The milk went off. | intr |
+| **go through** | пройти через (трудности, документы) | She went through a difficult divorce. | non-sep |
+| **come up with** | придумать | He came up with a great idea. | non-sep |
+| **come across** | встретить случайно | I came across an old photo in the drawer. | non-sep |
+| **break down** | сломаться (машина / эмоционально) | My car broke down on the way to work. | intr |
+| **break up** | расстаться | They broke up after five years together. | intr |
+| **find out** | выяснить | I found out the truth yesterday. | sep |
+| **work out** | тренироваться; сработать; понять | I work out three times a week. It worked out. | intr / sep |
+| **figure out** | разобраться, понять | I can't figure out this error. | sep |
+| **run out of** | закончились запасы | We're running out of milk. | non-sep |
+| **hang out** | тусоваться | We hang out at the cafe every Friday. | intr |
+
+### Правила порядка слов
+
+**Separable** (большинство transitive PV): объект — существительное стоит как до, так и после частицы.
+
+- *I turned on the light.* / *I turned the light on.* — оба нормальны.
+- *She took off her coat.* / *She took her coat off.* — оба нормальны.
+
+С местоимением правило ужесточается: **обязательно между глаголом и частицей**.
+
+- *I turned it on.* — да. *I turned on it.* — нет.
+- *She took it off.* — да. *She took off it.* — нет.
+
+**Non-separable**: всё остаётся вместе, объект — после частицы. Особенно: PV с двумя частицами (`put up with`, `look forward to`, `come up with`, `run out of`) и некоторые исключения (`look after`, `come across`, `go through`).
+
+- *Look after the kids.* / *Look after them.* — да.
+- *Look the kids after.* — нет.
+
+**Intransitive**: объекта нет, разделять нечем.
+
+- *I get up at seven.* — да.
+- *The car broke down.* — да.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="У нас приставка приклеена к глаголу спереди и неподвижна. Английская частица — отделена и может ходить, но смысл она меняет так же радикально. «Под-ходить», «об-ходить», «у-ходить» — три разных глагола, и в английском им соответствуют не три разных корня, а три разные частицы при одном корне.">
+  <div slot="ru">
+    <strong>Приставка спереди:</strong><br/>
+    при-ходить = come.<br/>
+    у-ходить = leave / go away.<br/>
+    под-ходить = come up to.<br/>
+    об-ходить = go around.<br/>
+    Смысл задан приставкой, она спереди и не двигается.
+  </div>
+  <div slot="en">
+    <strong>Частица сзади:</strong><br/>
+    come — приходить.<br/>
+    go away — уходить.<br/>
+    come up with — придумать.<br/>
+    look up — искать в словаре.<br/>
+    Частица сзади, иногда отделяется от глагола объектом.
+  </div>
+</AnalogyBox>
+
+## 5. Визуальная схема
+
+Три класса PV по поведению с объектом — отличаются только тем, можно ли вклинить объект между глаголом и частицей.
+
+<Compare leftLabel="Separable" rightLabel="Non-separable">
+  <div slot="left">
+    <strong>turn on, turn off, take off, put on, give up, find out, look up, figure out</strong><br/><br/>
+    Объект-существительное — где угодно:<br/>
+    <em>Turn on the light. / Turn the light on.</em><br/><br/>
+    Объект-местоимение — только между:<br/>
+    <em>Turn it on.</em> (не «turn on it»).
+  </div>
+  <div slot="right">
+    <strong>look after, look for, look forward to, put up with, get along with, come across, come up with, run out of</strong><br/><br/>
+    Объект всегда после частицы целиком:<br/>
+    <em>Look after the kids. / Look after them.</em><br/><br/>
+    Разделение запрещено:<br/>
+    <em>Look the kids after.</em> — невозможно.
+  </div>
+</Compare>
+
+Группы PV на одном «материнском» глаголе с разными частицами — корень дает направление действия, частица меняет смысл.
+
+<Compare leftLabel="look + частица" rightLabel="turn + частица">
+  <div slot="left">
+    <strong>look at</strong> — смотреть на (обычный verb + prep).<br/>
+    <strong>look for</strong> — искать (что потерял).<br/>
+    <strong>look after</strong> — присматривать.<br/>
+    <strong>look forward to</strong> — ждать с нетерпением.<br/>
+    <strong>look up</strong> — искать в словаре.<br/>
+    <strong>look into</strong> — расследовать.<br/>
+    <strong>look out</strong> — берегись.
+  </div>
+  <div slot="right">
+    <strong>turn on / off</strong> — включить / выключить.<br/>
+    <strong>turn up / down</strong> — громче / тише; отказать.<br/>
+    <strong>turn into</strong> — превратиться в.<br/>
+    <strong>turn out</strong> — оказаться (в итоге).<br/>
+    <strong>turn over</strong> — перевернуть.<br/>
+    <strong>turn back</strong> — повернуть назад.
+  </div>
+</Compare>
+
+## 6. Смысл и использование
+
+### Separable PV — как правильно расставлять объект
+
+<RuleList rules={[
+  "<strong>Объект-существительное</strong> может стоять и до частицы, и после. <em>Turn off the TV.</em> = <em>Turn the TV off.</em> Оба варианта правильные, выбор стилистический.",
+  "<strong>Объект-местоимение</strong> (it, them, him, her, me, us, you) — <strong>всегда между глаголом и частицей</strong>. <em>Turn it off.</em> — да. <em>Turn off it.</em> — категорически нет.",
+  "<strong>Длинная фраза-объект</strong> ставится после частицы, не вклинивается. <em>Turn off the lights in the kitchen and the hallway.</em> Вклинивать такое посередине — громоздко.",
+  "<strong>Большинство transitive PV — separable.</strong> turn on/off, take off, put on, give up, find out, look up, work out, figure out, take up, give back, put away, put out, fill in.",
+]} />
+
+### Non-separable PV — порядок жёсткий
+
+<RuleList rules={[
+  "<strong>PV с двумя частицами</strong> (verb + adverb + preposition) всегда non-separable: <em>put up with, look forward to, come up with, get along with, run out of, get away with, look out for</em>. Разделять нельзя.",
+  "<strong>PV типа look after, look for, look into</strong> ведут себя как обычные verb + prep — частицу не отрывают от глагола.",
+  "<strong>С местоимением</strong> тоже после частицы: <em>I get along with him.</em>, <em>We ran out of it.</em>",
+  "<strong>Подсказка по запоминанию:</strong> если PV с предлогом-направлением (`after`, `for`, `into`, `with`, `of`) — почти всегда non-separable.",
+]} />
+
+### Intransitive PV — без объекта вообще
+
+<RuleList rules={[
+  "<strong>Не требуют объекта</strong> — действие самодостаточно: <em>get up, wake up, go away, sit down, stand up, come over, look out, hang out, break down, go on, give in.</em>",
+  "<strong>Разделять нечем</strong> — частица всегда сразу после глагола. <em>I get up at seven.</em>, <em>The car broke down.</em>",
+  "<strong>Некоторые PV бывают и transitive, и intransitive</strong> в разных смыслах: <em>turn up</em> = прибавить громкость (sep) и появиться (intr); <em>take off</em> = снимать одежду (sep) и взлетать о самолёте (intr).",
+]} />
+
+### Контекст решает смысл
+
+Многие PV многозначны. Какое значение — подсказывает контекст и тип объекта.
+
+<RuleList rules={[
+  "<strong>take off</strong>: снять одежду (с объектом) — <em>Take off your shoes.</em> Взлетать (без объекта, про самолёт) — <em>The plane took off at 6 AM.</em>",
+  "<strong>go off</strong>: будильник звенит — <em>The alarm went off.</em> Молоко прокисло — <em>The milk has gone off.</em> Бомба сработала — <em>The bomb went off in the square.</em>",
+  "<strong>work out</strong>: тренироваться — <em>I work out at the gym.</em> Сложиться удачно — <em>Things worked out fine.</em> Понять — <em>I can't work out how he did it.</em>",
+  "<strong>turn down</strong>: убавить громкость — <em>Turn the music down.</em> Отказать в просьбе/предложении — <em>They turned down my offer.</em>",
+  "<strong>break down</strong>: машина сломалась — <em>My car broke down.</em> Человек психологически — <em>She broke down in tears.</em>",
+]} />
+
+### Грамматические тонкости
+
+<RuleList rules={[
+  "<strong>give up + V-ing</strong>, не to + V. <em>I gave up smoking.</em> — да. <em>I gave up to smoke.</em> — нет.",
+  "<strong>look forward to + V-ing</strong>, не to + V. Здесь <em>to</em> — это предлог, не маркер инфинитива. <em>I look forward to seeing you.</em> — да. <em>I look forward to see you.</em> — нет.",
+  "<strong>run out of</strong> — обязательное <em>of</em>. Без него меняется смысл: <em>run out</em> (без объекта) = выбежать наружу.",
+  "<strong>put up with</strong> — три части, целиком non-separable: <em>I can't put up with him.</em> — да. <em>I can't put him up with.</em> — нет.",
+]} />
+
+## 7. Примеры
+
+### Бытовое утро
+
+<Example ru="Я обычно встаю в семь.">I usually get up at seven.</Example>
+<Example ru="Включи свет, пожалуйста.">Turn on the light, please.</Example>
+<Example ru="Сними обувь у двери.">Take off your shoes at the door.</Example>
+<Example ru="Я никак не могу найти свои ключи.">I can't find my keys anywhere.</Example>
+<Example ru="Будильник зазвенел в шесть.">The alarm went off at six.</Example>
+
+### Транспорт и дорога
+
+<Example ru="Она вышла из автобуса на следующей остановке.">She got off the bus at the next stop.</Example>
+<Example ru="Садись в машину, едем.">Get in the car, let's go.</Example>
+<Example ru="Я ищу заправку поблизости.">I'm looking for a gas station nearby.</Example>
+<Example ru="Машина сломалась посреди шоссе.">The car broke down in the middle of the highway.</Example>
+<Example ru="Самолёт взлетел вовремя.">The plane took off on time.</Example>
+
+### Друзья и отношения
+
+<Example ru="Я хорошо лажу с соседями.">I get along well with my neighbours.</Example>
+<Example ru="Они расстались в прошлом месяце.">They broke up last month.</Example>
+<Example ru="Мы тусуемся в этом кафе по пятницам.">We hang out at this cafe on Fridays.</Example>
+<Example ru="Я случайно встретил старого друга в магазине.">I came across an old friend at the store.</Example>
+<Example ru="Сын очень похож на отца.">The son really takes after his father.</Example>
+
+### Решения и привычки
+
+<Example ru="Я бросил курить два года назад.">I gave up smoking two years ago.</Example>
+<Example ru="Не откладывай этот разговор.">Don't put off this conversation.</Example>
+<Example ru="Я начал бегать в прошлом году.">I took up running last year.</Example>
+<Example ru="После часа спора она уступила.">After an hour of arguing, she gave in.</Example>
+
+### Офис в общем виде
+
+<Example ru="Я жду нашей встречи во вторник.">I look forward to our meeting on Tuesday.</Example>
+<Example ru="Анна возьмёт на себя команду в следующем месяце.">Anna will take over the team next month.</Example>
+<Example ru="Я свяжусь с вами завтра.">I'll get back to you tomorrow.</Example>
+<Example ru="Они отклонили моё предложение.">They turned down my offer.</Example>
+<Example ru="Совещание оказалось полезным.">The meeting turned out to be useful.</Example>
+<Example ru="Кто-то должен придумать новую идею.">Someone needs to come up with a new idea.</Example>
+
+### IT-нейтрально
+
+<Example ru="Я не могу разобраться в этой ошибке.">I can't figure out this error.</Example>
+<Example ru="Мы изучаем причину сбоя.">We're looking into the cause of the failure.</Example>
+<Example ru="Свободное место на диске заканчивается.">We're running out of disk space.</Example>
+<Example ru="Я выяснил, почему тест падает.">I found out why the test fails.</Example>
+
+## 8. Контрасты с похожими темами
+
+<Compare leftLabel="Phrasal verb (идиоматично)" rightLabel="Verb + preposition (буквально)">
+  <div slot="left">
+    <strong>look up</strong> — искать в справочнике.<br/>
+    <em>Look up the word in the dictionary.</em><br/><br/>
+    <strong>take off</strong> — снимать одежду / взлетать.<br/>
+    <em>Take off your coat.</em><br/><br/>
+    <strong>give up</strong> — бросать (привычку, дело).<br/>
+    <em>I gave up smoking.</em><br/><br/>
+    Смысл не выводится из частей.
+  </div>
+  <div slot="right">
+    <strong>look at</strong> — смотреть на.<br/>
+    <em>Look at the screen.</em><br/><br/>
+    <strong>listen to</strong> — слушать.<br/>
+    <em>Listen to music.</em><br/><br/>
+    <strong>wait for</strong> — ждать.<br/>
+    <em>Wait for the bus.</em><br/><br/>
+    Смысл прямой: глагол + объект через предлог.
+  </div>
+</Compare>
+
+<Compare leftLabel="look at / for / after / forward to" rightLabel="Разные смыслы — разные частицы">
+  <div slot="left">
+    <strong>look at</strong> — смотреть на.<br/>
+    <em>Look at this photo.</em><br/><br/>
+    <strong>look for</strong> — искать (что потерял).<br/>
+    <em>I'm looking for my phone.</em><br/><br/>
+    <strong>look after</strong> — заботиться.<br/>
+    <em>Look after the dog while I'm away.</em><br/><br/>
+    <strong>look forward to</strong> — ждать с нетерпением.<br/>
+    <em>I look forward to the weekend.</em>
+  </div>
+  <div slot="right">
+    Корень <em>look</em> один, частица меняет всё.<br/><br/>
+    <em>at</em> — направление взгляда.<br/>
+    <em>for</em> — цель поиска.<br/>
+    <em>after</em> — забота, в основном о живых.<br/>
+    <em>forward to</em> — антиципация будущего.<br/><br/>
+    Перевод по частям не работает — учить целиком.
+  </div>
+</Compare>
+
+<Compare leftLabel="turn on / off / up / down" rightLabel="Парные противоположности">
+  <div slot="left">
+    <strong>turn on</strong> — включить.<br/>
+    <em>Turn on the lamp.</em><br/><br/>
+    <strong>turn up</strong> — прибавить громкость.<br/>
+    <em>Turn the volume up.</em><br/><br/>
+    Также <em>turn up</em> = появиться (без объекта): <em>He turned up at 9.</em>
+  </div>
+  <div slot="right">
+    <strong>turn off</strong> — выключить.<br/>
+    <em>Turn off the lamp.</em><br/><br/>
+    <strong>turn down</strong> — убавить громкость; отказать.<br/>
+    <em>Turn the volume down.</em><br/>
+    <em>They turned down the offer.</em>
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Лайфхак запоминания">
+Учи фразовый глагол **одним блоком с примером**, как одно слово. Не «get + up», а `get up = вставать (I get up at seven)`. Перевод по частям почти всегда ведёт в ловушку: `look up` — это не «смотреть вверх», а «искать в словаре». Если значение глагола в контексте не вытекает из обычного смысла глагола — это phrasal verb, и его смысл нужно знать как факт. С местоимением действует жёсткое правило: **between**. `Turn it on`, `take them off`, `give it back` — местоимение всегда между глаголом и частицей.
+</Callout>
+
+## 10. Логика расхождения
+
+<Callout type="blue" title="Почему PV возникли и почему их так много">
+Английский — германский язык, в котором словарный запас на ⅔ заимствован из латыни и французского после норманского завоевания. Получилось два слоя лексики: германский (короткие глаголы — `get`, `take`, `put`, `come`, `go`) и романский (длинные «учёные» — `obtain`, `acquire`, `place`, `arrive`, `depart`). Германские глаголы расширили свой охват за счёт частиц — так из небольшого набора корней получилась гибкая система: `get up / get on / get over / get along` против латинских `rise / board / overcome / cope`. Поэтому phrasal verbs ощущаются как «разговорные», а их романские синонимы — как «формальные»: `find out` vs `discover`, `come across` vs `encounter`, `give up` vs `abandon`. В неформальной речи PV — норма; в академическом тексте предпочитают романские синонимы. Это не два разных лексикона, это один язык с двумя регистрами, и владеть обоими — значит чувствовать дистанцию.
+</Callout>
+
+## 11. Дерево решений
+
+<DecisionTree nodes={[
+  { q: "У PV есть объект (transitive)?", yes: "к вопросу 2", no: "Intransitive — частица сразу после глагола, никакого разделения. get up, go away, break down, look out." },
+  { q: "Это PV с двумя частицами (put up with, look forward to, come up with, run out of)?", yes: "Всегда non-separable, объект только после всей конструкции. put up with him, look forward to seeing you.", no: "к вопросу 3" },
+  { q: "Это PV с предлогом-направлением (after, for, into, with, of, across, through) — например look after, get over, come across?", yes: "Non-separable, объект только после частицы. look after the kids, get over the breakup.", no: "к вопросу 4" },
+  { q: "Объект — местоимение (it, them, him, her, me, us)?", yes: "Separable PV — обязательно между глаголом и частицей: turn it on, take them off, give it back.", no: "к вопросу 5" },
+  { q: "Объект — существительное (короткое или длинное)?", yes: "Можно и до, и после частицы — для короткого. Длинную фразу лучше после частицы. Turn off the light / Turn the light off / Turn off the lights in the kitchen and the hallway.", no: "Проверь, что в предложении действительно есть объект." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I look up to the sky to find my keys | I look up the word in the dictionary | look up = искать в справочнике, не «смотреть вверх». Прямой перевод не работает — это идиома. |
+| Turn on it | Turn it on | Separable PV с местоимением — обязательно между глаголом и частицей. С существительным можно и так, и так: turn on the light / turn the light on. |
+| I'm waiting the bus | I'm waiting for the bus | wait — обычный глагол, требует предлога for. Это не PV, но частая ошибка по аналогии. |
+| Look the kids after | Look after the kids | look after — non-separable, разделять нельзя. То же с look for, look into, get over, put up with. |
+| In the bus we get in / get out | On the bus we get on / get off | get on/off — для большого транспорта (автобус, поезд, самолёт). get in/out — для машин и такси. Запомнить: большой транспорт → on/off, легковой → in/out. |
+| I gave up to smoke | I gave up smoking | После give up — V-ing (герундий), не инфинитив. То же: stop smoking, не stop to smoke. |
+| I look forward to see you | I look forward to seeing you | В look forward to «to» — предлог, не маркер инфинитива. После предлога — V-ing. То же с be used to, get used to. |
+| I can't put him up with anymore | I can't put up with him anymore | put up with — три части, целиком non-separable. Объект (даже местоимение) только после всей конструкции. |
+| The plane took off the runway | The plane took off | take off в смысле «взлетать» — intransitive, без объекта. Объект (одежда) у sep-варианта: take off the coat / take the coat off. |
+| He turned out a great manager | He turned out to be a great manager | turn out в смысле «оказаться кем-то» требует to be. Без to be turn out = в итоге случиться. |
+| We run out milk | We are running out of milk | run out of требует обязательного of. Без of — другой PV: run out = выбегать наружу. |
+| She gone off the milk | The milk has gone off | go off о еде = испортилась, и подлежащее — сама еда, не человек. Также часто в Present Perfect (есть последствие сейчас). |
+
+## 13. Шпаргалка
+
+| Корень | Главные PV | Что объединяет |
+| --- | --- | --- |
+| **get** | get up, get on/off, get in/out, get over, get along with, get back to, get away | движение, состояние, преодоление |
+| **put** | put on, put off, put up with, put away, put out | помещать что-то куда-то; терпеть |
+| **look** | look up, look after, look for, look forward to, look into, look out | направление внимания |
+| **turn** | turn on/off, turn up/down, turn into, turn out | переключение состояния |
+| **take** | take off, take after, take up, take over | принимать / снимать / начинать |
+| **give** | give up, give in, give away, give back | передача / отказ |
+| **go** | go on, go off, go through, go away | продолжение / прекращение / прохождение |
+| **come** | come up with, come across, come over, come back | приход / появление / встреча |
+| **break** | break down, break up | поломка / распад |
+| **work / find / figure** | work out, find out, figure out | выяснение / достижение |
+
+| Тип | Правило | Примеры |
+| --- | --- | --- |
+| Separable | Объект-существительное — где угодно; местоимение — только между | turn it on, take off the shoes / take the shoes off |
+| Non-separable | Объект только после частицы целиком | look after them, put up with him |
+| Intransitive | Без объекта | get up, break down, hang out |
+| Two-particle | Всегда non-separable | look forward to, come up with, run out of |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "phrasal verb (PV)", meaning: "фразовый глагол — глагол + частица с часто идиоматичным смыслом" },
+  { term: "particle", meaning: "частица — предлог или наречие после глагола в составе PV" },
+  { term: "separable", meaning: "разделяемый — объект может стоять между глаголом и частицей" },
+  { term: "non-separable", meaning: "неразделяемый — объект только после частицы" },
+  { term: "intransitive", meaning: "непереходный — без объекта (get up, break down)" },
+  { term: "two-particle PV", meaning: "PV с двумя частицами (look forward to, put up with) — всегда non-separable" },
+  { term: "get up", meaning: "вставать (с кровати)" },
+  { term: "get on / get off", meaning: "садиться в / выходить из большого транспорта (bus, train, plane)" },
+  { term: "get in / get out of", meaning: "садиться в / выходить из машины или такси" },
+  { term: "get over", meaning: "пережить, преодолеть (breakup, illness)" },
+  { term: "get along with", meaning: "ладить с кем-то" },
+  { term: "get back to", meaning: "связаться позже, дать ответ позже" },
+  { term: "get away", meaning: "уехать в отпуск; ускользнуть" },
+  { term: "put on", meaning: "надевать; набирать (вес)" },
+  { term: "put off", meaning: "откладывать дело, встречу" },
+  { term: "put up with", meaning: "мириться, терпеть (non-separable)" },
+  { term: "put away", meaning: "убирать на место" },
+  { term: "put out", meaning: "тушить (огонь, сигарету)" },
+  { term: "look up", meaning: "искать в справочнике, словаре" },
+  { term: "look after", meaning: "присматривать, ухаживать" },
+  { term: "look for", meaning: "искать (что-то потерянное)" },
+  { term: "look forward to + V-ing", meaning: "ждать с нетерпением" },
+  { term: "look into", meaning: "расследовать, изучать" },
+  { term: "look out", meaning: "будь осторожен!" },
+  { term: "turn on / turn off", meaning: "включать / выключать" },
+  { term: "turn up / turn down", meaning: "прибавить / убавить громкость; turn down также — отказать" },
+  { term: "turn into", meaning: "превратиться в" },
+  { term: "turn out", meaning: "оказаться (the meeting turned out to be useful)" },
+  { term: "take off", meaning: "снимать одежду (sep); взлетать о самолёте (intr)" },
+  { term: "take after", meaning: "быть похожим на родителя" },
+  { term: "take up", meaning: "начать заниматься (хобби); занять место" },
+  { term: "take over", meaning: "взять на себя роль, должность" },
+  { term: "give up + V-ing", meaning: "сдаваться; бросать (привычку)" },
+  { term: "give in", meaning: "уступить" },
+  { term: "give away", meaning: "раздавать бесплатно" },
+  { term: "give back", meaning: "вернуть" },
+  { term: "go on", meaning: "продолжаться" },
+  { term: "go off", meaning: "звенеть (alarm); портиться (food); срабатывать (bomb)" },
+  { term: "go through", meaning: "пройти через (трудности, документы)" },
+  { term: "come up with", meaning: "придумать (idea, solution)" },
+  { term: "come across", meaning: "встретить случайно" },
+  { term: "break down", meaning: "сломаться (машина); психологически (человек)" },
+  { term: "break up", meaning: "расстаться (couple); распадаться" },
+  { term: "find out", meaning: "выяснить" },
+  { term: "work out", meaning: "тренироваться; сработать; разобраться" },
+  { term: "figure out", meaning: "понять, разобраться" },
+  { term: "run out of", meaning: "закончились запасы (We're running out of milk)" },
+  { term: "hang out", meaning: "тусоваться, проводить время" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">PV → значение и пример</span>
+    <span class="kc-trainer-hint">Запомни 20+ ключевых phrasal verbs целиком</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">PV → значение</span>
+    <span class="kc-trainer-hint">Соотнеси фразовый глагол с переводом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">По «материнскому» глаголу</span>
+    <span class="kc-trainer-hint">Разложи PV по группам: get / put / look / другое</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">PV в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов: выбери правильный PV под смысл</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши частицу или весь PV</span>
+    <span class="kc-trainer-hint">Заполни пропуск нужной частицей</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение</span>
+    <span class="kc-trainer-hint">Расставь слова — следи за местом частицы и местоимения</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Murphy R., English Grammar in Use** — Units 137-145 (phrasal verbs: introduction, in/out, on/off, up/down, away/back).
+- **Swan M., Practical English Usage** — §595-599 (phrasal verbs: meaning, word order, separable/inseparable).
+- **Cambridge Phrasal Verbs Dictionary** — основные значения и примеры B1-B2 уровня.
+- **English Page** — englishpage.com/prepositions/phrasaldictionary.html (алфавитный справочник PV с примерами).

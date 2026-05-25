@@ -1,0 +1,107 @@
+{
+  "course": "english",
+  "lesson": "english-phrasal-verbs",
+  "title": "PV по «материнскому» глаголу",
+  "description": "Распредели phrasal verbs по группам — get / put / look / другие.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "get", "label": "GET-семейство" },
+      { "id": "put", "label": "PUT-семейство" },
+      { "id": "look", "label": "LOOK-семейство" },
+      { "id": "other", "label": "Другие глаголы" }
+    ],
+    "items": [
+      {
+        "text": "get up",
+        "category": "get",
+        "explain": "Get-семейство, intransitive. Вставать с кровати: «I get up at seven.»"
+      },
+      {
+        "text": "get along with",
+        "category": "get",
+        "explain": "Get-семейство, two-particle non-separable. Ладить с кем-то."
+      },
+      {
+        "text": "get over",
+        "category": "get",
+        "explain": "Get-семейство, non-separable. Пережить, преодолеть (breakup, illness)."
+      },
+      {
+        "text": "get off",
+        "category": "get",
+        "explain": "Get-семейство, non-separable. Выходить из большого транспорта (bus, train, plane)."
+      },
+      {
+        "text": "put on",
+        "category": "put",
+        "explain": "Put-семейство, separable. Надевать одежду или набирать вес."
+      },
+      {
+        "text": "put up with",
+        "category": "put",
+        "explain": "Put-семейство, three-particle non-separable. Мириться, терпеть."
+      },
+      {
+        "text": "put off",
+        "category": "put",
+        "explain": "Put-семейство, separable. Откладывать дело, встречу."
+      },
+      {
+        "text": "put away",
+        "category": "put",
+        "explain": "Put-семейство, separable. Убирать на место (dishes, toys)."
+      },
+      {
+        "text": "look after",
+        "category": "look",
+        "explain": "Look-семейство, non-separable. Присматривать, ухаживать."
+      },
+      {
+        "text": "look up",
+        "category": "look",
+        "explain": "Look-семейство, separable. Искать в справочнике. НЕ «смотреть вверх»."
+      },
+      {
+        "text": "look forward to",
+        "category": "look",
+        "explain": "Look-семейство, two-particle non-separable. Ждать с нетерпением + V-ing."
+      },
+      {
+        "text": "look into",
+        "category": "look",
+        "explain": "Look-семейство, non-separable. Расследовать, изучать (issue, case)."
+      },
+      {
+        "text": "give up",
+        "category": "other",
+        "explain": "Give-семейство, separable. Бросать (привычку), сдаваться. Give up + V-ing."
+      },
+      {
+        "text": "turn on",
+        "category": "other",
+        "explain": "Turn-семейство, separable. Включать. С местоимением: «turn it on»."
+      },
+      {
+        "text": "take off",
+        "category": "other",
+        "explain": "Take-семейство, два смысла: снимать одежду (sep) / взлетать (intr)."
+      },
+      {
+        "text": "break down",
+        "category": "other",
+        "explain": "Break-семейство, intransitive. Сломаться (машина / человек)."
+      },
+      {
+        "text": "come up with",
+        "category": "other",
+        "explain": "Come-семейство, three-particle non-separable. Придумать (идею)."
+      },
+      {
+        "text": "run out of",
+        "category": "other",
+        "explain": "Run-семейство, two-particle non-separable. Закончились запасы — обязательное of."
+      }
+    ]
+  }
+}

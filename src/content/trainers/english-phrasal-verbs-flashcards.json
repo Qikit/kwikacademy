@@ -1,0 +1,156 @@
+{
+  "course": "english",
+  "lesson": "english-phrasal-verbs",
+  "title": "Phrasal verbs — flashcards",
+  "description": "20+ ключевых PV: значение и пример. Учить целиком, как одно слово.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "get up",
+        "back": "вставать (с кровати). «I get up at seven every day.» Intransitive — без объекта.",
+        "hint": "intransitive"
+      },
+      {
+        "front": "get on / get off",
+        "back": "садиться в / выходить из большого транспорта (bus, train, plane). «She got on the bus.» / «Get off at the next stop.» Non-separable.",
+        "hint": "большой транспорт"
+      },
+      {
+        "front": "get in / get out of",
+        "back": "садиться в / выходить из машины или такси. «He got in the car.» / «I got out of the taxi at the corner.» Non-separable.",
+        "hint": "легковой транспорт"
+      },
+      {
+        "front": "get along with",
+        "back": "ладить с кем-то. «I get along with my new colleagues.» Two-particle, non-separable.",
+        "hint": "non-separable"
+      },
+      {
+        "front": "get over",
+        "back": "пережить, преодолеть (разрыв, болезнь, потерю). «It took her a year to get over the breakup.» Non-separable.",
+        "hint": "non-separable"
+      },
+      {
+        "front": "put on",
+        "back": "надевать; набирать (вес). «Put on a coat — it's cold.» / «He has put on five kilos.» Separable: turn it on модель — put it on.",
+        "hint": "separable"
+      },
+      {
+        "front": "put off",
+        "back": "откладывать (дело, встречу). «Don't put off the dentist appointment.» Separable: «put it off» с местоимением.",
+        "hint": "separable"
+      },
+      {
+        "front": "put up with",
+        "back": "мириться, терпеть. «I can't put up with this noise.» Two-particle, non-separable — нельзя «put him up with».",
+        "hint": "three particles, non-separable"
+      },
+      {
+        "front": "look up",
+        "back": "искать в справочнике, словаре. «Look up the word in the dictionary.» НЕ «смотреть вверх» — прямой перевод не работает.",
+        "hint": "separable, идиоматично"
+      },
+      {
+        "front": "look after",
+        "back": "присматривать, ухаживать. «Can you look after the kids tonight?» Non-separable — «look the kids after» невозможно.",
+        "hint": "non-separable"
+      },
+      {
+        "front": "look for",
+        "back": "искать (что-то потерянное). «I'm looking for my keys.» Non-separable. Не путать с look at (смотреть на) и look after (заботиться).",
+        "hint": "non-separable"
+      },
+      {
+        "front": "look forward to + V-ing",
+        "back": "ждать с нетерпением. «I look forward to seeing you.» — здесь to это предлог, после него V-ing, не инфинитив. НЕ «look forward to see».",
+        "hint": "to + V-ing"
+      },
+      {
+        "front": "turn on / turn off",
+        "back": "включать / выключать. «Turn on the light» = «Turn the light on». С местоимением — только «Turn it on», не «turn on it». Separable.",
+        "hint": "separable; местоимение между"
+      },
+      {
+        "front": "turn down",
+        "back": "1) убавить громкость: «Turn the music down.» 2) отказать в просьбе/предложении: «They turned down my offer.» Separable.",
+        "hint": "два смысла"
+      },
+      {
+        "front": "turn out",
+        "back": "оказаться (в итоге). «The meeting turned out to be useful.» / «It turned out he was right.» Intransitive, часто с to be.",
+        "hint": "intransitive"
+      },
+      {
+        "front": "take off",
+        "back": "1) снимать одежду (sep): «Take off your shoes / take your shoes off.» 2) взлетать о самолёте (intr): «The plane took off at 6.» Контекст решает.",
+        "hint": "два смысла"
+      },
+      {
+        "front": "take after",
+        "back": "быть похожим на родителя. «She takes after her mother.» Non-separable. Не путать с take off (снимать) и take up (заняться).",
+        "hint": "non-separable"
+      },
+      {
+        "front": "take up",
+        "back": "начать заниматься (хобби, занятием); занять место/время. «I took up running last year.» / «This table takes up too much space.» Separable.",
+        "hint": "separable"
+      },
+      {
+        "front": "give up + V-ing",
+        "back": "сдаваться; бросать (привычку). «I gave up smoking two years ago.» После give up — V-ing, не инфинитив: НЕ «gave up to smoke».",
+        "hint": "give up + V-ing"
+      },
+      {
+        "front": "give back",
+        "back": "вернуть. «Give the book back when you finish.» / «Give it back!» Separable — с местоимением обязательно «give it back».",
+        "hint": "separable"
+      },
+      {
+        "front": "go off",
+        "back": "три смысла: 1) звенеть (alarm): «My alarm went off at six.» 2) портиться (food): «The milk has gone off.» 3) срабатывать (bomb): «The bomb went off.»",
+        "hint": "три смысла"
+      },
+      {
+        "front": "come up with",
+        "back": "придумать (idea, plan, solution). «He came up with a great idea.» Two-particle, non-separable.",
+        "hint": "three particles, non-separable"
+      },
+      {
+        "front": "come across",
+        "back": "встретить случайно (кого-то / что-то). «I came across an old photo in the drawer.» Non-separable. Контекст подсказывает случайность.",
+        "hint": "non-separable"
+      },
+      {
+        "front": "break down",
+        "back": "1) сломаться (о машине, технике): «My car broke down on the highway.» 2) психологически: «She broke down in tears.» Intransitive.",
+        "hint": "intransitive"
+      },
+      {
+        "front": "find out",
+        "back": "выяснить (информацию, факт). «I found out the truth yesterday.» / «I found out why the test fails.» Separable, но обычно объект — целое придаточное.",
+        "hint": "separable"
+      },
+      {
+        "front": "work out",
+        "back": "три смысла: 1) тренироваться (intr): «I work out at the gym.» 2) сложиться удачно (intr): «It worked out.» 3) разобраться (sep): «I can't work out the answer.»",
+        "hint": "три смысла"
+      },
+      {
+        "front": "figure out",
+        "back": "понять, разобраться (как что-то устроено / почему случилось). «I can't figure out this error.» Separable: «I can't figure it out.»",
+        "hint": "separable"
+      },
+      {
+        "front": "run out of",
+        "back": "закончились запасы. «We're running out of milk / time / patience.» Two-particle, non-separable. Обязательное of — без него другой смысл.",
+        "hint": "обязательное of"
+      },
+      {
+        "front": "hang out",
+        "back": "тусоваться, проводить время (без определённой цели, с друзьями). «We hang out at the cafe every Friday.» Intransitive.",
+        "hint": "intransitive"
+      }
+    ]
+  }
+}

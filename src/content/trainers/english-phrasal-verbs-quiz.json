@@ -1,0 +1,95 @@
+{
+  "course": "english",
+  "lesson": "english-phrasal-verbs",
+  "title": "Phrasal verbs — правила в контексте",
+  "description": "Выбери правильный PV или правильный порядок слов под смысл.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Can you ___ the kids while I'm at the doctor?",
+        "options": ["look for", "look after", "look up", "look forward to"],
+        "correctIndex": 1,
+        "explain": "«Присматривать за детьми» = look after (non-separable). look for = искать потерянное, look up = искать в словаре, look forward to = ждать."
+      },
+      {
+        "prompt": "I gave ___ smoking two years ago.",
+        "options": ["up to smoke", "up smoking", "up smoke", "to smoking"],
+        "correctIndex": 1,
+        "explain": "After give up — V-ing (give up smoking), не инфинитив. «I gave up smoking», не «to smoke»."
+      },
+      {
+        "prompt": "The lamp is on. Please ___.",
+        "options": ["turn off it", "turn it off", "turn off them", "turn them off"],
+        "correctIndex": 1,
+        "explain": "Separable PV с местоимением — обязательно между глаголом и частицей: turn it off. «turn off it» — категорическая ошибка."
+      },
+      {
+        "prompt": "I look forward to ___ you next week.",
+        "options": ["see", "seeing", "seen", "to see"],
+        "correctIndex": 1,
+        "explain": "Look forward to + V-ing. To здесь — предлог, не маркер инфинитива. Поэтому seeing, не see."
+      },
+      {
+        "prompt": "We're ___ milk — can you buy some?",
+        "options": ["running out", "running out of", "running of", "running"],
+        "correctIndex": 1,
+        "explain": "«Закончились запасы» = run out of. Обязательное of. Без of — другой смысл (run out = выбежать наружу)."
+      },
+      {
+        "prompt": "She ___ her mother — same eyes, same voice.",
+        "options": ["takes off", "takes after", "takes up", "takes over"],
+        "correctIndex": 1,
+        "explain": "«Похожа на родителя» = take after (non-separable). Take off = снимать / взлетать; take up = заняться; take over = взять на себя роль."
+      },
+      {
+        "prompt": "My car ___ on the way to work yesterday.",
+        "options": ["broke up", "broke off", "broke down", "broke through"],
+        "correctIndex": 2,
+        "explain": "«Сломалась о машине» = break down (intransitive). Break up = расстаться (о людях); break off = отломить."
+      },
+      {
+        "prompt": "I can't ___ this error — the logs don't help.",
+        "options": ["figure on", "figure out", "figure for", "figure up"],
+        "correctIndex": 1,
+        "explain": "«Разобраться, понять» = figure out (separable). С местоимением: «I can't figure it out.»"
+      },
+      {
+        "prompt": "He ___ at the meeting an hour late.",
+        "options": ["turned on", "turned off", "turned up", "turned in"],
+        "correctIndex": 2,
+        "explain": "«Появиться, прийти (часто неожиданно или поздно)» = turn up (intransitive). Turn on = включить; turn down = убавить / отказать."
+      },
+      {
+        "prompt": "I came ___ this old photo in the drawer.",
+        "options": ["across", "over", "through", "into"],
+        "correctIndex": 0,
+        "explain": "«Встретить случайно» (о вещи или человеке) = come across (non-separable). Come over = заглянуть в гости; come through = пройти насквозь."
+      },
+      {
+        "prompt": "Please ___ the dishes after dinner.",
+        "options": ["put away", "put out", "put off", "put up with"],
+        "correctIndex": 0,
+        "explain": "«Убирать на место» = put away (separable). Put out = тушить; put off = откладывать; put up with = терпеть."
+      },
+      {
+        "prompt": "The meeting ___ to be more useful than I expected.",
+        "options": ["turned on", "turned out", "turned up", "turned over"],
+        "correctIndex": 1,
+        "explain": "«Оказаться (в итоге)» = turn out (часто с to be). «The meeting turned out to be useful.»"
+      },
+      {
+        "prompt": "Sorry, I'll ___ you ___ as soon as I have an answer.",
+        "options": ["get / back", "get / over", "get / along", "get / up"],
+        "correctIndex": 0,
+        "explain": "«Связаться позже, дать ответ позже» = get back to. «I'll get back to you tomorrow.»"
+      },
+      {
+        "prompt": "I can't ___ the noise from upstairs anymore.",
+        "options": ["put up", "put up with", "put with", "put on with"],
+        "correctIndex": 1,
+        "explain": "«Мириться, терпеть» = put up with (three particles, non-separable). Нельзя разделять — «put it up with» неверно."
+      }
+    ]
+  }
+}

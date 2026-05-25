@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-phrasal-verbs",
+  "title": "Phrasal verbs — собери предложение",
+  "description": "Расставь слова в правильном порядке. Следи за местом частицы и местоимения.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["it", "on", "please", "turn"],
+        "answer": ["turn", "it", "on", "please"],
+        "translation": "Включи это, пожалуйста.",
+        "explain": "Separable PV с местоимением — обязательно между глаголом и частицей: turn it on. «turn on it» — категорическая ошибка."
+      },
+      {
+        "words": ["you", "after", "look", "can", "the", "kids", "?"],
+        "answer": ["can", "you", "look", "after", "the", "kids", "?"],
+        "translation": "Ты можешь присмотреть за детьми?",
+        "explain": "Look after — non-separable, объект (the kids) сразу после частицы. Разделять нельзя: «look the kids after» невозможно."
+      },
+      {
+        "words": ["smoking", "two", "I", "ago", "gave", "up", "years"],
+        "answer": ["I", "gave", "up", "smoking", "two", "years", "ago"],
+        "translation": "Я бросил курить два года назад.",
+        "explain": "Give up + V-ing (smoking), не инфинитив. Обстоятельство времени (two years ago) — в конце."
+      },
+      {
+        "words": ["forward", "I", "you", "to", "look", "seeing"],
+        "answer": ["I", "look", "forward", "to", "seeing", "you"],
+        "translation": "Я жду нашей встречи с тобой.",
+        "explain": "Look forward to + V-ing. To — это предлог, поэтому seeing (V-ing), не see. Объект (you) после."
+      },
+      {
+        "words": ["up", "noise", "I", "can't", "with", "this", "put"],
+        "answer": ["I", "can't", "put", "up", "with", "this", "noise"],
+        "translation": "Я не могу терпеть этот шум.",
+        "explain": "Put up with — three-particle non-separable. Все три частицы вместе, объект (this noise) — после всей конструкции."
+      },
+      {
+        "words": ["of", "we're", "milk", "running", "out"],
+        "answer": ["we're", "running", "out", "of", "milk"],
+        "translation": "У нас заканчивается молоко.",
+        "explain": "Run out of — two-particle non-separable. Обязательное of, объект (milk) после."
+      },
+      {
+        "words": ["down", "on", "way", "my", "car", "broke", "to", "the", "work"],
+        "answer": ["my", "car", "broke", "down", "on", "the", "way", "to", "work"],
+        "translation": "Моя машина сломалась по дороге на работу.",
+        "explain": "Break down — intransitive («сломаться о машине»). Частица down сразу после глагола. Дальше — обстоятельство места."
+      },
+      {
+        "words": ["up", "great", "a", "with", "she", "idea", "came"],
+        "answer": ["she", "came", "up", "with", "a", "great", "idea"],
+        "translation": "Она придумала отличную идею.",
+        "explain": "Come up with — three-particle non-separable. Объект (a great idea) — после всей конструкции, разделять нельзя."
+      },
+      {
+        "words": ["shoes", "your", "at", "off", "take", "door", "the"],
+        "answer": ["take", "off", "your", "shoes", "at", "the", "door"],
+        "translation": "Сними обувь у двери.",
+        "explain": "Take off — separable. С существительным-объектом возможно «take off your shoes» и «take your shoes off» — оба верны."
+      },
+      {
+        "words": ["?", "did", "out", "find", "you", "when", "the", "truth"],
+        "answer": ["when", "did", "you", "find", "out", "the", "truth", "?"],
+        "translation": "Когда ты выяснил правду?",
+        "explain": "Вопрос Past Simple: when + did + S + V (find out). Find out — separable, но с длинным объектом — после частицы."
+      }
+    ]
+  }
+}

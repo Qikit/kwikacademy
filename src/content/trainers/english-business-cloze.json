@@ -1,0 +1,82 @@
+{
+  "course": "english",
+  "lesson": "english-business",
+  "title": "Business English — впиши термин",
+  "description": "Заполни пропуск точным business-словом. Одно слово или короткая фраза.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Our quarterly ___ grew by 15% — that's all the money from sales before expenses.",
+        "answers": ["revenue"],
+        "explain": "Revenue — top line, вся выручка от продаж. Profit — что осталось после расходов. Тут указано «before expenses», поэтому revenue.",
+        "hint": "top line"
+      },
+      {
+        "text": "The marketing ___ for next quarter has been approved at $50K.",
+        "answers": ["budget"],
+        "explain": "Budget — запланированная сумма на период или проект. «Approved at $50K» = утверждён бюджет."
+      },
+      {
+        "text": "Please send me the ___ so I can process the payment.",
+        "answers": ["invoice"],
+        "explain": "Invoice — счёт на оплату от поставщика клиенту. Countable: send me the invoice (с артиклем)."
+      },
+      {
+        "text": "Can you give me a ___ figure just to understand the order of magnitude?",
+        "answers": ["ballpark"],
+        "explain": "Ballpark figure — приблизительная оценка, порядок цифр. Бейсбольная идиома. «Just to understand the order of magnitude» — подсказка."
+      },
+      {
+        "text": "I don't have the ___ to take this on this week — I'm fully booked.",
+        "answers": ["bandwidth"],
+        "explain": "Bandwidth (идиома) — личные ресурсы, время на задачу. «I'm fully booked» подтверждает: нет свободного времени."
+      },
+      {
+        "text": "Could you please keep me in the ___ on this decision?",
+        "answers": ["loop"],
+        "explain": "In the loop — в курсе, в копии. «Keep me in the loop» = держи меня в курсе. Out of the loop — не в теме."
+      },
+      {
+        "text": "Let's ___ base on Friday and review where we are.",
+        "answers": ["touch"],
+        "explain": "Touch base — коротко списаться/созвониться без серьёзной повестки, чтобы сверить статус. Бейсбольная метафора."
+      },
+      {
+        "text": "We need to push ___ the deadline by a week.",
+        "answers": ["back"],
+        "explain": "Push back the deadline — сдвинуть срок позже. Не отменить, не приблизить. Антоним: move up the deadline."
+      },
+      {
+        "text": "I would ___ to schedule a call at your convenience.",
+        "answers": ["like"],
+        "explain": "Would like — формально-вежливая просьба вместо want. «I would like to schedule a call» — стандарт делового email. Без I want."
+      },
+      {
+        "text": "She works at the marketing ___ of a mid-sized company.",
+        "answers": ["department"],
+        "explain": "Department — отдел внутри компании. Marketing department, HR department, finance department. Team — часть отдела, обычно меньше."
+      },
+      {
+        "text": "Could you walk me ___ the proposal? I want to understand the details.",
+        "answers": ["through"],
+        "explain": "Walk through — подробно объяснить шаг за шагом. «Walk me through it» = объясни мне детально. Стандартная business-фраза."
+      },
+      {
+        "text": "Our main ___ is monthly active users — that's how we measure growth.",
+        "answers": ["KPI"],
+        "explain": "KPI = Key Performance Indicator, ключевая измеримая метрика. «How we measure growth» — точное определение KPI."
+      },
+      {
+        "text": "Let's start with the low-hanging ___ before tackling the hard problems.",
+        "answers": ["fruit"],
+        "explain": "Low-hanging fruit — идиома: лёгкая задача с большим эффектом, быстрая победа. Метафора из сбора фруктов: то, что висит низко, брать проще."
+      },
+      {
+        "text": "That feature is out of ___ for this release — we'll do it next quarter.",
+        "answers": ["scope"],
+        "explain": "Out of scope — не входит в объём работ проекта. Scope определяет границы. Scope creep — когда границы незаметно расширяются."
+      }
+    ]
+  }
+}

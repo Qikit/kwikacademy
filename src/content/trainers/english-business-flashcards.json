@@ -1,0 +1,161 @@
+{
+  "course": "english",
+  "lesson": "english-business",
+  "title": "Business English — flashcards",
+  "description": "20+ ключевых business-терминов: значение, регистр, пример. Учить целиком, с контекстом употребления.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "revenue",
+        "back": "выручка — все деньги, которые компания получила от продаж до вычета расходов. «Our annual revenue is $5M.» Не путать с profit (прибыль = revenue минус расходы).",
+        "hint": "top line"
+      },
+      {
+        "front": "profit",
+        "back": "прибыль — то, что осталось после вычета всех расходов из выручки. «We made a profit of $200K this quarter.» Bottom line.",
+        "hint": "bottom line"
+      },
+      {
+        "front": "budget",
+        "back": "бюджет — запланированная сумма на период или проект. «The marketing budget for Q3 is $50K.» Глагол: budget for something = выделить бюджет.",
+        "hint": "запланированная сумма"
+      },
+      {
+        "front": "expense",
+        "back": "расход на операции — аренда, зарплаты, командировки. «Travel expenses are tax-deductible.» В отличие от cost (себестоимость единицы).",
+        "hint": "операционные расходы"
+      },
+      {
+        "front": "salary vs wage",
+        "back": "Salary — фиксированный оклад за месяц/год (офисные). «My salary is $60K a year.» Wage — почасовая оплата (рабочие, retail). «The minimum wage is $15/hr.»",
+        "hint": "годовой vs почасовой"
+      },
+      {
+        "front": "invoice",
+        "back": "счёт на оплату — документ от поставщика клиенту. «I'll send you the invoice tomorrow.» Countable — нужен артикль: an invoice, the invoice.",
+        "hint": "countable, с артиклем"
+      },
+      {
+        "front": "client vs customer",
+        "back": "Client покупает услугу (юр.фирма, агентство, консалтинг). Customer покупает товар (магазин, ритейл, B2C). Бывают пересечения, но базовая интуиция такая.",
+        "hint": "услуга vs товар"
+      },
+      {
+        "front": "stakeholder",
+        "back": "заинтересованная сторона — любой, на кого влияет решение или проект. Включает клиентов, инвесторов, сотрудников, регуляторов. «Let's align with the stakeholders first.»",
+        "hint": "шире чем shareholder"
+      },
+      {
+        "front": "vendor vs supplier",
+        "back": "Vendor — поставщик услуг или ПО (часто внешняя компания). Supplier — поставщик товаров, комплектующих, материалов. Иногда взаимозаменяемы.",
+        "hint": "услуги/ПО vs товары"
+      },
+      {
+        "front": "deadline",
+        "back": "крайний срок. «The deadline is next Friday.» Глагол push back the deadline = сдвинуть позже; meet the deadline = успеть; miss the deadline = не успеть.",
+        "hint": "крайний срок"
+      },
+      {
+        "front": "milestone",
+        "back": "контрольная точка проекта — промежуточная цель, по которой меряют прогресс. «We hit the first milestone on time.» Часть длинного timeline.",
+        "hint": "промежуточная цель"
+      },
+      {
+        "front": "KPI",
+        "back": "Key Performance Indicator — ключевой показатель эффективности. Измеримая метрика. «Our main KPI is monthly active users.» Произносится по буквам: K-P-I.",
+        "hint": "измеримая метрика"
+      },
+      {
+        "front": "deliverable",
+        "back": "результат, который должен быть сдан — документ, фича, отчёт, прототип. «The deliverables for this sprint are the spec and the mockups.» Обычно во мн.числе.",
+        "hint": "что сдаём"
+      },
+      {
+        "front": "scope",
+        "back": "объём работ — что входит и не входит в проект. «That's out of scope for this release.» Scope creep — когда объём незаметно растёт.",
+        "hint": "границы проекта"
+      },
+      {
+        "front": "agenda",
+        "back": "повестка встречи или плана — список тем. «What's on the agenda for tomorrow's meeting?» Также: hidden agenda = скрытые мотивы.",
+        "hint": "список тем"
+      },
+      {
+        "front": "launch",
+        "back": "запустить (продукт, кампанию, фичу). «We're launching the new product next month.» Также существительное: «the launch went well».",
+        "hint": "глагол + существительное"
+      },
+      {
+        "front": "scale (verb)",
+        "back": "масштабировать — расти в размере, охвате, объёме. «We need to scale the team.» / «Can this solution scale?» Не путать с simple grow.",
+        "hint": "расти в размере"
+      },
+      {
+        "front": "pivot",
+        "back": "резко сменить стратегию или направление. «The startup pivoted from B2C to B2B after the first year.» Существительное и глагол.",
+        "hint": "смена стратегии"
+      },
+      {
+        "front": "outsource",
+        "back": "передать задачу или процесс внешнему подрядчику. «We outsource our IT support to a third party.» Антоним: insource, in-house.",
+        "hint": "внешним подрядчикам"
+      },
+      {
+        "front": "touch base",
+        "back": "идиома: коротко списаться или созвониться без серьёзной повестки. «Let's touch base on Friday to see where we are.» Бейсбольная метафора.",
+        "hint": "идиома, бейсбол"
+      },
+      {
+        "front": "low-hanging fruit",
+        "back": "идиома: лёгкая задача с большим эффектом — быстрая победа. «Let's start with the low-hanging fruit before tackling the hard problems.»",
+        "hint": "быстрая победа"
+      },
+      {
+        "front": "ballpark figure",
+        "back": "идиома: приблизительная оценка, порядок цифр. «Can you give me a ballpark figure for the budget?» Бейсбольная метафора (ballpark = стадион).",
+        "hint": "приблизительная оценка"
+      },
+      {
+        "front": "move the needle",
+        "back": "идиома: дать заметный, измеримый результат. «Will this feature really move the needle on conversion?» Метафора со стрелкой прибора.",
+        "hint": "заметный результат"
+      },
+      {
+        "front": "in the loop / out of the loop",
+        "back": "идиома: in the loop = в курсе, в копии. Out of the loop = не в теме. «Please keep me in the loop on this decision.»",
+        "hint": "в курсе / не в курсе"
+      },
+      {
+        "front": "circle back",
+        "back": "идиома: вернуться к обсуждению позже. «Let's circle back on this next week.» Часто звучит мягче, чем «postpone».",
+        "hint": "вернуться позже"
+      },
+      {
+        "front": "push back (the deadline)",
+        "back": "сдвинуть срок позже. «We'll need to push back the deadline by a week.» Отличается от cancel (отменить) и delay (задержать).",
+        "hint": "сдвинуть позже"
+      },
+      {
+        "front": "I would like to (vs I want to)",
+        "back": "Формальный регистр: «I would like to schedule a call.» Нейтральный: «I want to schedule a call.» В email клиенту — всегда would like.",
+        "hint": "формальная просьба"
+      },
+      {
+        "front": "Could you please (vs Can you)",
+        "back": "Формально-вежливая просьба: «Could you please send the report?» Прямое «Send me the report» в email клиенту читается как приказ.",
+        "hint": "вежливая просьба"
+      },
+      {
+        "front": "at your convenience",
+        "back": "формальная фраза «в удобное для вас время». «Please reply at your earliest convenience.» Также: «when convenient for you».",
+        "hint": "формально, в email"
+      },
+      {
+        "front": "follow up",
+        "back": "напомнить о теме, спросить о продолжении. «I'm following up on my previous email.» Существительное: a follow-up = follow-up message/meeting.",
+        "hint": "напоминание"
+      }
+    ]
+  }
+}

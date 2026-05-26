@@ -1,0 +1,65 @@
+{
+  "course": "english",
+  "lesson": "english-business",
+  "title": "Business English — собери предложение",
+  "description": "Расставь слова в правильном порядке. Следи за регистром и порядком слов в деловой просьбе.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["please", "you", "send", "could", "the", "report", "?"],
+        "answer": ["could", "you", "please", "send", "the", "report", "?"],
+        "translation": "Не мог бы ты прислать отчёт?",
+        "explain": "Формально-вежливая просьба: could you please + V. Could идёт первым (вопрос), please — после подлежащего. Could you please — стандарт делового email."
+      },
+      {
+        "words": ["call", "to", "schedule", "I", "a", "would", "like"],
+        "answer": ["I", "would", "like", "to", "schedule", "a", "call"],
+        "translation": "Я хотел бы запланировать звонок.",
+        "explain": "Would like to + V — формальная просьба вместо want to. Schedule a call — стандартная коллокация (не «make a call» в значении «запланировать»)."
+      },
+      {
+        "words": ["the", "deadline", "to", "next", "we'll", "push", "back", "Wednesday"],
+        "answer": ["we'll", "push", "back", "the", "deadline", "to", "next", "Wednesday"],
+        "translation": "Мы сдвинем дедлайн на следующую среду.",
+        "explain": "Push back the deadline — сдвинуть срок позже. После него: to + новая дата. «To next Wednesday» = до новой даты-цели."
+      },
+      {
+        "words": ["loop", "you", "please", "keep", "me", "in", "the", "?"],
+        "answer": ["please", "keep", "me", "in", "the", "loop", "?"],
+        "translation": "Пожалуйста, держи меня в курсе.",
+        "explain": "Keep me in the loop — идиома «держи в курсе». Please стоит перед просьбой для вежливости. Структура: please + V (keep) + object (me) + idiom."
+      },
+      {
+        "words": ["base", "on", "let's", "Friday", "touch"],
+        "answer": ["let's", "touch", "base", "on", "Friday"],
+        "translation": "Давай созвонимся в пятницу.",
+        "explain": "Touch base — идиома, целиком. Let's + V (touch) + остальное. День недели с предлогом on: on Friday."
+      },
+      {
+        "words": ["the", "I", "for", "ballpark", "give", "me", "can", "a", "budget", "figure", "?"],
+        "answer": ["can", "you", "give", "me", "a", "ballpark", "figure", "for", "the", "budget", "?"],
+        "translation": "Можешь дать примерную оценку бюджета?",
+        "explain": "Ловушка: в исходных словах нет «you», но есть «I» — нужно увидеть, что для вопроса нужно «can you give me». Правильный порядок: can you give me + a ballpark figure + for the budget."
+      },
+      {
+        "words": ["bandwidth", "have", "I", "don't", "the", "week", "this"],
+        "answer": ["I", "don't", "have", "the", "bandwidth", "this", "week"],
+        "translation": "У меня нет ресурсов на это на этой неделе.",
+        "explain": "I don't have the bandwidth — стандартная business-фраза. The bandwidth с определённым артиклем (конкретный ресурс). This week — обстоятельство в конце."
+      },
+      {
+        "words": ["of", "scope", "is", "that", "release", "this", "out", "for"],
+        "answer": ["that", "is", "out", "of", "scope", "for", "this", "release"],
+        "translation": "Это вне объёма работ для этого релиза.",
+        "explain": "Out of scope — устойчивая фраза «вне объёма работ». For this release — границы scope конкретизируются после."
+      },
+      {
+        "words": ["?", "you", "walk", "could", "the", "me", "through", "proposal"],
+        "answer": ["could", "you", "walk", "me", "through", "the", "proposal", "?"],
+        "translation": "Не мог бы ты подробно объяснить предложение?",
+        "explain": "Walk someone through something — подробно объяснить шаг за шагом. Структура: walk + объект (me) + through + предмет (the proposal). Could you — вежливая просьба."
+      }
+    ]
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "course": "english",
+  "lesson": "english-business",
+  "title": "Business-термин → точное значение",
+  "description": "Соотнеси термин с правильным определением. Деловой словарь требует точности — близкие слова значат разное.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "revenue",
+        "right": "вся выручка до вычета расходов",
+        "explain": "Revenue — top line, все деньги от продаж. Profit — то, что осталось после вычета расходов. «Our revenue is $5M, profit is $400K.»"
+      },
+      {
+        "left": "profit",
+        "right": "что осталось после расходов",
+        "explain": "Profit = revenue минус все expenses. Bottom line отчётности. «We made a profit of $200K this quarter.»"
+      },
+      {
+        "left": "budget",
+        "right": "запланированная сумма на проект или период",
+        "explain": "Budget — план, сколько денег выделено. «The marketing budget for Q3 is $50K.» Глагол budget for = выделить бюджет."
+      },
+      {
+        "left": "invoice",
+        "right": "счёт на оплату, выставленный клиенту",
+        "explain": "Invoice — документ от поставщика клиенту с суммой к оплате. Countable: «Send me the invoice.» Не путать с receipt (квитанция о факте оплаты)."
+      },
+      {
+        "left": "client",
+        "right": "тот, кто покупает услугу",
+        "explain": "Client — за услугу (юр.фирма, агентство, консалтинг). Customer — за товар (магазин, ритейл). Базовая интуиция: услуга → client."
+      },
+      {
+        "left": "stakeholder",
+        "right": "любой, на кого влияет решение",
+        "explain": "Stakeholder шире чем shareholder (акционер). Включает клиентов, сотрудников, регуляторов, инвесторов. «Let's align with the stakeholders first.»"
+      },
+      {
+        "left": "supplier",
+        "right": "поставщик товаров или материалов",
+        "explain": "Supplier — поставщик физических товаров, комплектующих. Vendor — чаще для услуг или ПО. Иногда взаимозаменяемы."
+      },
+      {
+        "left": "deadline",
+        "right": "крайний срок выполнения",
+        "explain": "Deadline — конечная дата. Глаголы: meet the deadline (успеть), miss the deadline (не успеть), push back the deadline (сдвинуть позже)."
+      },
+      {
+        "left": "milestone",
+        "right": "промежуточная контрольная точка проекта",
+        "explain": "Milestone — не финальный дедлайн, а промежуточный пункт прогресса. «We hit the first milestone on schedule.» Часть длинного timeline."
+      },
+      {
+        "left": "KPI",
+        "right": "ключевая измеримая метрика",
+        "explain": "Key Performance Indicator — конкретный измеримый показатель. «Our main KPI is monthly active users.» Произносится K-P-I по буквам."
+      },
+      {
+        "left": "deliverable",
+        "right": "результат, который должен быть сдан",
+        "explain": "Deliverable — конкретный артефакт: документ, фича, отчёт. «The deliverables for this sprint are the spec and the prototype.»"
+      },
+      {
+        "left": "scope",
+        "right": "объём работ — что входит и не входит",
+        "explain": "Scope определяет границы проекта. «That's out of scope for this release.» Scope creep — когда границы незаметно расширяются."
+      },
+      {
+        "left": "agenda",
+        "right": "повестка встречи, список тем",
+        "explain": "Agenda — план обсуждения. «What's on the agenda for tomorrow?» Hidden agenda — переносное: скрытые мотивы."
+      },
+      {
+        "left": "salary",
+        "right": "фиксированный оклад за месяц или год",
+        "explain": "Salary — обычно у офисных сотрудников, фиксированная сумма за период. Wage — почасовая оплата, чаще у рабочих и в retail."
+      },
+      {
+        "left": "wage",
+        "right": "почасовая оплата",
+        "explain": "Wage — оплата за час работы. «Minimum wage in this state is $15 per hour.» Salary измеряется в годах, wage — в часах."
+      },
+      {
+        "left": "vendor",
+        "right": "поставщик услуг или ПО",
+        "explain": "Vendor — обычно поставщик услуг, ПО, sub-contractor. Supplier чаще для физических товаров. «We switched to a different vendor.»"
+      },
+      {
+        "left": "outsource",
+        "right": "передать процесс внешнему подрядчику",
+        "explain": "Outsource — отдать задачу/функцию внешней компании вместо in-house. «We outsource our IT support.» Антоним: insource."
+      },
+      {
+        "left": "touch base",
+        "right": "коротко списаться или созвониться",
+        "explain": "Touch base — без серьёзной повестки, чтобы сверить статус. «Let's touch base on Friday.» Бейсбольная метафора."
+      }
+    ]
+  }
+}

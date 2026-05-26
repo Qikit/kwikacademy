@@ -1,13 +1,450 @@
 ---
 course: english
 order: 17
-phase: "Фаза 2 · Профессиональный английский"
-title: "Business English Foundation"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Деловая лексика — переговоры, презентации, отчёты."
-placeholder: true
-tags: [english]
+phase: "Фаза 2 · Рабочий английский"
+title: "Business English Foundation — общая деловая лексика"
+eyebrow: "Профессиональный · уровень B1-B2"
+readingMinutes: 25
+summary: "Базовая бизнес-лексика: роли, финансы, процессы, идиомы. Формальный vs нейтральный регистр в типовых рабочих ситуациях."
+tags: [business, vocabulary, work, B1, B2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Business English Foundation» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Scale from '../../components/lesson/Scale.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем нужен Business English
+
+Бытовой английский уровня B1 закрывает аэропорт, магазин и разговор с соседом. Но как только начинается работа в международной команде — митинги, переписка с клиентом, чтение спецификации, обсуждение бюджета — обычной лексики не хватает. Не потому что грамматика сложнее, а потому что появляется свой словарь: `revenue`, `stakeholder`, `deadline`, `deliverable`, `KPI`. Эти слова в учебниках общего английского почти не встречаются, а на работе они в каждой второй фразе.
+
+Вторая сложность — регистр. Одна и та же мысль звучит по-разному в чате с коллегой и в письме клиенту. «I want a call tomorrow» технически грамматически правильно, но в email звучит как требование, а не просьба. «I would like to schedule a call tomorrow» — та же мысль в нейтрально-вежливом регистре. Русскоязычные часто переносят прямой стиль из родного языка и непреднамеренно звучат грубо, особенно в письменной форме, где нет интонации.
+
+Этот урок — про базовый набор деловой лексики и про чувство регистра. Не «выучи 500 идиом» (это бесполезно), а «знай 100 ключевых слов по областям и умей переключать формальность под ситуацию». Это фундамент, на котором уже можно работать в международной команде — а дальше доращивается специфика твоей профессии.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Business English = **обычный английский + специальный словарь + чувство регистра**. Грамматика та же, но лексика более точная (`revenue` ≠ `profit` ≠ `income`), а формулировки — более вежливые и осторожные. Запоминай слова **парами «нейтральное / формальное»** (`want / would like`, `can't / unable to`, `ask / inquire`) и **группами по областям** (HR, finance, process, action). Регистр выбирается по адресату и каналу: чат с командой = нейтрально, email клиенту = формально.
+</Callout>
+
+## 3. Что входит в Business English
+
+Базовый деловой словарь делится на несколько крупных областей. Знать все термины наизусть не нужно — нужно понимать структуру и узнавать ключевые слова в контексте.
+
+- **HR & Roles** — люди и организации: company, department, manager, employee, stakeholder.
+- **Finance** — деньги: revenue, profit, budget, expense, invoice.
+- **Process** — как организована работа: deadline, milestone, KPI, agenda, priority.
+- **Actions** — что делают компании: launch, scale, pivot, outsource, optimize.
+- **Communication** — как общаются: follow up, circle back, touch base, push back, table.
+- **Idioms** — фиксированные выражения: low-hanging fruit, ballpark figure, move the needle.
+
+Каждая область — отдельная мини-тема со своими ловушками для русскоязычных. Большая часть ошибок не в произношении, а в путанице близких терминов: `salary` vs `wage`, `client` vs `customer`, `goal` vs `objective`.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="В русском у нас тоже есть «деловой подъязык»: «руководитель отдела», «согласовать смету», «выйти на KPI». Они не отличаются грамматически от обычной речи — просто более точные и более формальные. То же самое в английском, только пары слов другие, и регистр часто маркируется глаголом (`get` нейтрально / `obtain` формально).">
+  <div slot="ru">
+    <strong>Бытовое vs деловое:</strong><br/>
+    «начальник» → «руководитель отдела» / «директор».<br/>
+    «деньги» → «выручка / прибыль / бюджет».<br/>
+    «срок» → «дедлайн / контрольная точка».<br/>
+    «хочу» → «прошу рассмотреть возможность».<br/><br/>
+    В деловом — точнее и формальнее, но язык тот же.
+  </div>
+  <div slot="en">
+    <strong>Casual vs business:</strong><br/>
+    "boss" → "manager / head of department / director".<br/>
+    "money" → "revenue / profit / budget".<br/>
+    "deadline" → "deadline / milestone".<br/>
+    "I want" → "I would like / I would appreciate".<br/><br/>
+    Same grammar, more precise vocabulary, more polite register.
+  </div>
+</AnalogyBox>
+
+## 5. Шкала регистров
+
+Одна мысль — три уровня формальности. Выбор зависит от адресата (коллега / руководитель / клиент) и канала (чат / email / контракт).
+
+<Scale
+  labels={["informal", "neutral", "formal"]}
+  items={[
+    { left: "Hey, can we chat?", center: "Can we have a quick call?", right: "I would like to schedule a call at your convenience." },
+    { left: "I can't make it.", center: "I won't be able to attend.", right: "I regret that I will be unable to attend." },
+    { left: "Got it, thanks!", center: "Thanks, noted.", right: "Thank you, I have noted your request." },
+    { left: "What's up with the report?", center: "Any update on the report?", right: "Could you please provide an update on the report?" },
+    { left: "Sorry, my bad.", center: "Sorry about that.", right: "I apologise for the inconvenience." },
+  ]}
+/>
+
+Базовое правило: **в чате с командой — нейтрально, в email клиенту или незнакомому коллеге — формально, в неформальном чате после работы — informal**. Промахи с регистром заметнее в обе стороны: слишком формально в чате звучит холодно, слишком informally в email клиенту — непрофессионально.
+
+## 6. Лексика по областям
+
+### HR & Roles — люди и организации
+
+| Термин | Значение |
+| --- | --- |
+| **company** | компания (общее) |
+| **organization** | организация (включая некоммерческие, госструктуры) |
+| **department** | отдел (Marketing department, HR department) |
+| **team** | команда (часть отдела или кросс-функциональная) |
+| **manager** | менеджер, руководитель (нейтральное; шире чем «директор») |
+| **supervisor** | непосредственный руководитель (часто формальное) |
+| **executive** | руководитель высшего звена (C-level: CEO, CFO, CTO) |
+| **employee** | сотрудник (formal: работник на зарплате) |
+| **colleague** | коллега (нейтрально; co-worker — чуть более informal) |
+| **client** | клиент (обычно за услугу: юр.фирма, агентство) |
+| **customer** | покупатель (за товар: магазин, ритейл, B2C) |
+| **partner** | партнёр (бизнес-партнёр, совладелец, союзник) |
+| **stakeholder** | заинтересованная сторона (любой, на кого влияет решение) |
+| **vendor** | поставщик услуг/ПО (часто внешняя компания) |
+| **supplier** | поставщик товаров (комплектующих, материалов) |
+| **contractor** | подрядчик (внешний исполнитель, не штатный) |
+
+### Finance — деньги
+
+| Термин | Значение |
+| --- | --- |
+| **revenue** | выручка (все деньги от продаж до вычета расходов) |
+| **profit** | прибыль (выручка минус расходы) |
+| **loss** | убыток (расходы превысили выручку) |
+| **budget** | бюджет (запланированная сумма на период / проект) |
+| **cost** | себестоимость, затраты на единицу |
+| **expense** | расход (на операции: офис, зарплаты, командировки) |
+| **salary** | оклад (фиксированная сумма в месяц/год, обычно для офисных) |
+| **wage** | почасовая оплата (часто для рабочих, retail, hourly) |
+| **bonus** | премия, бонус (поверх оклада) |
+| **invoice** | счёт на оплату (отправляешь клиенту) |
+| **payment** | платёж, оплата |
+| **tax** | налог |
+| **income** | доход (личный или компании; шире чем salary) |
+
+### Process — как организована работа
+
+| Термин | Значение |
+| --- | --- |
+| **deadline** | крайний срок |
+| **milestone** | контрольная точка (промежуточная цель проекта) |
+| **objective** | цель (более формально; SMART-objective) |
+| **goal** | цель (нейтрально; шире и менее измеримо чем objective) |
+| **KPI** | Key Performance Indicator — ключевой показатель |
+| **target** | целевой показатель (sales target, monthly target) |
+| **schedule** | расписание, график |
+| **agenda** | повестка (список тем митинга или плана) |
+| **priority** | приоритет |
+| **deliverable** | результат, который должен быть сдан (документ, фича, отчёт) |
+| **scope** | объём работ (что входит и не входит в проект) |
+| **timeline** | временная шкала, план по датам |
+
+### Actions — что делают компании
+
+| Термин | Значение |
+| --- | --- |
+| **launch** | запустить (продукт, кампанию) |
+| **scale** | масштабировать (рост в размере / охвате) |
+| **expand** | расширяться (новые рынки, продукты) |
+| **downsize** | сокращать (штат, операции) |
+| **pivot** | резко сменить стратегию |
+| **optimize** | оптимизировать (процесс, затраты) |
+| **streamline** | упростить, убрать лишние шаги |
+| **automate** | автоматизировать |
+| **outsource** | передать на аутсорс (внешним подрядчикам) |
+| **acquire** | приобрести (компанию, актив) |
+| **merge** | слиться (с другой компанией) |
+| **restructure** | реструктурировать (организацию, долг) |
+
+### Business idioms — фиксированные выражения
+
+Идиомы в Business English — отдельный пласт. Их не выводят логически, а узнают и используют. Перевод по словам не работает.
+
+| Идиома | Что значит | Когда |
+| --- | --- | --- |
+| **touch base** | коротко созвониться/списаться | «Let's touch base on Friday.» |
+| **low-hanging fruit** | лёгкая задача с большим эффектом | «Let's start with the low-hanging fruit.» |
+| **ballpark figure** | приблизительная оценка | «Can you give me a ballpark figure?» |
+| **move the needle** | дать заметный результат | «Will this really move the needle?» |
+| **drop the ball** | накосячить, упустить задачу | «Sorry, I dropped the ball on this.» |
+| **get the ball rolling** | начать процесс | «Let's get the ball rolling on the new project.» |
+| **in the loop** | в курсе, в копии | «Please keep me in the loop.» |
+| **on the same page** | согласованы в понимании | «Are we on the same page about scope?» |
+| **circle back** | вернуться к обсуждению позже | «Let's circle back next week.» |
+| **bandwidth** | ресурсы, время на задачу | «I don't have the bandwidth this week.» |
+
+### Стандартные ситуационные фразы
+
+Готовые конструкции для типовых ситуаций. Их учат целиком, как формулы — это сильно ускоряет письмо.
+
+- **Follow-up.** «I'm following up on my previous email regarding the contract.»
+- **Запрос объяснения.** «Could you walk me through the proposal?»
+- **Возврат к теме.** «Just to circle back on what we discussed last week...»
+- **Сдвиг сроков.** «I'm afraid we'll need to push back the deadline by a week.»
+- **Отложить обсуждение.** «Let's table this discussion for now and come back to it next sprint.»
+- **Запросить решение.** «What's our next step?» / «How would you like to proceed?»
+- **Принять решение.** «Sounds good, let's move forward.»
+- **Отказать вежливо.** «I appreciate the offer, but it's not the right fit for us at this time.»
+
+## 7. Примеры в действии
+
+### Общий офис и команда
+
+<Example ru="Я работаю в маркетинговом отделе компании среднего размера.">I work in the marketing department of a mid-sized company.</Example>
+<Example ru="Наша команда состоит из пяти человек, и мы подчиняемся руководителю отдела.">Our team has five people and we report to the head of department.</Example>
+<Example ru="Не могла бы ты держать меня в курсе по этому проекту?">Could you please keep me in the loop on this project?</Example>
+<Example ru="Мне нужно отойти на десять минут — у меня встреча со стейкхолдерами.">I need to step out for ten minutes — I have a meeting with the stakeholders.</Example>
+<Example ru="Давайте созвонимся в пятницу и подведём промежуточные итоги.">Let's touch base on Friday and review where we are.</Example>
+<Example ru="Я не успею в эту неделю — у меня нет свободных ресурсов.">I won't be able to take this on this week — I don't have the bandwidth.</Example>
+<Example ru="Поставщик задержал поставку, нам нужен запасной план.">The supplier has delayed the delivery, we need a backup plan.</Example>
+<Example ru="Я возвращаюсь с вопросом по нашему предыдущему обсуждению.">I'm following up on our previous discussion.</Example>
+
+### Переговоры и процесс
+
+<Example ru="Какие у нас следующие шаги по этому контракту?">What are our next steps on this contract?</Example>
+<Example ru="Боюсь, нам придётся сдвинуть дедлайн на следующую среду.">I'm afraid we'll need to push back the deadline to next Wednesday.</Example>
+<Example ru="Давайте отложим это обсуждение и вернёмся к нему на следующем спринте.">Let's table this discussion and come back to it in the next sprint.</Example>
+<Example ru="Мы все на одной волне по поводу объёма работ?">Are we all on the same page about the scope of work?</Example>
+<Example ru="Не мог бы ты подробно рассказать, как ты пришёл к этому решению?">Could you walk me through how you arrived at this decision?</Example>
+<Example ru="Эта функция действительно даст заметный результат, или это просто косметика?">Will this feature really move the needle, or is it just cosmetic?</Example>
+
+### Финансы и контракты
+
+<Example ru="Наша квартальная выручка выросла на пятнадцать процентов год к году.">Our quarterly revenue grew by fifteen percent year over year.</Example>
+<Example ru="Бюджет на следующий квартал должен быть согласован до конца месяца.">The budget for next quarter needs to be approved by the end of the month.</Example>
+<Example ru="Можешь дать ориентировочную оценку, чтобы мы понимали порядок цифр?">Could you give me a ballpark figure just to understand the order of magnitude?</Example>
+<Example ru="Счёт за прошлый месяц ещё не оплачен.">The invoice for last month hasn't been paid yet.</Example>
+<Example ru="Мы планируем оптимизировать операционные расходы во втором полугодии.">We plan to optimize operational expenses in the second half of the year.</Example>
+<Example ru="Прибыль выросла, но валовая выручка упала — это плохой знак.">Profit is up, but gross revenue is down — that's a bad sign.</Example>
+
+## 8. Формальное vs нейтральное
+
+Одна и та же мысль в двух регистрах. Левая колонка — нейтральная (чат, разговор), правая — формальная (email клиенту, контракт, корпоративный broadcast).
+
+<Compare leftLabel="Нейтральное (чат, разговор)" rightLabel="Формальное (email, контракт)">
+  <div slot="left">
+    <strong>I want to schedule a call.</strong><br/>
+    <em>Хочу созвониться.</em><br/><br/>
+    <strong>I can't make it on Friday.</strong><br/>
+    <em>Не получится в пятницу.</em><br/><br/>
+    <strong>Can you send me the report?</strong><br/>
+    <em>Можешь прислать отчёт?</em><br/><br/>
+    <strong>Thanks for letting me know.</strong><br/>
+    <em>Спасибо, что дал знать.</em><br/><br/>
+    <strong>Sorry about the delay.</strong><br/>
+    <em>Извини за задержку.</em>
+  </div>
+  <div slot="right">
+    <strong>I would like to schedule a call at your convenience.</strong><br/>
+    <em>Хотел бы предложить созвон в удобное для вас время.</em><br/><br/>
+    <strong>I regret that I will be unable to attend on Friday.</strong><br/>
+    <em>Сожалею, что не смогу присутствовать в пятницу.</em><br/><br/>
+    <strong>Could you please send me the report at your earliest convenience?</strong><br/>
+    <em>Не могли бы вы прислать отчёт при первой возможности?</em><br/><br/>
+    <strong>Thank you for the update, it is much appreciated.</strong><br/>
+    <em>Благодарю за информацию, очень признателен.</em><br/><br/>
+    <strong>I apologise for the inconvenience caused by the delay.</strong><br/>
+    <em>Приношу извинения за неудобства, вызванные задержкой.</em>
+  </div>
+</Compare>
+
+Заметь характерные маркеры формального регистра: модальные `would / could`, существительные вместо глаголов (`apologise → apologies`, `delay → delayed delivery`), фразы вежливости (`at your convenience`, `much appreciated`), отказ от сокращений (`I will`, не `I'll`).
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Как помнить близкие термины">
+**Salary vs wage.** Salary — фиксированная сумма за месяц/год, обычно у офисных сотрудников: «My annual salary is $60,000.» Wage — почасовая оплата, обычно у рабочих, retail, баристы: «Minimum wage in this state is $15 per hour.» Запомни: salary измеряется в годах/месяцах, wage — в часах.
+
+**Client vs customer.** Client покупает услугу (юр.фирма, маркетинговое агентство, IT-консалтинг). Customer покупает товар (супермаркет, кофейня, онлайн-магазин). Бывают пересечения, но базовая интуиция: услуга → client, товар → customer.
+
+**Job vs work.** Work — uncountable, общее («I have a lot of work to do»). Job — countable, конкретная позиция или задача («I got a new job», «I have three jobs to finish»). «I have a work» — ошибка; правильно «I have work to do» или «I have a job to do».
+
+**Revenue vs profit vs income.** Revenue — все деньги, что компания получила (top line). Profit — что осталось после вычета расходов (bottom line). Income — доход в целом, может относиться и к человеку, и к компании, шире и менее технично, чем revenue/profit.
+
+**Goal vs objective.** Goal — общая цель, может быть размытой («Our goal is to grow»). Objective — конкретная измеримая цель, часть SMART-методологии («Our objective is to grow revenue by 20% by Q4»). В корпоративных документах чаще objective, в неформальной речи — goal.
+</Callout>
+
+## 10. Почему русскоязычные звучат грубо в email
+
+<Callout type="blue" title="Дистанция, которая не переводится напрямую">
+В русском вежливость в письме часто передаётся через «вы», вступительное обращение и подпись («Добрый день, Анна! С уважением, Дмитрий»). Внутренний текст может быть довольно прямой — «Пришлите отчёт до пятницы» — и это не воспринимается как грубость, потому что обрамление вежливое.
+
+В английском нет «вы», и обрамление само по себе не «вытягивает» прямую формулировку. Вежливость встроена в саму фразу: модальные глаголы (`could`, `would`), смягчающие слова (`please`, `kindly`, `at your convenience`), косвенные конструкции (`I was wondering if you could...` вместо `Can you...`).
+
+«Send me the report by Friday» в английском читается как приказ. «Could you please send me the report by Friday?» — обычная вежливая просьба. Это не перебор, это норма. Особенно для писем людям выше по иерархии, клиентам или незнакомым коллегам.
+
+Главный сдвиг для русскоязычного: **в английском вежливость переносится с обрамления на саму фразу**. Не «Уважаемая Анна, пришлите отчёт. С уважением», а «Hi Anna, could you please send the report? Thanks!». Структура проще, но каждая фраза смягчена.
+</Callout>
+
+## 11. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I have a work to do today | I have work to do today / I have a job to do today | work — uncountable, без артикля. job — countable, с артиклем. «A work» — типичная калька с русского «работа». |
+| My boss said in formal email | My manager said... / My supervisor said... | boss — informal, фамильярно для официальной речи. В формальных текстах — manager, supervisor, head of department. |
+| What is your salary per hour? | What is your hourly wage? / What is your hourly rate? | salary — фиксированная сумма за период (месяц/год). Почасовая оплата — wage или hourly rate. |
+| Our company's income last year was $2M | Our company's revenue last year was $2M | Для компании корректно revenue (выручка). Income — личный доход или общий, менее технично в контексте отчётности. |
+| We want to do business with you | We would like to work with you / We are interested in a partnership | «Do business with» звучит сухо и контрактно. В deal-making — work with, partner with, collaborate with. |
+| I will send invoice tomorrow | I will send the invoice tomorrow / I will send you an invoice tomorrow | invoice — countable, требует артикля. Без артикля — типичная ошибка из славянских языков. |
+| Send me the report by tomorrow | Could you please send me the report by tomorrow? | Императив в email клиенту читается как приказ. Модальные глаголы + please делают просьбу вежливой. |
+| I want to discuss the proposal | I would like to discuss the proposal | В деловом email «I want» звучит как требование. «I would like» — нейтрально-вежливая просьба. |
+| How much money do you earn? | (не задавать в большинстве культур) | Прямой вопрос о зарплате в англоязычном бизнес-контексте считается грубым. В small talk — табу. |
+| I will make a meeting on Monday | I will schedule a meeting on Monday / I will set up a meeting on Monday | «Make a meeting» — калька. Правильно schedule (запланировать), set up (организовать), arrange (договориться). |
+| The deadline is on next week | The deadline is next week | С временными выражениями next/last не используется «on». «On Monday» — да, «on next week» — нет. |
+| Please find attached the document | Please find the document attached / I have attached the document | Старая формула «Please find attached» считается архаичной и канцелярской. Современно — «Attached is...» или «I've attached...». |
+| Our company makes a profit of $1M | Our company makes $1M in profit / Our profit is $1M | «Makes a profit OF» — допустимо, но «$1M in profit» или «Our profit is $1M» звучит естественнее. |
+
+## 12. Шпаргалка
+
+| Область | Ключевые термины |
+| --- | --- |
+| **HR & Roles** | company, department, team, manager, employee, colleague, client, customer, stakeholder, vendor, supplier, contractor |
+| **Finance** | revenue, profit, loss, budget, cost, expense, salary, wage, bonus, invoice, payment, tax, income |
+| **Process** | deadline, milestone, objective, goal, KPI, target, schedule, agenda, priority, deliverable, scope, timeline |
+| **Actions** | launch, scale, expand, downsize, pivot, optimize, streamline, automate, outsource, acquire, merge |
+| **Communication** | follow up, circle back, touch base, push back, table, walk through |
+| **Idioms** | touch base, low-hanging fruit, ballpark figure, move the needle, drop the ball, get the ball rolling, in the loop, on the same page, bandwidth |
+
+| Регистр | Маркеры | Когда |
+| --- | --- | --- |
+| **Informal** | сокращения (I'll, can't), get/got, slang, восклицания | чат с командой, коллеги-друзья |
+| **Neutral** | want, can, ask, please | обычный рабочий email, нейтральный чат |
+| **Formal** | would like, could, kindly, at your convenience, no contractions | email клиенту, незнакомому, в иерархии вверх |
+
+| Калька | Правильно |
+| --- | --- |
+| make a meeting | schedule / set up / arrange a meeting |
+| my boss (formal) | my manager / supervisor |
+| a work | work (uncountable) / a job |
+| our income (компании) | our revenue |
+| do business with | work with / partner with |
+| I want (email) | I would like |
+
+## 13. Словарь урока
+
+<Vocab items={[
+  { term: "company", meaning: "компания" },
+  { term: "organization", meaning: "организация (общее, включая НКО, госструктуры)" },
+  { term: "department", meaning: "отдел" },
+  { term: "team", meaning: "команда (часть отдела или кросс-функциональная)" },
+  { term: "manager", meaning: "менеджер, руководитель (нейтральное)" },
+  { term: "supervisor", meaning: "непосредственный руководитель (формальное)" },
+  { term: "executive", meaning: "руководитель высшего звена (C-level)" },
+  { term: "employee", meaning: "сотрудник (formal)" },
+  { term: "colleague", meaning: "коллега (нейтрально)" },
+  { term: "co-worker", meaning: "коллега (informal, чаще американский)" },
+  { term: "client", meaning: "клиент (за услугу)" },
+  { term: "customer", meaning: "покупатель (за товар, ритейл, B2C)" },
+  { term: "partner", meaning: "партнёр (бизнес, совладелец)" },
+  { term: "stakeholder", meaning: "заинтересованная сторона" },
+  { term: "vendor", meaning: "поставщик услуг/ПО" },
+  { term: "supplier", meaning: "поставщик товаров, комплектующих" },
+  { term: "contractor", meaning: "подрядчик, внешний исполнитель" },
+  { term: "revenue", meaning: "выручка (все деньги от продаж до расходов)" },
+  { term: "profit", meaning: "прибыль (выручка минус расходы)" },
+  { term: "loss", meaning: "убыток" },
+  { term: "budget", meaning: "бюджет (запланированная сумма)" },
+  { term: "cost", meaning: "себестоимость, затраты" },
+  { term: "expense", meaning: "расход (на операции)" },
+  { term: "salary", meaning: "оклад (фиксированный, месяц/год)" },
+  { term: "wage", meaning: "почасовая оплата" },
+  { term: "bonus", meaning: "премия, бонус" },
+  { term: "invoice", meaning: "счёт на оплату" },
+  { term: "payment", meaning: "платёж, оплата" },
+  { term: "tax", meaning: "налог" },
+  { term: "income", meaning: "доход (личный или общий)" },
+  { term: "deadline", meaning: "крайний срок" },
+  { term: "milestone", meaning: "контрольная точка проекта" },
+  { term: "objective", meaning: "цель (формально, измеримо)" },
+  { term: "goal", meaning: "цель (нейтрально, шире)" },
+  { term: "KPI", meaning: "Key Performance Indicator — ключевой показатель" },
+  { term: "target", meaning: "целевой показатель (sales target)" },
+  { term: "schedule", meaning: "расписание, график" },
+  { term: "agenda", meaning: "повестка встречи" },
+  { term: "priority", meaning: "приоритет" },
+  { term: "deliverable", meaning: "результат для сдачи (документ, фича, отчёт)" },
+  { term: "scope", meaning: "объём работ (что входит и не входит)" },
+  { term: "timeline", meaning: "временная шкала, план по датам" },
+  { term: "launch", meaning: "запустить (продукт, кампанию)" },
+  { term: "scale", meaning: "масштабировать" },
+  { term: "expand", meaning: "расширяться (новые рынки)" },
+  { term: "downsize", meaning: "сокращать (штат)" },
+  { term: "pivot", meaning: "резко сменить стратегию" },
+  { term: "optimize", meaning: "оптимизировать" },
+  { term: "streamline", meaning: "упростить, убрать лишние шаги" },
+  { term: "automate", meaning: "автоматизировать" },
+  { term: "outsource", meaning: "передать на аутсорс" },
+  { term: "acquire", meaning: "приобрести (компанию)" },
+  { term: "merge", meaning: "слиться (с другой компанией)" },
+  { term: "restructure", meaning: "реструктурировать" },
+  { term: "touch base", meaning: "коротко списаться/созвониться" },
+  { term: "low-hanging fruit", meaning: "лёгкая задача с большим эффектом" },
+  { term: "ballpark figure", meaning: "приблизительная оценка" },
+  { term: "move the needle", meaning: "дать заметный результат" },
+  { term: "drop the ball", meaning: "накосячить, упустить" },
+  { term: "get the ball rolling", meaning: "начать процесс" },
+  { term: "in the loop", meaning: "в курсе, в копии" },
+  { term: "on the same page", meaning: "согласованы в понимании" },
+  { term: "circle back", meaning: "вернуться к обсуждению позже" },
+  { term: "bandwidth", meaning: "ресурсы, время на задачу" },
+  { term: "follow up", meaning: "напомнить, спросить о продолжении" },
+  { term: "push back (the deadline)", meaning: "сдвинуть срок позже" },
+  { term: "table (a discussion)", meaning: "отложить обсуждение" },
+  { term: "walk through", meaning: "подробно объяснить шаг за шагом" },
+  { term: "at your convenience", meaning: "в удобное для вас время (формально)" },
+  { term: "kindly", meaning: "пожалуйста (формальный смягчитель)" },
+  { term: "I would like to", meaning: "я хотел бы (формальная просьба вместо I want)" },
+  { term: "could you please", meaning: "не могли бы вы (вежливая просьба вместо can you)" },
+]} />
+
+## 14. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-business-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Деловые термины → значение</span>
+    <span class="kc-trainer-hint">Запомни 20+ ключевых business-слов с примерами</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-business-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Термин → определение</span>
+    <span class="kc-trainer-hint">Соотнеси business-слово с точным значением</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-business-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">По областям бизнес-лексики</span>
+    <span class="kc-trainer-hint">Разложи термины: HR / Finance / Process / Actions</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-business-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Регистр и точность</span>
+    <span class="kc-trainer-hint">12 вопросов: выбери формальный/точный вариант</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-business-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши нужный термин</span>
+    <span class="kc-trainer-hint">Заполни пропуск точным business-словом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-business-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери деловое предложение</span>
+    <span class="kc-trainer-hint">Расставь слова — следи за регистром и вежливостью</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 15. Источники
+
+- **Cambridge Business English Dictionary** — определения деловых терминов, B1-C1, с примерами употребления.
+- **Oxford Business English** (серия учебников Oxford University Press) — лексика по областям, упражнения на регистр.
+- **The Economist Style Guide** — стандарты делового письма, формальный регистр, аккуратность с финансовыми терминами.
+- **Harvard Business Review** — реальные тексты делового стиля, источник идиом и устоявшихся формулировок.

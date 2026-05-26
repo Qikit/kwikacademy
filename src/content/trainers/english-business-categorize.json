@@ -1,0 +1,117 @@
+{
+  "course": "english",
+  "lesson": "english-business",
+  "title": "Business English — по областям",
+  "description": "Распредели business-термины по областям: HR & Roles / Finance / Process / Actions.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "hr", "label": "HR & Roles" },
+      { "id": "finance", "label": "Finance" },
+      { "id": "process", "label": "Process" },
+      { "id": "actions", "label": "Actions" }
+    ],
+    "items": [
+      {
+        "text": "stakeholder",
+        "category": "hr",
+        "explain": "HR & Roles: заинтересованная сторона — любой, на кого влияет решение. Шире чем shareholder (акционер)."
+      },
+      {
+        "text": "supervisor",
+        "category": "hr",
+        "explain": "HR & Roles: непосредственный руководитель. Формальнее чем boss. «I'll discuss it with my supervisor.»"
+      },
+      {
+        "text": "client",
+        "category": "hr",
+        "explain": "HR & Roles: клиент, покупает услугу (юр.фирма, агентство). Customer — за товар."
+      },
+      {
+        "text": "contractor",
+        "category": "hr",
+        "explain": "HR & Roles: подрядчик, внешний исполнитель не в штате. Часто на конкретный проект."
+      },
+      {
+        "text": "revenue",
+        "category": "finance",
+        "explain": "Finance: выручка — все деньги от продаж до вычета расходов. Top line отчётности."
+      },
+      {
+        "text": "expense",
+        "category": "finance",
+        "explain": "Finance: операционный расход — на офис, зарплаты, командировки. Не путать с cost (себестоимость единицы)."
+      },
+      {
+        "text": "invoice",
+        "category": "finance",
+        "explain": "Finance: счёт на оплату от поставщика клиенту. Countable, с артиклем: «Send me the invoice.»"
+      },
+      {
+        "text": "bonus",
+        "category": "finance",
+        "explain": "Finance: премия поверх оклада. Обычно по результатам — annual bonus, performance bonus."
+      },
+      {
+        "text": "deadline",
+        "category": "process",
+        "explain": "Process: крайний срок. Глаголы: meet/miss/push back the deadline."
+      },
+      {
+        "text": "milestone",
+        "category": "process",
+        "explain": "Process: промежуточная контрольная точка проекта. Не финальный дедлайн."
+      },
+      {
+        "text": "KPI",
+        "category": "process",
+        "explain": "Process: Key Performance Indicator — ключевая измеримая метрика. «Our main KPI is monthly active users.»"
+      },
+      {
+        "text": "deliverable",
+        "category": "process",
+        "explain": "Process: результат для сдачи — документ, фича, отчёт. Обычно во мн.числе: deliverables for this sprint."
+      },
+      {
+        "text": "scope",
+        "category": "process",
+        "explain": "Process: объём работ — что входит и не входит в проект. «That's out of scope.»"
+      },
+      {
+        "text": "agenda",
+        "category": "process",
+        "explain": "Process: повестка встречи, список тем. «What's on the agenda?»"
+      },
+      {
+        "text": "launch",
+        "category": "actions",
+        "explain": "Actions: запустить (продукт, кампанию, фичу). «We're launching the new product next month.»"
+      },
+      {
+        "text": "scale",
+        "category": "actions",
+        "explain": "Actions: масштабировать — расти в размере, охвате. «We need to scale the team.»"
+      },
+      {
+        "text": "pivot",
+        "category": "actions",
+        "explain": "Actions: резко сменить стратегию или направление. «The startup pivoted from B2C to B2B.»"
+      },
+      {
+        "text": "outsource",
+        "category": "actions",
+        "explain": "Actions: передать задачу внешнему подрядчику. Антоним: insource, in-house."
+      },
+      {
+        "text": "automate",
+        "category": "actions",
+        "explain": "Actions: автоматизировать процесс. «We automated the reporting pipeline.»"
+      },
+      {
+        "text": "downsize",
+        "category": "actions",
+        "explain": "Actions: сокращать (штат, операции). Эвфемизм для увольнений. Антоним scale up."
+      }
+    ]
+  }
+}

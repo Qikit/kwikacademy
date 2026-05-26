@@ -1,0 +1,135 @@
+{
+  "course": "english",
+  "lesson": "english-business",
+  "title": "Business English — регистр и точность",
+  "description": "Выбери правильный термин или вариант регистра под контекст.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Formal email to a client. Choose the appropriate request:",
+        "options": [
+          "Send me the report by Friday.",
+          "I want the report by Friday.",
+          "Could you please send the report by Friday?",
+          "Gimme the report by Friday."
+        ],
+        "correctIndex": 2,
+        "explain": "В формальном email клиенту — модальные глаголы + please. Императив «Send me» читается как приказ. «I want» звучит как требование. Вариант 4 — informal slang."
+      },
+      {
+        "prompt": "Our company makes shoes and sells them in supermarkets. Who buys them?",
+        "options": ["clients", "customers", "stakeholders", "vendors"],
+        "correctIndex": 1,
+        "explain": "Customers покупают физический товар в ритейле. Clients — за услугу. Stakeholders — заинтересованные стороны. Vendors — поставщики."
+      },
+      {
+        "prompt": "Annual ___ is $60K and ___ is $15 per hour.",
+        "options": ["wage / salary", "salary / wage", "income / salary", "salary / income"],
+        "correctIndex": 1,
+        "explain": "Salary — фиксированный годовой оклад. Wage — почасовая оплата. Salary измеряется в годах/месяцах, wage — в часах."
+      },
+      {
+        "prompt": "We need to push back the deadline — what does it mean?",
+        "options": [
+          "We need to cancel the project.",
+          "We need to move the deadline earlier.",
+          "We need to move the deadline later.",
+          "We need to add a new deadline."
+        ],
+        "correctIndex": 2,
+        "explain": "Push back the deadline = сдвинуть срок позже (в будущее). Не отменить, не приблизить. Антоним: move up the deadline (приблизить)."
+      },
+      {
+        "prompt": "Choose the term: the total money our company gets from sales, before expenses.",
+        "options": ["profit", "income", "revenue", "budget"],
+        "correctIndex": 2,
+        "explain": "Revenue — top line, вся выручка от продаж до вычета расходов. Profit — что осталось после расходов. Income — шире и менее технично. Budget — запланированная сумма."
+      },
+      {
+        "prompt": "An informal chat with a teammate. Most natural:",
+        "options": [
+          "I regret that I will be unable to attend.",
+          "I cannot make it.",
+          "Hey, I can't make it today.",
+          "I shall be absent from the meeting."
+        ],
+        "correctIndex": 2,
+        "explain": "В informal чате — сокращения (can't), приветствие (Hey). Вариант 1 — formal email. Вариант 4 — очень архаично, не используется."
+      },
+      {
+        "prompt": "We outsource our customer support — what does it mean?",
+        "options": [
+          "We do customer support ourselves.",
+          "We hired an external company for customer support.",
+          "We stopped doing customer support.",
+          "We expanded our support team."
+        ],
+        "correctIndex": 1,
+        "explain": "Outsource = передать функцию внешнему подрядчику вместо in-house команды. Антоним: insource."
+      },
+      {
+        "prompt": "Can you give me a ___ for the project cost — just rough numbers?",
+        "options": ["ballpark figure", "low-hanging fruit", "bottom line", "bandwidth"],
+        "correctIndex": 0,
+        "explain": "Ballpark figure — приблизительная оценка, порядок цифр. Low-hanging fruit — лёгкая задача. Bottom line — итог/прибыль. Bandwidth — ресурсы/время."
+      },
+      {
+        "prompt": "I don't have the ___ to take this on this week.",
+        "options": ["timeline", "scope", "bandwidth", "milestone"],
+        "correctIndex": 2,
+        "explain": "Bandwidth (идиома) — личные ресурсы, время на задачу. «I don't have the bandwidth» = я перегружен. Не «scope» и не «timeline»."
+      },
+      {
+        "prompt": "Choose the correct sentence:",
+        "options": [
+          "I have a work to do tomorrow.",
+          "I have work to do tomorrow.",
+          "I have works to do tomorrow.",
+          "I have the work to do tomorrow."
+        ],
+        "correctIndex": 1,
+        "explain": "Work — uncountable, без артикля. «A work» — типичная калька с русского. Альтернативно можно «I have a job to do» (job — countable)."
+      },
+      {
+        "prompt": "What's on the ___ for tomorrow's meeting?",
+        "options": ["agenda", "schedule", "deadline", "timeline"],
+        "correctIndex": 0,
+        "explain": "Agenda — повестка встречи, список тем. Schedule — расписание (когда что происходит). Deadline — крайний срок. Timeline — план по датам."
+      },
+      {
+        "prompt": "Choose the most formal opening for a client email:",
+        "options": [
+          "Hey,",
+          "What's up,",
+          "Hi there,",
+          "Dear Mr. Smith,"
+        ],
+        "correctIndex": 3,
+        "explain": "Dear + фамилия — самый формальный вариант. Hi there / Hey — informal. В business email с незнакомым клиентом или вверх по иерархии — Dear."
+      },
+      {
+        "prompt": "Let's table this discussion — what does it mean?",
+        "options": [
+          "Let's continue this discussion now.",
+          "Let's postpone this discussion.",
+          "Let's vote on this issue.",
+          "Let's write down this discussion."
+        ],
+        "correctIndex": 1,
+        "explain": "Table a discussion = отложить, перенести. В американском английском — postpone. В британском часто значит обратное (put on the table = поставить на обсуждение). В business чаще американский смысл: отложить."
+      },
+      {
+        "prompt": "Our company sold $5M and made $200K after costs. The $5M is the ___ and $200K is the ___.",
+        "options": [
+          "profit / revenue",
+          "budget / income",
+          "revenue / profit",
+          "income / cost"
+        ],
+        "correctIndex": 2,
+        "explain": "$5M — все деньги от продаж = revenue. $200K — что осталось после расходов = profit. Revenue → top line, profit → bottom line."
+      }
+    ]
+  }
+}

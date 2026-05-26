@@ -1,0 +1,95 @@
+{
+  "course": "english",
+  "lesson": "english-tech",
+  "title": "Tech English в контексте",
+  "description": "Выбери правильный термин, предлог или фразу под рабочий контекст.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Standup format: «Yesterday I closed two tickets, today I'm working on caching, and ___ the API change.»",
+        "options": ["I have a problem on", "I'm blocked on", "I'm sick of", "I'm blocked from"],
+        "correctIndex": 1,
+        "explain": "«I'm blocked on …» — стандартная standup-формула: ждёшь разблокировки. Предлог — ON. «I have a problem» в рабочем регистре звучит драматично."
+      },
+      {
+        "prompt": "Asking a teammate for review of your work in GitHub:",
+        "options": ["Make me a code review please", "Could you review my PR?", "Please accept my pull request", "Do for me a review"],
+        "correctIndex": 1,
+        "explain": "«Could you review my PR?» — глагол review, объект PR. «Make a code review» / «accept the PR» — кальки с русского, не норма. Approve и accept — разные действия (PR одобряют, не «принимают»)."
+      },
+      {
+        "prompt": "Choose the correct article: «We're shipping ___ MVP next sprint, with ___ UI overhaul to follow.»",
+        "options": ["a / an", "an / a", "an / an", "a / a"],
+        "correctIndex": 1,
+        "explain": "Артикль — по первому звуку аббревиатуры. MVP читается «эм-…» (гласный звук) → AN MVP. UI = «ю-…» (согласный звук [j]) → A UI."
+      },
+      {
+        "prompt": "Status update: «I caught a bug that exists only ___ prod — locally everything works.»",
+        "options": ["in", "at", "on", "to"],
+        "correctIndex": 2,
+        "explain": "Для состояния / места появления — ON: «the bug shows up on prod». Для деплоя — TO: «deploy to prod», «push to prod». Не смешивать."
+      },
+      {
+        "prompt": "Choose the correct sentence:",
+        "options": ["I made the deployment of the new version yesterday", "I deployed the new version yesterday", "I make deploy of the new version yesterday", "I have made deployment of new version yesterday"],
+        "correctIndex": 1,
+        "explain": "Английский tech-регистр предпочитает глагол существительному: «I deployed», не «I made the deployment». Короче и естественнее. То же с refactor, ship, release."
+      },
+      {
+        "prompt": "«We can't add more features — that's ___ for this sprint.»",
+        "options": ["out of scope", "in scope of", "out from scope", "outside scope"],
+        "correctIndex": 0,
+        "explain": "«Out of scope» — устойчивая фраза, объём работ вне текущей задачи / спринта. Вежливый способ отказаться расширять без долгого обсуждения."
+      },
+      {
+        "prompt": "Bug investigation: «I can't reproduce it locally — ___.»",
+        "options": ["it works on me", "works for me", "it works to me", "works on my computer"],
+        "correctIndex": 1,
+        "explain": "«Works for me» (WFM) — стандартная фраза, когда у тебя баг не воспроизводится. Часто с лёгкой иронией про природу багов. Предлог — FOR, не on / to."
+      },
+      {
+        "prompt": "Releasing a feature gradually:",
+        "options": ["We're rolling up dark mode to 10% of users", "We're rolling out dark mode to 10% of users", "We're spinning out dark mode to 10% of users", "We're shipping up dark mode to 10% of users"],
+        "correctIndex": 1,
+        "explain": "Roll out — постепенный раскат фичи на пользователей. Не путать: roll back (откатить), spin up (поднять сервер), ship (выкатить — целиком, не процентам)."
+      },
+      {
+        "prompt": "Choose the correct PR-approval phrase:",
+        "options": ["LGTM, ship it", "OKTM, ship it", "LGTM, send it", "WFM, ship it"],
+        "correctIndex": 0,
+        "explain": "LGTM = Looks Good To Me — короткое одобрение при approve. «Ship it» = «выкатываем». WFM (Works For Me) — про воспроизводимость бага, не одобрение PR."
+      },
+      {
+        "prompt": "Manager asking about your task: «What is the ___ status?»",
+        "options": ["actual", "current", "actually", "real"],
+        "correctIndex": 1,
+        "explain": "Current = актуальный, текущий. Actual = реальный, фактический (не «актуальный»). Один из самых частых ложных друзей в IT-английском."
+      },
+      {
+        "prompt": "Choose the architectural pair:",
+        "options": ["client / endpoint", "frontend / database", "client / server", "frontend / endpoint"],
+        "correctIndex": 2,
+        "explain": "Client / server — про роли в коммуникации (кто запрашивает / кто отвечает). Frontend / backend — про где живёт код. Это разные оси, не одно и то же."
+      },
+      {
+        "prompt": "Engineer to the team: «I ___ a test container to debug the issue.»",
+        "options": ["spin up", "spinned up", "spun up", "spent up"],
+        "correctIndex": 2,
+        "explain": "Spin up — поднять сервер / контейнер. Прошедшее — spun up (неправильный глагол: spin → spun → spun). «Spinned» — ошибка."
+      },
+      {
+        "prompt": "After deploy you noticed bugs. The action is:",
+        "options": ["roll forward", "roll back", "spin down", "tear up"],
+        "correctIndex": 1,
+        "explain": "Roll back — откатить релиз на предыдущую версию (синоним: revert). Tear down — погасить инфраструктуру (не релиз). Roll forward — нечастый термин (выкатить вперёд, чтобы исправить, но без отката)."
+      },
+      {
+        "prompt": "On standup, you finish your update with:",
+        "options": ["I have free time after three", "I'm free after three — let's hop on a call", "After three I will be free for calls", "I have a window after three for the call"],
+        "correctIndex": 1,
+        "explain": "«I'm free after 3 — let's hop on a call» — естественная живая фраза. Hop on = быстро подключиться к звонку. Остальные варианты грамматически корректны, но звучат как перевод с русского."
+      }
+    ]
+  }
+}

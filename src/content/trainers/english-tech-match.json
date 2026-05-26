@@ -1,0 +1,121 @@
+{
+  "course": "english",
+  "lesson": "english-tech",
+  "title": "Tech-термин → перевод",
+  "description": "Соотнеси английский термин разработки с русским значением. Учить как профессиональный регистр.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "standup",
+        "right": "ежедневный созвон команды",
+        "explain": "Standup (или daily) — короткая встреча на 10-15 минут утром. «Yesterday I did X, today I'm working on Y, I'm blocked on Z.»"
+      },
+      {
+        "left": "backlog",
+        "right": "очередь задач команды",
+        "explain": "Backlog — список будущих задач, упорядоченный по приоритету. Из него на planning выбирают задачи на спринт."
+      },
+      {
+        "left": "blocked",
+        "right": "не могу двигаться без помощи",
+        "explain": "«I'm blocked on the design review.» Сильный сигнал в standup — после него команда обязана разблокировать."
+      },
+      {
+        "left": "tech debt",
+        "right": "накопленные компромиссы в коде",
+        "explain": "Technical debt — все «временные решения», которые остались. Платят его рефакторингом. «We need to pay down some tech debt.»"
+      },
+      {
+        "left": "PR (pull request)",
+        "right": "запрос на слияние ветки",
+        "explain": "Pull request — сущность в GitHub/GitLab (там — MR). Создаётся через «open / submit a PR». НЕ путать с git pull (команда подтянуть изменения)."
+      },
+      {
+        "left": "rebase",
+        "right": "перенести коммиты ветки поверх другой",
+        "explain": "Rebase даёт линейную историю, в отличие от merge. «Rebase your branch onto main.»"
+      },
+      {
+        "left": "regression",
+        "right": "новый код сломал то, что работало",
+        "explain": "Regression — баг в ранее работавшей функциональности, появившийся после изменения. «Looks like a regression from yesterday's release.»"
+      },
+      {
+        "left": "hotfix",
+        "right": "срочный фикс прямо на prod",
+        "explain": "Hotfix — экстренное исправление в обход обычного процесса релизов. «We can ship a hotfix tonight.»"
+      },
+      {
+        "left": "roll out",
+        "right": "постепенно выпустить фичу",
+        "explain": "Roll out — раскатать на пользователей, часто поэтапно. «We're rolling out dark mode to 10% of users this week.»"
+      },
+      {
+        "left": "roll back",
+        "right": "откатить релиз",
+        "explain": "Roll back — вернуться на предыдущую версию из-за проблем. Синоним — revert. «We had to roll back due to a regression.»"
+      },
+      {
+        "left": "endpoint",
+        "right": "конкретный URL API",
+        "explain": "Endpoint — точка входа API: GET /api/users, POST /api/orders. «We added a new endpoint for user search.»"
+      },
+      {
+        "left": "migration",
+        "right": "изменение схемы базы данных",
+        "explain": "Migration — версионированное изменение БД (добавить колонку, индекс, таблицу). «We need a migration for the new column.»"
+      },
+      {
+        "left": "cache",
+        "right": "слой быстрого доступа к данным",
+        "explain": "Cache — промежуточное хранилище для ускорения. Глагол — кэшировать. «Hit the cache first, then fall back to the DB.»"
+      },
+      {
+        "left": "queue",
+        "right": "очередь сообщений или задач",
+        "explain": "Queue — асинхронная буферизация. «Push the job to the queue.» Помогает сгладить пики нагрузки."
+      },
+      {
+        "left": "bottleneck",
+        "right": "узкое место в производительности",
+        "explain": "Bottleneck — самая медленная часть системы, ограничивающая общее время. «I profiled the request and found the bottleneck.»"
+      },
+      {
+        "left": "refactor",
+        "right": "переписать без изменения поведения",
+        "explain": "Refactor — улучшение внутренней структуры кода. Внешнее поведение остаётся. Отличается от feature work и от fix."
+      },
+      {
+        "left": "spin up",
+        "right": "поднять сервер или контейнер",
+        "explain": "«Let me spin up a test container.» Часто про временные инстансы. Парный термин — tear down (погасить)."
+      },
+      {
+        "left": "LGTM",
+        "right": "одобрение PR",
+        "explain": "Looks Good To Me — стандартное короткое одобрение при approve. «LGTM, ship it.»"
+      },
+      {
+        "left": "WFM",
+        "right": "у меня работает",
+        "explain": "Works For Me — когда у других ломается, а у тебя нет. Часто с лёгкой иронией про природу багов."
+      },
+      {
+        "left": "hit a wall",
+        "right": "упереться в тупик",
+        "explain": "«I hit a wall with this caching issue — could you take a look?» Сигнал, что нужна помощь."
+      },
+      {
+        "left": "estimate",
+        "right": "оценка задачи по времени или points",
+        "explain": "«Can you give me an estimate for this feature?» Может быть в часах, днях, story points — зависит от практики команды."
+      },
+      {
+        "left": "scope",
+        "right": "объём работ задачи",
+        "explain": "«That's out of scope for this sprint.» Вежливый способ отказаться расширять задачу без обсуждения."
+      }
+    ]
+  }
+}

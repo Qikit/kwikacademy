@@ -1,0 +1,66 @@
+{
+  "course": "english",
+  "lesson": "english-tech",
+  "title": "Tech English — собери рабочую фразу",
+  "description": "Расставь слова в правильном порядке. Стандартные standup / code review / blocked-фразы.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["on", "I'm", "the", "blocked", "code", "review"],
+        "answer": ["I'm", "blocked", "on", "the", "code", "review"],
+        "translation": "Я заблокирован на код-ревью.",
+        "explain": "«I'm blocked on …» — устойчивая standup-формула. Предлог ON, потом причина блокировки (review, design decision, API change).",
+        "hint": "standup"
+      },
+      {
+        "words": ["you", "minute", "my", "review", "PR", "Could", "when", "have", "a", "you", "?"],
+        "answer": ["Could", "you", "review", "my", "PR", "when", "you", "have", "a", "minute", "?"],
+        "translation": "Не мог бы ты посмотреть мой PR, когда будет минутка?",
+        "explain": "Глагол review, объект PR. «When you have a minute» — вежливое смягчение, не требует «прямо сейчас». Could you — мягче, чем Can you."
+      },
+      {
+        "words": ["this", "We", "morning", "to", "staging", "deployed"],
+        "answer": ["We", "deployed", "to", "staging", "this", "morning"],
+        "translation": "Мы выкатили на staging сегодня утром.",
+        "explain": "Deploy to <environment>. Предлог TO, не ON. Обстоятельство времени (this morning) — в конце предложения."
+      },
+      {
+        "words": ["a", "from", "Looks", "release", "regression", "like", "yesterday's"],
+        "answer": ["Looks", "like", "a", "regression", "from", "yesterday's", "release"],
+        "translation": "Похоже на регрессию из вчерашнего релиза.",
+        "explain": "Стандартный bug-investigation паттерн. Regression — баг в работавшей функциональности. «Looks like» — мягче, чем «is»; оставляет пространство для уточнений."
+      },
+      {
+        "words": ["sprint", "for", "of", "out", "scope", "this", "That's"],
+        "answer": ["That's", "out", "of", "scope", "for", "this", "sprint"],
+        "translation": "Это вне рамок текущего спринта.",
+        "explain": "«Out of scope for X» — устойчивая фраза. Вежливый отказ расширять задачу. For — предлог «для», обозначает рамки контекста."
+      },
+      {
+        "words": ["the", "Let's", "minutes", "five", "for", "result", "cache"],
+        "answer": ["Let's", "cache", "the", "result", "for", "five", "minutes"],
+        "translation": "Сложим результат в кэш на пять минут.",
+        "explain": "Cache — глагол (кэшировать). Let's = let us = предлагаю. «For five minutes» — длительность, предлог FOR."
+      },
+      {
+        "words": ["tonight", "ship", "We", "a", "hotfix", "can"],
+        "answer": ["We", "can", "ship", "a", "hotfix", "tonight"],
+        "translation": "Можем выкатить hotfix сегодня вечером.",
+        "explain": "Ship — разговорный «выкатить». Hotfix — срочный фикс прямо на prod. «Can» — возможность, мягче чем will."
+      },
+      {
+        "words": ["The", "is", "right", "load", "heavy", "service", "under", "now"],
+        "answer": ["The", "service", "is", "under", "heavy", "load", "right", "now"],
+        "translation": "Сервис сейчас под большой нагрузкой.",
+        "explain": "«Under load» — устойчивая коллокация. Предлог UNDER, прилагательное heavy перед load. Right now = в данный момент."
+      },
+      {
+        "words": ["main", "I", "and", "conflicts", "pulled", "resolved", "the"],
+        "answer": ["I", "pulled", "main", "and", "resolved", "the", "conflicts"],
+        "translation": "Я подтянул main и разрешил конфликты.",
+        "explain": "Pull — подтянуть изменения из remote. Конфликты — resolve, не fix. Главную ветку обычно называют main (modern default), реже master."
+      }
+    ]
+  }
+}

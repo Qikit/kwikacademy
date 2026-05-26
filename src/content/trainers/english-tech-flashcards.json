@@ -1,0 +1,151 @@
+{
+  "course": "english",
+  "lesson": "english-tech",
+  "title": "Tech English — flashcards",
+  "description": "20+ ключевых терминов разработки: процесс, git, архитектура. Учить как речевые блоки.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "standup / daily",
+        "back": "Короткий ежедневный созвон команды на 10-15 минут. Формула: «yesterday I did X, today I'm working on Y, I'm blocked on Z».",
+        "hint": "process"
+      },
+      {
+        "front": "blocked / blocker",
+        "back": "Не могу двигаться дальше без чьей-то помощи. «I'm blocked on the design review.» Сильное слово — после него ждут реакции.",
+        "hint": "process"
+      },
+      {
+        "front": "sprint / backlog / retro",
+        "back": "Каркас Scrum. Sprint — итерация (1-2 недели). Backlog — очередь задач. Retro (retrospective) — встреча обсуждения процесса.",
+        "hint": "agile"
+      },
+      {
+        "front": "ticket / issue",
+        "back": "Задача в трекере. Issue — шире, любая проблема или предложение. Ticket — нейтрально про рабочую задачу. «I have three tickets this sprint.»",
+        "hint": "process"
+      },
+      {
+        "front": "scope / out of scope",
+        "back": "Объём работ задачи или спринта. «That's out of scope for this sprint.» Полезно, чтобы вежливо отказаться расширять задачу.",
+        "hint": "process"
+      },
+      {
+        "front": "tech debt (technical debt)",
+        "back": "Накопленные компромиссы в коде, мешающие развитию. «We need to pay down some tech debt.» Платят его рефакторингом.",
+        "hint": "process"
+      },
+      {
+        "front": "PR (pull request) / MR (merge request)",
+        "back": "Запрос на слияние ветки. GitHub — PR, GitLab — MR. «I opened a PR for the login fix.» НЕ путать с git pull (другая команда).",
+        "hint": "git"
+      },
+      {
+        "front": "review / approve / request changes",
+        "back": "Стадии код-ревью. «Could you review my PR?» / «I'll approve once tests pass.» / «I requested changes on the DB part.»",
+        "hint": "git"
+      },
+      {
+        "front": "merge / rebase / squash",
+        "back": "Способы интегрировать ветку. Merge — с merge-commit. Rebase — переписать поверх main (линейная история). Squash — объединить коммиты в один.",
+        "hint": "git"
+      },
+      {
+        "front": "conflict / resolve a conflict",
+        "back": "Git-конфликт при merge или rebase. «I'm resolving conflicts on the feature branch.» Глагол — resolve, не fix.",
+        "hint": "git"
+      },
+      {
+        "front": "deploy",
+        "back": "Положить артефакт на окружение. «We deployed to staging this morning.» Предлог — TO, не on. «Deploy on prod» — ошибка.",
+        "hint": "releases"
+      },
+      {
+        "front": "release vs ship",
+        "back": "Release — событие: версия доступна пользователям. Ship — разговорное «выкатили в живое». «We shipped the new dashboard.»",
+        "hint": "releases"
+      },
+      {
+        "front": "roll out / roll back",
+        "back": "Roll out — постепенно выпустить фичу («rolling out dark mode to 10% of users»). Roll back — откатить релиз («we had to roll back»).",
+        "hint": "releases"
+      },
+      {
+        "front": "hotfix / regression",
+        "back": "Hotfix — срочный фикс прямо на prod. Regression — новый код сломал то, что работало. «Looks like a regression from yesterday's release.»",
+        "hint": "releases"
+      },
+      {
+        "front": "prod / staging / dev",
+        "back": "Поток окружений: local → dev → staging → prod. Production — где живут пользователи. Staging — копия prod без живых пользователей.",
+        "hint": "environments"
+      },
+      {
+        "front": "frontend / backend / full-stack",
+        "back": "Клиентская часть / серверная / и то и другое. «I'm a backend engineer. She works full-stack.»",
+        "hint": "architecture"
+      },
+      {
+        "front": "API / endpoint",
+        "back": "API — программный интерфейс. Endpoint — конкретный URL, на который ходят. «We added a new endpoint for user search.»",
+        "hint": "architecture"
+      },
+      {
+        "front": "database / query / schema / migration",
+        "back": "БД / запрос / структура / изменение схемы. «This query is slow. We need a migration for the new column.»",
+        "hint": "architecture"
+      },
+      {
+        "front": "cache / queue",
+        "back": "Кэш / очередь сообщений или задач. «Hit the cache first, then fall back to the DB. Push the job to the queue.»",
+        "hint": "architecture"
+      },
+      {
+        "front": "microservice / monolith",
+        "back": "Два архитектурных стиля. НЕ «лучший / худший» — разные. «We're splitting the monolith into a few microservices.»",
+        "hint": "architecture"
+      },
+      {
+        "front": "load / latency / throughput / uptime",
+        "back": "Нагрузка / задержка / пропускная способность / время работы. «Service is under heavy load. Latency went up. We're at 99.9% uptime.»",
+        "hint": "metrics"
+      },
+      {
+        "front": "debug vs fix vs refactor",
+        "back": "Debug — искать причину бага. Fix — починить. Refactor — переписать без изменения поведения. Три разных стадии.",
+        "hint": "actions"
+      },
+      {
+        "front": "spin up / tear down",
+        "back": "Поднять сервер, контейнер, инстанс / погасить. «Let me spin up a test container. Tear down the staging env after testing.»",
+        "hint": "actions"
+      },
+      {
+        "front": "scale up / scale down / scale out",
+        "back": "Мощнее машины / слабее / больше инстансов вширь. «We scaled up the DB. We scaled out to ten nodes.»",
+        "hint": "actions"
+      },
+      {
+        "front": "LGTM / WFM",
+        "back": "LGTM = Looks Good To Me (одобрение PR, часто при approve). WFM = Works For Me (у меня работает, часто с лёгкой иронией).",
+        "hint": "phrases"
+      },
+      {
+        "front": "I'm blocked on… / hit a wall",
+        "back": "«I'm blocked on the API change» — стандартный standup-сигнал. «I hit a wall with this caching issue» — упёрся в тупик, прошу помощь.",
+        "hint": "phrases"
+      },
+      {
+        "front": "push to prod",
+        "back": "Выкатить в продакшн. «Don't push to prod on Friday.» Предлог TO. «Push on prod» — не норма.",
+        "hint": "phrases"
+      },
+      {
+        "front": "current vs actual",
+        "back": "Current = актуальный, текущий. Actual = реальный, фактический. «What is the current status?» — правильно. «Actual» в этом значении — ложный друг.",
+        "hint": "false friends"
+      }
+    ]
+  }
+}

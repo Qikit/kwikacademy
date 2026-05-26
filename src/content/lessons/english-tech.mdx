@@ -1,13 +1,434 @@
 ---
 course: english
 order: 16
-phase: "Фаза 2 · Профессиональный английский"
-title: "Tech English Foundation"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Английский для разработки — код-ревью, документация, общение в команде."
-placeholder: true
-tags: [english]
+phase: "Фаза 2 · Рабочий английский"
+title: "Tech English Foundation — английский для разработчика"
+eyebrow: "Профессиональный · уровень B1"
+readingMinutes: 24
+summary: "Базовая лексика разработки: процесс, архитектура, действия. Готовые фразы для standup, code review, blocked-ситуаций."
+tags: [tech, vocabulary, work, B1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Tech English Foundation» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем разработчику свой пласт английского
+
+Уровня A2 хватает на отпуск и кафе. На работе он рассыпается: разработка живёт на узком, плотном словаре, которого нет в общих курсах. На standup нужно за тридцать секунд сказать «вчера дочинил баг в авторизации, сегодня беру тикет про кэш, заблокирован на ревью PR». На code review — оставить комментарий, который не звучит грубо. В чате — попросить кого-то посмотреть пулл-реквест и не написать «make me a code review», от которого сворачиваются уши.
+
+Беда в том, что общая лексика тут не выручает. `Make` вместо `do`, `actual` вместо `current`, `deploy on prod` вместо `deploy to prod`, `pull request` вместо `git pull` в смысле «обнови репозиторий» — каждое такое слово сразу выдаёт, что человек переводит дословно. Локально это понятно, на работе — мешает: коллеги переспрашивают, ревью буксует, оценки задач читаются криво.
+
+Этот урок — про базовый словарь и набор готовых фраз, без которых рабочая коммуникация в IT не складывается. Не про продвинутую техническую дискуссию о distributed systems, а про каркас: процесс, код и git, архитектура, частые офисные ситуации. После него стандартный рабочий день — standup, обсуждение тикета, поход за код-ревью, «у меня сломалось» — собирается на знакомых блоках, а не переводится на лету.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Tech English — это не «английский плюс термины», а **отдельный регистр** с устойчивыми коллокациями (`spin up a server`, `roll out a feature`, `push to prod`, `take down a service`), своими предлогами (`deploy **to** prod`, не «on»), своими ложными друзьями (`actual` ≠ актуальный) и набором готовых формул для процесса (`I'm blocked on…`, `Could you take a look at my PR?`, `LGTM`). Учить как речевые клише, а не как отдельные слова — иначе соберётся в дословный перевод и сразу прозвучит как русский в IT-русском.
+</Callout>
+
+## 3. Что входит в tech English
+
+Условно — четыре области, в каждой свой словарь и свои клише.
+
+| Область | Что туда входит | Когда нужно |
+| --- | --- | --- |
+| **Process** | agile, scrum, standup, sprint, backlog, retro, estimate, ticket, blocked | дейлики, планирование, оценки, статусы |
+| **Code & Git** | repo, branch, commit, push, pull, merge, rebase, PR, review, conflict | работа в git, code review, обсуждение изменений |
+| **Architecture** | frontend, backend, API, endpoint, database, cache, queue, microservice | дизайн, обсуждение системы, тех-собесы |
+| **Useful phrases** | «I'm blocked on…», «Could you take a look at my PR?», «LGTM», «WFM» | чаты, код-ревью, переписка с командой |
+
+Эти четыре области пересекаются, но словарь разный. На дейлике редко звучит `endpoint`, в архитектурной дискуссии — редко `retro`. Полезно держать их раздельно в голове: какой контекст — такой регистр.
+
+## 4. Аналогия с русским IT-сленгом
+
+<AnalogyBox note="Английский tech-слой — это плотный профессиональный жаргон, как наш «задеплоить», «закоммитить», «смержить», «зарелизить». Большая часть русского IT-сленга — это плохо ассимилированные английские глаголы. Разница: они у них основные, у нас — поверх русских корней. И когда говоришь по-английски, не нужно «возвращать» их к академическому — наоборот, носители используют тот же короткий рабочий регистр.">
+  <div slot="ru">
+    <strong>Русский IT-сленг:</strong><br/>
+    задеплоить = выкатить.<br/>
+    закоммитить = сохранить изменения.<br/>
+    смержить ветку = объединить.<br/>
+    зарелизить = опубликовать версию.<br/>
+    откатить = вернуть назад.<br/>
+    Большинство — кальки с английского.
+  </div>
+  <div slot="en">
+    <strong>То же по-английски:</strong><br/>
+    deploy / ship = выкатить.<br/>
+    commit = зафиксировать изменения.<br/>
+    merge a branch = слить ветку.<br/>
+    release = опубликовать версию.<br/>
+    roll back / revert = откатить.<br/>
+    На работе говорят коротко, не «academic».
+  </div>
+</AnalogyBox>
+
+## 6. Лексика по областям
+
+### Process — процесс разработки
+
+<RuleList rules={[
+  "<strong>standup / daily</strong> — короткий ежедневный созвон команды. Формула: <em>yesterday I did X, today I'm working on Y, I'm blocked on Z</em>.",
+  "<strong>sprint, backlog, planning, retro</strong> — каркас Scrum. Sprint — итерация (обычно 1-2 недели). Backlog — очередь задач. Planning — встреча, где выбираем задачи на спринт. Retro (retrospective) — обсуждение, что улучшить.",
+  "<strong>ticket / issue</strong> — задача в трекере (Jira, Linear, GitHub Issues). <em>I'm working on a ticket about caching.</em> Слова взаимозаменяемы, но <em>issue</em> чаще для багов и предложений, <em>ticket</em> — для рабочих задач.",
+  "<strong>estimate / estimation</strong> — оценка задачи (часы, дни, story points). <em>Can you give me an estimate for this feature?</em>",
+  "<strong>blocked / blocker</strong> — нельзя двигаться дальше без чьей-то помощи. <em>I'm blocked on the design review.</em> Сильное слово — после него ждут реакции.",
+  "<strong>scope</strong> — объём работ. <em>This is out of scope for this sprint.</em> Полезная фраза, чтобы вежливо отказаться расширять задачу.",
+  "<strong>technical debt / tech debt</strong> — накопленные компромиссы в коде. <em>We need to pay down some tech debt.</em>",
+]} />
+
+<Example ru="Вчера я закрыл два тикета по авторизации.">Yesterday I closed two auth tickets.</Example>
+<Example ru="Сегодня я работаю над миграцией базы.">Today I'm working on the database migration.</Example>
+<Example ru="Я заблокирован — жду код-ревью.">I'm blocked — waiting on code review.</Example>
+<Example ru="Это вне рамок текущего спринта.">That's out of scope for the current sprint.</Example>
+<Example ru="Можешь оценить эту задачу?">Could you estimate this task?</Example>
+
+### Code & Git — работа с кодом
+
+<RuleList rules={[
+  "<strong>repository / repo, branch, commit, push, pull, merge, rebase</strong> — базовый git-словарь. <em>Pull the latest from main, create a branch, commit your changes, push to remote, open a PR.</em>",
+  "<strong>PR (pull request) / MR (merge request)</strong> — запрос на слияние ветки. В GitHub — PR, в GitLab — MR, по сути одно и то же. <em>I opened a PR for the login fix.</em>",
+  "<strong>review / approve / request changes</strong> — стадии код-ревью. <em>Could you review my PR? / I'll approve once tests pass. / I requested changes on the database part.</em>",
+  "<strong>conflict / resolve a conflict</strong> — git-конфликт при merge. <em>I'm resolving conflicts on the feature branch.</em>",
+  "<strong>bug / issue / regression / hotfix</strong> — баг — проблема в коде. Issue — шире, любая проблема или предложение. Regression — баг, появившийся из-за нового кода в старой работающей функциональности. Hotfix — срочный фикс прямо на prod.",
+  "<strong>deploy / release / ship / roll out / roll back</strong> — выкатка изменений. <em>We deployed to staging. The release is scheduled for Friday. We shipped the feature. We rolled it out to 10% of users. We had to roll back due to a bug.</em>",
+  "<strong>main / master / develop / feature branch</strong> — типичные имена веток. Современная норма — <em>main</em>; <em>master</em> исторически и до сих пор встречается.",
+]} />
+
+<Example ru="Я открыл PR — посмотришь, когда будет время?">I opened a PR — could you take a look when you have a sec?</Example>
+<Example ru="Запушил фикс в feature-branch.">I pushed the fix to the feature branch.</Example>
+<Example ru="Подтянул main, разрешил конфликты.">I pulled main and resolved the conflicts.</Example>
+<Example ru="Мы выкатили на staging сегодня утром.">We deployed to staging this morning.</Example>
+<Example ru="Пришлось откатить релиз — поймали регрессию.">We had to roll back the release — we caught a regression.</Example>
+
+### Architecture — система и компоненты
+
+<RuleList rules={[
+  "<strong>frontend / backend / full-stack</strong> — клиентская часть / серверная / и то и другое. <em>I'm a backend engineer. She works full-stack.</em>",
+  "<strong>API / endpoint</strong> — программный интерфейс / конкретный URL, на который ходят. <em>We added a new endpoint for user search.</em>",
+  "<strong>database / DB / query / schema / migration</strong> — БД / запрос / схема / миграция. <em>This query is slow. We need a migration for the new column.</em>",
+  "<strong>cache / queue / message broker</strong> — слои инфраструктуры. <em>Hit the cache first, then fall back to the DB. Push the job to the queue.</em>",
+  "<strong>microservice / monolith</strong> — два архитектурных стиля. Не «лучший / худший» — просто разные. <em>We're splitting the monolith into a few microservices.</em>",
+  "<strong>client / server</strong> — кто запрашивает / кто отвечает. <em>The client sends a request, the server returns a response.</em>",
+  "<strong>load / latency / throughput / uptime</strong> — метрики нагрузки и доступности. <em>The service is under heavy load. Latency went up. We're at 99.9% uptime.</em>",
+]} />
+
+<Example ru="Этот endpoint возвращает список пользователей.">This endpoint returns a list of users.</Example>
+<Example ru="Запрос к базе слишком медленный, нужен индекс.">The query is too slow — we need an index.</Example>
+<Example ru="Сложим результат в кэш на пять минут.">Let's cache the result for five minutes.</Example>
+<Example ru="Сервис сейчас под большой нагрузкой.">The service is under heavy load right now.</Example>
+
+### Глагольные действия
+
+<RuleList rules={[
+  "<strong>ship</strong> — выкатить, доставить пользователям. Гордое слово в IT. <em>We shipped the new dashboard last week.</em>",
+  "<strong>debug</strong> — искать причину бага. <em>I'm debugging the login flow.</em> Не путать с <em>fix</em> — fix это уже починить.",
+  "<strong>refactor</strong> — переписать без изменения внешнего поведения. <em>I refactored the payment module.</em>",
+  "<strong>scale up / scale down / scale out</strong> — масштабировать вверх (мощнее машины) / вниз / вширь (больше инстансов). <em>We scaled up the DB. We scaled out to ten nodes.</em>",
+  "<strong>benchmark / profile / optimize</strong> — замерить производительность / посмотреть, где медленно / ускорить. <em>I profiled the request and found the bottleneck.</em>",
+  "<strong>mock / stub / fake</strong> — заглушки для тестов. <em>Mock the API in the unit tests.</em>",
+  "<strong>spin up / tear down</strong> — поднять (сервер, контейнер) / погасить. <em>Spin up a test instance. Tear down the staging env after testing.</em>",
+]} />
+
+<Example ru="Мы выкатили новую страницу профиля на прошлой неделе.">We shipped the new profile page last week.</Example>
+<Example ru="Я отлаживаю что-то странное в логине.">I'm debugging something weird in the login.</Example>
+<Example ru="Этот модуль нужно отрефакторить — он разросся.">This module needs a refactor — it's getting too big.</Example>
+
+### Полезные коллокации и устойчивые фразы
+
+<RuleList rules={[
+  "<strong>spin up a server / a container / an instance</strong> — поднять. <em>Let me spin up a test container.</em>",
+  "<strong>roll out a feature</strong> — постепенно выпустить фичу на пользователей. <em>We're rolling out dark mode to all users this week.</em>",
+  "<strong>push to prod</strong> — выкатить в продакшн. <em>Don't push to prod on Friday.</em>",
+  "<strong>take down a service</strong> — выключить / положить сервис. Может быть и плановым, и аварийным. <em>We took down the API for ten minutes during the migration.</em>",
+  "<strong>get a build to pass</strong> — добиться зелёного билда. <em>Spent two hours getting the build to pass.</em>",
+  "<strong>hit a wall</strong> — упереться в тупик. <em>I hit a wall with this caching issue — could you take a look?</em>",
+  "<strong>LGTM (Looks Good To Me)</strong> — одобрение PR. Часто в комментарии при approve. <em>LGTM, ship it.</em>",
+  "<strong>WFM (Works For Me)</strong> — у меня работает. Часто с лёгкой иронией, когда у кого-то ломается, а у тебя нет.",
+]} />
+
+## 7. Примеры в действии
+
+### Standup
+
+<Example ru="Вчера я доделал миграцию на новую версию библиотеки.">Yesterday I finished the migration to the new library version.</Example>
+<Example ru="Сегодня беру тикет про кэш на главной странице.">Today I'm picking up the ticket about caching on the home page.</Example>
+<Example ru="Заблокирован на код-ревью своего PR — можешь посмотреть?">I'm blocked on review for my PR — could you take a look?</Example>
+<Example ru="Ничего по этой задаче не двигалось со вчера.">Nothing has moved on this task since yesterday.</Example>
+<Example ru="В пятницу выходной — закрою спринт во вторник.">I'm off on Friday — I'll wrap up the sprint on Tuesday.</Example>
+
+### Code review и обсуждение PR
+
+<Example ru="Не мог бы ты посмотреть мой PR, когда будет минутка?">Could you review my PR when you have a minute?</Example>
+<Example ru="Оставил пару комментариев — несрочные, на твоё усмотрение.">I left a couple of comments — non-blocking, up to you.</Example>
+<Example ru="Эта часть выглядит хорошо, но в обработке ошибок есть дыра.">This part looks good, but there's a hole in the error handling.</Example>
+<Example ru="Поправлю и снова попрошу ревью.">I'll fix it and request another review.</Example>
+<Example ru="LGTM, можно мёржить.">LGTM, good to merge.</Example>
+
+### Баг и расследование
+
+<Example ru="У меня сломалась авторизация на staging.">Auth is broken on staging for me.</Example>
+<Example ru="Не могу воспроизвести — у меня работает.">Can't reproduce it — works for me.</Example>
+<Example ru="Похоже на регрессию из вчерашнего релиза.">Looks like a regression from yesterday's release.</Example>
+<Example ru="Заведу тикет с шагами воспроизведения.">I'll open a ticket with repro steps.</Example>
+<Example ru="Можем выкатить hotfix сегодня вечером.">We can ship a hotfix tonight.</Example>
+
+### Архитектура и дизайн
+
+<Example ru="Этот endpoint нужно вынести в отдельный сервис.">This endpoint should be moved to a separate service.</Example>
+<Example ru="Кэш быстрее, но придётся думать про инвалидацию.">Cache is faster, but we'll have to think about invalidation.</Example>
+<Example ru="Очередь поможет сгладить пики нагрузки.">A queue will help smooth out load spikes.</Example>
+<Example ru="Сначала фронт, потом подтянем бэк.">Frontend first, backend will catch up.</Example>
+
+### Чат и быстрые ответы
+
+<Example ru="У меня свободно после трёх — давай созвонимся.">I'm free after 3 — let's hop on a call.</Example>
+<Example ru="Поделюсь экраном, чтобы было понятнее.">Let me share my screen so it's clearer.</Example>
+<Example ru="У меня уперлось — нужна твоя помощь на пять минут.">I'm stuck — need five minutes of your time.</Example>
+<Example ru="Уйду на встречу, вернусь через час.">I'll be in a meeting, back in an hour.</Example>
+
+## 8. Контрасты — близкие по смыслу пары
+
+<Compare leftLabel="deploy / release / ship" rightLabel="Близкие, но не одно и то же">
+  <div slot="left">
+    <strong>deploy</strong> — техническое действие: положить артефакт на окружение.<br/>
+    <em>We deploy to staging every commit.</em><br/><br/>
+    <strong>release</strong> — событие: версия доступна пользователям/клиентам.<br/>
+    <em>The 2.0 release is on Friday.</em><br/><br/>
+    <strong>ship</strong> — выкатили в живое использование (разг.).<br/>
+    <em>We shipped the new search.</em>
+  </div>
+  <div slot="right">
+    Можно deploy без release (на staging — да, пользователи нет).<br/><br/>
+    Можно release без deploy (бывает: артефакт собран, но не задеплоен).<br/><br/>
+    <em>Ship</em> — почти всегда подразумевает «увидели пользователи». В разговоре чаще, чем <em>release</em>.
+  </div>
+</Compare>
+
+<Compare leftLabel="bug / issue / ticket" rightLabel="Где какой регистр">
+  <div slot="left">
+    <strong>bug</strong> — конкретный сломанный кусок поведения.<br/>
+    <em>There's a bug in the date picker.</em><br/><br/>
+    <strong>issue</strong> — общее: проблема, предложение, вопрос. Шире, чем bug.<br/>
+    <em>I opened an issue about the slow loading.</em><br/><br/>
+    <strong>ticket</strong> — задача в трекере, любая.<br/>
+    <em>I have three tickets this sprint.</em>
+  </div>
+  <div slot="right">
+    Каждый bug — это issue. Не каждый issue — bug.<br/><br/>
+    На GitHub «issue» — общий тип сущности (там же фичи, вопросы).<br/><br/>
+    «Ticket» нейтрально про любую задачу в Jira / Linear. <em>Bug ticket</em> — задача про баг.
+  </div>
+</Compare>
+
+<Compare leftLabel="client / server / frontend / backend" rightLabel="Где граница">
+  <div slot="left">
+    <strong>client</strong> — кто отправляет запрос.<br/>
+    Браузер, мобильное приложение, скрипт.<br/><br/>
+    <strong>server</strong> — кто принимает и отвечает.<br/>
+    Web-сервер, API, бэкенд.<br/><br/>
+    <strong>frontend</strong> — UI-часть.<br/>
+    <strong>backend</strong> — серверная логика и данные.
+  </div>
+  <div slot="right">
+    client/server — про <em>роли в коммуникации</em>.<br/><br/>
+    frontend/backend — про <em>где живёт код</em> в продукте.<br/><br/>
+    Frontend — всегда client-side. Backend — всегда server-side. Но client/server описывает шире — например, два бэкенд-сервиса между собой тоже client и server.
+  </div>
+</Compare>
+
+<Compare leftLabel="prod / staging / dev" rightLabel="Окружения">
+  <div slot="left">
+    <strong>prod (production)</strong> — где живут пользователи. Сломаешь — все увидят.<br/><br/>
+    <strong>staging</strong> — копия prod для финальной проверки. Те же данные структурно, без живых пользователей.<br/><br/>
+    <strong>dev / develop / local</strong> — рабочее окружение разработчика или общая dev-среда.
+  </div>
+  <div slot="right">
+    Поток: <em>local → dev → staging → prod</em>.<br/><br/>
+    Деплой идёт <em>to</em>: <em>deploy to staging</em>, <em>push to prod</em>.<br/><br/>
+    <em>On prod</em> уместно для статуса: <em>the bug only appears on prod</em>. <em>Deploy on prod</em> — не норма.
+  </div>
+</Compare>
+
+<Compare leftLabel="merge / rebase / squash" rightLabel="Способы интегрировать ветку">
+  <div slot="left">
+    <strong>merge</strong> — создаёт merge-commit, история сохраняется.<br/>
+    <em>Merge the feature branch into main.</em><br/><br/>
+    <strong>rebase</strong> — переписывает коммиты ветки поверх main, линейная история.<br/>
+    <em>Rebase your branch onto main.</em>
+  </div>
+  <div slot="right">
+    <strong>squash</strong> — объединить все коммиты PR в один.<br/>
+    <em>Squash and merge.</em><br/><br/>
+    Выбор зависит от практики команды. Часто: <em>squash merge</em> для PR в main, <em>rebase</em> для синка ветки с main.
+  </div>
+</Compare>
+
+## 9. Мнемоника и лайфхаки
+
+<Callout type="teal" title="Артикль перед IT-аббревиатурами">
+Артикль определяется **звуком первой буквы аббревиатуры, не написанием**. `MVP` читается как «эм-ви-пи» — начинается на гласный звук, значит **an MVP**. `SQL` чаще читается «эс-кью-эл», тоже на гласный — **an SQL query**. `API` — «эй-пи-ай», но первый звук [eɪ] — гласный, **an API**. А `UI` — «ю-ай», первый звук [j] — согласный, поэтому **a UI**. `URL` — «ю-ар-эл», тоже **a URL**. Запомни: проговори вслух первую букву, и артикль вылезет сам.
+</Callout>
+
+## 10. UK vs US — мелкие отличия
+
+<Callout type="blue" title="Мелкая разница, на которую можно не сильно отвлекаться">
+В tech-словаре UK/US почти не расходятся — индустрия глобальная, в чатах преобладает US-вариант. Но точечно: `whilst` (UK) против `while` (US, и в коде везде), `colour` (UK) против `color` (US, и в CSS), `licence` (UK noun) против `license` (US универсально, и в коде/лицензиях). Глагол `to license` — везде с `s`. В терминологии разработки крупных расхождений практически нет: `deploy`, `release`, `ship`, `PR`, `repo` — одинаково везде. Можно спокойно опираться на US-норму — её точно поймут, а UK-коллеги привыкли.
+</Callout>
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I have a problem with X | I'm running into an issue with X | «I have a problem» звучит тяжело и драматично. На работе — `running into an issue / hitting a snag / seeing a weird thing`. Легче по тону. |
+| What is the actual status? | What is the current status? | `Actual` — это «реальный / фактический», не «актуальный». «Актуальный» = `current / up-to-date / relevant`. Один из самых частых ложных друзей. |
+| Make me a code review, please | Could you review my PR? | `Make a code review` — калька с русского. По-английски: `review my PR`, `take a look at my PR`, `do a quick review`. Глагол — `review`, не `make`. |
+| Please accept my PR | Please approve my PR | В git/GitHub PR не «принимают» — его `approve` (одобряют), затем `merge` (сливают). `Accept` подходит для предложения о работе или приглашения, не для PR. |
+| an UI / a API / a SQL query | a UI / an API / an SQL query | Артикль по **первому звуку аббревиатуры**. UI — [juː], согласный → `a`. API — [eɪ], гласный → `an`. SQL — [es], гласный → `an`. |
+| I will ship the file to you | I'll send you the file | `Ship` в IT = выкатить в прод. Файл — `send`, `share`, `attach`. Иначе звучит, что ты деплоишь файл. |
+| Please make git pull request | Please open a pull request | `Pull request` — это сущность в GitHub/GitLab. Создают её через `open / create / submit a PR`. `Git pull` — другая команда, она про подтягивание изменений из remote. Разные вещи, не смешивать. |
+| Deploy on prod | Deploy to prod | `Deploy to <environment>`. Предлог `to` — направление действия. `On prod` уместно для состояния: `the bug shows up on prod`. Для деплоя — только `to`. |
+| Our microservices are better than their monolith | We use microservices; they use a monolith | Архитектурный стиль — не оценка качества. Монолит — нормальное решение для многих систем. Сравнивать `better / worse` — звучит наивно. Описывай через `we use / they use / for our case we chose`. |
+| I will commit it on master | I'll commit to main / push to main | `Commit to <branch>`, не `on`. Современная норма ветки — `main`, не `master` (в большинстве новых репо). |
+| I made the deployment of the new version | I deployed the new version | Английский предпочитает глагол существительному: `deploy`, не `make a deployment`. `Refactor`, не `make a refactoring`. Короче и естественнее. |
+| principal of least privilege | principle of least privilege | `Principal` = главный / директор / основная сумма. `Principle` = принцип. Омофоны, но в код-ревью пишут именно `principle`. |
+| The design compliments the UX | The design complements the UX | `Complement` = дополнять. `Compliment` = хвалить. В техническом письме почти всегда нужен `complement`. |
+
+## 13. Шпаргалка
+
+| Область | Ядро словаря |
+| --- | --- |
+| **Process** | standup, sprint, backlog, planning, retro, ticket, issue, estimate, scope, blocked, tech debt |
+| **Git** | repo, branch, commit, push, pull, merge, rebase, squash, conflict, PR, review, approve, request changes |
+| **Releases** | deploy, release, ship, roll out, roll back, hotfix, regression, prod, staging, dev |
+| **Architecture** | frontend, backend, full-stack, API, endpoint, database, query, schema, migration, cache, queue, microservice, monolith, client, server |
+| **Metrics** | load, latency, throughput, uptime, downtime, bottleneck |
+| **Actions** | debug, fix, refactor, optimize, profile, benchmark, mock, stub, spin up, tear down, scale up/down/out |
+| **Phrases** | I'm blocked on…, Could you take a look at my PR?, LGTM, WFM, hit a wall, get a build to pass, push to prod |
+
+| Ловушка | Запомни |
+| --- | --- |
+| Артикль перед аббрев. | По первому звуку: an MVP, an API, an SQL, **a** UI, **a** URL |
+| deploy to / push to prod | Предлог `to`, не `on` |
+| review my PR | Глагол `review`, не `make a review` |
+| approve / merge PR | Не `accept` |
+| current ≠ actual | `Current` = актуальный; `actual` = фактический |
+| ship = выкатить | Файл — `send`, не `ship` |
+| pull request ≠ git pull | PR — сущность; git pull — команда |
+| main, не master | Современная норма ветки по умолчанию |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "standup / daily", meaning: "ежедневный созвон команды на 10-15 минут" },
+  { term: "sprint", meaning: "итерация разработки, обычно 1-2 недели" },
+  { term: "backlog", meaning: "очередь задач команды на будущее" },
+  { term: "planning", meaning: "встреча выбора задач на спринт" },
+  { term: "retro (retrospective)", meaning: "встреча обсуждения, что улучшить в процессе" },
+  { term: "ticket / issue", meaning: "задача в трекере (Jira, Linear, GitHub)" },
+  { term: "estimate / estimation", meaning: "оценка задачи по времени или story points" },
+  { term: "blocked / blocker", meaning: "не могу двигаться без помощи или внешнего действия" },
+  { term: "scope", meaning: "объём работ; out of scope = вне этой задачи" },
+  { term: "technical debt / tech debt", meaning: "накопленные компромиссы в коде, мешающие развитию" },
+  { term: "repository / repo", meaning: "git-хранилище проекта" },
+  { term: "branch", meaning: "ветка в git" },
+  { term: "commit", meaning: "зафиксированный набор изменений; глагол — фиксировать" },
+  { term: "push", meaning: "отправить локальные коммиты в remote" },
+  { term: "pull", meaning: "подтянуть изменения из remote" },
+  { term: "merge", meaning: "объединить ветку в другую" },
+  { term: "rebase", meaning: "перенести коммиты поверх другой ветки (линейная история)" },
+  { term: "squash", meaning: "объединить коммиты в один" },
+  { term: "conflict", meaning: "git-конфликт при merge или rebase" },
+  { term: "PR (pull request)", meaning: "запрос на слияние ветки; в GitLab — MR" },
+  { term: "review", meaning: "код-ревью; глагол — ревьюить" },
+  { term: "approve / request changes", meaning: "одобрить PR / попросить правки" },
+  { term: "LGTM", meaning: "Looks Good To Me — одобрение PR" },
+  { term: "WFM", meaning: "Works For Me — у меня работает" },
+  { term: "bug", meaning: "сломанное поведение в коде" },
+  { term: "regression", meaning: "новый код сломал то, что работало" },
+  { term: "hotfix", meaning: "срочный фикс прямо на prod" },
+  { term: "deploy", meaning: "выкатить артефакт на окружение" },
+  { term: "release", meaning: "версия, доступная пользователям/клиентам" },
+  { term: "ship", meaning: "выкатить в живое использование (разг.)" },
+  { term: "roll out", meaning: "постепенно выпустить фичу" },
+  { term: "roll back / revert", meaning: "откатить релиз" },
+  { term: "prod / staging / dev", meaning: "production / промежуточное / dev-окружение" },
+  { term: "frontend / backend / full-stack", meaning: "клиент / сервер / и то и другое" },
+  { term: "API", meaning: "программный интерфейс" },
+  { term: "endpoint", meaning: "конкретный URL API" },
+  { term: "database / DB", meaning: "база данных" },
+  { term: "query", meaning: "запрос к базе" },
+  { term: "schema", meaning: "структура таблиц / документов в БД" },
+  { term: "migration", meaning: "изменение схемы БД" },
+  { term: "cache", meaning: "кэш; глагол — кэшировать" },
+  { term: "queue", meaning: "очередь сообщений / задач" },
+  { term: "microservice / monolith", meaning: "сервисная архитектура / монолитная" },
+  { term: "client / server", meaning: "кто запрашивает / кто отвечает" },
+  { term: "load / latency / throughput / uptime", meaning: "нагрузка / задержка / пропускная способность / время работы" },
+  { term: "bottleneck", meaning: "узкое место в производительности" },
+  { term: "debug", meaning: "искать причину бага" },
+  { term: "refactor", meaning: "переписать без изменения поведения" },
+  { term: "optimize", meaning: "ускорить, улучшить" },
+  { term: "profile / benchmark", meaning: "посмотреть где медленно / замерить производительность" },
+  { term: "mock / stub", meaning: "заглушка в тестах" },
+  { term: "spin up / tear down", meaning: "поднять / погасить сервер, контейнер" },
+  { term: "scale up / down / out", meaning: "мощнее / слабее / больше инстансов" },
+  { term: "hit a wall", meaning: "упереться в тупик" },
+  { term: "current (≠ actual)", meaning: "актуальный, текущий; ложный друг" },
+  { term: "principle (≠ principal)", meaning: "принцип, не главный" },
+  { term: "complement (≠ compliment)", meaning: "дополнять, не комплимент" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Tech-термин → значение</span>
+    <span class="kc-trainer-hint">Запомни 20+ ключевых слов из процесса, git и архитектуры</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Термин → перевод</span>
+    <span class="kc-trainer-hint">Соотнеси английский термин с русским значением</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">По области</span>
+    <span class="kc-trainer-hint">Process / Code & Git / Architecture / Useful Phrases</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Tech English в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов: выбери правильный термин или фразу</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши нужный термин</span>
+    <span class="kc-trainer-hint">Заполни пропуск подходящим словом из tech-словаря</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери рабочую фразу</span>
+    <span class="kc-trainer-hint">Расставь слова в standup / code review / blocked-фразе</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Cambridge Dictionary** — dictionary.cambridge.org (значения и примеры использования слов deploy, release, ship, refactor).
+- **Oxford Learner's Dictionaries** — oxfordlearnersdictionaries.com (разговорные коллокации и регистр).
+- **GitHub Docs Glossary** — docs.github.com/en/get-started/learning-about-github/github-glossary (термины PR, branch, commit, merge, rebase в их каноническом контексте).
+- **Atlassian Agile Coach Glossary** — atlassian.com/agile/project-management/project-management-intro (sprint, backlog, retro, story point, scrum-словарь).

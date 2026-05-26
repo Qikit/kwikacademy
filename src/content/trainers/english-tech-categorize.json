@@ -1,0 +1,107 @@
+{
+  "course": "english",
+  "lesson": "english-tech",
+  "title": "Tech English по областям",
+  "description": "Распредели термины по областям: процесс, код и git, архитектура, рабочие фразы.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "process", "label": "Process" },
+      { "id": "code", "label": "Code & Git" },
+      { "id": "architecture", "label": "Architecture" },
+      { "id": "phrases", "label": "Useful Phrases" }
+    ],
+    "items": [
+      {
+        "text": "standup",
+        "category": "process",
+        "explain": "Process — ежедневный созвон команды на 10-15 минут. Часть Scrum-каркаса."
+      },
+      {
+        "text": "backlog",
+        "category": "process",
+        "explain": "Process — очередь задач команды, из которой на planning выбирают спринт."
+      },
+      {
+        "text": "estimate",
+        "category": "process",
+        "explain": "Process — оценка задачи по времени или story points. «Can you give me an estimate?»"
+      },
+      {
+        "text": "tech debt",
+        "category": "process",
+        "explain": "Process — накопленные компромиссы в коде. Платят рефакторингом, обсуждают в planning/retro."
+      },
+      {
+        "text": "rebase",
+        "category": "code",
+        "explain": "Code & Git — перенести коммиты поверх другой ветки для линейной истории. «Rebase your branch onto main.»"
+      },
+      {
+        "text": "conflict",
+        "category": "code",
+        "explain": "Code & Git — git-конфликт при merge или rebase. Глагол — resolve. «I'm resolving conflicts.»"
+      },
+      {
+        "text": "hotfix",
+        "category": "code",
+        "explain": "Code & Git — срочный фикс прямо на prod в обход обычного процесса релизов."
+      },
+      {
+        "text": "regression",
+        "category": "code",
+        "explain": "Code & Git — баг в работавшей функциональности после нового релиза. «A regression from yesterday's release.»"
+      },
+      {
+        "text": "endpoint",
+        "category": "architecture",
+        "explain": "Architecture — конкретный URL API. «We added a new endpoint for user search.»"
+      },
+      {
+        "text": "queue",
+        "category": "architecture",
+        "explain": "Architecture — асинхронная очередь сообщений или задач. Помогает сглаживать пики нагрузки."
+      },
+      {
+        "text": "migration",
+        "category": "architecture",
+        "explain": "Architecture — версионированное изменение схемы БД. «We need a migration for the new column.»"
+      },
+      {
+        "text": "microservice",
+        "category": "architecture",
+        "explain": "Architecture — стиль с разбиением на маленькие сервисы. Не «лучше», чем monolith — просто другой подход."
+      },
+      {
+        "text": "bottleneck",
+        "category": "architecture",
+        "explain": "Architecture / metrics — узкое место в производительности системы. «I profiled and found the bottleneck.»"
+      },
+      {
+        "text": "LGTM",
+        "category": "phrases",
+        "explain": "Phrase — Looks Good To Me. Стандартное одобрение PR в комментарии при approve."
+      },
+      {
+        "text": "WFM",
+        "category": "phrases",
+        "explain": "Phrase — Works For Me. Ответ, когда у других ломается, а у тебя нет."
+      },
+      {
+        "text": "I'm blocked on…",
+        "category": "phrases",
+        "explain": "Phrase — standup-сигнал, что нужна разблокировка. «I'm blocked on review for my PR.»"
+      },
+      {
+        "text": "hit a wall",
+        "category": "phrases",
+        "explain": "Phrase — «упёрся в тупик». «I hit a wall with this caching issue.» Сигнал, что прошу помощь."
+      },
+      {
+        "text": "push to prod",
+        "category": "phrases",
+        "explain": "Phrase — выкатить в продакшн. Предлог TO. «Don't push to prod on Friday.»"
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "course": "english",
+  "lesson": "english-tech",
+  "title": "Tech English — впиши термин",
+  "description": "Заполни пропуск подходящим словом или предлогом из tech-словаря. Один пропуск = одно слово.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Yesterday I closed two tickets, today I'm working on caching, and I'm ___ on the API change.",
+        "answers": ["blocked"],
+        "explain": "«I'm blocked on …» — standup-формула, сигнал команде, что нужна разблокировка. Сильное слово — ждут реакции."
+      },
+      {
+        "text": "We deployed ___ staging this morning — please test the auth flow.",
+        "answers": ["to"],
+        "explain": "Deploy / push to <environment>. Предлог TO, не ON. «Deploy on prod» — частая ошибка по аналогии с русским «на».",
+        "hint": "предлог направления"
+      },
+      {
+        "text": "Could you ___ my PR when you have a minute? It's a small fix.",
+        "answers": ["review"],
+        "explain": "Глагол review — стандартный запрос на код-ревью. «Make a code review» — калька с русского, не норма."
+      },
+      {
+        "text": "Looks like a ___ from yesterday's release — login was working on Friday.",
+        "answers": ["regression"],
+        "explain": "Regression — баг в ранее работавшей функциональности, появившийся после нового релиза. Часто требует hotfix."
+      },
+      {
+        "text": "What is the ___ status of the migration? I need to update the doc.",
+        "answers": ["current"],
+        "explain": "Current = актуальный, текущий. Actual в этом значении — ложный друг (на самом деле = реальный, фактический)."
+      },
+      {
+        "text": "LGTM, good to ___ — tests are green.",
+        "answers": ["merge"],
+        "explain": "После approve следующий шаг — merge ветки в main. LGTM = Looks Good To Me — одобрение. «Accept» в контексте PR — ошибка."
+      },
+      {
+        "text": "We're ___ out dark mode to 10% of users this week and monitoring metrics.",
+        "answers": ["rolling"],
+        "explain": "Roll out — постепенный раскат фичи. «Rolling out» — Present Continuous, действие в процессе. Не путать с roll back (откат)."
+      },
+      {
+        "text": "Can you give me an ___ for this feature? Two days or two weeks?",
+        "answers": ["estimate"],
+        "explain": "Estimate (существительное) — оценка задачи. Глагол — to estimate. «Make estimation» — кальковая ошибка."
+      },
+      {
+        "text": "I profiled the request and found the ___ — it's an N+1 query.",
+        "answers": ["bottleneck"],
+        "explain": "Bottleneck — узкое место в производительности. Profile = посмотреть, где медленно. N+1 query — классический пример bottleneck в БД."
+      },
+      {
+        "text": "Let me ___ up a test container to debug the issue.",
+        "answers": ["spin"],
+        "explain": "Spin up — поднять сервер / контейнер / инстанс. Парный термин — tear down (погасить). Не путать с roll out."
+      },
+      {
+        "text": "That's ___ of scope for this sprint — let's discuss it on planning.",
+        "answers": ["out"],
+        "explain": "«Out of scope» — устойчивая фраза, вне рамок задачи. Вежливый способ отложить расширение задачи без долгого спора."
+      },
+      {
+        "text": "We had to ___ back the release after we caught a critical bug on prod.",
+        "answers": ["roll"],
+        "explain": "Roll back — откатить релиз на предыдущую версию. Синоним — revert. Действие при регрессии или критическом баге на prod."
+      },
+      {
+        "text": "I'm ___ a wall with this caching issue — could you take a look?",
+        "answers": ["hitting"],
+        "explain": "Hit a wall — упереться в тупик. В Present Continuous «I'm hitting» — описывает текущее состояние, сигнал, что нужна помощь."
+      },
+      {
+        "text": "Don't push ___ prod on Friday — wait until Monday morning.",
+        "answers": ["to"],
+        "explain": "Push to prod — предлог TO. На пятницу выкатывать в прод — общая anti-pattern: некому чинить, если что-то сломается на выходных."
+      }
+    ]
+  }
+}

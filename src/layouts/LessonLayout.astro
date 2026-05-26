@@ -34,8 +34,8 @@ const { title, eyebrow, readingMinutes, slug, courseHref, prevHref, prevTitle, n
         </div>
       ) : (
         <>
-          <ExportMenu client:visible title={title} eyebrow={eyebrow} slug={slug} />
-          <LessonComplete client:visible slug={slug} nextHref={nextHref} />
+          <ExportMenu client:idle title={title} eyebrow={eyebrow} slug={slug} />
+          <LessonComplete client:idle slug={slug} nextHref={nextHref} />
         </>
       )
     }

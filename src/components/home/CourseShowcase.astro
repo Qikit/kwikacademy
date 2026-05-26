@@ -48,7 +48,7 @@ const fallback = { area: 'auto', size: 'md' as const };
         return (
           <div class="cell" style={`grid-area:${p.area}`}>
             <CourseCard
-              client:visible
+              client:idle
               href={withBase(`/topics/${c.id}`)}
               title={c.data.title}
               eyebrow={c.data.subtitle}

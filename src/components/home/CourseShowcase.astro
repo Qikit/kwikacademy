@@ -5,9 +5,8 @@ import { withBase } from '../../lib/url';
 
 interface Props {
   header?: boolean;
-  narrow?: boolean; // catalog uses a tighter container (no break-out)
 }
-const { header = true, narrow = false } = Astro.props;
+const { header = true } = Astro.props;
 
 const courses = (await getCollection('courses'))
   .filter((c) => !c.data.hidden)
@@ -17,27 +16,30 @@ const trainers = await getCollection('trainers');
 const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slug);
 const trainersFor = (slug: string) => trainers.filter((t) => t.data.course === slug);
 
-// Brick-like bento on a 6-column grid. Each row is one track tall; wide tiles
-// span 2 cols (rectangles), small tiles span 1 col (squares). Rows 1 and 3 are
-// centered groups of 3 with 1u padding on each side; row 2 spans full width.
+// Diagonal-brick bento on a 5-column grid. Rows stagger horizontally — row 1
+// has a notch at the top-right, row 3 at the bottom-left — so the overall
+// silhouette runs diagonally instead of forming a rectangle. Row 2 breaks the
+// uniformity with a wide / square / wide sandwich, giving the middle row its
+// own rhythm. Cards with the longest content (English, Web titles + Kotlin,
+// Java eyebrows) take the 2u wide slots; the others stay 1u squares.
 const place: Record<string, { area: string; size: 'lg' | 'md' | 'sm' }> = {
-  // Row 1 — centered (cols 2–6): wide + sq + sq
-  english: { area: '1 / 2 / 2 / 4', size: 'md' },
-  kotlin: { area: '1 / 4 / 2 / 5', size: 'md' },
-  java: { area: '1 / 5 / 2 / 6', size: 'md' },
-  // Row 2 — full width: 3 wide tiles
-  react: { area: '2 / 1 / 3 / 3', size: 'md' },
-  'ai-llm': { area: '2 / 3 / 3 / 5', size: 'md' },
-  databases: { area: '2 / 5 / 3 / 7', size: 'md' },
-  // Row 3 — centered (cols 2–6): wide + sq + sq
-  web: { area: '3 / 2 / 4 / 4', size: 'md' },
-  business: { area: '3 / 4 / 4 / 5', size: 'md' },
-  management: { area: '3 / 5 / 4 / 6', size: 'md' },
+  // Row 1 — wide english, two squares, empty top-right
+  english: { area: '1 / 1 / 2 / 3', size: 'lg' }, // cols 1-3
+  react: { area: '1 / 3 / 2 / 4', size: 'md' }, // col 3-4
+  'ai-llm': { area: '1 / 4 / 2 / 5', size: 'md' }, // col 4-5
+  // Row 2 — kotlin / databases / java sandwich, full width
+  kotlin: { area: '2 / 1 / 3 / 3', size: 'lg' }, // cols 1-3
+  databases: { area: '2 / 3 / 3 / 4', size: 'md' }, // col 3-4
+  java: { area: '2 / 4 / 3 / 6', size: 'lg' }, // cols 4-6
+  // Row 3 — empty bottom-left, wide web in middle, two squares right
+  web: { area: '3 / 2 / 4 / 4', size: 'lg' }, // cols 2-4
+  business: { area: '3 / 4 / 4 / 5', size: 'md' }, // col 4-5
+  management: { area: '3 / 5 / 4 / 6', size: 'md' }, // col 5-6
 };
 const fallback = { area: 'auto', size: 'md' as const };
 ---
 
-<section class={`showcase ${narrow ? 'narrow' : ''}`}>
+<section class="showcase">
   {
     header && (
       <>
@@ -74,13 +76,9 @@ const fallback = { area: 'auto', size: 'md' as const };
 <style>
   .showcase {
     /* slightly wider than the rest of the page — the bento breaks out gently */
-    max-width: min(1320px, 94vw);
+    max-width: min(1480px, 94vw);
     margin: 0 auto;
     padding: 8px 24px 110px;
-  }
-  .showcase.narrow {
-    /* catalog — stays within the central content column */
-    max-width: 1080px;
   }
   .eyebrow,
   h2 {
@@ -94,9 +92,9 @@ const fallback = { area: 'auto', size: 'md' as const };
   }
   .bento {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 190px;
-    gap: 24px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 230px;
+    gap: 20px;
   }
   .cell {
     min-width: 0;

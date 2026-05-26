@@ -141,9 +141,10 @@ a {
 .kc-stack:hover .kc-lb {
   transform: translateX(-50%) translateY(-2px) rotate(1.4deg);
 }
-/* larger tiles get a bigger title */
+/* larger tiles get a bigger title — capped to keep two-word headings on one line */
 .kc-stack[data-size='lg'] .kc-title {
-  font-size: clamp(24px, 2.6vw, 32px);
+  font-size: clamp(24px, 2.2vw, 30px);
+  line-height: 1.15;
 }
 .kc-stack:hover .kc-la {
   transform: translateX(-50%) translateY(-6px) rotate(-3deg);
@@ -156,7 +157,8 @@ a {
   height: 100%;
   min-height: 168px;
   border-radius: var(--r-lg);
-  padding: 22px;
+  /* extra bottom reserves space for absolutely-positioned meta/pct */
+  padding: 22px 22px 50px;
   overflow: hidden;
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
@@ -264,9 +266,14 @@ a {
   font-size: 22px;
   font-weight: 700;
   margin-top: 8px;
+  /* keep the title clear of the absolutely-positioned glyph chip */
+  padding-right: 52px;
   color: var(--text);
   position: relative;
   z-index: 3;
+}
+.kc-stack[data-size='lg'] .kc-title {
+  padding-right: 64px;
 }
 .kc-meta {
   position: absolute;

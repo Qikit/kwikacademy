@@ -1,0 +1,107 @@
+{
+  "course": "english",
+  "lesson": "english-interviews",
+  "title": "Interviews — впиши слово в фразу",
+  "description": "Заполни пропуск в типовой формуле собеседования. Одно слово или короткая фраза.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Let me give you an ___ from my previous role.",
+        "answers": ["example"],
+        "explain": "«Let me give you an example» — стандартное начало STAR-ответа. Сигнал интервьюеру, что сейчас будет конкретная история, а не абстракция.",
+        "hint": "начало STAR"
+      },
+      {
+        "text": "My ___ was to align the team and ship the feature on time.",
+        "answers": ["role", "responsibility", "job", "task"],
+        "explain": "Часть T (Task) в STAR: твоя личная роль и цель. Варианты: «My role was to...», «My responsibility was to...», «My job was to...», «My task was to...».",
+        "hint": "T в STAR"
+      },
+      {
+        "text": "What I did ___ schedule a one-on-one with the designer.",
+        "answers": ["was"],
+        "explain": "«What I did was + V» — стандартная формула A (Action) в STAR. Глагол идёт сразу после «was» без «to». «What I did was schedule», не «to schedule».",
+        "hint": "A в STAR"
+      },
+      {
+        "text": "As a ___, we shipped two weeks early and adoption hit 40% in the first month.",
+        "answers": ["result"],
+        "explain": "«As a result» — стандартное начало R в STAR. После — конкретный измеримый результат с цифрой, если возможно.",
+        "hint": "R в STAR"
+      },
+      {
+        "text": "I'm ___ a range of $140K to $160K based on the market.",
+        "answers": ["targeting"],
+        "explain": "«I'm targeting a range of X to Y» — стандартная формула для salary expectations. Range, а не точное число; обоснование (based on market).",
+        "hint": "negotiation"
+      },
+      {
+        "text": "I was ___ for something in the range of $150K on the base.",
+        "answers": ["hoping"],
+        "explain": "«I was hoping for» — мягкая формула counter-предложения. Звучит вежливо и оставляет место для движения. Альтернатива I'd like / I expected.",
+        "hint": "мягкая negotiation-формула"
+      },
+      {
+        "text": "Is there ___ on the base salary?",
+        "answers": ["flexibility"],
+        "explain": "«Is there flexibility on X?» — прямой запрос про space для движения. Стандартная фраза, не агрессивная. После неё — пауза, не оправдывайся.",
+        "hint": "прямой запрос"
+      },
+      {
+        "text": "I'd like to take a couple of ___ to think it over.",
+        "answers": ["days"],
+        "explain": "Никогда не принимай оффер on the spot. «Take a couple of days to think it over» — стандартный запрос времени на обдумывание.",
+        "hint": "обдумывание"
+      },
+      {
+        "text": "I'd rather focus on what makes ___ for this role.",
+        "answers": ["sense"],
+        "explain": "«What makes sense for this role» — pivot от вопроса про текущую зарплату к target range для новой роли.",
+        "hint": "pivot от current salary"
+      },
+      {
+        "text": "Could you share the salary ___ for this position?",
+        "answers": ["range"],
+        "explain": "Range компании — публичная информация во многих юрисдикциях. Лучше «for the role/position», чем «what you usually pay».",
+        "hint": "вопрос про диапазон"
+      },
+      {
+        "text": "I tend to ___-engineer solutions early in a project.",
+        "answers": ["over"],
+        "explain": "«To over-engineer» — переусложнять. Безопасная weakness для интервью: реальная, понятная, очевидный путь работать над ней.",
+        "hint": "безопасная weakness"
+      },
+      {
+        "text": "I'm looking for a role with more strategic ___ across a full product line.",
+        "answers": ["ownership"],
+        "explain": "Ownership — ответственность за результат. Качество, которое ищут на senior+ ролях. Сильнее, чем «responsibility».",
+        "hint": "качество senior+"
+      },
+      {
+        "text": "I ___ a team of four engineers on the migration project.",
+        "answers": ["led"],
+        "explain": "«I led» — прямое заявление о роли. На интервью говори «I led», «I owned», «I drove» — не «I helped».",
+        "hint": "ownership, не скромность"
+      },
+      {
+        "text": "What does success ___ like for this role in the first six months?",
+        "answers": ["look"],
+        "explain": "«What does success look like» — сильный вопрос интервьюеру. Показывает, что думаешь про результат, а не процесс. «In the first six months» — добавляет конкретики.",
+        "hint": "вопрос интервьюеру"
+      },
+      {
+        "text": "Thank you for taking the time to ___ with me today.",
+        "answers": ["speak", "talk", "meet"],
+        "explain": "Формальное начало follow-up email или закрытия интервью: «Thank you for taking the time to speak/talk/meet with me today.» Чуть формальнее, чем просто «Thanks for the chat».",
+        "hint": "follow-up email"
+      },
+      {
+        "text": "I've been ___ your product since the launch of the developer platform last year.",
+        "answers": ["following"],
+        "explain": "«I've been following your product» — research-based ответ на «Why do you want to work here?». Доказывает, что не разослал письмо в 50 компаний.",
+        "hint": "research-based"
+      }
+    ]
+  }
+}

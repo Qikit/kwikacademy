@@ -1,0 +1,154 @@
+{
+  "course": "english",
+  "lesson": "english-interviews",
+  "title": "Interviews — слабый vs сильный ответ",
+  "description": "Выбери самую сильную формулировку для типового вопроса собеседования.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "«Tell me about yourself» — лучший ответ:",
+        "options": [
+          "I was born in Moscow, finished school in 2010, then university in 2015. After that I worked in three companies.",
+          "I have six years of experience in product. I'm currently a PM at a SaaS startup, where I led the launch of two products and grew adoption by 40%. I'm looking for a role with more strategic ownership, which is why this position caught my attention.",
+          "I'm a passionate and hard-working professional with strong communication skills and a results-driven mindset.",
+          "Well, what would you like to know? I can talk about my education or my hobbies, you tell me."
+        ],
+        "correctIndex": 1,
+        "explain": "Это 60-сек pitch: past (6 лет в product) → present (текущая роль + цифра 40%) → future (почему эта роль). Вариант 1 — биография. Вариант 3 — пустые шаблонные слова. Вариант 4 — переваливает работу на интервьюера."
+      },
+      {
+        "prompt": "«Why do you want to work here?» — лучший ответ:",
+        "options": [
+          "Because your company is well-known and I like the industry.",
+          "Honestly, I need a job and you're hiring.",
+          "I've been following your product since the launch of the developer platform last year. I read the engineering blog post about scaling the payment infrastructure — that's exactly the kind of problem I'd love to work on.",
+          "I want to work here because the salary and benefits are great."
+        ],
+        "correctIndex": 2,
+        "explain": "Сильный ответ research-based: конкретный продукт, конкретный blog post, чёткая связь с твоим интересом. Вариант 1 — общие слова. Вариант 2 — отчаяние. Вариант 4 — материальная мотивация на первом раунде = красный флаг."
+      },
+      {
+        "prompt": "«What's your biggest weakness?» — лучший ответ:",
+        "options": [
+          "I'm a perfectionist — I just care too much about quality.",
+          "I tend to over-engineer solutions early in a project. I've been working on this by pairing with my PM on scoping and committing to ship a minimum version first.",
+          "I don't really have any weaknesses I can think of.",
+          "My English is not perfect, I'm sorry about that."
+        ],
+        "correctIndex": 1,
+        "explain": "Реальная слабость (over-engineering) + конкретная работа над ней (pairing, MVP-first). Вариант 1 — банально, читается как уклонение. Вариант 3 — отсутствие самоанализа = красный флаг. Вариант 4 — извинение за уровень снижает позицию."
+      },
+      {
+        "prompt": "«Why are you leaving your current job?» — лучший ответ:",
+        "options": [
+          "My manager is micromanaging and the team is toxic.",
+          "The salary is too low and I want more money.",
+          "I've learned a lot over the last three years, but the team has stabilised and I'm not getting the growth I'm looking for. I want a role with bigger architectural challenges and more strategic ownership.",
+          "I don't really want to leave, but my friends said I should try."
+        ],
+        "correctIndex": 2,
+        "explain": "Forward-looking, без критики, конкретно про то, чего ищешь дальше. Вариант 1 — критика бывших = красный флаг. Вариант 2 — материальная мотивация как единственная причина. Вариант 4 — отсутствие собственной мотивации."
+      },
+      {
+        "prompt": "«Tell me about a time when you missed a deadline.» — лучший ответ:",
+        "options": [
+          "I never miss deadlines.",
+          "Last year I missed a deadline by a month. My role was timeline owner. What I learned was that I'd underestimated the integration complexity. I now run a risk-review at the end of week one of every project, and I'm much more willing to flag scope creep early. Since then, I've shipped four projects on time.",
+          "Once we missed a deadline because the designers were slow and the PM kept changing the scope.",
+          "I don't really remember a specific case, but I think it happens to everyone sometimes."
+        ],
+        "correctIndex": 1,
+        "explain": "Полный STAR: Situation (last year), Task (timeline owner), Action и Result (что изменил, и что с тех пор шипает на время). Вариант 1 — нечестно. Вариант 3 — обвиняет других. Вариант 4 — нет конкретики."
+      },
+      {
+        "prompt": "«What are your salary expectations?» — лучший ответ:",
+        "options": [
+          "Whatever you can offer is fine, I'm flexible.",
+          "I want at least $150,000.",
+          "Based on my research and experience, I'm targeting a range of $140K to $160K on the base salary.",
+          "Could you tell me what you usually pay first?"
+        ],
+        "correctIndex": 2,
+        "explain": "Range + обоснование («based on my research and experience»). Вариант 1 — снижает оффер сразу. Вариант 2 — точное число, теряешь пространство торга. Вариант 4 — допустимо как follow-up, но слабее как первый ответ."
+      },
+      {
+        "prompt": "«What's your current salary?» — лучшая стратегия:",
+        "options": [
+          "Назвать точную цифру.",
+          "Сказать, что не имеешь права раскрывать.",
+          "«I'd rather focus on what makes sense for this role. I'm targeting a range of X to Y.»",
+          "«That's a personal question, I don't want to answer.»"
+        ],
+        "correctIndex": 2,
+        "explain": "Стандартный pivot на target range. Не раскрывая текущей, переводишь разговор в свою рамку. Вариант 1 — теряешь negotiating power. Вариант 2 — формально враньё (если только не NDA). Вариант 4 — звучит грубо и закрывает разговор."
+      },
+      {
+        "prompt": "«Do you have any questions for us?» — лучший ответ:",
+        "options": [
+          "No, I think you covered everything, thanks.",
+          "How much vacation do I get?",
+          "What does success look like for this role in the first six months? And how does the team typically handle disagreements about technical direction?",
+          "When can I start?"
+        ],
+        "correctIndex": 2,
+        "explain": "Два сильных вопроса про работу — про результат и про культуру команды. Вариант 1 — сигнал низкого интереса. Вариант 2 — бенефиты на этом этапе = красный флаг (рано). Вариант 4 — звучит слишком отчаянно."
+      },
+      {
+        "prompt": "Получил оффер на base $130K, ожидал $150K. Лучший ответ:",
+        "options": [
+          "Sorry, that's too low, I'll have to decline.",
+          "Thank you for the offer — I'm really excited about the role. Based on my experience and the market data I've reviewed, I was hoping for something in the range of $145K to $155K. Is there flexibility there?",
+          "OK, I accept.",
+          "I have a competing offer at $200K, beat that."
+        ],
+        "correctIndex": 1,
+        "explain": "Структура counter: благодарность → обоснование → конкретный range → прямой вопрос про flexibility. Вариант 1 — закрывает разговор. Вариант 3 — упускает negotiation. Вариант 4 — блеф (особенно фиктивный) = риск, что отзовут оффер."
+      },
+      {
+        "prompt": "Recruiter говорит: «The base is fixed.» Лучший ответ:",
+        "options": [
+          "OK then, I accept.",
+          "Then I'm not interested.",
+          "I understand. Could we look at a signing bonus or additional equity to bridge the gap? Or perhaps a salary review after six months?",
+          "Why is it fixed? That's not fair."
+        ],
+        "correctIndex": 2,
+        "explain": "Когда base зафиксирован — двигай другие части пакета (signing, equity, vacation, salary review). Вариант 1 — упускает negotiation. Вариант 2 — слишком резко. Вариант 4 — обвиняет компанию, не помогает."
+      },
+      {
+        "prompt": "Conflict question: «Tell me about a time when you disagreed with your manager.» — лучший ответ:",
+        "options": [
+          "I never disagree with my manager — they have more experience.",
+          "My manager was wrong and I told them so directly.",
+          "Last year, my manager wanted us to use technology X. I disagreed because I'd seen it fail in a previous project. I scheduled a 1-on-1, walked them through the data and a small POC. We ended up adopting a hybrid approach that worked well — it shipped on time with fewer issues than the original plan.",
+          "I had so many disagreements with my last manager that I had to leave."
+        ],
+        "correctIndex": 2,
+        "explain": "STAR с уважением к менеджеру: данные, POC, 1-on-1, hybrid-решение. Вариант 1 — сигнал отсутствия мнения. Вариант 2 — конфликтный стиль. Вариант 4 — критика бывших = красный флаг."
+      },
+      {
+        "prompt": "Recruiter спрашивает: «Are you considering other offers?» Лучший ответ:",
+        "options": [
+          "Yes, I have five offers at $300K each, you need to beat that.",
+          "No, you're my only option.",
+          "I'm actively interviewing — I'm in late stages with two other companies, but this role is my strongest interest based on what I've seen.",
+          "That's confidential information."
+        ],
+        "correctIndex": 2,
+        "explain": "Честно, нейтральный тон, не отчаяние и не блеф. Вариант 1 — блеф с фиктивными offers = риск. Вариант 2 — снижает negotiating power. Вариант 4 — звучит закрыто, не помогает recruiter."
+      },
+      {
+        "prompt": "После offer call: следующий шаг — это:",
+        "options": [
+          "Принять оффер на месте по телефону.",
+          "Молча подумать неделю и не отвечать.",
+          "Поблагодарить, попросить 1-2 дня на обдумывание, прислать email с counter-предложением со всеми пунктами сразу.",
+          "Отправить требование удвоить зарплату."
+        ],
+        "correctIndex": 2,
+        "explain": "Стандарт negotiation: время на обдумывание + письменный counter одним заходом. Вариант 1 — упускает negotiation. Вариант 2 — теряешь оффер из-за молчания. Вариант 4 — нереалистично + агрессивно."
+      }
+    ]
+  }
+}

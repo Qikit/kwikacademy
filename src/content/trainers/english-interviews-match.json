@@ -1,0 +1,86 @@
+{
+  "course": "english",
+  "lesson": "english-interviews",
+  "title": "Interviews — вопрос → стратегия ответа",
+  "description": "Соотнеси типовой вопрос собеседования с правильной стратегией ответа.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "Tell me about yourself",
+        "right": "60-сек pitch: past → present → why this role",
+        "explain": "НЕ биография и НЕ пересказ резюме. Три блока на 15-25 секунд каждый: бэкграунд → текущая роль с цифрой → почему именно эта вакансия."
+      },
+      {
+        "left": "Why do you want to work here?",
+        "right": "Research-based: продукт, миссия, недавний релиз, команда",
+        "explain": "Общие слова («известная компания», «нравится сфера») = катастрофа. Сильный ответ доказывает, что ты изучил компанию: упомянул конкретный продукт, blog post, технологию."
+      },
+      {
+        "left": "What's your biggest weakness?",
+        "right": "Реальная слабость + конкретная работа над ней",
+        "explain": "НЕ «I'm a perfectionist», «I work too hard» — банально, читается как уклонение. Дай настоящую слабость (over-engineering, public speaking) и что делаешь."
+      },
+      {
+        "left": "Where do you see yourself in 5 years?",
+        "right": "Направление, не жёсткая позиция",
+        "explain": "«In a senior or staff role with deep ownership» — норма. «CEO of your company» — слишком. Покажи, что эта роль вписывается в траекторию."
+      },
+      {
+        "left": "Why are you leaving your current job?",
+        "right": "Forward-looking, без критики бывших",
+        "explain": "Критика бывшего работодателя/руководителя = красный флаг. Всегда формулируй «I'm looking for a role with more X», не «I hate my boss»."
+      },
+      {
+        "left": "Tell me about a time when you failed",
+        "right": "STAR + урок: Situation → Task → Action → Result + что изменил после",
+        "explain": "Поведенческий вопрос. Конкретная история по STAR. Главное в неудаче — что ты вынес из неё и как изменил подход. Не оправдания, а самоанализ."
+      },
+      {
+        "left": "Tell me about a conflict with a coworker",
+        "right": "STAR с акцентом на твои действия по разрешению",
+        "explain": "Не обвиняй коллегу. Контекст краткий, фокус — что ты сделал (поговорил 1-on-1, нашёл общую почву, нашёл данные). Результат — отношения улучшились или проект выиграл."
+      },
+      {
+        "left": "What are your salary expectations?",
+        "right": "Range, не точное число; based on market and experience",
+        "explain": "«I'm targeting a range of X to Y, based on the market and my experience.» Нижняя граница диапазона — твой минимум. Точное число — теряешь пространство торга."
+      },
+      {
+        "left": "What's your current salary?",
+        "right": "Перевести разговор на target range",
+        "explain": "Не обязан раскрывать (в некоторых юрисдикциях вопрос даже незаконен). «I'd rather focus on what makes sense for this role. I'm targeting a range of X to Y.»"
+      },
+      {
+        "left": "Do you have any questions for us?",
+        "right": "2-3 готовых заранее вопроса про работу",
+        "explain": "«No, you covered everything» = сигнал низкого интереса. Сильные вопросы: «What does success look like in first six months?», «Biggest challenge for the team?», «How are disagreements handled?»."
+      },
+      {
+        "left": "What's your greatest achievement?",
+        "right": "Один конкретный проект по STAR с цифрами",
+        "explain": "Не «лучший человек года» — конкретный проект. Структура та же STAR: контекст → твоя роль → действия → измеримый результат. «I led X, which reduced Y by 30%.»"
+      },
+      {
+        "left": "Why should we hire you?",
+        "right": "3 пункта: твой опыт + их потребность + impact",
+        "explain": "Связь между вакансией и тобой. «У вас задача X — у меня прямой опыт Y, который дал результат Z.» Без «I'm passionate and a hard worker»."
+      },
+      {
+        "left": "Are you considering other offers?",
+        "right": "Честно, без блефа, но без отчаяния",
+        "explain": "Если есть offers/процессы — упомяни их в нейтральном тоне («I'm in late stages with two other companies»). Если нет — «I'm actively interviewing, but this role is my top interest.» Не блефуй с фиктивными offers."
+      },
+      {
+        "left": "Can you work overtime?",
+        "right": "Уточнить, что значит overtime, до согласия",
+        "explain": "Уклончивое «yes» = ловушка. «Could you tell me more about how often that happens? In my experience, occasional crunch is fine, but I value sustainable pace.»"
+      },
+      {
+        "left": "What's your management style?",
+        "right": "Конкретные практики + пример",
+        "explain": "Не абстракции типа «I lead by example». Конкретно: «1-on-1 weekly, async-first communication, blameless retros after incidents» + одна story, как это сработало."
+      }
+    ]
+  }
+}

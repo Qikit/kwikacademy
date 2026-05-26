@@ -1,13 +1,450 @@
 ---
 course: english
 order: 20
-phase: "Фаза 2 · Профессиональный английский"
+phase: "Фаза 2 · Рабочий английский"
 title: "Interviews — собеседования"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Как проходить собеседования на английском — типичные вопросы и ответы."
-placeholder: true
-tags: [english]
+eyebrow: "Профессиональный · уровень B1-B2"
+readingMinutes: 26
+summary: "Personal pitch, STAR-метод для поведенческих вопросов, типовые вопросы HR/tech/behavioural, фразы для переговоров о зарплате и условиях."
+tags: [interviews, speaking, job, B1, B2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Interviews — собеседования» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем учить «язык собеседований» отдельно
+
+Технический английский, бизнес-лексика и грамматика на B1 закрывают повседневную работу. На собеседовании этого не хватает по двум причинам. Первая — на интервью оценивают не словарный запас, а структуру речи. Кандидат, который говорит «I worked on a project, it was good, the team was nice», теряет позицию против того, кто отвечает: «I led a team of four, we shipped X over six months, and reduced Y by 30%». Слова почти одинаковые, рамка — разная.
+
+Вторая причина — культурная норма. На западном собеседовании ожидают, что ты прямо говоришь о своём вкладе. «I just helped the team» или «It was a team effort, nothing special» прочитают как неуверенность или отсутствие вклада, а не как скромность. В русскоязычной деловой культуре прямое «I led», «I owned», «I drove» часто звучит как хвастовство; на интервью это норма и ожидание.
+
+Этот урок — не про список вопросов, на которые надо «вызубрить ответы». Это про шаблоны: personal pitch на 60 секунд, STAR-структура для поведенческих вопросов, набор фраз для negotiation и follow-up, и список того, что русскоязычные говорят на автомате — и что лучше переформулировать.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+На собеседовании на английском **не импровизируй на типовых вопросах** — у них есть устоявшиеся шаблоны ответов. Подготовь и отрепетируй четыре блока: 60-секундный pitch, 3-4 STAR-истории под behavioural-вопросы, ответы на стандартные HR-вопросы («Why us?», «Weakness», «5 years»), и список из 2-3 вопросов, которые ты сам задашь в конце. Импровизация добавляется поверх каркаса, а не вместо. Хороший кандидат звучит естественно не потому, что не готовился — а потому, что готовился до автоматизма.
+</Callout>
+
+## 3. Что входит в путь собеседования
+
+Типичный пайплайн в международной компании — несколько этапов с разной целью. Знать структуру важно, чтобы не удивляться вопросам.
+
+- **Recruiter screen** (15-30 мин с HR). Цель — проверить базу: интерес к роли, формальные требования, ожидания по зарплате. Здесь спрашивают «Tell me about yourself», «Why are you looking?», «What are your salary expectations?».
+- **Hiring manager call** (30-45 мин с будущим руководителем). Глубже про опыт, motivation, soft fit с командой. Поведенческие вопросы начинаются здесь.
+- **Technical / case interview** (1-2 раунда). Tech — задачи, код, system design, или live coding. Non-tech — кейс из реальной работы, презентация, разбор данных.
+- **Behavioural / culture round** (45-60 мин, иногда несколько). Полностью STAR-вопросы: «Tell me about a time when you...». Оценивают, как ты ведёшь себя в конфликтах, неудачах, перегрузке.
+- **Final / panel** (несколько собеседующих сразу или подряд). Часто закрывают вопросы предыдущих раундов, проверяют senior leadership signal, leadership principles (если компания их использует).
+- **Offer call & negotiation** (15-30 мин с HR или recruiter). Озвучивают offer, обсуждают зарплату, опционы, бонусы, релокацию, старт.
+
+Этот урок — про язык всех этих этапов, кроме чисто технического (там лексика своя, по специальности).
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="«Расскажите о себе» в русском — это часто биография с детства. «Tell me about yourself» в английском — это всегда 60-секундный pitch про карьеру, специально упакованный под вакансию. Та же фраза, разное ожидание. Это главная ловушка для русскоязычных: ответить «правильно» по смыслу, но в неправильном формате.">
+  <div slot="ru">
+    <strong>«Расскажите о себе»:</strong><br/>
+    Часто — биография, иногда от школы. Спокойный темп. 3-5 минут — норма.<br/><br/>
+    <strong>«Почему вы хотите у нас работать?»:</strong><br/>
+    Можно общими словами: «нравится сфера, известная компания».<br/><br/>
+    <strong>«Расскажите о ваших достижениях»:</strong><br/>
+    Со скромностью, в формате «мы команда сделали».
+  </div>
+  <div slot="en">
+    <strong>"Tell me about yourself":</strong><br/>
+    60 sec pitch: past → present → why this role. Не биография.<br/><br/>
+    <strong>"Why do you want to work here?":</strong><br/>
+    Конкретно: продукт, миссия, команда. Research-based, не общие слова.<br/><br/>
+    <strong>"Tell me about your achievements":</strong><br/>
+    «I led», «I owned», «I delivered». Цифры. Свой вклад прямо.
+  </div>
+</AnalogyBox>
+
+## 5. Шкала формальности
+
+Тон собеседования сдвигается между этапами. С recruiter — чуть свободнее, c VP на финальном раунде — формальнее. Письма (cover letter, follow-up) — отдельный регистр.
+
+| Informal | Neutral | Formal |
+|---|---|---|
+| Hey, thanks for the chat! | Thanks for the conversation today. | Thank you for taking the time to speak with me today. |
+| Yeah, I'm definitely interested. | Yes, I'm very interested in the role. | I would be very pleased to move forward in the process. |
+| I really wanna work here. | I'd love to be part of this team. | I would welcome the opportunity to contribute to your team. |
+| What's the pay like? | What's the salary range for this role? | Could you share the compensation range for this position? |
+| I'll think about it. | I'd like a couple of days to consider. | I would appreciate a few days to review the offer carefully. |
+
+Базовое правило: **на самом интервью — нейтрально, в письмах (cover letter, follow-up, negotiation email) — формально, в чате с recruiter после оффера — допустимо чуть свободнее, если они задают тон**. Слишком формально на интервью звучит зажато; слишком informally в письме — несерьёзно.
+
+## 6. Personal pitch — 60 секунд про себя
+
+«Tell me about yourself» — первый вопрос почти в каждом раунде. Ответ должен быть готов наизусть и звучать естественно. Стандартная структура — три блока на 15-25 секунд каждый.
+
+<RuleList rules={[
+  { title: "Past — 1-2 предложения о бэкграунде", text: "Где учился, сколько лет в индустрии, ключевые роли. Без школы и детства. «I have six years of experience in product marketing, mostly in SaaS.»" },
+  { title: "Present — что делаешь сейчас и чего добился", text: "Текущая роль, 1-2 главных результата с цифрами. «Currently, I'm a senior PM at a B2B startup where I led the launch of two products and grew adoption by 40% in a year.»" },
+  { title: "Future — почему именно эта роль и компания", text: "Связь с вакансией, конкретика, что ищешь дальше. «I'm looking for a role with more strategic ownership, which is why your senior PM position caught my attention.»" },
+  { title: "Время: 45-75 секунд", text: "Меньше — кажется, что нечего сказать. Больше — теряют нить и начинают перебивать. Засеки на телефоне." },
+  { title: "Один результат с цифрой обязательно", text: "Цифра делает pitch конкретным. «Grew X by 30%», «launched 4 products», «led a team of 6». Без цифр — звучит размыто." },
+  { title: "Никаких «I'm a hard worker, passionate, results-driven»", text: "Это шаблонные слова, которые ничего не значат. Замени на конкретный пример, который сам же иллюстрирует качество." },
+]} />
+
+<Example ru="Шаблон 60-секундного pitch — продакт-менеджер.">I have around six years of experience in product management, with the last four years in B2B SaaS. Currently, I'm a senior PM at a fintech startup, where I led the launch of our payments product and grew monthly active users from five thousand to thirty thousand in about a year. What I enjoy most is working closely with engineering on complex backend products. I'm looking for a role with more strategic ownership across a full product line, which is why this position at your company caught my attention.</Example>
+
+<Example ru="Шаблон pitch — инженер.">I've been a backend engineer for seven years, mostly working on distributed systems. In my current role, I lead a small team of three, and over the past year we rebuilt our payment processing pipeline, which reduced latency by sixty percent and cut infrastructure costs by about a third. Right now, I'm looking for a senior or staff-level role where I can have more impact on architecture decisions and mentor a larger team.</Example>
+
+## 7. STAR-метод для поведенческих вопросов
+
+Поведенческие вопросы начинаются с «Tell me about a time when...», «Give me an example of...», «Describe a situation where...». На них **нельзя отвечать абстрактно** — нужна конкретная история по структуре STAR.
+
+<RuleList rules={[
+  { title: "S — Situation. Контекст", text: "1-2 предложения: где, когда, в какой роли, какая была задача проекта. «Last year at my previous company, our team was about to ship a major release, and two days before launch we found a critical bug in production.»" },
+  { title: "T — Task. Твоя роль и цель", text: "Что было нужно сделать тебе лично. Не «команде» — тебе. «My job as tech lead was to decide whether to push the launch or fix the bug in time.»" },
+  { title: "A — Action. Что ты конкретно сделал", text: "Это самая длинная часть, 40-50% ответа. Глаголы в past simple, активный залог, от первого лица. «I called an emergency meeting, split the team into two parts, took the fix workstream myself...»" },
+  { title: "R — Result. Чем закончилось, с цифрами", text: "Конкретный результат. По возможности — цифры или измеримый эффект. «We shipped on time with the fix included; the feature reached 80% adoption in the first month, and we got a write-up in the engineering newsletter.»" },
+  { title: "Лимит времени: 90-120 секунд на историю", text: "Дольше — теряют интерес. Если интервьюер хочет деталей, он задаст follow-up." },
+  { title: "Подготовь 4-5 историй заранее", text: "Одна про конфликт, одна про неудачу, одна про лидерство, одна про проект под давлением, одна про межкомандную работу. Большинство behavioural-вопросов сводятся к этим темам." },
+]} />
+
+### Готовые начала фраз для каждой буквы STAR
+
+<RuleList rules={[
+  { title: "Situation", text: "«Let me give you an example from my last role...», «About a year ago, when I was working at...», «In my previous job, we were facing a situation where...»" },
+  { title: "Task", text: "«My role was to...», «I was responsible for...», «The team expected me to...», «What I needed to do was...»" },
+  { title: "Action", text: "«What I did was...», «The first thing I did was...», «I started by...», «To address that, I...», «I made the decision to...»" },
+  { title: "Result", text: "«As a result...», «In the end...», «The outcome was...», «That led to...», «Looking back, what I learned was...»" },
+]} />
+
+<Example ru="STAR-история про конфликт с коллегой.">Let me give you an example. About a year ago, I was working on a project with a designer who had very different opinions about the product direction. My role was to align the team and ship on time. What I did was schedule a one-on-one where I asked her to walk me through her reasoning. It turned out she had user research I hadn't seen. I incorporated her data into the spec, and we ended up with a stronger product. As a result, we shipped two weeks early, and that designer and I became one of the most effective pairs on the team.</Example>
+
+<Example ru="STAR-история про неудачу.">In my previous job, I led a project to launch a new feature, and we missed the deadline by about a month. My responsibility was the timeline. What I learned was that I'd underestimated the complexity of the integration with our legacy system and hadn't pushed back early enough when scope kept growing. What I changed afterwards was that I now run a risk-review at the end of week one of every project, and I'm much more willing to flag scope creep early. Since then, I've shipped four projects on time.</Example>
+
+## 8. Типовые HR-вопросы и стратегии ответа
+
+### «Tell me about yourself»
+
+Personal pitch на 60 секунд (см. раздел 6). НЕ биография, НЕ список работ из резюме.
+
+### «Why do you want to work here?»
+
+Конкретно, на основе research. Упомяни продукт, миссию, недавний релиз, команду, технологию. Общие слова («it's a well-known company», «I like the industry») — катастрофа.
+
+<Example ru="Слабый ответ.">I want to work here because your company is famous and I like the industry.</Example>
+<Example ru="Сильный ответ.">I've been following your product since the launch of the developer platform last year. I read the engineering blog post about how you scaled the payment infrastructure, and that's exactly the kind of problem I'd love to work on. I also know your team practices trunk-based development, which matches how I prefer to work.</Example>
+
+### «What's your biggest weakness?»
+
+Честно, но с показом работы над собой. **Не** «I'm a perfectionist», «I work too hard», «I care too much» — это банально, читается как уклонение.
+
+<Example ru="Слабый ответ.">My biggest weakness is that I'm a perfectionist.</Example>
+<Example ru="Сильный ответ.">I tend to over-engineer solutions early in a project — I want every edge case covered before shipping anything. I've been working on this by pairing with my PM on scoping and committing to ship a minimum version first, then iterate. It's made me significantly faster over the last year.</Example>
+
+### «Where do you see yourself in 5 years?»
+
+Конкретно, но гибко. Покажи направление, не жёсткую позицию.
+
+<Example ru="Сильный ответ.">In five years, I'd like to be in a senior or staff-level role with deep ownership of a product area. I don't need to manage a large team — I'm more interested in technical leadership and mentoring. I see this role as a strong step in that direction.</Example>
+
+### «Why are you leaving your current job?»
+
+Никогда не критикуй текущего работодателя, руководителя, команду. Формулируй forward-looking: чего ищешь, а не от чего бежишь.
+
+<Example ru="Слабый ответ.">I'm leaving because my manager is bad and the company doesn't pay well.</Example>
+<Example ru="Сильный ответ.">I've learned a lot in my current role over the last three years, but the team has stabilised and I'm not getting the growth I'm looking for. I want a role with bigger architectural challenges and more ownership of strategy, which doesn't really exist where I am now.</Example>
+
+### «Do you have any questions for us?»
+
+**Всегда** иметь 2-3 готовых вопроса. «No, you covered everything» = сигнал низкого интереса. Вопросы — про работу, не про бенефиты на первом раунде.
+
+<Example ru="Сильные вопросы для интервьюера.">What does success look like for this role in the first six months? How does the team handle disagreements about technical direction? What's the biggest challenge the team is facing right now? How is performance evaluated for someone at this level?</Example>
+
+## 9. Negotiation — переговоры по офферу
+
+Negotiation начинается, когда HR озвучивает оффер. Принимать первое предложение **не нужно** — почти всегда есть space to negotiate, и HR ожидает встречного движения.
+
+<RuleList rules={[
+  { title: "Не озвучивай свою текущую зарплату первым", text: "Если спрашивают «What are you making now?» — переведи разговор: «I'm targeting a range of X to Y for this role.»" },
+  { title: "Назови диапазон, не точное число", text: "Range даёт пространство. Нижняя граница диапазона — твой минимум, верхняя — твоя цель." },
+  { title: "Negotiate в письме, не голосом", text: "После offer call — попроси сутки подумать, ответь email с конкретным запросом. Письменно проще держать структуру." },
+  { title: "Один заход, не торг по 5 итераций", text: "Назови одно встречное предложение со всеми пунктами сразу: base, bonus, equity, signing bonus, vacation. Не растягивай на недели." },
+  { title: "Если бюджет на base зафиксирован — двигай equity, signing, vacation", text: "Когда recruiter говорит «base is capped», это часто не значит «total comp capped»." },
+]} />
+
+### Готовые фразы negotiation
+
+<Example ru="На вопрос о текущей зарплате.">I'd rather focus on what makes sense for this role. Based on my research and experience, I'm targeting a range of $X to $Y in base salary.</Example>
+
+<Example ru="Запрос диапазона компании.">Could you share the salary range for this position? I want to make sure we're aligned before we go further in the process.</Example>
+
+<Example ru="Встречное предложение по офферу.">Thank you for the offer — I'm really excited about the role. Based on my experience and the market data I've reviewed, I was hoping for something in the range of $X to $Y on the base salary. Is there flexibility there?</Example>
+
+<Example ru="Запрос времени на размышление.">I really appreciate the offer. I'd like to take a couple of days to review everything carefully and discuss with my family. Could I get back to you by Friday?</Example>
+
+<Example ru="Запрос про equity / RSU.">Could we discuss the equity package in more detail? Specifically, what's the vesting schedule, and is the grant a refresh option after year four?</Example>
+
+<Example ru="Про benefits.">What does the benefits package look like — health coverage, retirement contribution, parental leave, learning budget?</Example>
+
+<Example ru="Когда base зафиксирован.">I understand the base is fixed. Could we look at a signing bonus or additional equity to bridge the gap?</Example>
+
+## 10. Cover letter и follow-up email
+
+### Cover letter — структура
+
+Cover letter — одна страница, не дублирует резюме, отвечает на «почему ты + почему мы». Структура из четырёх блоков.
+
+<RuleList rules={[
+  { title: "Intro (2-3 предложения)", text: "На какую позицию подаёшься, откуда узнал, hook про твоё совпадение с ролью. «I'm applying for the Senior PM role posted on your careers page. With six years in B2B SaaS and a track record of launching three products, I believe I'd be a strong addition to your team.»" },
+  { title: "Why you (1 абзац)", text: "Конкретно: 2-3 результата с цифрами, которые соответствуют требованиям из job description. Не пересказывать всё резюме." },
+  { title: "Why them (1 абзац)", text: "Что именно ты знаешь об их продукте/команде/миссии и почему это тебе откликается. Доказывает, что ты не разослал письмо в 50 компаний." },
+  { title: "Close (2-3 предложения)", text: "Спокойное приглашение к разговору. «I'd welcome the chance to discuss how my experience could contribute to your team. Thank you for your consideration.»" },
+]} />
+
+### Follow-up email после интервью
+
+Отправляется в течение **24-48 часов** после раунда. Короткое, личное, упоминает конкретную деталь из разговора.
+
+<Example ru="Follow-up email после behavioural-раунда.">Hi Sarah, thank you for taking the time to talk with me today. I really enjoyed our discussion about how your team handles cross-functional planning — the example you shared about the recent migration was especially interesting. It reinforced my excitement about the role, and I'd love to move forward in the process. Please let me know if there's anything else you need from my side. Best, Mike</Example>
+
+## 11. Что НЕ говорить на интервью
+
+<RuleList rules={[
+  { title: "«I hate my current job»", text: "Любая критика бывшего/текущего работодателя читается как red flag. Переформулируй forward-looking: «I'm looking for a role with bigger challenges.»" },
+  { title: "«What does your company do?»", text: "Катастрофа. Сигнал, что не подготовился. Минимум — почитать сайт, продукт, последние новости." },
+  { title: "«I'm desperate for a job»", text: "Снижает твою позицию на торге. Даже если desperate — звучи так, будто у тебя есть варианты." },
+  { title: "«I'll take anything»", text: "Звучит как «у меня нет требований». Снижает оффер на 10-20%." },
+  { title: "«It was a team effort»", text: "Скромность недооценивается. Если спросили про твой вклад — отвечай про свой вклад. Команду упомянешь во второй фразе." },
+  { title: "«I'm a perfectionist» (как weakness)", text: "Слишком банально, читается как нежелание давать честный ответ. Дай реальную слабость + что с ней делаешь." },
+  { title: "«Maybe...», «I guess...», «Sort of...»", text: "Эти слова-смягчители убивают авторитет. На интервью говори утвердительно даже о неуверенном: «I'd approach it by X», не «I guess maybe I'd try X»." },
+  { title: "Личное (семья, здоровье, политика, религия)", text: "Не относится к работе и может работать против. Если спросят «Tell me about yourself» — это про карьеру, не биографию." },
+]} />
+
+## 12. Слабый vs сильный ответ — сравнение
+
+<Compare leftLabel="Слабо (звучит размыто или неуверенно)" rightLabel="Сильно (конкретно, ownership)">
+  <div slot="left">
+    <strong>"I worked on a project last year."</strong><br/>
+    <em>Без роли, без масштаба, без результата.</em><br/><br/>
+    <strong>"My biggest weakness is that I'm a perfectionist."</strong><br/>
+    <em>Шаблонно, читается как уклонение.</em><br/><br/>
+    <strong>"I want to leave because my manager is difficult."</strong><br/>
+    <em>Жалоба на бывших — red flag.</em><br/><br/>
+    <strong>"I don't know."</strong><br/>
+    <em>Стоп-сигнал, разговор затыкается.</em><br/><br/>
+    <strong>"It was a team effort, I just helped."</strong><br/>
+    <em>Не позволяет оценить твой вклад.</em><br/><br/>
+    <strong>"I'm flexible, I'll take any salary."</strong><br/>
+    <em>Снижает оффер сразу.</em>
+  </div>
+  <div slot="right">
+    <strong>"I led a team of four that shipped X over six months, which reduced Y by 30%."</strong><br/>
+    <em>Роль + масштаб + срок + результат.</em><br/><br/>
+    <strong>"I tend to over-engineer early-stage projects. I've started pairing with my PM on scoping to ship a minimum version first."</strong><br/>
+    <em>Реальная слабость + работа над ней.</em><br/><br/>
+    <strong>"I'm looking for a role with more architectural ownership and bigger team scope."</strong><br/>
+    <em>Forward-looking, про себя, не про прошлое.</em><br/><br/>
+    <strong>"That's a great question — let me think for a moment. Here's how I'd approach it..."</strong><br/>
+    <em>Пауза + структура — лучше, чем «I don't know».</em><br/><br/>
+    <strong>"I led the architecture decisions. The team executed brilliantly, but the technical direction was my call."</strong><br/>
+    <em>Свой вклад прямо, команда упомянута.</em><br/><br/>
+    <strong>"I'm targeting a range of $X to $Y for this role, based on the market and my experience."</strong><br/>
+    <em>Аргументированная позиция.</em>
+  </div>
+</Compare>
+
+## 13. Мнемоника
+
+<Callout type="teal" title="STAR — как запомнить">
+**S**ituation → **T**ask → **A**ction → **R**esult.
+
+Самая частая ошибка — кандидат застревает на S и T (рассказывает контекст 60 секунд из 90), и не успевает на A и R. Запомни обратное правило: **A длиннее, чем S + T вместе**. То, что ты конкретно сделал, важнее, чем как красиво ты описал ситуацию.
+
+Если интервьюер услышал R — он услышал главное. Если ты дошёл до R с цифрой — ты выиграл вопрос.
+
+Аналог в письме: SBI (Situation - Behaviour - Impact) — для feedback и self-review. Та же логика: контекст краткий, действие конкретное, результат измеримый.
+</Callout>
+
+## 14. Почему скромность работает против тебя
+
+<Callout type="blue" title="Self-promotion как норма">
+В русскоязычной деловой культуре прямые формулировки типа «I led the architecture», «I owned the project», «I drove the decision» часто читаются как хвастовство. В английской культуре собеседования это норма и ожидание. Если ты говоришь «we did it», «the team shipped», «I just helped» — интервьюер не может понять, что **именно** делал ты, и оценивает тебя ниже.
+
+Это особенно бьёт по русскоязычным женщинам — им культурно сложнее переключиться на прямую self-promotion. Но интервьюер не видит твоей скромности; он видит отсутствие сигналов о вкладе.
+
+Простое правило: **первое предложение про любой проект — твой вклад, второе — команда**. «I led the rebuild of our auth system; the four engineers on my team executed brilliantly.» — звучит и сильно, и не нагло. «We rebuilt our auth system, I helped a bit» — звучит как отговорка.
+
+Также — никаких «just». «I'm just a junior», «I just worked on the frontend», «I just shipped X» — это слово автоматически принижает любое заявление после него. Вычисти «just» из ответов на интервью полностью.
+</Callout>
+
+## 15. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I have 5 years experience in product | I have five years of experience in product / I've been doing product for five years | Пропущен предлог «of». «X years OF experience» — обязательная конструкция. |
+| I made a project about payments | I built / shipped / led / delivered a project on payments | «Make a project» — калька. Английские глаголы для проектов: build, ship, lead, deliver, own, drive. |
+| I just helped my team with the launch | I led the launch of our new product | «Just helped» = недооценка вклада. На интервью говори прямо: I led, I owned, I drove. |
+| Why I leave? Because my boss is bad | I'm looking for a role with more architectural ownership and cross-functional impact | Критика бывшего работодателя — red flag. Всегда forward-looking. |
+| My current salary is $50K | I'm targeting a range of $X to $Y for this role | Не обязан раскрывать текущую. Лучше сразу target range — переводит разговор в твою рамку. |
+| What is your salary? | What's the salary range for this role? | «Your salary» — личный вопрос recruiter'у. Range for the role — нормально, ожидаемо. |
+| I am working in IT company | I work in tech / I work at a tech company | Continuous вместо simple для постоянной работы. «IT» в английском всё реже, «tech» — современный термин. |
+| I want job in your company | I'd like to learn more about the opportunity at your company | «I want job» — звучит отчаянно и невежливо. Would like + learn more — нейтрально-вежливо. |
+| I am perfectionist (as weakness) | I tend to over-engineer early-stage projects, and I've started... | Слишком банально, читается как уклонение. Дай настоящую слабость + что делаешь. |
+| What does your company do? | (никогда — research заранее) | Катастрофическая ошибка. Сигнал, что не подготовился. Минимум — сайт, продукт, новости. |
+| I worked there during 2 years | I worked there for two years | «During» = в течение конкретного периода («during the crisis»). «For» — продолжительность («for two years»). |
+| Last year, I was working on the project, it was good | Last year, I led a project that reduced customer churn by 20% | Эпитет «good» бесполезен. Замени на цифру или конкретный результат. |
+| Sorry for my bad English | (никогда — не извиняйся за уровень) | Извинение за английский занижает позицию. Если что-то не понял — переспроси: «Could you rephrase that?» |
+
+## 16. Шпаргалка
+
+### Типовой вопрос → стратегия → пример начала ответа
+
+| Вопрос | Стратегия | Начало |
+| --- | --- | --- |
+| Tell me about yourself | 60s pitch: past → present → why this role | «I have X years of experience in...» |
+| Why do you want to work here? | Research-based: продукт + миссия + команда | «I've been following your product since...» |
+| What's your biggest weakness? | Реальная слабость + работа над ней | «I tend to..., and I've been working on it by...» |
+| Where do you see yourself in 5 years? | Направление, не позиция | «In five years, I'd like to be in a role where...» |
+| Why are you leaving? | Forward-looking, без критики | «I'm looking for a role where I can...» |
+| Tell me about a time when X | STAR: Situation → Task → Action → Result | «Let me give you an example. Last year...» |
+| What are your salary expectations? | Range, не точное число | «I'm targeting a range of $X to $Y based on...» |
+| Do you have any questions? | 2-3 заранее готовых, про работу | «Yes — what does success look like for this role in the first six months?» |
+
+### Фаза negotiation → фраза
+
+| Фаза | Фраза |
+| --- | --- |
+| Спросили текущую зарплату | «I'd rather focus on what makes sense for this role. I'm targeting a range of X to Y.» |
+| Спросили expectations | «Based on my research and experience, I was hoping for something in the range of X to Y.» |
+| Получил оффер ниже ожиданий | «Thank you for the offer. I was hoping for something closer to X. Is there flexibility on the base?» |
+| Просишь время подумать | «I'd like to take a couple of days to review everything carefully. Could I get back to you by Friday?» |
+| Base зафиксирован | «I understand the base is fixed. Could we look at a signing bonus or additional equity to bridge the gap?» |
+| Спрашиваешь про equity | «Could you walk me through the equity package — vesting schedule, refresh policy?» |
+| Спрашиваешь про benefits | «What does the benefits package look like — health, retirement, parental leave, learning budget?» |
+| Принимаешь оффер | «Thank you — I'd like to formally accept the offer. When would be a good start date?» |
+
+## 17. Словарь урока
+
+<Vocab items={[
+  { term: "tell me about yourself", meaning: "расскажите о себе (всегда = 60-сек pitch, не биография)" },
+  { term: "personal pitch", meaning: "короткая самопрезентация (60-75 секунд)" },
+  { term: "background", meaning: "бэкграунд: образование, опыт" },
+  { term: "track record", meaning: "послужной список, доказанный опыт" },
+  { term: "role", meaning: "позиция, должность" },
+  { term: "responsibility", meaning: "зона ответственности" },
+  { term: "ownership", meaning: "ответственность за результат (часто как качество)" },
+  { term: "to lead", meaning: "вести, возглавлять (проект, команду)" },
+  { term: "to own", meaning: "взять на себя ответственность за" },
+  { term: "to drive", meaning: "продвигать, двигать (инициативу, изменения)" },
+  { term: "to deliver", meaning: "сдать, доставить (результат)" },
+  { term: "to ship", meaning: "выпустить, запустить (продукт, фичу)" },
+  { term: "to build", meaning: "построить, разработать" },
+  { term: "to launch", meaning: "запустить (продукт, кампанию)" },
+  { term: "achievement", meaning: "достижение" },
+  { term: "impact", meaning: "влияние, эффект, результат" },
+  { term: "outcome", meaning: "итог, результат" },
+  { term: "as a result", meaning: "в результате (фраза для R в STAR)" },
+  { term: "STAR method", meaning: "Situation → Task → Action → Result" },
+  { term: "situation", meaning: "ситуация, контекст истории" },
+  { term: "behavioural question", meaning: "поведенческий вопрос («tell me about a time when»)" },
+  { term: "to give an example", meaning: "привести пример" },
+  { term: "let me give you an example", meaning: "позвольте привести пример (начало STAR)" },
+  { term: "weakness", meaning: "слабость, недостаток" },
+  { term: "strength", meaning: "сильная сторона" },
+  { term: "to over-engineer", meaning: "переусложнять (решение, код)" },
+  { term: "scoping", meaning: "определение объёма (что входит и не входит)" },
+  { term: "to pair with someone", meaning: "работать в паре (на ранних этапах)" },
+  { term: "to research", meaning: "изучить заранее (компанию, продукт)" },
+  { term: "to be excited about", meaning: "быть в восторге от (формула интереса)" },
+  { term: "to follow up", meaning: "напомнить, прислать follow-up" },
+  { term: "follow-up email", meaning: "письмо-благодарность после интервью (24-48ч)" },
+  { term: "cover letter", meaning: "сопроводительное письмо (одна страница)" },
+  { term: "hiring manager", meaning: "руководитель, который ищет в свою команду" },
+  { term: "recruiter", meaning: "рекрутер (HR, не нанимающий менеджер)" },
+  { term: "screen / screening", meaning: "первичный отсев (recruiter screen)" },
+  { term: "panel interview", meaning: "интервью с несколькими собеседующими сразу" },
+  { term: "final round", meaning: "финальный раунд интервью" },
+  { term: "offer", meaning: "предложение (job offer)" },
+  { term: "offer letter", meaning: "официальное письмо с условиями оффера" },
+  { term: "compensation", meaning: "вознаграждение (общий пакет: base + bonus + equity)" },
+  { term: "compensation package", meaning: "общий пакет компенсации" },
+  { term: "base salary", meaning: "базовый оклад" },
+  { term: "signing bonus", meaning: "разовый бонус при найме" },
+  { term: "performance bonus", meaning: "премия по результатам" },
+  { term: "equity", meaning: "доля в компании (опционы, акции)" },
+  { term: "RSU", meaning: "Restricted Stock Units — ограниченные акции" },
+  { term: "stock options", meaning: "опционы (право купить акции)" },
+  { term: "vesting schedule", meaning: "график вестинга (как часть переходит к тебе)" },
+  { term: "cliff", meaning: "период до первого вестинга (обычно 1 год)" },
+  { term: "refresh grant", meaning: "повторная выдача equity (через 3-4 года)" },
+  { term: "benefits", meaning: "соцпакет (страховка, отпуск, обучение)" },
+  { term: "PTO (paid time off)", meaning: "оплачиваемый отпуск" },
+  { term: "parental leave", meaning: "отпуск по уходу за ребёнком" },
+  { term: "relocation package", meaning: "пакет переезда (билеты, жильё)" },
+  { term: "to negotiate", meaning: "торговаться, обсуждать условия" },
+  { term: "negotiation", meaning: "переговоры по офферу" },
+  { term: "flexibility", meaning: "пространство для движения (по зарплате, дате)" },
+  { term: "I was hoping for", meaning: "я рассчитывал на (мягкая формула negotiation)" },
+  { term: "in the range of", meaning: "в диапазоне (вместо точного числа)" },
+  { term: "to target a range", meaning: "ориентироваться на диапазон" },
+  { term: "to take a couple of days", meaning: "взять пару дней (на размышление)" },
+  { term: "start date", meaning: "дата выхода на работу" },
+  { term: "notice period", meaning: "период отработки на текущей работе" },
+  { term: "to formally accept", meaning: "официально принять оффер" },
+  { term: "to decline", meaning: "отклонить оффер" },
+  { term: "to withdraw an application", meaning: "снять свою кандидатуру" },
+  { term: "red flag", meaning: "тревожный сигнал (для интервьюера)" },
+  { term: "fit / culture fit", meaning: "соответствие команде и культуре" },
+  { term: "success looks like", meaning: "как выглядит успех (в роли) — вопрос интервьюеру" },
+]} />
+
+## 18. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-interviews-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Лексика собеседований</span>
+    <span class="kc-trainer-hint">20+ ключевых фраз и терминов с контекстом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-interviews-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Вопрос → стратегия ответа</span>
+    <span class="kc-trainer-hint">Соотнеси типовой вопрос с правильным подходом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-interviews-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">По типу вопроса / этапу</span>
+    <span class="kc-trainer-hint">Разложи фразы: HR / Technical / Behavioural / Negotiation</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-interviews-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Слабый vs сильный ответ</span>
+    <span class="kc-trainer-hint">12 вопросов: выбери сильную формулировку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-interviews-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши слово в interview-фразу</span>
+    <span class="kc-trainer-hint">Заполни пропуск в типовой формуле</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-interviews-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери STAR / negotiation-фразу</span>
+    <span class="kc-trainer-hint">Расставь слова — следи за вежливостью и формулой</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 19. Источники
+
+- **Cambridge Business English Dictionary** — определения терминов compensation, equity, negotiation с примерами употребления.
+- **Harvard Business Review — Interview Prep** — статьи про behavioural interviews, STAR-метод, salary negotiation, follow-up этикет.
+- **Indeed Career Guide и Glassdoor Interview Guides** — реальные вопросы по компаниям, шаблоны cover letter и follow-up email.
+- **Mike Lewis, «When to Jump»** — про карьерные переходы, переговоры по офферу, формулировки для difficult conversations.

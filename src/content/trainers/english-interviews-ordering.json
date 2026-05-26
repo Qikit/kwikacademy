@@ -1,0 +1,77 @@
+{
+  "course": "english",
+  "lesson": "english-interviews",
+  "title": "Interviews — собери фразу",
+  "description": "Расставь слова в правильном порядке. STAR-формулы и фразы negotiation.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["example", "you", "give", "let", "me", "an"],
+        "answer": ["let", "me", "give", "you", "an", "example"],
+        "translation": "Позвольте привести пример.",
+        "explain": "Стандартное начало STAR-ответа. Сигнал интервьюеру: сейчас будет конкретная история, не абстракция. Структура: let + me + V (give) + объект (you) + an example."
+      },
+      {
+        "words": ["was", "the", "to", "team", "my", "align", "role"],
+        "answer": ["my", "role", "was", "to", "align", "the", "team"],
+        "translation": "Моей ролью было выровнять команду.",
+        "explain": "Часть T (Task) в STAR. Формула: My role was to + V. Глагол идёт после «to» в инфинитиве. «My role was to align», не «My role was align»."
+      },
+      {
+        "words": ["a", "of", "led", "engineers", "I", "team", "four"],
+        "answer": ["I", "led", "a", "team", "of", "four", "engineers"],
+        "translation": "Я возглавлял команду из четырёх инженеров.",
+        "explain": "Прямое заявление о роли (часть A в STAR). I led — past simple, прямой залог. Структура: I + V (led) + объект (a team) + of + число + существительное (engineers)."
+      },
+      {
+        "words": ["by", "we", "result", "reduced", "as", "a", "churn", "20%"],
+        "answer": ["as", "a", "result", "we", "reduced", "churn", "by", "20%"],
+        "translation": "В результате мы снизили отток на 20%.",
+        "explain": "Часть R (Result) в STAR. «As a result» — стандартное начало. Структура: As a result + subject + V + object + by + цифра. «Reduce by X%» — стандартная коллокация для снижения метрики."
+      },
+      {
+        "words": ["a", "I'm", "of", "to", "targeting", "$150K", "$140K", "range"],
+        "answer": ["I'm", "targeting", "a", "range", "of", "$140K", "to", "$150K"],
+        "translation": "Я ориентируюсь на диапазон $140K - $150K.",
+        "explain": "Стандартная формула для salary expectations. Range, а не точное число. Структура: I'm targeting + a range + of + X + to + Y. Нижняя цифра идёт первой."
+      },
+      {
+        "words": ["base", "the", "is", "flexibility", "there", "on", "?"],
+        "answer": ["is", "there", "flexibility", "on", "the", "base", "?"],
+        "translation": "Есть ли пространство по базовой зарплате?",
+        "explain": "Прямой запрос про space для движения в negotiation. Структура вопроса: Is there + существительное (flexibility) + on + the + X. После вопроса — пауза, не оправдывайся."
+      },
+      {
+        "words": ["hoping", "I", "for", "$155K", "was", "something", "in", "the", "range", "of"],
+        "answer": ["I", "was", "hoping", "for", "something", "in", "the", "range", "of", "$155K"],
+        "translation": "Я рассчитывал на что-то в районе $155K.",
+        "explain": "Мягкая формула counter-предложения. «I was hoping for» звучит вежливее, чем «I expected» или «I want». Структура: I was hoping for + something + in the range of + цифра."
+      },
+      {
+        "words": ["take", "I'd", "to", "couple", "a", "of", "think", "to", "days", "it", "over", "like"],
+        "answer": ["I'd", "like", "to", "take", "a", "couple", "of", "days", "to", "think", "it", "over"],
+        "translation": "Я хотел бы взять пару дней, чтобы обдумать.",
+        "explain": "Стандартная фраза для запроса времени на обдумывание оффера. Структура: I'd like to + V (take) + a couple of days + to + V (think) + it over. «Think it over» — фразовый глагол: обдумать."
+      },
+      {
+        "words": ["have", "you", "do", "for", "questions", "us", "any", "?"],
+        "answer": ["do", "you", "have", "any", "questions", "for", "us", "?"],
+        "translation": "Есть ли у вас вопросы к нам?",
+        "explain": "Финальный вопрос почти каждого раунда. Структура: Do you have + any + questions + for + us. Ответ ВСЕГДА — 2-3 готовых вопроса заранее, не «No, you covered everything»."
+      },
+      {
+        "words": ["look", "for", "what", "this", "like", "success", "does", "role", "?"],
+        "answer": ["what", "does", "success", "look", "like", "for", "this", "role", "?"],
+        "translation": "Как выглядит успех в этой роли?",
+        "explain": "Сильный вопрос интервьюеру. Структура: What does + subject (success) + look + like + for + this role. Показывает, что думаешь про результат, а не процесс."
+      },
+      {
+        "words": ["for", "thank", "today", "time", "to", "speak", "with", "the", "taking", "you", "me"],
+        "answer": ["thank", "you", "for", "taking", "the", "time", "to", "speak", "with", "me", "today"],
+        "translation": "Спасибо, что нашли время поговорить со мной сегодня.",
+        "explain": "Формальное начало follow-up email или закрытия интервью. Структура: Thank you + for + V-ing (taking) + the time + to + V (speak) + with me + today. Чуть формальнее, чем «Thanks for the chat»."
+      }
+    ]
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "course": "english",
+  "lesson": "english-interviews",
+  "title": "Interviews — flashcards",
+  "description": "Ключевые фразы и термины собеседования: значение, регистр, пример. Учить целиком, с контекстом.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Tell me about yourself",
+        "back": "Открывающий вопрос почти каждого раунда. Ожидается 60-сек pitch: past → present → why this role. Не биография, не пересказ резюме.",
+        "hint": "60-сек pitch"
+      },
+      {
+        "front": "personal pitch (структура)",
+        "back": "Past (1-2 предложения о бэкграунде) → Present (текущая роль + 1 результат с цифрой) → Future (почему эта роль). 45-75 секунд.",
+        "hint": "past → present → future"
+      },
+      {
+        "front": "STAR method",
+        "back": "Situation → Task → Action → Result. Структура для behavioural-вопросов («Tell me about a time when...»). Action — самая длинная часть.",
+        "hint": "S → T → A → R"
+      },
+      {
+        "front": "behavioural question",
+        "back": "Поведенческий вопрос: «Tell me about a time when...», «Give me an example of...», «Describe a situation where...». Отвечать ВСЕГДА по STAR с конкретной историей.",
+        "hint": "tell me about a time when..."
+      },
+      {
+        "front": "Let me give you an example",
+        "back": "Стандартная фраза начала STAR-ответа. Сигнал интервьюеру: сейчас будет конкретная история. Альтернативы: «About a year ago, when...», «In my previous role...».",
+        "hint": "начало STAR"
+      },
+      {
+        "front": "to lead vs to help",
+        "back": "На интервью говори «I led the project», «I owned X», «I drove the decision». «I helped the team» = недооценка вклада, читается как отсутствие ownership.",
+        "hint": "ownership, не скромность"
+      },
+      {
+        "front": "ownership",
+        "back": "Ответственность за результат, не просто за задачу. Качество, которое ищут на senior+ ролях. «He took ownership of the migration end-to-end.»",
+        "hint": "качество senior+"
+      },
+      {
+        "front": "to ship",
+        "back": "Запустить, выпустить (продукт, фичу) — конкретный измеримый результат, не «работал над». «I shipped the new onboarding flow last quarter.»",
+        "hint": "глагол результата"
+      },
+      {
+        "front": "Why do you want to work here?",
+        "back": "Research-based ответ: упомяни продукт, миссию, недавний релиз, технологию. Общие слова («известная компания, нравится сфера») — катастрофа.",
+        "hint": "research, не общие слова"
+      },
+      {
+        "front": "What's your biggest weakness?",
+        "back": "Реальная слабость + работа над ней. НЕ «I'm a perfectionist», «I work too hard» — банально и читается как уклонение.",
+        "hint": "не «perfectionist»"
+      },
+      {
+        "front": "Why are you leaving?",
+        "back": "Forward-looking, без критики бывших. «I'm looking for a role with more X» вместо «My boss is difficult». Критика = red flag.",
+        "hint": "forward-looking"
+      },
+      {
+        "front": "Where do you see yourself in 5 years?",
+        "back": "Направление, не жёсткая позиция. «In a senior role with X responsibility» — нормально. «CEO of your company» — слишком.",
+        "hint": "направление, не позиция"
+      },
+      {
+        "front": "Do you have any questions for us?",
+        "back": "ВСЕГДА 2-3 готовых вопроса. «No, you covered everything» = сигнал низкого интереса. Спрашивай про работу, не про бенефиты (на первом раунде).",
+        "hint": "ВСЕГДА 2-3 вопроса"
+      },
+      {
+        "front": "What does success look like for this role?",
+        "back": "Сильный вопрос интервьюеру: показывает, что думаешь про результат, а не процесс. «In the first six months» — добавляет конкретики.",
+        "hint": "вопрос интервьюеру"
+      },
+      {
+        "front": "compensation package",
+        "back": "Общий пакет: base salary + bonus + equity + benefits. На переговорах смотри на total comp, не только на base.",
+        "hint": "base + bonus + equity + benefits"
+      },
+      {
+        "front": "base salary",
+        "back": "Базовый оклад — фиксированная сумма в год. Это только часть compensation, помимо bonus, equity, signing.",
+        "hint": "только часть пакета"
+      },
+      {
+        "front": "equity (RSU / stock options)",
+        "back": "Доля в компании. RSU — Restricted Stock Units, акции с вестингом. Stock options — право купить акции по фиксированной цене.",
+        "hint": "RSU vs options"
+      },
+      {
+        "front": "vesting schedule",
+        "back": "График, по которому equity переходит к тебе. Типичный: 4 года, 1-year cliff (ничего за первый год), потом ежемесячно/ежеквартально по 1/48.",
+        "hint": "4 года, 1-year cliff"
+      },
+      {
+        "front": "signing bonus",
+        "back": "Разовый бонус при найме. Часто компенсирует потерю unvested equity на предыдущем месте. Обсуждается, когда base зафиксирован.",
+        "hint": "разовый, при найме"
+      },
+      {
+        "front": "I'm targeting a range of X to Y",
+        "back": "Стандартная фраза для salary expectations. Range, а не точное число. Нижняя граница — твой минимум, верхняя — твоя цель.",
+        "hint": "range, не точка"
+      },
+      {
+        "front": "I was hoping for something in the range of...",
+        "back": "Мягкая формула negotiation, когда оффер ниже ожиданий. Звучит вежливо, оставляет место для движения.",
+        "hint": "мягкая negotiation-формула"
+      },
+      {
+        "front": "Is there flexibility on the base?",
+        "back": "Прямой запрос о space для движения. Стандартная фраза, не воспринимается агрессивно. После — пауза, не оправдывайся.",
+        "hint": "прямой запрос"
+      },
+      {
+        "front": "Could I take a couple of days to think it over?",
+        "back": "Никогда не принимай оффер на самом offer call. Возьми сутки-двое, ответь email с конкретным counter-предложением.",
+        "hint": "никогда не on the spot"
+      },
+      {
+        "front": "follow-up email",
+        "back": "Письмо в течение 24-48 часов после раунда. Благодарность + конкретная деталь из разговора + повторное выражение интереса. Короткое.",
+        "hint": "24-48 часов после"
+      },
+      {
+        "front": "cover letter",
+        "back": "Сопроводительное письмо к резюме. Одна страница. Структура: intro → why you → why them → close. НЕ дублирует резюме.",
+        "hint": "одна страница, 4 блока"
+      },
+      {
+        "front": "hiring manager vs recruiter",
+        "back": "Hiring manager — твой будущий руководитель, оценивает фит и опыт. Recruiter — HR, организует процесс. Разный регистр и разные вопросы.",
+        "hint": "руководитель vs HR"
+      },
+      {
+        "front": "red flag",
+        "back": "Тревожный сигнал для интервьюера. Примеры: критика бывших работодателей, «what does your company do?», «I'll take any salary».",
+        "hint": "что не делать"
+      },
+      {
+        "front": "to over-engineer",
+        "back": "Переусложнять решение раньше времени. Безопасная weakness для интервью: реальная, понятная, есть очевидный способ работать над ней.",
+        "hint": "безопасная weakness"
+      },
+      {
+        "front": "I'd rather focus on what makes sense for this role",
+        "back": "Стандартная вежливая увёртка от вопроса про текущую зарплату. Переводит разговор на target range вместо твоего бэкграунда.",
+        "hint": "уход от current salary"
+      },
+      {
+        "front": "Could you share the salary range for this role?",
+        "back": "Стандартный вопрос recruiter'у. Лучше «for the role», чем «your salary». Range компании — публичная информация во многих юрисдикциях.",
+        "hint": "вопрос про range"
+      },
+      {
+        "front": "as a result / the outcome was",
+        "back": "Стандартные начала R (Result) в STAR. После них — конкретный результат с цифрой, если возможно: «...we reduced churn by 20%».",
+        "hint": "начало R в STAR"
+      },
+      {
+        "front": "Thank you for taking the time to speak with me today",
+        "back": "Формальное начало follow-up email или закрытие интервью. Чуть более formal, чем просто «Thanks for the chat».",
+        "hint": "формальная благодарность"
+      }
+    ]
+  }
+}

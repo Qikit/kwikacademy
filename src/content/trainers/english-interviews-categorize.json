@@ -1,0 +1,97 @@
+{
+  "course": "english",
+  "lesson": "english-interviews",
+  "title": "Interviews — по этапу собеседования",
+  "description": "Распредели вопросы и фразы по этапам: HR / Technical / Behavioural / Negotiation.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "hr", "label": "HR / general" },
+      { "id": "technical", "label": "Technical / case" },
+      { "id": "behavioural", "label": "Behavioural" },
+      { "id": "negotiation", "label": "Negotiation" }
+    ],
+    "items": [
+      {
+        "text": "Tell me about yourself.",
+        "category": "hr",
+        "explain": "Открывающий вопрос HR-этапа (recruiter screen или hiring manager). Ожидается 60-сек pitch: past → present → why this role."
+      },
+      {
+        "text": "Why do you want to work here?",
+        "category": "hr",
+        "explain": "Стандартный HR-вопрос. Research-based ответ: упомяни продукт, миссию, конкретную деталь, которую узнал заранее."
+      },
+      {
+        "text": "What's your biggest weakness?",
+        "category": "hr",
+        "explain": "Классика HR-этапа. Реальная слабость + работа над ней. НЕ «I'm a perfectionist» — банально, читается как уклонение."
+      },
+      {
+        "text": "Where do you see yourself in 5 years?",
+        "category": "hr",
+        "explain": "HR-вопрос про долгосрочную мотивацию. Конкретное направление, но гибкость. «In a senior role with deep ownership.»"
+      },
+      {
+        "text": "How would you design a URL shortener?",
+        "category": "technical",
+        "explain": "Technical / system design вопрос. Не один правильный ответ — оценивают подход: уточнение требований, trade-offs, оценка масштаба."
+      },
+      {
+        "text": "Walk me through how you'd approach this case.",
+        "category": "technical",
+        "explain": "Case interview (consulting, product, strategy). Думай вслух, структурируй (framework), задавай уточняющие вопросы, проверяй цифры."
+      },
+      {
+        "text": "Can you live-code a function that reverses a linked list?",
+        "category": "technical",
+        "explain": "Live coding / technical screen. Думай вслух, проверяй edge cases, не молчи. Если застрял — обсуди подход, а не пытайся выкрутиться молча."
+      },
+      {
+        "text": "Tell me about a time when you disagreed with your manager.",
+        "category": "behavioural",
+        "explain": "Поведенческий вопрос. STAR-структура. Контекст, твоя роль, что конкретно сделал (1-on-1, привёл данные), результат."
+      },
+      {
+        "text": "Give me an example of when you failed.",
+        "category": "behavioural",
+        "explain": "Поведенческий вопрос на самоанализ. STAR + что изменил после. Не оправдания, а урок и конкретная новая практика."
+      },
+      {
+        "text": "Describe a situation where you had to influence someone without authority.",
+        "category": "behavioural",
+        "explain": "Поведенческий вопрос про soft skills и leadership. STAR. Часто проверяют для senior+ ролей."
+      },
+      {
+        "text": "Tell me about a project you led from start to finish.",
+        "category": "behavioural",
+        "explain": "STAR-вопрос про ownership и масштаб. Конкретный проект, твоя роль (I led, I owned), действия, измеримый результат с цифрами."
+      },
+      {
+        "text": "What are your salary expectations?",
+        "category": "negotiation",
+        "explain": "Negotiation. Range, не точное число: «I'm targeting a range of X to Y based on the market and my experience.»"
+      },
+      {
+        "text": "I was hoping for something in the range of X to Y on the base.",
+        "category": "negotiation",
+        "explain": "Counter-предложение после оффера. Мягкая формула «I was hoping for», конкретный range, оставляет место для движения."
+      },
+      {
+        "text": "Is there flexibility on the base salary?",
+        "category": "negotiation",
+        "explain": "Прямой запрос про space для движения. Стандартная негоциационная фраза, не воспринимается агрессивно. После — пауза."
+      },
+      {
+        "text": "Could we discuss the equity / RSU package?",
+        "category": "negotiation",
+        "explain": "Negotiation про non-base часть пакета. Когда base зафиксирован — двигай equity, signing bonus, vacation."
+      },
+      {
+        "text": "I'd like to take a couple of days to think it over.",
+        "category": "negotiation",
+        "explain": "Никогда не принимай оффер on the spot. Возьми сутки-двое, ответь email с конкретным counter-предложением."
+      }
+    ]
+  }
+}

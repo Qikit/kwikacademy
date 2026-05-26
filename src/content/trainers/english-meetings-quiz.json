@@ -1,0 +1,143 @@
+{
+  "course": "english",
+  "lesson": "english-meetings",
+  "title": "Meetings — дипломатичный ответ",
+  "description": "12 вопросов: выбери уместную реплику под ситуацию встречи или звонка.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Клиент сказал что-то, с чем ты не согласен. Какая реплика уместна?",
+        "options": [
+          "You're wrong about that.",
+          "I disagree.",
+          "I see your point, but have you considered the alternative?",
+          "No, that won't work."
+        ],
+        "correctIndex": 2,
+        "explain": "Самая дипломатичная формула: признать аргумент клиента, потом предложить альтернативу. «You're wrong» — личный выпад. «I disagree» — слишком прямо для клиента. «No, that won't work» — категорично."
+      },
+      {
+        "prompt": "Ты не расслышал, что сказал коллега из-за связи. Как переспросить?",
+        "options": [
+          "Repeat please?",
+          "What?",
+          "Sorry, you cut out — could you repeat that?",
+          "I don't understand."
+        ],
+        "correctIndex": 2,
+        "explain": "Сваливает причину на связь («you cut out»), вежливо просит повторить через модальное «could». «Repeat please» — команда. «What?» — резко. «I don't understand» — звучит как претензия."
+      },
+      {
+        "prompt": "Хочешь вступить в разговор и добавить мысль. Как это сделать вежливо?",
+        "options": [
+          "I want to say something.",
+          "Excuse me, may I speak?",
+          "I'd like to add something here.",
+          "Listen, I have an idea."
+        ],
+        "correctIndex": 2,
+        "explain": "Нейтрально-вежливая формула входа в разговор. «I want to say» — требовательно. «Excuse me, may I speak» — как ученик у доски. «Listen» — начало нравоучения."
+      },
+      {
+        "prompt": "Открываешь встречу с новыми участниками. Что сказать первым?",
+        "options": [
+          "Hello, my name is John.",
+          "Thanks everyone for joining. Quick round of introductions?",
+          "OK, let's begin.",
+          "Why is everyone here?"
+        ],
+        "correctIndex": 1,
+        "explain": "Стандартное открытие: благодарность за подключение + предложение представиться. Joining — про онлайн-формат. «Quick round of introductions» — мостик к знакомству."
+      },
+      {
+        "prompt": "Тебе нужно уйти со встречи раньше — у тебя следующий звонок. Как предупредить?",
+        "options": [
+          "I have to go now.",
+          "Bye, I'm leaving.",
+          "I'll have to drop off in 5 minutes — I have another call.",
+          "Sorry, I'm busy."
+        ],
+        "correctIndex": 2,
+        "explain": "Предупреждение заранее + причина. Drop off — стандарт для выхода из звонка. Без причины звучит грубо."
+      },
+      {
+        "prompt": "Хочешь отложить пункт повестки и не уйти в тангенс. Как сказать?",
+        "options": [
+          "Stop, we'll talk about it later.",
+          "Forget it for now.",
+          "Let's park that for now and come back to it.",
+          "Skip it."
+        ],
+        "correctIndex": 2,
+        "explain": "Park that — устоявшаяся бизнес-идиома для откладывания темы. «Come back to it» подчёркивает, что тема не забыта. «Stop / Forget / Skip» звучат пренебрежительно."
+      },
+      {
+        "prompt": "В конце встречи распределяешь задачи. Какая фраза?",
+        "options": [
+          "OK, who does what?",
+          "Let me recap the action items — who's owning what?",
+          "Everyone, do something.",
+          "I'll decide who does what."
+        ],
+        "correctIndex": 1,
+        "explain": "Стандартная завершающая формула: recap = резюмировать, action items = задачи с owner. «Who's owning what» — современный business-английский."
+      },
+      {
+        "prompt": "Хочешь убедиться, что все понимают одинаково, не звуча как «я не понял»?",
+        "options": [
+          "I don't understand. Explain again.",
+          "Are you sure about that?",
+          "Just to make sure we're on the same page...",
+          "What did you mean?"
+        ],
+        "correctIndex": 2,
+        "explain": "Универсальная переспрашивающая формула, которая звучит как «давайте синхронизируемся», а не как «я не въехал». Идиома on the same page = одинаковое понимание."
+      },
+      {
+        "prompt": "Хочешь предложить созвониться сегодня — нейтрально, не сухо. Как?",
+        "options": [
+          "We must talk by phone today.",
+          "Can we hop on a call today?",
+          "Phone me, please.",
+          "Call me immediately."
+        ],
+        "correctIndex": 1,
+        "explain": "Современная нейтрально-неформальная формула. Hop on a call — без бюрократии. «Must talk» / «immediately» — звучит как ультиматум. «Phone me» — устаревшее."
+      },
+      {
+        "prompt": "Перед презентацией хочешь расшарить экран. Стандартная фраза?",
+        "options": [
+          "I show you my screen now.",
+          "Look at my screen.",
+          "Let me share my screen — can you see it?",
+          "Watch what I do."
+        ],
+        "correctIndex": 2,
+        "explain": "Share my screen — устоявшаяся коллокация (не show). Сразу следом проверка видимости. Стандартный ритуал перед демо в Zoom/Teams."
+      },
+      {
+        "prompt": "Не понял объяснение вообще. Как попросить пройти ещё раз без потери лица?",
+        "options": [
+          "I don't understand anything you said.",
+          "That made no sense.",
+          "Could you walk me through that again?",
+          "Repeat all of it."
+        ],
+        "correctIndex": 2,
+        "explain": "Walk me through = провести по шагам. Признаёт непонимание мягко, без обвинения. «I don't understand anything» — преувеличение и претензия. «That made no sense» — обвиняет говорящего."
+      },
+      {
+        "prompt": "Хочешь мягко возразить против таймлайна на встрече команды. Как?",
+        "options": [
+          "This timeline is impossible.",
+          "I'd push back a bit on that timeline — it feels tight.",
+          "No way we can do that.",
+          "You're being unrealistic."
+        ],
+        "correctIndex": 1,
+        "explain": "Push back — устоявшийся бизнес-термин для возражения. «A bit» смягчает. «Feels tight» — мягкая характеристика. Остальные варианты — категоричны или личный выпад."
+      }
+    ]
+  }
+}

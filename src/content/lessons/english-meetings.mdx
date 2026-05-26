@@ -1,13 +1,466 @@
 ---
 course: english
 order: 19
-phase: "Фаза 2 · Профессиональный английский"
-title: "Meetings and Calls — встречи"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Как вести и понимать встречи и созвоны на английском."
-placeholder: true
-tags: [english]
+phase: "Фаза 2 · Рабочий английский"
+title: "Meetings and Calls — встречи и звонки"
+eyebrow: "Профессиональный · уровень B1-B2"
+readingMinutes: 25
+summary: "Готовые фразы для всех этапов встречи и звонка: начало, обсуждение, мягкое возражение, технические сбои, подведение итогов."
+tags: [meetings, calls, speaking, work, B1, B2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Meetings and Calls — встречи» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем отдельная тема про встречи
+
+General English уровня B1 закрывает разговоры с коллегой у кофемашины и переписку в чате. Но как только начинается рабочая встреча — Zoom, Google Meet, Teams — обычной лексики не хватает. Не из-за грамматики, а из-за того, что на встрече есть свой ритуал: начало, повестка, выступление, мягкое возражение, технические сбои, подведение итогов, action items. Каждый этап требует своих фраз, и эти фразы — почти готовые формулы, которые носители используют автоматически.
+
+Вторая сложность — молчание. В русскоязычной культуре пауза часто означает «я подумал и согласен», а долгое слушание без реплик — норма. В US/UK тишина на встрече читается иначе: либо человек не понял, либо он не согласен, но не говорит из вежливости. Если ты молчишь все 30 минут — коллеги не подумают, что ты вдумчивый, они подумают, что у тебя проблемы со связью или с английским. Минимум одна-две реплики за встречу — `let me add something`, `I'd push back a bit on that`, `just to clarify` — обязательны, даже если ты не модератор.
+
+Этот урок — про подготовленные формулы для каждого этапа встречи. Не «выучи 200 фраз», а «знай по 3-5 рабочих заготовок на каждый момент: открыть встречу, попросить повторить, мягко возразить, договориться об action items, выйти из звонка». С таким набором ты можешь полноценно участвовать в международной встрече, даже если разговорный английский ещё не идеален.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Встречи и звонки — это **ситуационные формулы, не свободная импровизация**. Каждый этап (начало / обсуждение / возражение / уточнение / итоги / тех.сбой) имеет 3-5 устойчивых фраз, которые носители используют почти автоматически. Учи их **целиком** (`let me share my screen`, `could you walk me through that?`, `I'd push back a bit on that`) и **по этапам** — тогда в момент встречи мозг достаёт готовую конструкцию, а не пытается собрать её из слов на лету. Молчание = непонимание/несогласие в западной культуре, минимум одна реплика обязательна.
+</Callout>
+
+## 3. Что входит в тему
+
+Лексика встреч и звонков логически делится по этапам события. Каждая группа фраз привязана к моменту, в который её произносят.
+
+- **Перед встречей** — назначить, перенести, прислать инвайт, договориться об удобном времени.
+- **Начало встречи** — поздороваться, представить участников, обозначить повестку и тайминг.
+- **Управление обсуждением** — поделиться экраном, попросить уточнить, добавить мысль, отложить пункт.
+- **Мягкое несогласие** — не «I disagree», а градация от «I'd push back» до «I see your point, but...».
+- **Согласие** — короткие готовые реплики, чтобы не выпадать из дискуссии.
+- **Уточнения и непонимание** — попросить повторить, признать, что не расслышал, без потери лица.
+- **Окончание** — action items, owners, follow-up, договорённости о следующей встрече.
+- **Технические сбои** — mute, breaking up, connection issues, drop off — без паники и без раздражения.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="В русском у нас тоже есть свой набор «встречных» формул: «давай созвонимся в 3», «я тебя теряю», «давайте к этому вернёмся попозже». В английском конструкции другие, но логика та же — это короткие готовые формулы, которые учат целиком, а не разбирают пословно.">
+  <div slot="ru">
+    <strong>Русские рабочие формулы:</strong><br/>
+    «Давай созвонимся в три» — назначить.<br/>
+    «Ты пропадаешь / тебя плохо слышно» — связь.<br/>
+    «Можешь повторить?» — переспросить.<br/>
+    «Давайте к этому вернёмся» — отложить.<br/>
+    «Кто что делает?» — action items.<br/><br/>
+    Никто не собирает их из слов в моменте — все знают наизусть.
+  </div>
+  <div slot="en">
+    <strong>Same logic in English:</strong><br/>
+    "Can we hop on a call at 3?" — schedule.<br/>
+    "You're breaking up / I can't hear you well." — connection.<br/>
+    "Could you repeat that?" — repeat.<br/>
+    "Let's park that for now." — defer.<br/>
+    "Who's owning what?" — action items.<br/><br/>
+    Memorise them whole — that's how natives use them.
+  </div>
+</AnalogyBox>
+
+## 5. Шкала возражений
+
+Прямое «I disagree» в западной деловой культуре звучит резко. Несогласие принято смягчать — особенно с коллегами выше по иерархии или с клиентом. Шкала от прямого к максимально мягкому:
+
+| Прямо (избегать) | Нейтрально | Дипломатично |
+|---|---|---|
+| I disagree. | I'm not sure I agree with that. | I see your point, but have you considered…? |
+| That's wrong. | I see it a bit differently. | That's an interesting angle — I'd love to push back a bit, though. |
+| No, that won't work. | I'm not sure that'll work for us. | I'd be a bit cautious about that approach. |
+| You missed the point. | I think we might be talking past each other. | Just to make sure we're on the same page, can I rephrase? |
+| That's a bad idea. | I have some concerns about that. | I'd want to think through the trade-offs before committing. |
+
+Базовое правило: **чем выше человек по иерархии или чем формальнее ситуация — тем правее по шкале**. С близкой командой допустимо «I disagree» с улыбкой; с клиентом в первый раз — только мягкие формулировки. Никогда не используй «You're wrong» — это считается личным выпадом, а не аргументом.
+
+## 6. Лексика по этапам встречи
+
+### Перед встречей — назначить, перенести
+
+<RuleList rules={[
+  "**Can we hop on a call?** — короткая нейтральная просьба созвониться. «Hop on» = быстро запрыгнуть, без бюрократии.",
+  "**I'll send a calendar invite.** — стандартная фраза. Calendar invite — не «invitation», а именно invite.",
+  "**Let me know what time works for you.** — узнать удобное время. Не «when you can» — это звучит формальнее и тяжелее.",
+  "**Could we move the call to 3 PM?** — перенести. To + новое время. Альтернатива: push the call to / reschedule the call for.",
+  "**Does Tuesday work for you?** — предложить дату. Альтернатива: «How about Tuesday?», «Would Tuesday work?».",
+  "**Could you join via Zoom?** — попросить присоединиться через конкретный сервис. Via Zoom / on Teams / over Google Meet.",
+  "**I've blocked off 30 minutes.** — я зарезервировал полчаса. Block off time — занять слот в календаре.",
+]} />
+
+<Example ru="Не могли бы мы перенести звонок на три часа дня?">Could we move the call to 3 PM?</Example>
+<Example ru="Дай знать, какое время тебе подходит — я подстроюсь.">Let me know what time works for you — I'll adjust.</Example>
+<Example ru="Я отправлю инвайт в календарь до конца дня.">I'll send the calendar invite by end of day.</Example>
+
+### Начало встречи
+
+<RuleList rules={[
+  "**Thanks everyone for joining.** — стандартное открытие. Joining, не coming — это про онлайн-встречу.",
+  "**Let's get started.** — поехали, начинаем. Самая частая фраза-стартер.",
+  "**Quick round of introductions?** — быстрое знакомство по кругу. Round = круг.",
+  "**The agenda for today is...** — обозначить повестку. Agenda for today, не «of today».",
+  "**I've got 30 minutes blocked off, so let's keep it tight.** — у меня полчаса, давайте по делу. Keep it tight — компактно.",
+  "**Before we dive in...** — перед тем как нырнём в тему. Стандартный мостик к оргмоменту.",
+  "**Just a quick note before we start.** — короткое замечание перед началом.",
+]} />
+
+<Example ru="Спасибо всем, что подключились. Давайте начнём.">Thanks everyone for joining. Let's get started.</Example>
+<Example ru="Повестка на сегодня — три пункта: статус релиза, бюджет на следующий квартал и наём.">The agenda for today is three items: release status, next quarter's budget, and hiring.</Example>
+<Example ru="У меня заблокировано тридцать минут, поэтому давайте компактно.">I've got 30 minutes blocked off, so let's keep it tight.</Example>
+
+### Управление обсуждением
+
+<RuleList rules={[
+  "**Let me share my screen.** — стандартная фраза перед демо. Share my screen, не show.",
+  "**Can you see my screen?** — проверить, что демо видно. Базовая проверка перед презентацией.",
+  "**Could you elaborate on that?** — попросить раскрыть мысль подробнее. Elaborate = развернуть.",
+  "**I'd like to add something here.** — вступить в разговор вежливо. «I'd like to add» — не «I want to say».",
+  "**Let me play devil's advocate.** — взять на себя роль оппонента ради дискуссии. Идиома, целиком.",
+  "**Can we park that for now and come back to it?** — отложить пункт, к нему вернёмся. Park = припарковать тему.",
+  "**Just to make sure we're on the same page...** — чтобы убедиться, что мы понимаем одно и то же. Универсальная переспрашивающая формула.",
+  "**Let's take a step back.** — давайте отойдём и посмотрим шире. Когда дискуссия ушла в детали.",
+  "**Quick thought before we move on.** — быстрая мысль перед тем как идти дальше. Короткий вход в реплику.",
+]} />
+
+<Example ru="Я расшарю экран — скажи, видишь ли его.">Let me share my screen — let me know if you can see it.</Example>
+<Example ru="Не мог бы ты подробнее раскрыть второй пункт?">Could you elaborate on the second point?</Example>
+<Example ru="Давайте отложим этот вопрос и вернёмся к нему в конце.">Let's park that for now and come back to it at the end.</Example>
+<Example ru="Просто чтобы убедиться, что мы говорим об одном и том же — речь идёт о Q3, верно?">Just to make sure we're on the same page — we're talking about Q3, right?</Example>
+
+### Мягкое несогласие
+
+<RuleList rules={[
+  "**I see your point, but...** — я понимаю твою мысль, но... Базовая формула вежливого возражения.",
+  "**I'm not sure I agree with...** — не уверен, что согласен. Смягчающее «not sure» вместо прямого «disagree».",
+  "**That might work, but have you considered...?** — может сработать, но рассматривал ли ты...? Открывает альтернативу, не отвергая идею.",
+  "**I'd push back a bit on that.** — я бы немного возразил. Push back — устоявшийся бизнес-термин для возражения.",
+  "**I have some concerns about that approach.** — у меня есть некоторые опасения. Concerns мягче, чем objections.",
+  "**Let me play devil's advocate for a second.** — позволь мне на секунду побыть оппонентом. Снимает с возражения личный характер.",
+  "**I'm not sure that'll fly.** — не уверен, что прокатит. Informal, в команде. Fly = сработать, пройти.",
+]} />
+
+<Example ru="Я понимаю твою мысль, но как насчёт затрат на поддержку?">I see your point, but what about the cost of maintenance?</Example>
+<Example ru="Я бы немного возразил против такого таймлайна — он кажется агрессивным.">I'd push back a bit on that timeline — it feels aggressive.</Example>
+<Example ru="У меня есть опасения насчёт такого подхода — давай обсудим риски.">I have some concerns about that approach — let's talk through the risks.</Example>
+
+### Согласие
+
+<RuleList rules={[
+  "**I'm on board with that.** — я поддерживаю. Идиоматично, нейтрально.",
+  "**That sounds good.** — звучит хорошо. Самая частая короткая реплика согласия.",
+  "**Let's go with that.** — давайте так и сделаем. Закрывает дискуссию решением.",
+  "**Makes sense to me.** — для меня имеет смысл. Часто без подлежащего: «Makes sense».",
+  "**I'm with you on that one.** — я с тобой по этому вопросу. Личная поддержка.",
+  "**Works for me.** — мне подходит. Короткое деловое согласие.",
+]} />
+
+<Example ru="Звучит хорошо — давайте так и сделаем.">Sounds good — let's go with that.</Example>
+<Example ru="Я поддерживаю. Кто берёт это на себя?">I'm on board with that. Who's taking it on?</Example>
+
+### Уточнения и непонимание
+
+<RuleList rules={[
+  "**Could you repeat that?** — не мог бы ты повторить? Вежливая форма. Не «Repeat please?» — это калька.",
+  "**I didn't catch the last part.** — я не уловил последнюю часть. Catch = ухватить ухом.",
+  "**Sorry, you cut out for a moment.** — извини, ты пропал на секунду. Cut out — про связь.",
+  "**What do you mean by X?** — что ты имеешь в виду под X? Вежливо просит расшифровать термин.",
+  "**Just to clarify...** — просто чтобы уточнить... Универсальный вход в переспрос.",
+  "**Could you walk me through that again?** — не мог бы ещё раз провести меня по этому? Когда вообще ничего не понял — без потери лица.",
+  "**Sorry, I'm not following.** — извини, я не следую за мыслью. Признаёт непонимание без агрессии.",
+]} />
+
+<Example ru="Извини, ты пропал на секунду — не мог бы повторить последнюю часть?">Sorry, you cut out for a moment — could you repeat the last part?</Example>
+<Example ru="Просто чтобы уточнить — речь идёт о доходе или о выручке?">Just to clarify — are we talking about income or revenue?</Example>
+<Example ru="Не мог бы ты ещё раз провести меня по этому процессу? Я хочу убедиться, что понял правильно.">Could you walk me through that process again? I want to make sure I got it right.</Example>
+
+### Окончание встречи
+
+<RuleList rules={[
+  "**Let me recap the action items.** — давай я подытожу пункты к выполнению. Recap = резюмировать.",
+  "**Who's owning what?** — кто за что отвечает. Own = быть ответственным за пункт.",
+  "**I'll follow up via email.** — продолжу по почте. Follow up — стандарт после встречи.",
+  "**Let's reconvene next week.** — встретимся снова на следующей неделе. Reconvene — формальное «собраться снова».",
+  "**I think we've covered everything.** — кажется, мы всё обсудили. Covered = прошлись по всем темам.",
+  "**Any last questions before we wrap up?** — последние вопросы перед тем как закончим? Wrap up = свернуть.",
+  "**Thanks everyone, this was productive.** — спасибо всем, было продуктивно. Стандартное закрытие.",
+]} />
+
+<Example ru="Давайте я подытожу — кто за что отвечает на этой неделе.">Let me recap the action items — who's owning what this week.</Example>
+<Example ru="Я пришлю follow-up по почте с резюме встречи.">I'll follow up via email with a summary of the meeting.</Example>
+<Example ru="Последние вопросы перед тем, как закончим?">Any last questions before we wrap up?</Example>
+
+### Технические сбои
+
+<RuleList rules={[
+  "**I'm on mute, sorry.** — извини, я был на mute. Самая частая фраза на любой Zoom-встрече.",
+  "**Can you hear me?** — ты меня слышишь? Базовая проверка.",
+  "**You're breaking up.** — ты прерываешься (про связь). Не «You're breaking».",
+  "**My connection is unstable.** — у меня нестабильное соединение. Не «I have bad internet».",
+  "**I'll have to drop off in 5 minutes.** — мне придётся выйти через пять минут. Drop off = покинуть звонок.",
+  "**I'm having audio issues — let me try reconnecting.** — у меня проблемы со звуком, я переподключусь.",
+  "**Sorry, I lost you for a second.** — извини, я тебя потерял на секунду. Lost — про связь, не про потерю интереса.",
+  "**Can everyone go on mute when not speaking?** — давайте все на mute, когда не говорим. Стандартная просьба модератора.",
+]} />
+
+<Example ru="Извини, я был на mute — повтори, пожалуйста, вопрос.">Sorry, I was on mute — could you repeat the question?</Example>
+<Example ru="Ты прерываешься, попробуй переподключиться.">You're breaking up — try reconnecting.</Example>
+<Example ru="Мне нужно будет выйти через пять минут — у меня следующий звонок.">I'll have to drop off in 5 minutes — I have another call after this.</Example>
+
+## 7. Примеры в действии
+
+### Внутренняя команда
+
+<Example ru="Подключаемся к стендапу. Дайте две минуты, я доделаю кофе.">Hopping on the stand-up. Give me two minutes — I'm finishing my coffee.</Example>
+<Example ru="Давайте начнём. У нас три темы на сегодня и сорок пять минут.">Let's get started. We've got three items today and forty-five minutes.</Example>
+<Example ru="У меня быстрая мысль, прежде чем мы пойдём дальше.">Quick thought before we move on.</Example>
+<Example ru="Я бы немного возразил против такого таймлайна — он не оставляет буфера на тестирование.">I'd push back a bit on that timeline — it doesn't leave any buffer for testing.</Example>
+<Example ru="Давайте отложим вопрос про найм и вернёмся к нему в пятницу.">Let's park the hiring question and come back to it on Friday.</Example>
+<Example ru="Я поддерживаю. Кто возьмёт это на себя?">I'm on board with that. Who's taking it on?</Example>
+<Example ru="Просто чтобы убедиться, что мы говорим об одном и том же — это про второй квартал, верно?">Just to make sure we're on the same page — this is about Q2, right?</Example>
+<Example ru="Извини, ты пропал на секунду. Повтори последнюю мысль?">Sorry, you cut out for a moment. Could you repeat the last point?</Example>
+
+### Звонок с клиентом или вендором
+
+<Example ru="Спасибо, что нашли время сегодня. Я ценю это.">Thanks for making the time today, I really appreciate it.</Example>
+<Example ru="Я расшарю экран и проведу вас по предложению.">Let me share my screen and walk you through the proposal.</Example>
+<Example ru="Не могли бы вы подробнее раскрыть, какой объём вы имеете в виду?">Could you elaborate on the scope you have in mind?</Example>
+<Example ru="Я понимаю вашу точку зрения. Возможно, есть смысл рассмотреть гибридный подход?">I see your point. Perhaps it makes sense to consider a hybrid approach?</Example>
+<Example ru="Давайте я отправлю follow-up с резюме и предлагаемыми следующими шагами.">Let me send a follow-up with a summary and proposed next steps.</Example>
+<Example ru="Когда вам удобно встретиться снова — на следующей неделе подойдёт?">When works for you to reconvene — would next week work?</Example>
+
+### Технические моменты
+
+<Example ru="Я слышу эхо. Кто-то ещё подключён со звуком ноутбука?">I'm getting an echo. Is anyone else on with laptop audio?</Example>
+<Example ru="У меня нестабильное соединение — если я пропаду, переподключусь.">My connection is unstable — if I drop, I'll reconnect.</Example>
+<Example ru="Все слышат меня хорошо?">Can everyone hear me okay?</Example>
+<Example ru="Давайте все встанем на mute, когда не говорим — слышно фоновый шум.">Let's all go on mute when we're not speaking — there's some background noise.</Example>
+<Example ru="Извините, у меня были проблемы со звуком. Что я пропустил?">Sorry, I was having audio issues. What did I miss?</Example>
+<Example ru="Мне нужно выйти на минуту — оставлю камеру выключенной.">I need to step away for a minute — I'll leave my camera off.</Example>
+
+## 8. Грубо vs дипломатично
+
+Та же мысль в двух регистрах. Левая колонка — буквальный перенос из русского, который звучит грубо. Правая — нейтрально-вежливый эквивалент, который ожидают на западной встрече.
+
+<Compare leftLabel="Звучит грубо (буквальный перенос)" rightLabel="Дипломатично (норма для встреч)">
+  <div slot="left">
+    <strong>That's wrong.</strong><br/>
+    <em>Это неправильно.</em><br/><br/>
+    <strong>What?</strong><br/>
+    <em>Что?</em><br/><br/>
+    <strong>I don't agree.</strong><br/>
+    <em>Я не согласен.</em><br/><br/>
+    <strong>Hurry up, we don't have time.</strong><br/>
+    <em>Давай быстрее, у нас нет времени.</em><br/><br/>
+    <strong>You missed the point.</strong><br/>
+    <em>Ты упустил суть.</em><br/><br/>
+    <strong>Repeat please?</strong><br/>
+    <em>Повтори, пожалуйста.</em>
+  </div>
+  <div slot="right">
+    <strong>I see it a bit differently — could we look at it from another angle?</strong><br/>
+    <em>Я вижу это немного иначе — давай посмотрим под другим углом.</em><br/><br/>
+    <strong>Sorry, could you repeat that?</strong><br/>
+    <em>Извини, не мог бы ты повторить?</em><br/><br/>
+    <strong>I'm not quite on the same page yet.</strong><br/>
+    <em>Я ещё не до конца на одной волне с тобой.</em><br/><br/>
+    <strong>In the interest of time, let's keep this brief.</strong><br/>
+    <em>В интересах времени давайте кратко.</em><br/><br/>
+    <strong>I think we might be talking past each other — let me rephrase.</strong><br/>
+    <em>Кажется, мы говорим о разном — давай я переформулирую.</em><br/><br/>
+    <strong>Could you say that again? I didn't quite catch it.</strong><br/>
+    <em>Не мог бы повторить? Я не совсем расслышал.</em>
+  </div>
+</Compare>
+
+Главный сдвиг: в английском **никогда не критикуй человека, критикуй идею или ситуацию**, и даже идею — со смягчающими модальными (`might`, `could`, `would`), наречиями (`a bit`, `perhaps`, `slightly`) и косвенными конструкциями (`I'm not sure that...`, `have you considered...?`).
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Универсальный смягчитель — «just»">
+Слово **just** — самый универсальный смягчитель в деловом английском. Оно добавляется почти куда угодно и автоматически делает фразу мягче и менее обязывающей.
+
+- «I wanted to check something» → «I just wanted to check something». Меньше давления, больше вежливости.
+- «One quick question» → «Just one quick question». Подчёркивает, что не отнимешь много времени.
+- «I'm following up on the email» → «Just following up on the email». Стандарт для напоминания.
+- «To clarify» → «Just to clarify». Универсальный вход в переспрос — никого не обижает.
+- «Wanted to say» → «Just wanted to say». Снимает с реплики важность, даёт право вступить без претензии на главное слово.
+
+Не злоупотребляй (5 раз «just» в одном письме — заметно), но как инструмент смягчения «just» работает почти всегда. Особенно для русскоязычных, у которых от калек получается слишком прямо.
+</Callout>
+
+## 10. Молчание на встрече — культурная ловушка
+
+<Callout type="blue" title="Тишина читается не так, как в русской культуре">
+В русскоязычной деловой среде молчание во время чужого выступления часто означает: «я слушаю, я обдумываю, я согласен». Долгое молчаливое слушание — норма и даже знак уважения. Реплики типа «угу», «да», «понятно» считаются вспомогательными и не обязательны.
+
+В US/UK встречах та же тишина читается прямо противоположно. Если ты молчишь все 30 минут, коллеги думают одно из трёх: либо у тебя плохо со связью, либо ты не понимаешь язык, либо ты не согласен, но боишься сказать. Особенно в США: «активное участие» — это часть оценки сотрудника, и молчание прямо снижает её.
+
+Базовый минимум на любой встрече, даже если ты не модератор и не выступаешь по своей теме:
+
+- В начале — «**Hi everyone**» или «**Good to see you**».
+- Во время чужого выступления — «**right**», «**makes sense**», «**got it**» как короткие подтверждения, что ты слушаешь и понимаешь.
+- В конце — «**Thanks**» или конкретный вопрос/комментарий по теме.
+
+Если в течение встречи ты ни разу не сказал что-то по существу — обязательно вступи хотя бы с «**just to make sure I understood correctly...**» или «**quick question on what you mentioned earlier...**». Это считывается как «человек был включён», а не «человек просидел впустую». Минимальные затраты, ощутимая разница в восприятии тебя командой.
+</Callout>
+
+## 11. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| I have a question to you | I have a question for you | Question + for (адресат). To — направление движения. Калька с русского «вопрос к тебе». |
+| Repeat please? / What? | Could you repeat that? / Sorry, could you say that again? | «Repeat please» — повелительное наклонение, звучит как команда. «What?» — резко. Вежливо: модальные + please. |
+| I don't understand | Could you walk me through that again? / Sorry, I'm not following | Категоричное «I don't understand» звучит как претензия к собеседнику. Лучше показать, что готов слушать ещё раз. |
+| You are wrong | I see it differently / I'd push back a bit on that | «You are wrong» — личный выпад. На западных встречах критикуют идею, не человека. |
+| I want to say... | I'd like to add... / Quick thought... | «I want to say» звучит требовательно. «I'd like to add», «Just a quick thought» — нейтрально-вежливое вступление. |
+| Let's make a meeting on Monday | Let's schedule a meeting on Monday / Let's set up a meeting on Monday | «Make a meeting» — калька. По-английски meetings schedule, set up, arrange. |
+| I have problem with sound | I'm having audio issues / I'm having trouble with my audio | «Problem» требует артикля (a problem). Естественнее — «having audio issues», «audio is acting up». |
+| Молчание на встрече = согласие | Минимум одна реплика по теме + короткие подтверждения по ходу | В US/UK тишина = непонимание или скрытое несогласие. Молчание снижает оценку сотрудника. |
+| It's not so / It's not true | That doesn't quite match what I'm seeing / I'd want to double-check that | «It's not so» — калька, звучит обвинительно. Дипломатично: показать, что данные расходятся, без обвинения. |
+| Excuse me, may I speak? (в чате команды) | Quick thought / I'd like to add something here | Слишком формально для рабочей встречи команды. Звучит как ученик у доски. |
+| I want to schedule a meeting | I'd like to schedule a meeting / Could we schedule a meeting? | «I want» в деловом контексте — требование. «I'd like» / «Could we» — нейтрально-вежливо. |
+| We can connect on Skype tomorrow | We can hop on a call tomorrow / Let's jump on a Zoom tomorrow | «Connect on Skype» — старомодно. Современно: hop on / jump on a call, на конкретной платформе. |
+| Sorry I am late, I had problems with connection | Sorry I'm late — I was having connection issues | Без артикля «had problems», без «with the». Естественно — «connection issues», «trouble connecting». |
+
+## 12. Шпаргалка
+
+| Этап встречи | Ключевые фразы |
+| --- | --- |
+| **Перед встречей** | Can we hop on a call? · I'll send a calendar invite · Let me know what time works for you · Could we move the call to 3? |
+| **Начало** | Thanks everyone for joining · Let's get started · Quick round of introductions · The agenda for today is... · Before we dive in... |
+| **Управление** | Let me share my screen · Could you elaborate? · I'd like to add something · Let's park that · Just to make sure we're on the same page |
+| **Несогласие** | I see your point, but... · I'd push back a bit on that · I have some concerns about... · Have you considered...? |
+| **Согласие** | Sounds good · I'm on board · Let's go with that · Makes sense · Works for me |
+| **Уточнения** | Could you repeat that? · I didn't catch the last part · Just to clarify... · Could you walk me through that again? |
+| **Окончание** | Let me recap the action items · Who's owning what? · I'll follow up via email · Let's reconvene next week · Any last questions before we wrap up? |
+
+| Техническая ситуация | Что сказать |
+| --- | --- |
+| **Был на mute** | Sorry, I was on mute. |
+| **Не слышно собеседника** | You're breaking up · I can't hear you well · You cut out for a second |
+| **Свои проблемы со звуком** | I'm having audio issues — let me try reconnecting · My connection is unstable |
+| **Нужно выйти раньше** | I'll have to drop off in 5 minutes · I need to step away for a moment |
+| **Эхо / шум** | I'm getting an echo · There's some background noise — could everyone mute? |
+| **Проверка связи** | Can you hear me? · Can everyone see my screen? |
+
+## 13. Словарь урока
+
+<Vocab items={[
+  { term: "hop on a call", meaning: "быстро созвониться (informal-neutral)" },
+  { term: "jump on a Zoom", meaning: "подключиться к Zoom-звонку" },
+  { term: "calendar invite", meaning: "приглашение в календарь" },
+  { term: "block off (time)", meaning: "зарезервировать время в календаре" },
+  { term: "move the call", meaning: "перенести звонок" },
+  { term: "reschedule", meaning: "перенести (формальнее, чем move)" },
+  { term: "push the call to (a time)", meaning: "сдвинуть звонок на (время)" },
+  { term: "join via Zoom / on Teams", meaning: "подключиться через Zoom / в Teams" },
+  { term: "what time works for you", meaning: "какое время тебе подходит" },
+  { term: "Thanks everyone for joining", meaning: "спасибо всем за подключение (открытие встречи)" },
+  { term: "Let's get started", meaning: "давайте начнём" },
+  { term: "round of introductions", meaning: "круг знакомства" },
+  { term: "the agenda for today", meaning: "повестка на сегодня" },
+  { term: "Before we dive in", meaning: "перед тем как нырнём в тему" },
+  { term: "keep it tight", meaning: "держать компактно, без растягивания" },
+  { term: "share my screen", meaning: "расшарить экран" },
+  { term: "elaborate on", meaning: "раскрыть подробнее" },
+  { term: "I'd like to add", meaning: "я хотел бы добавить" },
+  { term: "play devil's advocate", meaning: "взять на себя роль оппонента ради дискуссии" },
+  { term: "park that for now", meaning: "отложить пункт, вернёмся" },
+  { term: "come back to it", meaning: "вернёмся к этому" },
+  { term: "on the same page", meaning: "одинаково понимаем (быть на одной волне)" },
+  { term: "take a step back", meaning: "посмотреть шире, отойти от деталей" },
+  { term: "Quick thought", meaning: "быстрая мысль (короткое вступление в реплику)" },
+  { term: "I see your point", meaning: "я понимаю твою точку зрения" },
+  { term: "push back (on)", meaning: "возразить, не согласиться" },
+  { term: "I have some concerns", meaning: "у меня есть опасения (мягкое возражение)" },
+  { term: "Have you considered...?", meaning: "ты рассматривал...? (предложить альтернативу)" },
+  { term: "I'm not sure that'll fly", meaning: "не уверен, что прокатит (informal)" },
+  { term: "I'm on board", meaning: "я поддерживаю" },
+  { term: "Sounds good", meaning: "звучит хорошо" },
+  { term: "Let's go with that", meaning: "давайте так и сделаем" },
+  { term: "Makes sense", meaning: "имеет смысл" },
+  { term: "Works for me", meaning: "мне подходит" },
+  { term: "Could you repeat that?", meaning: "не мог бы повторить?" },
+  { term: "I didn't catch (the last part)", meaning: "я не уловил (последнюю часть)" },
+  { term: "you cut out", meaning: "ты пропал (про связь)" },
+  { term: "Just to clarify", meaning: "просто чтобы уточнить" },
+  { term: "walk me through (something)", meaning: "проведи меня по шагам" },
+  { term: "I'm not following", meaning: "я не слежу за мыслью" },
+  { term: "recap (action items)", meaning: "подытожить (пункты к выполнению)" },
+  { term: "action items", meaning: "конкретные задачи по итогам встречи" },
+  { term: "Who's owning what?", meaning: "кто за что отвечает" },
+  { term: "own (a task)", meaning: "быть ответственным за задачу" },
+  { term: "follow up", meaning: "написать/созвониться по итогу" },
+  { term: "follow-up (email)", meaning: "письмо-напоминание после встречи" },
+  { term: "reconvene", meaning: "собраться снова (формальное)" },
+  { term: "wrap up", meaning: "свернуть, закончить" },
+  { term: "we've covered everything", meaning: "мы прошлись по всему" },
+  { term: "on mute", meaning: "на mute, со звуком выключенным микрофоном" },
+  { term: "go on mute", meaning: "встать на mute" },
+  { term: "you're breaking up", meaning: "ты прерываешься (про связь)" },
+  { term: "connection is unstable", meaning: "соединение нестабильно" },
+  { term: "drop off (a call)", meaning: "выйти из звонка" },
+  { term: "audio issues", meaning: "проблемы со звуком" },
+  { term: "reconnect", meaning: "переподключиться" },
+  { term: "I lost you", meaning: "я тебя потерял (про связь, не про отношения)" },
+  { term: "background noise", meaning: "фоновый шум" },
+  { term: "in the interest of time", meaning: "в интересах времени (вежливо ускорить)" },
+  { term: "talking past each other", meaning: "говорить мимо друг друга, не понимая" },
+]} />
+
+## 14. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-meetings-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Фразы встреч → значение</span>
+    <span class="kc-trainer-hint">Запомни 18+ ключевых формул для всех этапов встречи</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-meetings-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Ситуация → фраза</span>
+    <span class="kc-trainer-hint">Соотнеси момент встречи с уместной формулой</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-meetings-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">По этапам встречи</span>
+    <span class="kc-trainer-hint">Разложи фразы: Start / Discussion / End / Call Tech</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-meetings-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Дипломатичный ответ</span>
+    <span class="kc-trainer-hint">12 вопросов: выбери уместную реплику под ситуацию</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-meetings-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши нужную фразу</span>
+    <span class="kc-trainer-hint">Заполни пропуск точной формулой по контексту</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-meetings-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери реплику для встречи</span>
+    <span class="kc-trainer-hint">Расставь слова — следи за вежливостью и порядком</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 15. Источники
+
+- **Cambridge Business English Dictionary** — определения и регистр для деловой лексики, в том числе для meetings и calls.
+- **Harvard Business Review** — статьи про эффективные встречи, action items, культурные различия в коммуникации.
+- **BBC Learning English — English at Work** — диалоги и разборы типичных рабочих ситуаций, в том числе звонков и встреч.
+- **Macmillan Business English / Market Leader (Pearson)** — учебники с готовыми формулами для каждого этапа встречи и звонка.

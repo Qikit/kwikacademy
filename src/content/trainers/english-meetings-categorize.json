@@ -1,0 +1,117 @@
+{
+  "course": "english",
+  "lesson": "english-meetings",
+  "title": "Meetings — по этапам встречи",
+  "description": "Разложи фразы по этапам встречи: Start / Discussion / End / Call Tech.",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "start", "label": "Start" },
+      { "id": "discussion", "label": "Discussion" },
+      { "id": "end", "label": "End" },
+      { "id": "tech", "label": "Call Tech" }
+    ],
+    "items": [
+      {
+        "text": "Thanks everyone for joining.",
+        "category": "start",
+        "explain": "Start: стандартное открытие онлайн-встречи. Joining (не coming) — про подключение к Zoom/Teams."
+      },
+      {
+        "text": "Let's get started.",
+        "category": "start",
+        "explain": "Start: самая частая фраза-стартер. Произносится после приветствия, перед оглашением повестки."
+      },
+      {
+        "text": "The agenda for today is three items.",
+        "category": "start",
+        "explain": "Start: обозначение повестки в начале встречи. Agenda for today (не «of today»)."
+      },
+      {
+        "text": "Quick round of introductions?",
+        "category": "start",
+        "explain": "Start: короткое знакомство в начале встречи с новыми участниками. Round = круг."
+      },
+      {
+        "text": "Let me share my screen.",
+        "category": "discussion",
+        "explain": "Discussion: перед демо или презентацией. Share my screen (не show)."
+      },
+      {
+        "text": "Could you elaborate on that?",
+        "category": "discussion",
+        "explain": "Discussion: вежливая просьба раскрыть мысль подробнее. Elaborate on + предмет."
+      },
+      {
+        "text": "I'd push back a bit on that.",
+        "category": "discussion",
+        "explain": "Discussion: мягкое возражение. Push back — устоявшийся бизнес-термин для несогласия. «A bit» смягчает."
+      },
+      {
+        "text": "Let's park that for now.",
+        "category": "discussion",
+        "explain": "Discussion: отложить пункт, чтобы не уйти в тангенс. Park = припарковать тему."
+      },
+      {
+        "text": "Just to make sure we're on the same page...",
+        "category": "discussion",
+        "explain": "Discussion: универсальная переспрашивающая формула. Звучит как сверка, не как «я не понял»."
+      },
+      {
+        "text": "Let me recap the action items.",
+        "category": "end",
+        "explain": "End: подведение итогов в конце встречи. Recap = резюмировать. Action items = конкретные задачи с owner."
+      },
+      {
+        "text": "Who's owning what?",
+        "category": "end",
+        "explain": "End: распределение задач. Own (a task) = быть ответственным за пункт."
+      },
+      {
+        "text": "I'll follow up via email.",
+        "category": "end",
+        "explain": "End: обещание написать подробности после встречи. Follow up — стандарт для пост-митингового сообщения."
+      },
+      {
+        "text": "Let's reconvene next week.",
+        "category": "end",
+        "explain": "End: формальная договорённость о следующей встрече. Reconvene = собраться снова."
+      },
+      {
+        "text": "Any last questions before we wrap up?",
+        "category": "end",
+        "explain": "End: мостик к закрытию встречи. Wrap up = свернуть, закончить."
+      },
+      {
+        "text": "Sorry, I was on mute.",
+        "category": "tech",
+        "explain": "Call Tech: самая частая фраза на любой Zoom-встрече. On mute = с выключенным микрофоном."
+      },
+      {
+        "text": "You're breaking up.",
+        "category": "tech",
+        "explain": "Call Tech: про прерывистый звук связи. Не «You're breaking». Сваливает причину на технику."
+      },
+      {
+        "text": "My connection is unstable.",
+        "category": "tech",
+        "explain": "Call Tech: про свои проблемы со связью. НЕ «I have bad internet» — это калька."
+      },
+      {
+        "text": "I'll have to drop off in 5 minutes.",
+        "category": "tech",
+        "explain": "Call Tech: предупреждение, что выйдешь раньше. Drop off (a call) = покинуть звонок."
+      },
+      {
+        "text": "Can everyone go on mute when not speaking?",
+        "category": "tech",
+        "explain": "Call Tech: стандартная просьба модератора на встрече с большим числом участников. Go on mute = встать на mute."
+      },
+      {
+        "text": "I'm having audio issues — let me reconnect.",
+        "category": "tech",
+        "explain": "Call Tech: проблемы со звуком. Reconnect = переподключиться. Естественная формулировка."
+      }
+    ]
+  }
+}

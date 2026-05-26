@@ -1,0 +1,72 @@
+{
+  "course": "english",
+  "lesson": "english-meetings",
+  "title": "Meetings — впиши нужную фразу",
+  "description": "Заполни пропуск точной формулой по контексту встречи или звонка.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Sorry, I was on ___ — could you repeat the question?",
+        "answers": ["mute"],
+        "explain": "On mute — с выключенным микрофоном. Самая частая фраза на Zoom-встрече. Глагол: go on mute, unmute.",
+        "hint": "микрофон выключен"
+      },
+      {
+        "text": "Could you ___ on that? I'd like to understand the details.",
+        "answers": ["elaborate"],
+        "explain": "Elaborate on + предмет = развернуть подробнее. Вежливая просьба раскрыть мысль. Альтернатива: expand on."
+      },
+      {
+        "text": "I see your point, but have you ___ the cost of maintenance?",
+        "answers": ["considered"],
+        "explain": "Have you considered...? — стандартная формула, чтобы мягко предложить альтернативу. После признания аргумента собеседника."
+      },
+      {
+        "text": "Let's ___ that for now and come back to it at the end.",
+        "answers": ["park"],
+        "explain": "Park that — отложить пункт, чтобы не уйти в тангенс. Бизнес-идиома: припарковать тему. Дальше обычно — come back to it."
+      },
+      {
+        "text": "Let me ___ the action items — who's owning what this week?",
+        "answers": ["recap"],
+        "explain": "Recap = резюмировать. Стандартная фраза в конце встречи перед распределением задач. Recap + action items."
+      },
+      {
+        "text": "I'll ___ up via email with the meeting summary.",
+        "answers": ["follow"],
+        "explain": "Follow up — продолжить контакт после встречи. Стандартное обещание прислать summary. Существительное: a follow-up."
+      },
+      {
+        "text": "You're ___ up — try reconnecting.",
+        "answers": ["breaking"],
+        "explain": "Breaking up — про прерывистый звук связи. Не «You're breaking». Сваливает причину на технику, не на человека."
+      },
+      {
+        "text": "Just to make sure we're on the same ___ — we're talking about Q3, right?",
+        "answers": ["page"],
+        "explain": "On the same page — идиома «одинаково понимаем». Универсальная переспрашивающая формула. Не звучит как «я не понял»."
+      },
+      {
+        "text": "I'd ___ back a bit on that timeline — it feels aggressive.",
+        "answers": ["push"],
+        "explain": "Push back — устоявшийся бизнес-термин для мягкого возражения. «A bit» смягчает ещё больше. Дальше обычно — аргумент."
+      },
+      {
+        "text": "Could you ___ me through the proposal again? I want to make sure I got it.",
+        "answers": ["walk"],
+        "explain": "Walk someone through something = провести шаг за шагом. Способ признать непонимание без потери лица."
+      },
+      {
+        "text": "I'll have to ___ off in 5 minutes — I've got another call.",
+        "answers": ["drop"],
+        "explain": "Drop off a call = покинуть звонок. Вежливое предупреждение, что нужно уйти раньше. С указанием причины звучит уважительно."
+      },
+      {
+        "text": "My connection is ___ — if I drop, I'll reconnect.",
+        "answers": ["unstable"],
+        "explain": "Connection is unstable — стандартная формулировка про свои проблемы со связью. НЕ «I have bad internet» (калька)."
+      }
+    ]
+  }
+}

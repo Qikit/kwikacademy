@@ -1,0 +1,66 @@
+{
+  "course": "english",
+  "lesson": "english-meetings",
+  "title": "Meetings — собери реплику для встречи",
+  "description": "Расставь слова в правильном порядке. Следи за вежливостью и порядком слов в типовых формулах для встреч.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["repeat", "you", "could", "?", "that"],
+        "answer": ["could", "you", "repeat", "that", "?"],
+        "translation": "Не мог бы ты повторить?",
+        "explain": "Could you repeat that? — стандартная вежливая форма переспроса. Could (модальный) + you (подлежащее) + repeat (V) + that (объект). НЕ «Repeat please».",
+        "hint": "вежливый вопрос"
+      },
+      {
+        "words": ["share", "me", "screen", "let", "my"],
+        "answer": ["let", "me", "share", "my", "screen"],
+        "translation": "Дай мне расшарить экран.",
+        "explain": "Let me + V (share) + объект (my screen). Стандартная фраза перед демо. Share my screen — устоявшаяся коллокация, не show."
+      },
+      {
+        "words": ["the", "for", "today", "is", "agenda", "three", "items"],
+        "answer": ["the", "agenda", "for", "today", "is", "three", "items"],
+        "translation": "Повестка на сегодня — три пункта.",
+        "explain": "The agenda + for today (не «of today»). Стандартный способ обозначить план встречи в начале. Дальше идёт список пунктов."
+      },
+      {
+        "words": ["that", "to", "5", "I'll", "minutes", "drop", "off", "in", "have"],
+        "answer": ["I'll", "have", "to", "drop", "off", "in", "5", "minutes"],
+        "translation": "Мне придётся выйти через пять минут.",
+        "explain": "Drop off — покинуть звонок. I'll have to + V — придётся сделать. In 5 minutes — через 5 минут. Вежливое предупреждение, что уйдёшь раньше. Лишнее слово «that»."
+      },
+      {
+        "words": ["on", "I'm", "with", "that", "board"],
+        "answer": ["I'm", "on", "board", "with", "that"],
+        "translation": "Я поддерживаю это.",
+        "explain": "I'm on board with + объект — идиома согласия. On board буквально «на борту», то есть «в команде по этому решению»."
+      },
+      {
+        "words": ["come", "let's", "back", "now", "to", "park", "and", "that", "it", "for"],
+        "answer": ["let's", "park", "that", "for", "now", "and", "come", "back", "to", "it"],
+        "translation": "Давайте отложим это и вернёмся к этому позже.",
+        "explain": "Park that for now — отложить тему. + and come back to it — и вернёмся. Стандартная двухчастная формула, чтобы не уйти в тангенс."
+      },
+      {
+        "words": ["a", "I'd", "that", "push", "on", "back", "bit"],
+        "answer": ["I'd", "push", "back", "a", "bit", "on", "that"],
+        "translation": "Я бы немного возразил против этого.",
+        "explain": "Push back on something — устоявшийся бизнес-термин для возражения. A bit — наречие-смягчитель, ставится между push back и on. Дипломатично."
+      },
+      {
+        "words": ["mute", "I", "on", "sorry", "was"],
+        "answer": ["sorry", "I", "was", "on", "mute"],
+        "translation": "Извини, я был на mute.",
+        "explain": "Sorry в начале — признание. I was on mute — был с выключенным микрофоном. Самая частая фраза на любой Zoom-встрече."
+      },
+      {
+        "words": ["I'll", "via", "follow", "email", "up"],
+        "answer": ["I'll", "follow", "up", "via", "email"],
+        "translation": "Я продолжу по почте.",
+        "explain": "Follow up — phrasal verb «продолжить контакт после». Via email — через почту. Стандарт после встречи: «допишу детали в email»."
+      }
+    ]
+  }
+}

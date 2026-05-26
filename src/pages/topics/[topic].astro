@@ -108,20 +108,25 @@ const KIND_LABEL: Record<string, string> = {
 
   <script>
     import { hydrateRoadmap, hydrateTrainerList } from '../../lib/progress/hydrate';
-    hydrateRoadmap();
-    hydrateTrainerList().then(() => {
-      document.querySelectorAll<HTMLElement>('[data-group]').forEach((group) => {
-        const cards = group.querySelectorAll<HTMLElement>('[data-trainer]');
-        const done = Array.from(cards).filter((c) => c.dataset.done === 'true').length;
-        if (done === 0) return;
-        const wrap = group.querySelector<HTMLElement>('[data-group-progress]');
-        const text = group.querySelector<HTMLElement>('.trainer-group-progress-text');
-        if (!wrap || !text) return;
-        wrap.hidden = false;
-        text.textContent = `${done} / ${cards.length}`;
-        if (done === cards.length) wrap.dataset.full = 'true';
+    // ClientRouter swaps the DOM without re-executing module scripts, so we
+    // re-run hydration on every page-load event (covers first load + swaps).
+    function run() {
+      hydrateRoadmap();
+      hydrateTrainerList().then(() => {
+        document.querySelectorAll<HTMLElement>('[data-group]').forEach((group) => {
+          const cards = group.querySelectorAll<HTMLElement>('[data-trainer]');
+          const done = Array.from(cards).filter((c) => c.dataset.done === 'true').length;
+          if (done === 0) return;
+          const wrap = group.querySelector<HTMLElement>('[data-group-progress]');
+          const text = group.querySelector<HTMLElement>('.trainer-group-progress-text');
+          if (!wrap || !text) return;
+          wrap.hidden = false;
+          text.textContent = `${done} / ${cards.length}`;
+          if (done === cards.length) wrap.dataset.full = 'true';
+        });
       });
-    });
+    }
+    document.addEventListener('astro:page-load', run);
   </script>
 </BaseLayout>
 

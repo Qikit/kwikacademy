@@ -121,6 +121,34 @@ const links = [
     color: var(--c-purple);
     background: var(--track);
   }
+  @media (min-width: 601px) {
+    /* Desktop: collapsed icon-only strip; expands on hover/focus-within. */
+    .pill a {
+      gap: 0;
+      padding: 8px;
+      transition:
+        color 0.2s,
+        background 0.2s,
+        gap 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        padding 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.1);
+    }
+    .pill a span {
+      max-width: 0;
+      opacity: 0;
+      margin-left: -2px;
+    }
+    .pill:hover a,
+    .pill:focus-within a {
+      gap: 7px;
+      padding: 8px 15px;
+    }
+    .pill:hover a span,
+    .pill:focus-within a span {
+      max-width: 120px;
+      opacity: 1;
+      margin-left: 0;
+    }
+  }
   @media (max-width: 600px) {
     /* Pill is always absolute on mobile — same position type in both states means
        every other property (width, top, padding, gap, radius) interpolates smoothly. */

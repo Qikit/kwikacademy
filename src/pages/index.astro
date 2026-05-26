@@ -20,36 +20,42 @@ import Manifesto from '../components/home/Manifesto.astro';
 </BaseLayout>
 
 <script>
-  // reveal-on-scroll
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
+  // Re-runs on every ClientRouter swap so newly-inserted `.reveal` nodes get observed.
+  function initReveal() {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
         }
-      }
-    },
-    { threshold: 0.12 },
-  );
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      },
+      { threshold: 0.12 },
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  }
+  document.addEventListener('astro:page-load', initReveal);
 
-  // gentle pointer parallax on the aurora blobs
-  const mq = matchMedia('(prefers-reduced-motion: reduce)');
-  if (!mq.matches) {
-    const blobs = Array.from(document.querySelectorAll<HTMLElement>('.blobs .b'));
-    let raf = 0;
-    window.addEventListener('pointermove', (ev) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const dx = (ev.clientX / window.innerWidth - 0.5) * 2;
-        const dy = (ev.clientY / window.innerHeight - 0.5) * 2;
-        blobs.forEach((b, i) => {
-          const k = (i + 1) * 8;
-          b.style.translate = `${dx * k}px ${dy * k}px`;
+  // Parallax target is the persisted AuroraBlobs — bind once on window.
+  if (!(window as unknown as { __kwikParallax?: boolean }).__kwikParallax) {
+    (window as unknown as { __kwikParallax?: boolean }).__kwikParallax = true;
+    const mq = matchMedia('(prefers-reduced-motion: reduce)');
+    if (!mq.matches) {
+      let raf = 0;
+      window.addEventListener('pointermove', (ev) => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const blobs = document.querySelectorAll<HTMLElement>('.blobs .b');
+          const dx = (ev.clientX / window.innerWidth - 0.5) * 2;
+          const dy = (ev.clientY / window.innerHeight - 0.5) * 2;
+          blobs.forEach((b, i) => {
+            const k = (i + 1) * 8;
+            b.style.translate = `${dx * k}px ${dy * k}px`;
+          });
+          raf = 0;
         });
-        raf = 0;
       });
-    });
+    }
   }
 </script>

@@ -1,0 +1,101 @@
+{
+  "course": "english",
+  "lesson": "english-advanced-grammar",
+  "title": "Advanced Grammar — правила в контексте",
+  "description": "Выбери правильную форму или конструкцию. Inversion, cleft, relative, participle, gerund/infinitive, causative, subjunctive, wish, linkers.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Never ___ such a beautiful sunset.",
+        "options": ["I have seen", "have I seen", "I saw", "did I saw"],
+        "correctIndex": 1,
+        "explain": "После negative adverb «Never» в начале — обязательная инверсия: auxiliary + subject. «Never have I seen…» Без инверсии — нарушение."
+      },
+      {
+        "prompt": "Hardly ___ when the phone rang.",
+        "options": ["I had arrived", "had I arrived", "I arrived", "did I arrive"],
+        "correctIndex": 1,
+        "explain": "Hardly … when — конструкция последовательности. После Hardly — инверсия Past Perfect: «Hardly had I arrived when…»"
+      },
+      {
+        "prompt": "It ___ John who broke the printer.",
+        "options": ["is", "are", "was", "were"],
+        "correctIndex": 2,
+        "explain": "It-cleft в прошедшем: «It was John who…». «It was» — стандартная форма для выделения деятеля или времени в прошлом."
+      },
+      {
+        "prompt": "What I really need ___ a holiday.",
+        "options": ["are", "is", "have", "do"],
+        "correctIndex": 1,
+        "explain": "What-cleft: «What I need IS a holiday». Глагол be согласуется с тем, что после него — здесь a holiday (единственное число)."
+      },
+      {
+        "prompt": "My brother, ___ lives in New York, is a lawyer.",
+        "options": ["that", "who", "which", "whose"],
+        "correctIndex": 1,
+        "explain": "Non-defining relative clause (с запятыми) о человеке — только who. «That» в non-defining недопустим."
+      },
+      {
+        "prompt": "The book ___ I bought yesterday is great.",
+        "options": ["what", "who", "that", "whose"],
+        "correctIndex": 2,
+        "explain": "Defining relative clause о вещи — that (или which). «What» как relative pronoun — типичная ошибка русскоязычных, недопустимо."
+      },
+      {
+        "prompt": "___ the report, she went home.",
+        "options": ["Finishing", "Having finished", "Finish", "To finish"],
+        "correctIndex": 1,
+        "explain": "Perfect participle (Having + V3) — последовательность действий: сначала закончила отчёт, потом ушла. «Finishing» звучало бы как одновременное действие."
+      },
+      {
+        "prompt": "I really enjoy ___ on the weekends.",
+        "options": ["to swim", "swim", "swimming", "swam"],
+        "correctIndex": 2,
+        "explain": "Enjoy — глагол из группы «только -ing». «Enjoy to swim» — типовая ошибка."
+      },
+      {
+        "prompt": "He stopped ___ a cigarette and then continued walking.",
+        "options": ["smoking", "to smoke", "smoke", "smoked"],
+        "correctIndex": 1,
+        "explain": "Stop + to V = остановился, чтобы сделать. Здесь он остановился, чтобы покурить, и потом пошёл дальше. Stop + smoking значило бы «бросил курить»."
+      },
+      {
+        "prompt": "I had my hair ___ at the new salon.",
+        "options": ["cut", "to cut", "cutting", "cuts"],
+        "correctIndex": 0,
+        "explain": "Causative have something done: have + object + V3 (past participle). «I had my hair cut» — парикмахер постриг. Cut — это и V1, и V3 (неправильный глагол с одинаковыми формами)."
+      },
+      {
+        "prompt": "The committee requires that every member ___ at the meeting.",
+        "options": ["is", "be", "will be", "was"],
+        "correctIndex": 1,
+        "explain": "Mandative subjunctive после require: that + subject + bare verb (be, не is). То же правило для suggest, recommend, insist, demand."
+      },
+      {
+        "prompt": "I wish I ___ speak French — it would help on this trip.",
+        "options": ["can", "could", "will", "would"],
+        "correctIndex": 1,
+        "explain": "wish + could = жаль, что не умею. «Can» нельзя — после wish глагол сдвигается в прошлое для дистанции от реальности."
+      },
+      {
+        "prompt": "___ the heavy rain, we still went out for a walk.",
+        "options": ["Despite of", "Despite", "Although", "Though"],
+        "correctIndex": 1,
+        "explain": "Despite + noun («the rain»). «Despite of» — НЕВЕРНО (несуществующая конструкция). Although требует целое предложение (S + V)."
+      },
+      {
+        "prompt": "Sales dropped sharply this quarter. ___, we had to cut costs.",
+        "options": ["Although", "Despite", "Consequently", "However"],
+        "correctIndex": 2,
+        "explain": "Consequently — указатель следствия. Падение продаж → результат: сокращение расходов. However дал бы контраст, что нелогично здесь."
+      },
+      {
+        "prompt": "Only then ___ what had really happened.",
+        "options": ["I understood", "did I understand", "I did understand", "had I understood"],
+        "correctIndex": 1,
+        "explain": "После «Only then» в начале — обязательная инверсия с do/does/did, если нет другого вспомогательного. «Only then did I understand»."
+      }
+    ]
+  }
+}

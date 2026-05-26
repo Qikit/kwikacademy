@@ -1,0 +1,116 @@
+{
+  "course": "english",
+  "lesson": "english-advanced-grammar",
+  "title": "Gerund / Infinitive / Both",
+  "description": "Распредели глаголы: после какого нужен только -ing, после какого только to-V, а после какого допустимы обе формы (со сменой смысла или без).",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "gerund", "label": "Только -ing (gerund)" },
+      { "id": "infinitive", "label": "Только to + V (infinitive)" },
+      { "id": "both", "label": "Both (обе формы)" }
+    ],
+    "items": [
+      {
+        "text": "enjoy",
+        "category": "gerund",
+        "explain": "Только -ing. «I enjoy swimming.» «I enjoy to swim» — типичная ошибка русскоязычных."
+      },
+      {
+        "text": "avoid",
+        "category": "gerund",
+        "explain": "Только -ing. «She avoided answering the question.»"
+      },
+      {
+        "text": "decide",
+        "category": "infinitive",
+        "explain": "Только to-V. «I decided to leave.» После decide не бывает -ing."
+      },
+      {
+        "text": "agree",
+        "category": "infinitive",
+        "explain": "Только to-V. «She agreed to help us.» «Agreed helping» — неверно."
+      },
+      {
+        "text": "stop",
+        "category": "both",
+        "explain": "Both со сменой смысла. Stop smoking = бросил курить. Stop to smoke = остановился, чтобы покурить."
+      },
+      {
+        "text": "suggest",
+        "category": "gerund",
+        "explain": "Только -ing (или that-clause). «I suggested going to the cinema.» «I suggested him to go» — НЕВЕРНО."
+      },
+      {
+        "text": "promise",
+        "category": "infinitive",
+        "explain": "Только to-V. «He promised to call.» Promise всегда требует to-V."
+      },
+      {
+        "text": "finish",
+        "category": "gerund",
+        "explain": "Только -ing. «I finished writing the report.»"
+      },
+      {
+        "text": "like",
+        "category": "both",
+        "explain": "Both без смены смысла. «I like swimming» = «I like to swim». -ing звучит чуть более «общее»."
+      },
+      {
+        "text": "remember",
+        "category": "both",
+        "explain": "Both со сменой смысла. Remember locking the door = помню, что закрыл. Remember to lock = не забудь закрыть."
+      },
+      {
+        "text": "mind",
+        "category": "gerund",
+        "explain": "Только -ing. «Do you mind opening the window?» «Mind to open» — неверно."
+      },
+      {
+        "text": "hope",
+        "category": "infinitive",
+        "explain": "Только to-V. «I hope to see you soon.» После hope — только to-V."
+      },
+      {
+        "text": "begin",
+        "category": "both",
+        "explain": "Both без смены смысла. «It began raining» = «It began to rain». Та же группа, что start, continue, prefer."
+      },
+      {
+        "text": "consider",
+        "category": "gerund",
+        "explain": "Только -ing. «I'm considering moving abroad.» «Consider to move» — неверно."
+      },
+      {
+        "text": "manage",
+        "category": "infinitive",
+        "explain": "Только to-V. «She managed to finish on time.» Manage всегда с to-V."
+      },
+      {
+        "text": "try",
+        "category": "both",
+        "explain": "Both со сменой смысла. Try restarting the computer = попробуй вариант. Try to open the file = пытаться сделать."
+      },
+      {
+        "text": "admit",
+        "category": "gerund",
+        "explain": "Только -ing. «He admitted breaking the window.»"
+      },
+      {
+        "text": "refuse",
+        "category": "infinitive",
+        "explain": "Только to-V. «She refused to answer.» Refuse + V-ing неверно."
+      },
+      {
+        "text": "regret",
+        "category": "both",
+        "explain": "Both со сменой смысла. Regret saying that = сожалею о сказанном. Regret to inform = с сожалением сообщаю."
+      },
+      {
+        "text": "afford",
+        "category": "infinitive",
+        "explain": "Только to-V. «We can't afford to lose this client.»"
+      }
+    ]
+  }
+}

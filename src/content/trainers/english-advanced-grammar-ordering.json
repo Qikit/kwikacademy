@@ -1,0 +1,71 @@
+{
+  "course": "english",
+  "lesson": "english-advanced-grammar",
+  "title": "Собери предложение с Advanced-конструкцией",
+  "description": "Расставь слова в правильном порядке. Особое внимание — инверсии, cleft, participle и causative.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["I", "did", "Only", "then", "understand"],
+        "answer": ["Only", "then", "did", "I", "understand"],
+        "translation": "Только тогда я понял.",
+        "explain": "После «Only then» в начале — инверсия с do/does/did, если нет другого вспомогательного. «Only then did I understand»."
+      },
+      {
+        "words": ["Never", "seen", "such", "have", "I", "a", "sunset"],
+        "answer": ["Never", "have", "I", "seen", "such", "a", "sunset"],
+        "translation": "Никогда я не видел такого заката.",
+        "explain": "После Never — инверсия Present Perfect: auxiliary + subject + V3."
+      },
+      {
+        "words": ["had", "I", "Hardly", "the", "rang", "phone", "when", "arrived"],
+        "answer": ["Hardly", "had", "I", "arrived", "when", "the", "phone", "rang"],
+        "translation": "Едва я приехал, как зазвонил телефон.",
+        "explain": "Hardly … when: инверсия Past Perfect в первой части (had I arrived), Past Simple во второй (the phone rang)."
+      },
+      {
+        "words": ["who", "It", "the", "broke", "John", "vase", "was"],
+        "answer": ["It", "was", "John", "who", "broke", "the", "vase"],
+        "translation": "Это именно Джон разбил вазу.",
+        "explain": "It-cleft для выделения деятеля: It + was + [фокус] + who + остальное. Для людей — who, не that."
+      },
+      {
+        "words": ["I", "is", "a", "What", "coffee", "need"],
+        "answer": ["What", "I", "need", "is", "a", "coffee"],
+        "translation": "Что мне нужно — это кофе.",
+        "explain": "What-cleft: What + clause (I need) + is + [фокус] (a coffee). Подчёркивает предмет нужды."
+      },
+      {
+        "words": ["she", "Having", "office", "left", "the", "the", "finished", "report"],
+        "answer": ["Having", "finished", "the", "report", "she", "left", "the", "office"],
+        "translation": "Закончив отчёт, она ушла из офиса.",
+        "explain": "Perfect participle clause: Having + V3 в начале = последовательность действий. Подлежащее главного (she) совпадает с действующим лицом причастного оборота."
+      },
+      {
+        "words": ["hair", "cut", "had", "my", "I", "yesterday"],
+        "answer": ["I", "had", "my", "hair", "cut", "yesterday"],
+        "translation": "Я постригся вчера.",
+        "explain": "Causative have something done: I + had + object (my hair) + V3 (cut). Парикмахер постриг, не сам."
+      },
+      {
+        "words": ["be", "I", "more", "that", "he", "suggest", "careful"],
+        "answer": ["I", "suggest", "that", "he", "be", "more", "careful"],
+        "translation": "Я предлагаю, чтобы он был более внимательным.",
+        "explain": "Mandative subjunctive после suggest: that + subject + bare verb (be, не is). Классический формальный шаблон."
+      },
+      {
+        "words": ["the", "Despite", "out", "we", "went", "rain"],
+        "answer": ["Despite", "the", "rain", "we", "went", "out"],
+        "translation": "Несмотря на дождь, мы вышли.",
+        "explain": "Despite + noun (the rain). «Despite of» — НЕВЕРНО. С существительным работают despite и in spite of."
+      },
+      {
+        "words": ["could", "I", "I", "speak", "wish", "French"],
+        "answer": ["I", "wish", "I", "could", "speak", "French"],
+        "translation": "Жаль, что я не говорю по-французски.",
+        "explain": "wish + could = жаль, что не умею. После wish глагол сдвигается в прошлое — could вместо can."
+      }
+    ]
+  }
+}

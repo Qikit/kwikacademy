@@ -1,0 +1,82 @@
+{
+  "course": "english",
+  "lesson": "english-advanced-grammar",
+  "title": "Впиши правильную форму",
+  "description": "Inversion, gerund/infinitive, causative, subjunctive, linkers. Где нужно — несколько слов в один пропуск.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Never ___ (see) such a beautiful sunset in my life.",
+        "answers": ["have I seen"],
+        "explain": "После Never в начале — инверсия: auxiliary + subject + V3. «Never have I seen» (Present Perfect).",
+        "hint": "инверсия + Present Perfect"
+      },
+      {
+        "text": "Hardly ___ (arrive) when the phone started ringing.",
+        "answers": ["had I arrived"],
+        "explain": "Hardly … when — инверсия Past Perfect: «Hardly had I arrived». Второе действие в Past Simple (started)."
+      },
+      {
+        "text": "It ___ (be) on Saturday that we finally met.",
+        "answers": ["was"],
+        "explain": "It-cleft: «It was on Saturday that…» — выделяем обстоятельство времени в прошлом."
+      },
+      {
+        "text": "What I really need ___ (be) a long holiday.",
+        "answers": ["is"],
+        "explain": "What-cleft: глагол be согласуется с тем, что после него. «A long holiday» — единственное число → is."
+      },
+      {
+        "text": "My laptop, ___ I bought last year, is already broken.",
+        "answers": ["which"],
+        "explain": "Non-defining relative clause (с запятыми) о вещи — which. «That» в non-defining недопустим."
+      },
+      {
+        "text": "I enjoy ___ (swim) early in the morning.",
+        "answers": ["swimming"],
+        "explain": "Enjoy — глагол из группы «только -ing». «Enjoy to swim» — типовая ошибка."
+      },
+      {
+        "text": "She decided ___ (leave) the company after ten years.",
+        "answers": ["to leave"],
+        "explain": "Decide — глагол из группы «только to-V». После decide не бывает -ing формы."
+      },
+      {
+        "text": "He stopped ___ (smoke) two years ago and feels much better now.",
+        "answers": ["smoking"],
+        "explain": "Stop + -ing = бросил делать. «Stop to smoke» значило бы «остановился, чтобы покурить»."
+      },
+      {
+        "text": "Remember ___ (lock) the door before you leave.",
+        "answers": ["to lock"],
+        "explain": "Remember + to V = напоминание о будущем действии. «Remember locking» значило бы «помню, что закрыл»."
+      },
+      {
+        "text": "I had my car ___ (repair) at the new garage last week.",
+        "answers": ["repaired"],
+        "explain": "Causative have something done: have + object + V3. Машину чинил мастер, не сам говорящий."
+      },
+      {
+        "text": "It is essential that every team member ___ (be) on time for the meeting.",
+        "answers": ["be"],
+        "explain": "Mandative subjunctive после «it is essential that» — bare verb (be), не is/are. То же после suggest, recommend, require."
+      },
+      {
+        "text": "I wish I ___ (can) speak Spanish fluently.",
+        "answers": ["could"],
+        "explain": "wish + could = жаль, что не умею. После wish глагол сдвигается в прошлое для дистанции от реальности."
+      },
+      {
+        "text": "___ the heavy traffic, we managed to arrive on time.",
+        "answers": ["Despite", "In spite of"],
+        "explain": "Despite или in spite of + noun. «Despite of» — НЕВЕРНО. Although тут не подойдёт — после него нужен clause (S + V), а здесь существительное."
+      },
+      {
+        "text": "The plan looked risky on paper. ___, it turned out to work perfectly.",
+        "answers": ["However", "Nevertheless", "Nonetheless"],
+        "explain": "Контраст в начале нового предложения. However / nevertheless / nonetheless — формальные линкеры контраста."
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "course": "english",
+  "lesson": "english-advanced-grammar",
+  "title": "Конструкция → функция",
+  "description": "Подбери Advanced-конструкцию к тому, для чего она нужна.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "Эмфаза через инверсию: «Never have I seen…»",
+        "right": "Inversion после negative adverb",
+        "explain": "После Never / Rarely / Hardly / Only — инверсия вспомогательного и подлежащего, как в вопросе."
+      },
+      {
+        "left": "«It was John who broke the vase» — выделить деятеля",
+        "right": "It-cleft",
+        "explain": "It + be + [фокус] + who/that — выделяет один элемент: подлежащее, дополнение, обстоятельство."
+      },
+      {
+        "left": "«What I need is a coffee» — выделить объект потребности",
+        "right": "What-cleft",
+        "explain": "What + clause + is/was + [фокус]. Подчёркивает действие или предмет действия."
+      },
+      {
+        "left": "«The book that I bought» — сужает значение, без запятых",
+        "right": "Defining relative clause",
+        "explain": "Defining уточняет, о каком именно объекте речь. Without запятой, можно опустить «that», если объект."
+      },
+      {
+        "left": "«My laptop, which I bought last year, is broken» — дополнительная информация",
+        "right": "Non-defining relative clause",
+        "explain": "С запятыми. Уточнение, которое можно убрать без потери основного смысла. That не используется."
+      },
+      {
+        "left": "«The man standing there» — сокращённое придаточное",
+        "right": "Reduced relative clause",
+        "explain": "= who is standing there. -ing сжимает активное придаточное; V3 — пассивное."
+      },
+      {
+        "left": "«Walking down the street, I saw a friend» — одновременное действие",
+        "right": "Present participle clause",
+        "explain": "-ing в начале = while I was walking. Подлежащее главного и причастного должно совпадать."
+      },
+      {
+        "left": "«Having finished the work, she left» — последовательность",
+        "right": "Perfect participle clause",
+        "explain": "Having + V3 = после того как закончила. Подчёркивает: одно действие закончилось до другого."
+      },
+      {
+        "left": "«I had my hair cut» — действие чужими руками",
+        "right": "Causative have something done",
+        "explain": "Have + object + V3. Парикмахер постриг — не сам. Get something done — менее формальный вариант."
+      },
+      {
+        "left": "«I suggest that he be more careful» — формальное предписание",
+        "right": "Mandative subjunctive",
+        "explain": "После suggest, recommend, insist, require — that + subject + bare verb (be, не is)."
+      },
+      {
+        "left": "«I wish I could speak French» — отсутствие умения",
+        "right": "wish + could",
+        "explain": "wish + could = жаль, что не умею. Отдельный тип wish — про способность, не про сожаление."
+      },
+      {
+        "left": "«Despite the rain, we went out» — контраст",
+        "right": "Despite / in spite of + noun",
+        "explain": "Despite / in spite of требуют существительное или -ing. С полным предложением — although / even though."
+      },
+      {
+        "left": "«It would appear that the error is a typo» — смягчение утверждения",
+        "right": "Hedging",
+        "explain": "В академическом и деловом письме hedging убирает категоричность — «appears», «might», «seems»."
+      },
+      {
+        "left": "«To sum up, the project succeeded» — закрывающий маркер",
+        "right": "Discourse marker (заключение)",
+        "explain": "To sum up / in conclusion / all in all — структурные маркеры, которые ведут читателя по аргументу."
+      }
+    ]
+  }
+}

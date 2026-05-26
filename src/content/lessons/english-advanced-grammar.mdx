@@ -1,13 +1,524 @@
 ---
 course: english
 order: 21
-phase: "Фаза 2 · Профессиональный английский"
-title: "Advanced Grammar"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Продвинутая грамматика — инверсия, эмфаза, сложные конструкции."
-placeholder: true
-tags: [english]
+phase: "Фаза 2 · Рабочий английский"
+title: "Advanced Grammar — продвинутая грамматика"
+eyebrow: "Грамматика · уровень B2-C1"
+readingMinutes: 30
+summary: "Inversion, cleft sentences, relative clauses глубоко, participles, gerund vs infinitive, causative, subjunctive, discourse markers — всё, что отличает B1 от C1."
+tags: [advanced, grammar, B2, C1]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Advanced Grammar» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Scale from '../../components/lesson/Scale.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем эта тема
+
+На уровне B1 можно объяснить почти любую бытовую мысль — времена, модальные глаголы, базовые условные. Но как только речь идёт о письме посерьёзнее (отчёт, презентация, переговоры, статья, эссе) — становится тесно. Все предложения начинают выглядеть одинаково: «I think that…», «There is…», «If you…». Мысль доходит, но звучит плоско, без расстановки акцентов.
+
+Advanced Grammar — это не про «более правильный» английский. Это про инструменты выразительности. Инверсия делает фразу драматичной. Cleft-конструкции выделяют то, что важно, в начало. Reduced relative clauses сжимают рыхлый текст. Participle clauses позволяют связывать две мысли без союза. Discourse markers ведут читателя по аргументу. Hedging смягчает категоричность там, где это нужно. Знать всё это — значит уметь сказать одну и ту же вещь пятью разными способами и выбрать подходящий по контексту.
+
+Этот урок — сборник десяти таких групп. Они не связаны между собой одной формулой: каждая решает свою задачу. Поэтому подход — не «запомнить правило», а «понять, для чего инструмент, и научиться его узнавать в чужом тексте». Активное использование приходит позже — через много повторений в письме.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Advanced Grammar — это не «правильнее», а «точнее и эффектнее». Все эти конструкции почти всегда можно переписать проще: «Only then did I understand» = «I understood only then», «It was John who broke the vase» = «John broke the vase». Разница — в акценте, регистре и плотности. Используешь — когда хочешь подчеркнуть, выделить, связать, формализовать. Не используешь — когда обычный порядок слов делает работу без потерь. Главная ошибка на B2 — пихать конструкции туда, где они только утяжеляют текст.
+</Callout>
+
+## 3. Что входит в урок
+
+| Группа | Что это | Где работает лучше всего |
+| --- | --- | --- |
+| **Inversion** | обратный порядок после negative adverb | формальное письмо, эмфаза |
+| **Cleft sentences** | выделение через it / what | презентация, эссе |
+| **Relative clauses** | who / which / that / whose глубоко | любой текст |
+| **Participle clauses** | связь без союза через -ing / -ed | плотный нарратив |
+| **Gerund vs Infinitive** | выбор формы после глагола | разговор и письмо |
+| **Causative have / get** | действие чужими руками | бытовой и деловой |
+| **Subjunctive** | be / were в формальных конструкциях | формальный регистр |
+| **Wish / If only** | сожаление, раздражение | разговор и эссе |
+| **Formal linkers** | however / despite / nonetheless | деловой и академический |
+| **Discourse markers / hedging** | связки и смягчение | презентация, переговоры |
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Русский тоже умеет инверсию ради эмфазы — «Только тогда я понял», «Никогда раньше такого не видел», «Не успел я войти, как…». Английский делает то же, только формальнее и обязательно с грамматическим маркером — инверсией вспомогательного глагола. Поэтому при переводе таких русских конструкций нельзя оставлять прямой порядок: «Only then I understood» — грамматически нарушено, читается странно. Нужно «Only then did I understand».">
+  <div slot="ru">
+    <strong>«Только тогда я понял».</strong> → Only then did I understand.<br/>
+    <strong>«Никогда раньше я не видел такого».</strong> → Never before had I seen anything like it.<br/>
+    <strong>«Не только она поёт, но и танцует».</strong> → Not only does she sing, but she also dances.<br/>
+    <strong>«Едва я вошёл, как зазвонил телефон».</strong> → Hardly had I entered when the phone rang.<br/>
+    В русском маркер — порядок слов и интонация. В английском — порядок слов плюс инверсия вспомогательного.
+  </div>
+  <div slot="en">
+    <strong>«Это именно Джон разбил вазу».</strong> → It was John who broke the vase.<br/>
+    <strong>«Что мне нужно — это кофе».</strong> → What I need is a coffee.<br/>
+    <strong>«Я постригся».</strong> (в парикмахерской) → I had my hair cut.<br/>
+    <strong>«Жаль, что я не знал».</strong> → I wish I had known.<br/>
+    Каждый русский акцент имеет английский шаблон — выбор зависит от того, что именно выделяешь.
+  </div>
+</AnalogyBox>
+
+## 5. Регистр конструкций
+
+Не все Advanced-конструкции уместны везде. Часть — строго формальные (письмо, презентация, отчёт), часть — нейтральные, часть — нормальные и в разговоре.
+
+<Scale
+  axis="Где какие конструкции живут"
+  leftLabel="Разговор"
+  rightLabel="Формально"
+  items={[
+    { position: 8, label: "Разговор", note: "wish, gerund/infinitive, causative get, basic relative clauses" },
+    { position: 50, label: "Нейтрально", note: "cleft (it-cleft, what-cleft), reduced relatives, participle clauses, formal linkers (however, despite)" },
+    { position: 92, label: "Формально", note: "inversion после negative adverbs, subjunctive (I suggest he be), hedging (it would appear that)" },
+  ]}
+/>
+
+## 6. Группы конструкций
+
+### 6.1 Inversion — формальная эмфаза
+
+После negative или limiting adverb в начале предложения порядок слов становится как в вопросе: **adverb + auxiliary + subject + verb**.
+
+<RuleList rules={[
+  "<strong>Триггеры инверсии.</strong> Never, Rarely, Seldom, Hardly, Scarcely, Barely, Not only, Only then, Only after, Only when, Little, Nowhere, No sooner, On no account, Under no circumstances.",
+  "<strong>Формула.</strong> Negative adverb + auxiliary verb + subject + main verb. Если в обычном предложении нет вспомогательного — берём do/does/did. <em>I rarely see her → Rarely do I see her.</em>",
+  "<strong>Hardly … when / No sooner … than.</strong> Конструкции для двух последовательных событий: <em>Hardly had I arrived when the phone rang.</em> / <em>No sooner had I sat down than the lecture began.</em>",
+  "<strong>Not only … but also.</strong> Инверсия в первой части, обычный порядок во второй: <em>Not only does she sing, but she also dances.</em>",
+  "<strong>Регистр.</strong> Инверсия — формальная, литературная, ораторская. В обычном разговоре звучит вычурно. Уместна в эссе, презентации, художественной речи.",
+]} />
+
+### 6.2 Cleft sentences — выделение
+
+Cleft («расщеплённое» предложение) выносит важную часть в фокус через служебную оболочку. Два главных типа — it-cleft и what-cleft.
+
+<RuleList rules={[
+  "<strong>It-cleft: It + be + [выделяемое] + who/that + остальное.</strong> Подчёркивает один элемент. <em>It was John who broke the vase.</em> (не Питер, не Мария — именно Джон)",
+  "<strong>It-cleft работает для любого элемента.</strong> Подлежащее, дополнение, обстоятельство времени, места, причины. <em>It was yesterday that I saw her. / It was in Paris that we met.</em>",
+  "<strong>What-cleft: What + clause + is/was + [выделяемое].</strong> Подчёркивает действие или предмет действия. <em>What I need is a coffee. / What he did was leave without saying goodbye.</em>",
+  "<strong>What-cleft с глаголом — без «to».</strong> <em>What I want to do is travel.</em> (не «to travel»)",
+  "<strong>Где использовать.</strong> Письмо, презентация, эссе — там, где нужно сделать паузу и направить внимание. В быстром разговоре редко.",
+]} />
+
+### 6.3 Relative clauses — глубоко
+
+Relative clause — придаточное, описывающее существительное: «the book **that I bought**». Главная развилка — defining vs non-defining.
+
+<RuleList rules={[
+  "<strong>Defining (без запятых) — сужает значение.</strong> Без него непонятно, о чём речь. <em>The book that I bought yesterday is great.</em> (какой именно book)",
+  "<strong>Non-defining (с запятыми) — добавляет информацию.</strong> Можно убрать без потери смысла. <em>My laptop, which I bought last year, is broken.</em>",
+  "<strong>That нельзя в non-defining.</strong> Только who/which. <em>My brother, who lives in NY...</em> — нельзя «that lives».",
+  "<strong>Defining: who/which/that, можно опустить если объект.</strong> <em>The book (that) I bought.</em> Если местоимение — подлежащее придаточного, опустить нельзя: <em>The man who called me.</em>",
+  "<strong>Whom — формальный вариант who в роли дополнения.</strong> <em>The candidate whom we interviewed yesterday was strong.</em> В разговорной речи обычно who или вообще опускается.",
+  "<strong>Whose — притяжательное для людей и вещей.</strong> <em>The author whose book I read. / A company whose policies are unclear.</em>",
+  "<strong>Where / when / why — для места, времени, причины.</strong> <em>The hotel where we stayed. / The day when we met. / The reason why she left.</em>",
+  "<strong>Reduced relative clauses — сжатие через -ing или -ed.</strong> <em>The man standing there = who is standing there. / The book written by her = which was written by her.</em>",
+]} />
+
+### 6.4 Participle clauses — связь без союза
+
+Participle (-ing или perfect participle having + V3) в начале предложения связывает два события одним подлежащим.
+
+<RuleList rules={[
+  "<strong>Present participle (-ing) — одновременное действие.</strong> <em>Walking down the street, I saw an old friend.</em> = While I was walking…",
+  "<strong>Perfect participle (having + V3) — последовательность.</strong> <em>Having finished the work, she left the office.</em> = After she had finished…",
+  "<strong>Past participle (-ed / V3) — пассивный смысл.</strong> <em>Built in 1850, the house needs renovation.</em> = The house, which was built in 1850…",
+  "<strong>Подлежащее главного и причастного предложения должно совпадать.</strong> Иначе — dangling participle, классическая ошибка.",
+  "<strong>Dangling participle — типовой провал.</strong> <em>Walking down the street, the rain started.</em> — грамматически дождь walks. Правильно: <em>Walking down the street, I felt the rain start.</em>",
+]} />
+
+### 6.5 Gerund vs Infinitive — после каких глаголов
+
+Многие глаголы английского требуют после себя строго -ing или строго to-V. Универсального правила нет — это запоминается списком.
+
+<RuleList rules={[
+  "<strong>Только -ing.</strong> enjoy, avoid, finish, mind, suggest, recommend, consider, deny, admit, miss, postpone, practice, can't help, keep, give up, look forward to. <em>I enjoy swimming. / I suggested going to the cinema.</em>",
+  "<strong>Только to-V.</strong> agree, decide, hope, plan, refuse, manage, offer, promise, want, would like, expect, learn, afford, fail, pretend, seem, tend. <em>I decided to leave. / She promised to call.</em>",
+  "<strong>Both — тот же смысл.</strong> like, love, hate, prefer, begin, start, continue. <em>I like swimming / I like to swim.</em> Часто -ing — общая любовь к процессу, to-V — конкретный случай.",
+  "<strong>Both — разный смысл.</strong> stop, remember, forget, regret, try, mean, go on. Это самая частая ловушка — нужно знать обе формы и разницу.",
+  "<strong>Used to + V — раньше делал.</strong> <em>I used to smoke.</em> Be used to + Ving — привык делать. <em>I am used to working late.</em> Это разные конструкции, путать нельзя.",
+]} />
+
+#### Both с разным смыслом — детально
+
+| Глагол | + -ing | + to-V |
+| --- | --- | --- |
+| **stop** | бросил делать. *He stopped smoking.* | остановился, чтобы сделать. *He stopped to smoke.* |
+| **remember** | помню, что сделал. *I remember locking the door.* | помни сделать. *Remember to lock the door.* |
+| **forget** | забыл, что делал. *I'll never forget meeting her.* | забыл сделать. *I forgot to call.* |
+| **regret** | сожалею о сделанном. *I regret saying that.* | с сожалением сообщаю. *We regret to inform you…* |
+| **try** | попробуй вариант. *Try restarting the computer.* | пытаться сделать. *I tried to open the file.* |
+| **mean** | подразумевает / влечёт. *This means waiting another hour.* | намереваться. *I meant to call you.* |
+| **go on** | продолжать то же. *She went on talking.* | перейти к следующему. *She went on to explain the next step.* |
+
+### 6.6 Causative have / get — делать чужими руками
+
+Когда действие выполняет не сам говорящий, а кто-то для него. Стандартная путаница: «I cut my hair» (сам себе ножницами) vs «I had my hair cut» (парикмахер постриг).
+
+<RuleList rules={[
+  "<strong>Have + something + V3 (past participle).</strong> Кто-то делает это для меня. <em>I had my hair cut. / She had her car repaired.</em>",
+  "<strong>Get + something + V3.</strong> То же значение, чуть менее формально, чаще в разговоре. <em>I got the car repaired. / We got the kitchen painted last week.</em>",
+  "<strong>Have + someone + V (без to).</strong> Я заставил/попросил человека сделать. <em>I had my brother fix the bike.</em>",
+  "<strong>Get + someone + to V.</strong> Та же логика, но через to-V — убеждение, уговор. <em>I got my brother to fix the bike.</em>",
+  "<strong>Have something done может означать «пострадать от события».</strong> <em>I had my wallet stolen on the bus.</em> (= меня обокрали) Контекст подсказывает, что это не заказное действие.",
+]} />
+
+### 6.7 Subjunctive — формальные конструкции
+
+Subjunctive в современном английском почти вымер, но осталось в нескольких формальных шаблонах. Главный признак — be вместо is/are и were вместо was во всех лицах.
+
+<RuleList rules={[
+  "<strong>Mandative subjunctive после глаголов suggest, recommend, insist, demand, propose, require, request.</strong> <em>I suggest that he be more careful.</em> (не «is»). <em>The committee requires that all members attend.</em>",
+  "<strong>То же — после прилагательных в безличной конструкции.</strong> It is important / essential / necessary / vital that + subject + base verb. <em>It is essential that he arrive on time.</em>",
+  "<strong>Hypothetical were — после if, wish, as if.</strong> <em>If I were you. / I wish I were taller. / He acts as if he were the boss.</em> В формальном письме — только were.",
+  "<strong>Fixed expressions.</strong> Be that as it may, come what may, so be it, suffice it to say, God save the Queen, long live the King.",
+  "<strong>В американском английском mandative subjunctive используется чаще.</strong> Британский часто заменяет на «should»: <em>I suggest that he should be more careful.</em> Оба варианта допустимы.",
+]} />
+
+### 6.8 Wish / If only — глубже
+
+В уроке про conditionals разобраны базовые формы wish. Здесь — нюансы и if only.
+
+<RuleList rules={[
+  "<strong>wish + Past Simple — сожаление о настоящем.</strong> <em>I wish I knew the answer.</em> = жаль, что не знаю.",
+  "<strong>wish + Past Perfect — сожаление о прошлом.</strong> <em>I wish I had studied harder.</em> = жаль, что тогда не учился.",
+  "<strong>wish + would — раздражение или желание изменить чужое поведение.</strong> Только про других, не про себя. <em>I wish you wouldn't smoke in the car.</em>",
+  "<strong>wish + could — отсутствие способности.</strong> <em>I wish I could speak French.</em> = жаль, что не умею.",
+  "<strong>If only — эмфатичнее, чем wish.</strong> Тот же набор форм, но с большей эмоциональной силой. <em>If only I had known earlier!</em>",
+  "<strong>It's (high / about) time + Past Simple.</strong> Похожая конструкция: пора бы давно. <em>It's high time you went home.</em> (а ты всё ещё здесь)",
+]} />
+
+### 6.9 Formal linkers — связки в письме
+
+Базовые связки (and, but, so, because) знает каждый. Формальные нужны там, где важно показать структуру аргумента: контраст, добавление, следствие.
+
+<RuleList rules={[
+  "<strong>Contrast: however, nevertheless, nonetheless, on the other hand.</strong> Ставится в начале предложения с запятой. <em>The plan was risky. However, it worked.</em>",
+  "<strong>Despite / in spite of + noun или -ing form.</strong> Не путать: <em>despite the rain</em> (не «despite of»). <em>In spite of being tired, she finished the report.</em>",
+  "<strong>Although / though / even though + clause.</strong> С глаголом и подлежащим. <em>Although it was raining, we went out.</em> Even though — самая сильная форма.",
+  "<strong>Addition: moreover, furthermore, in addition, additionally.</strong> Все примерно равнозначны, добавляют новый аргумент к предыдущему. <em>The product is cheap. Moreover, it's well-designed.</em>",
+  "<strong>Consequence: consequently, therefore, hence, thus.</strong> Показывают вывод или результат. <em>Sales dropped sharply; consequently, we had to cut costs.</em>",
+  "<strong>Despite of — НЕВЕРНО.</strong> Despite уже без of. In spite — обязательно с of. Это две самые частые ошибки в этой группе.",
+]} />
+
+### 6.10 Discourse markers и hedging
+
+Discourse markers — слова-указатели в речи и письме: «во-первых», «с другой стороны», «короче». Hedging — смягчение категоричности.
+
+<RuleList rules={[
+  "<strong>Структурирование речи.</strong> Firstly / first of all, secondly, finally, on the one hand … on the other hand, to begin with, to sum up, in conclusion, all in all.",
+  "<strong>Дополнение и уточнение.</strong> In other words, that is to say, namely, in particular, especially, for instance, for example.",
+  "<strong>Возврат к теме.</strong> Anyway, as I was saying, going back to, speaking of, by the way (отступление).",
+  "<strong>Hedging — смягчение утверждения.</strong> It seems that, It would appear that, There seems to be, This might suggest that, It is generally believed that, As far as I can tell.",
+  "<strong>Зачем hedging.</strong> В академическом и деловом письме категоричные «X is true» / «Y will happen» воспринимаются как непрофессиональные. Смягчение делает позицию аккуратной — «X appears to be true» / «Y might happen».",
+]} />
+
+## 7. Примеры в действии
+
+### Inversion
+
+<Example ru="Никогда я не видел такого красивого заката.">Never have I seen such a beautiful sunset.</Example>
+<Example ru="Едва она открыла дверь, как зазвонил телефон.">Hardly had she opened the door when the phone rang.</Example>
+<Example ru="Не успел я сесть, как лекция началась.">No sooner had I sat down than the lecture began.</Example>
+<Example ru="Не только она опоздала, но и забыла отчёт.">Not only was she late, but she also forgot the report.</Example>
+<Example ru="Только тогда я понял, что произошло.">Only then did I understand what had happened.</Example>
+<Example ru="Ни при каких обстоятельствах не открывайте эту дверь.">Under no circumstances should you open this door.</Example>
+
+### Cleft sentences
+
+<Example ru="Это именно он сломал принтер.">It was he who broke the printer.</Example>
+<Example ru="Именно в субботу мы наконец встретились.">It was on Saturday that we finally met.</Example>
+<Example ru="Что мне действительно нужно — это отпуск.">What I really need is a holiday.</Example>
+<Example ru="Что он сделал — это вышел, не попрощавшись.">What he did was leave without saying goodbye.</Example>
+
+### Relative clauses
+
+<Example ru="Учитель, который преподаёт нам историю, ушёл на пенсию.">The teacher who teaches us history has retired.</Example>
+<Example ru="Это книга, которую я искал.">This is the book (that) I was looking for.</Example>
+<Example ru="Моя сестра, которая живёт в Лондоне, приедет на выходные.">My sister, who lives in London, is coming for the weekend.</Example>
+<Example ru="Машина, припаркованная снаружи, моя.">The car parked outside is mine.</Example>
+<Example ru="Девушка, стоящая у окна, — моя соседка.">The girl standing by the window is my neighbour.</Example>
+
+### Participle clauses
+
+<Example ru="Идя по парку, я наткнулся на старого друга.">Walking through the park, I ran into an old friend.</Example>
+<Example ru="Закончив отчёт, она пошла домой.">Having finished the report, she went home.</Example>
+<Example ru="Построенный в XIX веке, мост всё ещё в отличном состоянии.">Built in the 19th century, the bridge is still in excellent condition.</Example>
+
+### Gerund vs infinitive
+
+<Example ru="Я бросил курить два года назад.">I stopped smoking two years ago.</Example>
+<Example ru="Он остановился, чтобы прикурить.">He stopped to light a cigarette.</Example>
+<Example ru="Помню, как закрывал дверь.">I remember locking the door.</Example>
+<Example ru="Не забудь закрыть дверь.">Remember to lock the door.</Example>
+
+### Causative
+
+<Example ru="Я постригся вчера.">I had my hair cut yesterday.</Example>
+<Example ru="Мы покрасили кухню на прошлой неделе.">We got the kitchen painted last week.</Example>
+<Example ru="Я попросил брата починить мне велосипед.">I had my brother fix my bike.</Example>
+<Example ru="У меня украли кошелёк в автобусе.">I had my wallet stolen on the bus.</Example>
+
+### Subjunctive и wish
+
+<Example ru="Я предлагаю, чтобы он был более внимательным.">I suggest that he be more careful.</Example>
+<Example ru="Важно, чтобы все пришли вовремя.">It is essential that everyone arrive on time.</Example>
+<Example ru="На твоём месте я бы согласился.">If I were you, I would accept.</Example>
+<Example ru="Жаль, что я не говорю по-французски.">I wish I could speak French.</Example>
+<Example ru="Давно бы тебе пора домой.">It's high time you went home.</Example>
+
+### Linkers и hedging
+
+<Example ru="План был рискованным. Тем не менее, он сработал.">The plan was risky. Nevertheless, it worked.</Example>
+<Example ru="Несмотря на дождь, мы пошли на прогулку.">Despite the rain, we went for a walk.</Example>
+<Example ru="Продажи упали; следовательно, нам пришлось сократить расходы.">Sales dropped; consequently, we had to cut costs.</Example>
+<Example ru="По-видимому, ошибка вызвана опечаткой в конфиге.">It would appear that the error is caused by a typo in the config.</Example>
+
+## 8. Контрасты
+
+<Compare leftLabel="Defining (без запятой)" rightLabel="Non-defining (с запятыми)">
+  <div slot="left">
+    <strong>My brother who lives in New York is a lawyer.</strong><br/>У меня несколько братьев. Этот — тот, который в Нью-Йорке.<br/><br/>
+    <strong>The students who failed the exam will retake it.</strong><br/>Не все студенты, а только провалившие.<br/><br/>
+    Без запятой: придаточное сужает значение, его нельзя убрать.
+  </div>
+  <div slot="right">
+    <strong>My brother, who lives in New York, is a lawyer.</strong><br/>У меня один брат. Кстати, он живёт в Нью-Йорке.<br/><br/>
+    <strong>The students, who failed the exam, will retake it.</strong><br/>Все студенты провалили — теперь все пересдают.<br/><br/>
+    С запятыми: придаточное — дополнительная информация, можно убрать.
+  </div>
+</Compare>
+
+<Compare leftLabel="stop + -ing" rightLabel="stop + to V">
+  <div slot="left">
+    <strong>He stopped smoking last year.</strong><br/>Бросил курить — больше не курит.<br/><br/>
+    <strong>She stopped working at 7 PM.</strong><br/>Закончила работать — выключила компьютер.<br/><br/>
+    -ing означает «прекратил действие, которое делал».
+  </div>
+  <div slot="right">
+    <strong>He stopped to smoke a cigarette.</strong><br/>Остановился, чтобы покурить — действие началось после остановки.<br/><br/>
+    <strong>She stopped to talk to her colleague.</strong><br/>Прервалась, чтобы поговорить.<br/><br/>
+    to-V означает «остановился ради того, чтобы сделать что-то другое».
+  </div>
+</Compare>
+
+<Compare leftLabel="remember + -ing" rightLabel="remember + to V">
+  <div slot="left">
+    <strong>I remember locking the door.</strong><br/>Помню, что закрыл дверь — событие в прошлом.<br/><br/>
+    <strong>I'll never forget meeting her for the first time.</strong><br/>Сохраню в памяти ту встречу.<br/><br/>
+    -ing — воспоминание о прошлом действии.
+  </div>
+  <div slot="right">
+    <strong>Remember to lock the door before you leave.</strong><br/>Не забудь закрыть — действие в будущем.<br/><br/>
+    <strong>Don't forget to call her tomorrow.</strong><br/>Помни сделать.<br/><br/>
+    to-V — напоминание о будущем действии.
+  </div>
+</Compare>
+
+<Compare leftLabel="despite / in spite of + noun" rightLabel="although / even though + clause">
+  <div slot="left">
+    <strong>Despite the rain, we went out.</strong><br/>+ существительное.<br/><br/>
+    <strong>In spite of being tired, she finished the report.</strong><br/>+ -ing (gerund) как существительное.<br/><br/>
+    <strong>Despite the fact that it was raining…</strong><br/>Чтобы поставить целое предложение — через «the fact that».
+  </div>
+  <div slot="right">
+    <strong>Although it was raining, we went out.</strong><br/>+ полное предложение с глаголом.<br/><br/>
+    <strong>Even though she was tired, she finished the report.</strong><br/>Более сильная форма although.<br/><br/>
+    Главное — не сказать «despite it was raining» (грубая ошибка) или «although the rain».
+  </div>
+</Compare>
+
+## 9. Мнемоника
+
+<Callout type="teal" title="Как запомнить инверсию">
+Если предложение начинается с «отрицательного» или ограничительного слова (Never, Hardly, Only, Not only, Rarely, Seldom, Little, No sooner) — дальше **порядок слов как в вопросе**: вспомогательный глагол перед подлежащим. *Never have I seen* — точно так же, как в вопросе *Have you seen?*. Если вспомогательного нет — берём do/does/did. *Rarely do I see her.* = *Do I see her? — Rarely do I.* Эта параллель с вопросом — главный костыль, пока инверсия не закрепилась автоматически.
+</Callout>
+
+## 10. Когда это нужно в жизни
+
+<Callout type="blue" title="Зачем тратить силы на Advanced Grammar">
+В обычном разговоре эти конструкции почти не нужны. Бытовое общение прекрасно живёт на уровне «I think», «There is», «If you want». Но как только дело доходит до письма посерьёзнее — отчёт, презентация, эссе, статья, деловое письмо, — становится видна разница. Текст человека, владеющего только базой, читается монотонно: одинаковые длины фраз, одинаковые конструкции, ноль расстановки акцентов. Текст с инверсиями, cleft и participle clauses звучит как написанный взрослым автором. Не «правильнее», а «зрелее». Эту разницу замечает любой носитель, даже если не может назвать конкретные конструкции. Поэтому Advanced Grammar — это не для разговора, это для письма и подготовленной публичной речи. И именно поэтому её учат отдельно, не на уровне A2-B1.
+</Callout>
+
+## 11. Дерево решений: gerund vs infinitive
+
+<DecisionTree nodes={[
+  { q: "Глагол из списка «только -ing» (enjoy, avoid, finish, mind, suggest, recommend, consider, deny, admit, postpone, practice, can't help)?", yes: "Только -ing. Пример: I enjoy swimming. / She suggested going to the cinema.", no: "к вопросу 2" },
+  { q: "Глагол из списка «только to-V» (agree, decide, hope, plan, refuse, manage, offer, promise, want, expect, learn, afford, fail, pretend)?", yes: "Только to-V. Пример: I decided to leave. / She promised to call.", no: "к вопросу 3" },
+  { q: "Глагол из группы «both со сменой смысла» (stop, remember, forget, regret, try, mean, go on)?", yes: "Обе формы возможны, но смысл разный. Сверься с таблицей в §6.5. Пример: stop smoking (бросил) vs stop to smoke (остановился чтобы).", no: "к вопросу 4" },
+  { q: "Глагол из группы «both без смены смысла» (like, love, hate, prefer, begin, start, continue)?", yes: "Обе формы возможны, смысл практически тот же. -ing звучит более «общее», to-V — более «конкретное». Пример: I like swimming = I like to swim.", no: "к вопросу 5" },
+  { q: "Это конструкция used to / be used to / get used to?", yes: "used to + V — раньше делал. Be / get used to + Ving — привык / привыкаю делать. Это три разные конструкции, путать их — типовая ошибка.", no: "Перепроверь — возможно, после твоего глагола вообще не нужен другой глагол. Например, после expect идёт не глагол, а someone to do (I expect him to come)." },
+]} />
+
+## 12. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| Despite of the rain, we went out | Despite the rain, we went out | После despite — без of. С of только in spite of. |
+| In spite the rain, we went out | In spite of the rain, we went out | In spite — обязательно с of. Это зеркальная ошибка к предыдущей. |
+| I wish I would have done it | I wish I had done it | После wish про прошлое — Past Perfect (had + V3), не would have. |
+| I suggested him to come | I suggested that he come / I suggested coming | После suggest нельзя «someone to do». Либо that-clause с subjunctive, либо -ing. |
+| I am used to do this every day | I am used to doing this every day | Be used to + Ving (привык). Used to + V — это другая конструкция (раньше делал). |
+| The book what I read was great | The book that / which I read was great | What нельзя как relative pronoun. Только that / which / who / whose / where / when. |
+| Walking down the street, the dog barked at me | Walking down the street, I was barked at by the dog | Dangling participle — собака не walks. Нужно подлежащее, совпадающее с участником причастного оборота. |
+| I had cut my hair (имея в виду парикмахера) | I had my hair cut | Причём порядок слов: have + object + V3. «I had cut my hair» значит «я сам себе постриг». |
+| Hardly I had arrived when the phone rang | Hardly had I arrived when the phone rang | После hardly в начале — обязательная инверсия. |
+| Only then I understood | Only then did I understand | После only then — инверсия с do/does/did, если нет другого вспомогательного. |
+| I enjoy to swim | I enjoy swimming | Enjoy требует -ing. Это глагол из списка «только gerund». |
+| He stopped to smoke when his wife asked him | He stopped smoking when his wife asked him | Бросил курить — stop + -ing. Stop + to V — остановился, чтобы покурить. |
+| Although of the difficulty | Despite the difficulty / Although it was difficult | Although только с clause (S + V). С существительным — только despite / in spite of. |
+| It was John that broken the vase | It was John who broke the vase | В it-cleft для людей — who, не that. И глагол в нормальном виде — broke, не broken. |
+| What I want is to leave immediately the office | What I want is to leave the office immediately | В what-cleft порядок обычный после is. Наречие — в нормальной позиции. |
+
+## 13. Шпаргалка
+
+### Inversion: после какого слова → что инвертируется
+
+| Триггер | Пример инверсии |
+| --- | --- |
+| Never | Never have I seen… |
+| Rarely / Seldom | Rarely do I see her. |
+| Hardly … when | Hardly had I arrived when… |
+| No sooner … than | No sooner had I sat down than… |
+| Not only … but also | Not only does she sing, but… |
+| Only then / Only after / Only when | Only then did I understand. |
+| Little | Little did I know that… |
+| Under no circumstances | Under no circumstances should you… |
+| On no account | On no account must you… |
+
+### Глагол → gerund / infinitive / both
+
+| Группа | Список | Форма |
+| --- | --- | --- |
+| Только -ing | enjoy, avoid, finish, mind, suggest, recommend, consider, deny, admit, miss, postpone, practice, keep, give up, can't help, look forward to | + Ving |
+| Только to-V | agree, decide, hope, plan, refuse, manage, offer, promise, want, would like, expect, learn, afford, fail, pretend, seem, tend | + to V |
+| Both, тот же смысл | like, love, hate, prefer, begin, start, continue | + Ving = + to V |
+| Both, разный смысл | stop, remember, forget, regret, try, mean, go on | сверяться по таблице 6.5 |
+
+### Linker → значение → синтаксис
+
+| Linker | Значение | Что после |
+| --- | --- | --- |
+| however / nevertheless | контраст | , + clause (новое предложение) |
+| despite / in spite of | контраст | + noun / + Ving |
+| although / though / even though | контраст | + clause (S + V) |
+| moreover / furthermore | добавление | , + clause |
+| in addition / additionally | добавление | , + clause |
+| consequently / therefore / hence / thus | следствие | , + clause |
+| firstly / secondly / finally | структура | , + clause |
+| in other words / namely | уточнение | , + clause или noun |
+| to sum up / in conclusion | итог | , + clause |
+
+## 14. Словарь урока
+
+<Vocab items={[
+  { term: "inversion", meaning: "инверсия — обратный порядок слов (вспомогательный перед подлежащим)" },
+  { term: "negative adverb", meaning: "отрицательное наречие (never, rarely, seldom, hardly), триггер инверсии" },
+  { term: "limiting adverb", meaning: "ограничительное наречие (only, little), тоже триггер инверсии" },
+  { term: "cleft sentence", meaning: "расщеплённое предложение — выделение через it / what" },
+  { term: "it-cleft", meaning: "It + be + [фокус] + who/that + остальное" },
+  { term: "what-cleft", meaning: "What + clause + is/was + [фокус]" },
+  { term: "relative clause", meaning: "придаточное определительное, описывающее существительное" },
+  { term: "defining relative clause", meaning: "сужающее придаточное, без запятых" },
+  { term: "non-defining relative clause", meaning: "поясняющее придаточное, с запятыми" },
+  { term: "relative pronoun", meaning: "относительное местоимение: who, which, that, whose, whom" },
+  { term: "whom", meaning: "формальная форма who в роли дополнения" },
+  { term: "whose", meaning: "чей — притяжательное для людей и вещей" },
+  { term: "reduced relative clause", meaning: "сокращённое придаточное через -ing или V3" },
+  { term: "participle clause", meaning: "причастный оборот в начале предложения" },
+  { term: "present participle", meaning: "причастие настоящего времени на -ing" },
+  { term: "perfect participle", meaning: "having + V3, последовательность действий" },
+  { term: "past participle", meaning: "причастие прошедшего времени (V3, пассивный смысл)" },
+  { term: "dangling participle", meaning: "висячее причастие — типовая ошибка, когда подлежащие не совпадают" },
+  { term: "gerund", meaning: "герундий — форма глагола на -ing в роли существительного" },
+  { term: "infinitive", meaning: "инфинитив — форма to + V" },
+  { term: "bare infinitive", meaning: "голый инфинитив — без to" },
+  { term: "causative", meaning: "каузативная конструкция — делать что-то чужими руками" },
+  { term: "have something done", meaning: "каузатив через have — стандартная форма" },
+  { term: "get something done", meaning: "каузатив через get — менее формальная форма" },
+  { term: "subjunctive", meaning: "сослагательное наклонение — be / were в формальных шаблонах" },
+  { term: "mandative subjunctive", meaning: "subjunctive после suggest, recommend, insist, require и т.д." },
+  { term: "hypothetical were", meaning: "were для всех лиц после if / wish / as if" },
+  { term: "wish + Past Simple", meaning: "сожаление о настоящем" },
+  { term: "wish + Past Perfect", meaning: "сожаление о прошлом" },
+  { term: "wish + would", meaning: "раздражение или просьба изменить чужое поведение" },
+  { term: "if only", meaning: "эмфатичный аналог wish" },
+  { term: "it's (high) time", meaning: "пора бы уже — конструкция с Past Simple после неё" },
+  { term: "discourse marker", meaning: "слово-указатель в речи: firstly, however, in conclusion" },
+  { term: "hedging", meaning: "смягчение категоричности утверждения" },
+  { term: "however", meaning: "однако — контраст в начале предложения" },
+  { term: "nevertheless / nonetheless", meaning: "тем не менее — формальный контраст" },
+  { term: "despite / in spite of", meaning: "несмотря на (+ noun / + Ving)" },
+  { term: "although / though / even though", meaning: "хотя (+ clause)" },
+  { term: "moreover / furthermore", meaning: "более того — добавление аргумента" },
+  { term: "consequently / therefore / hence / thus", meaning: "следовательно — указатель следствия" },
+  { term: "firstly / secondly / finally", meaning: "структурные маркеры в письме" },
+  { term: "to sum up / in conclusion", meaning: "подводя итог — закрывающий маркер" },
+  { term: "in other words", meaning: "другими словами — уточнение" },
+  { term: "for instance / for example", meaning: "например — пример" },
+  { term: "it seems that / it appears that", meaning: "по всей видимости — hedging" },
+  { term: "this might suggest that", meaning: "это может означать, что — академическое hedging" },
+  { term: "it is generally believed that", meaning: "принято считать — академический hedging" },
+  { term: "used to + V", meaning: "раньше делал (а сейчас нет)" },
+  { term: "be used to + Ving", meaning: "привык делать (состояние)" },
+  { term: "get used to + Ving", meaning: "привыкаю делать (процесс)" },
+  { term: "fronting", meaning: "вынесение элемента в начало предложения для акцента" },
+]} />
+
+## 15. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Конструкции и формулы</span>
+    <span class="kc-trainer-hint">Запомни шаблоны: инверсия, cleft, causative</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Конструкция → значение</span>
+    <span class="kc-trainer-hint">Соотнеси формулу с её функцией</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Gerund / Infinitive / Both</span>
+    <span class="kc-trainer-hint">Разложи глаголы по трём корзинам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Правила в контексте</span>
+    <span class="kc-trainer-hint">14 вопросов с разбором каждого</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Впиши правильную форму</span>
+    <span class="kc-trainer-hint">Inversion, gerund/infinitive, linkers</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери предложение с инверсией</span>
+    <span class="kc-trainer-hint">Особенно тренируйся на Never / Only then / Hardly</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 16. Источники
+
+- **Carter R., McCarthy M., Cambridge Grammar of English** — Sections on inversion, cleft sentences, participle clauses, formal register.
+- **Hewings M., Advanced Grammar in Use (Cambridge)** — Units 23-34 (relative clauses, participles), Units 53-57 (inversion, cleft).
+- **Swan M., Practical English Usage** — §301-307 (inversion), §130-133 (cleft), §494-500 (relative clauses), §296 (gerund vs infinitive).
+- **Oxford Learner's Dictionaries — Grammar Reference** — oxfordlearnersdictionaries.com/grammar

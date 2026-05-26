@@ -1,0 +1,126 @@
+{
+  "course": "english",
+  "lesson": "english-advanced-grammar",
+  "title": "Advanced Grammar — конструкции",
+  "description": "Шаблоны инверсии, cleft, relative, participle, causative, subjunctive, wish, linkers и hedging — плюс типовые ловушки.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Inversion после negative adverb — формула",
+        "back": "Negative/limiting adverb (Never, Rarely, Hardly, Only then, Not only, No sooner, Little, Under no circumstances) + auxiliary + subject + main verb. Если нет вспомогательного — берём do/does/did. «Never have I seen…», «Rarely do I see her».",
+        "hint": "порядок как в вопросе"
+      },
+      {
+        "front": "Hardly … when / No sooner … than",
+        "back": "Конструкция для двух последовательных событий. «Hardly had I arrived when the phone rang.» / «No sooner had I sat down than the lecture began.» Past Perfect в первой части, Past Simple во второй.",
+        "hint": "едва … как"
+      },
+      {
+        "front": "Not only … but also — инверсия",
+        "back": "Инверсия только в первой части, во второй — обычный порядок. «Not only does she sing, but she also dances.» В первой части — auxiliary + subject + V; во второй — нормальное предложение с also.",
+        "hint": "инверсия в первой части"
+      },
+      {
+        "front": "It-cleft — формула",
+        "back": "It + be + [выделяемое] + who/that + остальное. «It was John who broke the vase.» Выделяет один элемент: подлежащее, дополнение, обстоятельство времени, места, причины. Для людей — who; для всего остального — that.",
+        "hint": "выделение через It was…"
+      },
+      {
+        "front": "What-cleft — формула",
+        "back": "What + clause + is/was + [выделяемое]. «What I need is a coffee.» / «What he did was leave without saying goodbye.» Подчёркивает действие или предмет действия. С глаголом после is — без to.",
+        "hint": "выделение через What…"
+      },
+      {
+        "front": "Defining vs non-defining relative",
+        "back": "Defining (без запятых) сужает значение, его нельзя убрать: «The book that I bought is great». Non-defining (с запятыми) — дополнительная информация, можно убрать: «My laptop, which I bought last year, is broken». В non-defining нельзя «that» — только who/which.",
+        "hint": "запятые меняют смысл"
+      },
+      {
+        "front": "Reduced relative clauses",
+        "back": "Сжатие придаточного через -ing (активный смысл) или V3 (пассивный). «The man standing there» = who is standing. «The book written by her» = which was written. Экономит слова, делает текст плотнее.",
+        "hint": "-ing / V3 вместо who is"
+      },
+      {
+        "front": "Present participle clause",
+        "back": "-ing в начале предложения = одновременное действие. «Walking down the street, I saw an old friend.» = While I was walking, I saw… Подлежащее главного и причастного должно совпадать.",
+        "hint": "одновременно"
+      },
+      {
+        "front": "Perfect participle clause",
+        "back": "Having + V3 в начале = последовательность действий. «Having finished the work, she left the office.» = After she had finished, she left. Подчёркивает: одно действие закончилось, потом другое.",
+        "hint": "сначала … потом"
+      },
+      {
+        "front": "Dangling participle — типовая ошибка",
+        "back": "Если подлежащее главного предложения не совпадает с участником причастного оборота, фраза звучит абсурдно. «Walking down the street, the rain started» — грамматически дождь walks. Правильно: «Walking down the street, I felt the rain start.»",
+        "hint": "подлежащие должны совпадать"
+      },
+      {
+        "front": "Gerund vs infinitive — три группы",
+        "back": "Только -ing: enjoy, avoid, finish, mind, suggest, recommend, consider, deny, admit, postpone, practice. Только to-V: agree, decide, hope, plan, refuse, manage, offer, promise, want, expect. Both со сменой смысла: stop, remember, forget, regret, try, mean. Both без смены: like, love, hate, prefer, begin, start.",
+        "hint": "запоминается списком"
+      },
+      {
+        "front": "stop + -ing vs stop + to V",
+        "back": "Stop smoking = бросил курить (прекратил действие). Stop to smoke = остановился, чтобы покурить (прервал что-то ради другого действия). Самая частая ловушка из «both со сменой смысла».",
+        "hint": "бросил vs остановился чтобы"
+      },
+      {
+        "front": "remember + -ing vs remember + to V",
+        "back": "Remember locking the door = помню, что закрыл (воспоминание о прошлом). Remember to lock the door = не забудь закрыть (напоминание о будущем). Forget работает по тому же принципу.",
+        "hint": "помню что vs помни сделать"
+      },
+      {
+        "front": "Causative have something done",
+        "back": "Have + something + V3. Кто-то делает это для меня. «I had my hair cut» = парикмахер постриг (не я сам). «She had her car repaired.» Get something done — то же значение, чуть менее формально: «I got the car repaired.»",
+        "hint": "делать чужими руками"
+      },
+      {
+        "front": "Causative have someone do",
+        "back": "Have + someone + bare infinitive (без to). «I had my brother fix the bike.» = заставил/попросил брата. Get + someone + to V (с to): «I got my brother to fix the bike.» — оттенок убеждения, уговора.",
+        "hint": "have без to, get с to"
+      },
+      {
+        "front": "Mandative subjunctive",
+        "back": "После suggest, recommend, insist, demand, require, propose, request — that + subject + bare verb (без -s в 3 лице, без is/are). «I suggest that he be more careful.» «It is essential that everyone arrive on time.» В британском часто заменяют на «should».",
+        "hint": "be / arrive вместо is / arrives"
+      },
+      {
+        "front": "Hypothetical were",
+        "back": "После if, wish, as if — were для всех лиц в формальной речи. «If I were you.» / «I wish I were taller.» / «He acts as if he were the boss.» В разговоре допустимо was, но were — норма.",
+        "hint": "were для всех лиц"
+      },
+      {
+        "front": "wish + could — отсутствие способности",
+        "back": "I wish I could speak French = жаль, что не умею. Это отдельный тип wish: не сожаление о настоящем (had), не о прошлом (had + V3), не раздражение (would), а отсутствие умения / возможности.",
+        "hint": "жаль что не умею"
+      },
+      {
+        "front": "It's high time + Past Simple",
+        "back": "«It's high time you went home» = давно пора домой. После «it's (high/about) time» — Past Simple, даже если речь про настоящее. Past здесь — сдвиг для дистанции от реальности, как в Second conditional.",
+        "hint": "пора уже"
+      },
+      {
+        "front": "Despite vs although",
+        "back": "Despite / in spite of + noun или -ing: «Despite the rain» / «In spite of being tired». Although / though / even though + clause (S + V): «Although it was raining». «Despite of» — НЕВЕРНО. «Although the rain» — НЕВЕРНО.",
+        "hint": "noun vs clause"
+      },
+      {
+        "front": "Formal linkers — три группы",
+        "back": "Контраст: however, nevertheless, nonetheless, on the other hand. Добавление: moreover, furthermore, in addition, additionally. Следствие: consequently, therefore, hence, thus. Все ставятся в начале с запятой, в новом предложении.",
+        "hint": "контраст / добавление / следствие"
+      },
+      {
+        "front": "Hedging — смягчение",
+        "back": "It seems that, It would appear that, There seems to be, This might suggest that, It is generally believed that, As far as I can tell. В академическом и деловом письме смягчение делает позицию аккуратной — без категоричных «X is true».",
+        "hint": "смягчение категоричности"
+      },
+      {
+        "front": "Used to vs be used to vs get used to",
+        "back": "Used to + V — раньше делал (а сейчас нет): «I used to smoke.» Be used to + Ving — привык, состояние: «I am used to working late.» Get used to + Ving — привыкаю, процесс: «I'm getting used to the new schedule.» Три разные конструкции.",
+        "hint": "три разные конструкции"
+      }
+    ]
+  }
+}

@@ -1,12 +1,57 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
+import StatsStrip from '../components/home/StatsStrip.astro';
+import Marquee from '../components/home/Marquee.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
 import TopicBento from '../components/home/TopicBento.astro';
 import CourseShowcase from '../components/home/CourseShowcase.astro';
+import Manifesto from '../components/home/Manifesto.astro';
 ---
 
 <BaseLayout title="KwikAcademy — открытая платформа знаний">
-  <Hero />
-  <TopicBento />
-  <CourseShowcase />
+  <div class="grain">
+    <Hero />
+    <StatsStrip />
+    <Marquee />
+    <HowItWorks />
+    <TopicBento />
+    <CourseShowcase />
+    <Manifesto />
+  </div>
 </BaseLayout>
+
+<script>
+  // reveal-on-scroll
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }
+    },
+    { threshold: 0.12 },
+  );
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // gentle pointer parallax on the aurora blobs
+  const mq = matchMedia('(prefers-reduced-motion: reduce)');
+  if (!mq.matches) {
+    const blobs = Array.from(document.querySelectorAll<HTMLElement>('.blobs .b'));
+    let raf = 0;
+    window.addEventListener('pointermove', (ev) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        const dx = (ev.clientX / window.innerWidth - 0.5) * 2;
+        const dy = (ev.clientY / window.innerHeight - 0.5) * 2;
+        blobs.forEach((b, i) => {
+          const k = (i + 1) * 8;
+          b.style.translate = `${dx * k}px ${dy * k}px`;
+        });
+        raf = 0;
+      });
+    });
+  }
+</script>

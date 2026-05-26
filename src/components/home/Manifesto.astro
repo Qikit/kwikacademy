@@ -1,0 +1,62 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { withBase } from '../../lib/url';
+---
+
+<section class="manifesto reveal">
+  <div class="glow" aria-hidden="true"></div>
+  <p class="big">
+    Без подписок, без писем на почту, без «зарегистрируйтесь, чтобы продолжить». Просто
+    <em>открыл и учишься</em>.
+  </p>
+  <p class="small">
+    Это личный некоммерческий проект. Всё бесплатно и останется бесплатным. Прогресс живёт в твоём
+    браузере — его можно выгрузить и перенести.
+  </p>
+  <Button href={withBase('/topics')}>
+    Выбрать тему <Icon name="arrow-right" size={16} />
+  </Button>
+</section>
+
+<style>
+  .manifesto {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+    text-align: center;
+    overflow: visible;
+  }
+  .glow {
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 220px;
+    background: radial-gradient(circle, rgba(160, 108, 240, 0.35), transparent 70%);
+    filter: blur(50px);
+    z-index: -1;
+  }
+  .big {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 4.4vw, 40px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .big em {
+    font-style: normal;
+    background: var(--grad-aurora);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .small {
+    margin: 22px auto 30px;
+    max-width: 520px;
+    color: var(--text-2);
+    font-size: 15px;
+  }
+</style>

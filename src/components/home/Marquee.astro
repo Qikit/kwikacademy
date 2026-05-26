@@ -1,0 +1,74 @@
+---
+const items = [
+  'Английский',
+  'Kotlin',
+  'ИИ и LLM',
+  'Java',
+  'React',
+  'Базы данных',
+  'Бизнес',
+  'Менеджмент',
+  'Современный веб',
+];
+const row = [...items, ...items];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    {
+      row.map((t, i) => (
+        <span class="chip">
+          {t}
+          <i class="dot" />
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    padding: 18px 0;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: scroll 38s linear infinite;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grad-purple-pink);
+  }
+  @keyframes scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .marquee:hover .track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
+  }
+</style>

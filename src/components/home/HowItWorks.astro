@@ -1,0 +1,111 @@
+---
+import Icon from '../ui/Icon.astro';
+
+const steps = [
+  {
+    icon: 'layers' as const,
+    title: 'Выбери направление',
+    text: 'Темы выстроены в дорожные карты — видно, с чего начать и куда двигаться.',
+    tilt: '-1.5deg',
+  },
+  {
+    icon: 'book-open' as const,
+    title: 'Изучай теорию',
+    text: 'Подробные уроки с примерами, сравнениями и шпаргалками. Можно скачать к себе.',
+    tilt: '1deg',
+  },
+  {
+    icon: 'zap' as const,
+    title: 'Закрепляй на тренажёрах',
+    text: 'Тесты, карточки и пропуски сразу после теории. Прогресс копится у тебя.',
+    tilt: '-1deg',
+  },
+];
+---
+
+<section class="how reveal">
+  <div class="how-head">
+    <p class="eyebrow">Как это работает</p>
+    <h2>Три шага — и тема в кармане</h2>
+  </div>
+  <div class="steps">
+    {
+      steps.map((s, i) => (
+        <article class="step" style={`--tilt:${s.tilt}`}>
+          <span class="num">0{i + 1}</span>
+          <span class="ico">
+            <Icon name={s.icon} size={22} />
+          </span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .how {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  .how-head {
+    margin-bottom: 32px;
+  }
+  .how-head h2 {
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 800;
+    margin-top: 8px;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .step {
+    position: relative;
+    padding: 26px 22px 24px;
+    border-radius: var(--r-lg);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    transform: rotate(var(--tilt));
+    transition: transform 0.3s;
+    overflow: hidden;
+  }
+  .step:hover {
+    transform: rotate(0) translateY(-5px);
+  }
+  .num {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--glass-border);
+  }
+  .ico {
+    display: inline-flex;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    color: #fff;
+    background: var(--grad-blue-purple);
+    margin-bottom: 14px;
+  }
+  .step h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step p {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+    max-width: 92%;
+  }
+</style>

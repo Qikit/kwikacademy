@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+
+const courses = (await getCollection('courses')).filter((c) => !c.data.hidden);
+const lessons = (await getCollection('lessons')).filter((l) => l.data.course !== 'demo');
+
+const stats = [
+  { value: String(courses.length), label: 'направлений', tilt: '-2deg' },
+  { value: String(lessons.length), label: 'уроков в карте', tilt: '1.5deg' },
+  { value: '0 ₽', label: 'навсегда', tilt: '-1deg' },
+  { value: '∞', label: 'без аккаунта', tilt: '2.5deg' },
+];
+---
+
+<section class="stats reveal">
+  {
+    stats.map((s) => (
+      <div class="stat" style={`--tilt:${s.tilt}`}>
+        <div class="val">{s.value}</div>
+        <div class="lbl">{s.label}</div>
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .stats {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 8px 24px 72px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    flex: 1 1 140px;
+    padding: 22px 20px;
+    border-radius: var(--r-lg);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    transform: rotate(var(--tilt));
+    transition: transform 0.3s;
+  }
+  .stat:hover {
+    transform: rotate(0) translateY(-4px);
+  }
+  .val {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 800;
+    background: var(--grad-aurora);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lbl {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 4px;
+  }
+</style>

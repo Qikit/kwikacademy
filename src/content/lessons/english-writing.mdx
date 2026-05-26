@@ -1,13 +1,582 @@
 ---
 course: english
 order: 18
-phase: "Фаза 2 · Профессиональный английский"
-title: "Writing — деловая переписка"
-eyebrow: Английский язык
-readingMinutes: 5
-summary: "Письма и сообщения — структура, тон, формулы вежливости."
-placeholder: true
-tags: [english]
+phase: "Фаза 2 · Рабочий английский"
+title: "Writing — деловая переписка и email"
+eyebrow: "Профессиональный · уровень B1-B2"
+readingMinutes: 26
+summary: "Структура email, регистр от formal до informal, готовые шаблоны для типовых ситуаций. Что прозвучит грубо для UK/US аудитории и как смягчить."
+tags: [writing, business, email, B1, B2]
 ---
 
-Этот урок ещё в работе. Скоро здесь появится подробный разбор темы «Writing — деловая переписка» — с правилами, примерами из жизни и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Example from '../../components/lesson/Example.astro';
+import RuleList from '../../components/lesson/RuleList.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Scale from '../../components/lesson/Scale.astro';
+import { withBase } from '../../lib/url';
+
+## 1. Зачем уметь писать email
+
+Разговорный английский и письменный — это два разных навыка. На созвоне можно мямлить, переспросить, поправиться, и собеседник всё равно поймёт. В email такой страховки нет: получатель видит только итоговый текст и судит по нему о тебе как о профессионале. Письмо с резкой формулировкой или неуместным тоном остаётся в почтовом ящике месяцами и читается всеми, кому его перешлют.
+
+Русскоязычные авторы регулярно ловят две крайности. Первая — переводят дословно с русского: получается либо холодно-приказно («Send me the report by Friday»), либо приторно-канцелярски («I hereby kindly request you to send the aforementioned document»). Носитель в первом случае подумает, что его построили, во втором — что письмо генерировал бот из 1970 года. Вторая крайность — слепое копирование шаблона из интернета без понимания, к какому регистру он относится. Так в письмо клиенту попадает «Hey buddy», а в чат с коллегой — «I would like to humbly request your assistance».
+
+Этот урок — про структуру email, про шкалу регистров от formal до informal, про готовые шаблоны для типовых ситуаций (follow-up, request, apology, decline, introduction, reminder) и про культурные ловушки: что для UK или US аудитории прозвучит грубо, даже если по-русски это норма.
+
+## 2. Главное правило
+
+<Callout type="purple" title="Ядро темы">
+Деловое письмо держится на трёх вещах: **уместный регистр**, **ясность**, **краткость**. Регистр — это согласие с тоном собеседника и контекста (не «Hey» юристу, не «Dear Sir or Madam» коллеге). Ясность — один email = одна тема, конкретный subject, главное в первом абзаце. Краткость — короткие предложения и абзацы, без слов-наполнителей. Если письмо длиннее экрана — переноси в документ или созвон. Всё остальное — производное от этих трёх.
+</Callout>
+
+## 3. Структура email
+
+Любое деловое письмо состоит из шести блоков. Не все обязательны (короткое follow-up может не иметь body как такового), но порядок фиксирован.
+
+| Блок | Что в нём | Пример |
+| --- | --- | --- |
+| Subject | Тема — конкретная, без воды | Question about onboarding doc — section 3 |
+| Greeting | Приветствие, соответствующее регистру | Hi Anna, |
+| Opening | Один абзац: зачем пишешь, контекст | I'm writing to follow up on our call yesterday. |
+| Body | Суть: запрос, информация, объяснение | Could you confirm the deadline for the design review? |
+| Closing | Завершающая формулировка | Best regards, |
+| Signature | Имя, должность, контакты | Anna Petrova / Product Designer / +44 ... |
+
+Subject — самая недооценённая часть. «Question» в теме — это «никакая тема»: получатель не понимает, открывать ли сейчас или отложить. Конкретный subject экономит время обеим сторонам и резко повышает шанс быстрого ответа.
+
+## 4. Аналогия с русским
+
+<AnalogyBox note="Шкала регистров в русском и английском устроена параллельно: чем формальнее ситуация, тем длиннее обращение и тем нейтральнее лексика. Разница только в наборе фиксированных формул — английский за века деловой переписки выработал больше готовых шаблонов, которые носитель распознаёт мгновенно.">
+  <div slot="ru">
+    <strong>«Уважаемый Иван Петрович»</strong> — formal, к незнакомому или старшему по статусу.<br/>
+    <strong>«Добрый день, Иван»</strong> — нейтральный коллега.<br/>
+    <strong>«Привет, Ваня»</strong> — близкий коллега, дружеский регистр.<br/>
+    <strong>«С уважением, Анна»</strong> — стандартное закрытие, нейтрально-формальное.
+  </div>
+  <div slot="en">
+    <strong>Dear Mr Smith,</strong> — formal, незнакомому или клиенту.<br/>
+    <strong>Hi Ivan,</strong> — нейтральный коллега.<br/>
+    <strong>Hey Anna,</strong> — близкий коллега, чат-like.<br/>
+    <strong>Best regards, Anna</strong> — стандартное закрытие, безопасный default.
+  </div>
+</AnalogyBox>
+
+## 5. Шкала регистра приветствий
+
+<Scale
+  title="От formal к informal"
+  items={[
+    { label: "Dear Mr/Ms [Surname]", note: "Максимально формально: юрист, банк, незнакомый клиент, официальное письмо" },
+    { label: "Dear [First name]", note: "Формально, но теплее: имя уже знаешь, но регистр держишь" },
+    { label: "Hello [Name]", note: "Нейтрально, безопасный default для большинства рабочих писем" },
+    { label: "Hi [Name]", note: "Полу-нейтрально: коллега, знакомый клиент, регулярная переписка" },
+    { label: "Hey [Name]", note: "Informal: только с близкими коллегами и в чат-like переписке" },
+  ]}
+/>
+
+Безопасный default для незнакомого делового адресата — `Dear [First name]` или `Hello [Name]`. `Hi` уместен, как только обе стороны перешли на имена и формат расслабился. `Hey` в первом письме клиенту — почти всегда промах.
+
+## 6. Greetings — приветствия
+
+<RuleList rules={[
+  "<strong>Dear [First name],</strong> — формально, но дружелюбно. Подходит для первого письма клиенту или вендору, если имя известно. Безопасный default.",
+  "<strong>Hi [Name],</strong> — нейтрально-дружелюбное приветствие. Стандарт для регулярной переписки в команде и с регулярным клиентом.",
+  "<strong>Hello team,</strong> / <strong>Hi everyone,</strong> — для группы. <em>Hi all</em> тоже работает, особенно в US.",
+  "<strong>Dear Sir or Madam,</strong> — очень формально и слегка устарело. Используют, когда вообще не знаешь, кто получит письмо (поддержка, общий ящик).",
+  "<strong>To Whom It May Concern,</strong> — ещё формальнее: для официальных писем, рекомендательных, заявлений. В обычной переписке звучит холодно.",
+  "<strong>Hey [Name],</strong> — informal, только с близкими коллегами. Первое письмо клиенту с <em>Hey</em> — фамильярно.",
+  "Если получатель уже подписался <em>Ivan</em>, обращайся по имени без фамилии. Возвращаться к <em>Mr Ivanov</em> после этого — странно.",
+]} />
+
+<Example ru="Привет, Анна, продолжаю по вчерашнему созвону.">Hi Anna, following up on our call yesterday.</Example>
+<Example ru="Здравствуйте, команда, краткое обновление по проекту.">Hello team, a quick update on the project.</Example>
+<Example ru="Здравствуйте, по вопросу выставленного счёта №2241.">Dear Sir or Madam, regarding invoice #2241.</Example>
+
+## 7. Openings — первая фраза
+
+После приветствия — одно предложение, объясняющее, зачем пишешь. Не лей воды, не повторяй subject слово в слово.
+
+<RuleList rules={[
+  "<strong>I'm writing to follow up on...</strong> — продолжение предыдущей переписки или разговора. Безопасный нейтральный default.",
+  "<strong>Thank you for your email regarding...</strong> — ответ на чужое письмо. Признание получения + переход к сути.",
+  "<strong>I hope this email finds you well.</strong> — классическая вежливая формула. Слегка устарела, носители часто иронизируют, но всё ещё уместна в формальной переписке с малознакомым адресатом. С коллегой по проекту — не нужно.",
+  "<strong>Quick question:</strong> / <strong>Just a quick one —</strong> — informal, для короткого письма с одним конкретным вопросом.",
+  "<strong>I wanted to reach out about...</strong> — мягкое начало, особенно для первого контакта.",
+  "<strong>Apologies for the late reply.</strong> — если отвечаешь с задержкой. Лучше один раз извиниться, чем оправдываться три абзаца.",
+]} />
+
+<Example ru="Пишу, чтобы уточнить статус по второй итерации макета.">I'm writing to check in on the status of the second design iteration.</Example>
+<Example ru="Спасибо за письмо про новые требования к доступам.">Thank you for your email regarding the new access requirements.</Example>
+<Example ru="Короткий вопрос: финальный дедлайн всё ещё пятница?">Quick question: is the final deadline still Friday?</Example>
+<Example ru="Извините за задержку с ответом — был в командировке.">Apologies for the late reply — I was travelling last week.</Example>
+
+## 8. Body — стиль и подача
+
+Это та часть, где русскоязычные авторы чаще всего «теряют» письмо длинными предложениями-переводами с русского.
+
+<RuleList rules={[
+  "<strong>Один email — одна тема.</strong> Если хочешь обсудить три разных вопроса, шли три письма с разными subject. Иначе получатель ответит на первый и забудет про два остальных.",
+  "<strong>Короткие абзацы.</strong> Один абзац — одна мысль. Стена текста на пять экранов прокручивается и закрывается.",
+  "<strong>Bullet points</strong> для перечня: вариантов, требований, шагов. Глаз сразу зацепится. <em>Three things to confirm: 1) ... 2) ... 3) ...</em>",
+  "<strong>Главное — в первом абзаце.</strong> Получатель должен понять «зачем мне это» с первой строки. Контекст и детали — ниже.",
+  "<strong>Active voice</strong> по умолчанию. <em>We will deliver the report on Friday</em> — конкретнее, чем <em>The report will be delivered</em>. Passive — только когда исполнитель не важен или ты намеренно его скрываешь.",
+  "<strong>Без лишних модификаторов.</strong> <em>Very urgent ASAP critical priority</em> — выглядит истерично. Если правда срочно, скажи один раз спокойно и объясни почему.",
+  "<strong>Subject lines конкретные.</strong> Не <em>Question</em>, а <em>Question about onboarding doc — section 3</em>. Не <em>Update</em>, а <em>Project Atlas — week 4 update</em>.",
+]} />
+
+<Example ru="Три пункта, которые нужно подтвердить до пятницы: финальный объём работ, бюджет, состав команды.">Three things to confirm before Friday: final scope, budget, and team composition.</Example>
+<Example ru="Главное — мы можем сдвинуть запуск на неделю, если это поможет с тестированием.">The main point — we can push the launch by a week if it helps with testing.</Example>
+
+## 9. Tone management — как смягчать
+
+То, что в русском звучит нормально-нейтрально, по-английски может прозвучать резко. Носитель ожидает «мягких» оборотов в запросах, отказах и плохих новостях.
+
+### Smoothing requests
+
+<RuleList rules={[
+  "<strong>Could you please...?</strong> — стандартный мягкий запрос. <em>Could you please send me the latest draft?</em>",
+  "<strong>Would you mind ...ing?</strong> — ещё мягче. <em>Would you mind sending the draft by EOD?</em>",
+  "<strong>I'd appreciate it if you could...</strong> — формальный мягкий запрос. <em>I'd appreciate it if you could review by Friday.</em>",
+  "<strong>If possible, ...</strong> — оставляешь получателю пространство для отказа. <em>If possible, please share the file before the call.</em>",
+  "<strong>When you get a chance, ...</strong> — несрочный запрос. <em>When you get a chance, take a look at the updated brief.</em>",
+]} />
+
+### Apologies
+
+<RuleList rules={[
+  "<strong>I apologise for the delay.</strong> — UK / нейтральная формальность. В US — <em>apologize</em>.",
+  "<strong>Thank you for your patience.</strong> — обходной манёвр: вместо извинения благодаришь. Звучит профессиональнее в большинстве деловых ситуаций.",
+  "<strong>Sorry for the confusion — let me clarify.</strong> — признаёшь, что текст был непонятен, и сразу исправляешь.",
+  "<strong>Apologies for the back and forth.</strong> — если переписка затянулась с уточнениями. Признание ситуации без долгих объяснений.",
+]} />
+
+### Bad news
+
+<RuleList rules={[
+  "<strong>Unfortunately, ...</strong> — стандартный «буфер» перед плохой новостью. <em>Unfortunately, we can't meet the original deadline.</em>",
+  "<strong>I'm afraid that...</strong> — мягче, чем прямое «No» или «We can't». Не про страх — про вежливое сожаление.",
+  "<strong>We regret to inform you that...</strong> — очень формально, для официальных писем (отказ от вакансии, отказ от контракта).",
+  "Никогда не начинай письмо с плохой новости без буфера — даже одно слово (<em>Unfortunately, ...</em>) делает тон в разы мягче.",
+]} />
+
+### Reminders
+
+<RuleList rules={[
+  "<strong>Just following up on my previous email.</strong> — стандартный нейтральный reminder.",
+  "<strong>As a gentle reminder, ...</strong> — мягкое напоминание. Не агрессивное, не пассивно-агрессивное.",
+  "<strong>Bumping this up in case it got buried.</strong> — informal-нейтрально: «может, потерялось в ящике». Хорошо снимает напряжение.",
+  "Никогда не начинай reminder с <em>You didn't reply</em> или <em>I'm still waiting</em>. Это упрёк — даже если по факту так и есть.",
+]} />
+
+<Example ru="Не могли бы вы прислать обновлённый бриф до конца дня?">Could you please send the updated brief by end of day?</Example>
+<Example ru="К сожалению, мы не успеем к изначальному дедлайну — нужна неделя.">Unfortunately, we won't make the original deadline — we need one more week.</Example>
+<Example ru="Напоминаю о моём вчерашнем письме — может, потерялось в ящике.">Just following up on my email from yesterday — bumping this up in case it got buried.</Example>
+<Example ru="Спасибо за терпение, я уточняю детали у команды.">Thank you for your patience — I'm checking the details with the team.</Example>
+
+## 10. Closings — завершение
+
+<RuleList rules={[
+  "<strong>Best regards,</strong> / <strong>Kind regards,</strong> — стандартный нейтрально-формальный default. Подходит почти везде.",
+  "<strong>Best,</strong> — короткая дружелюбная форма. Уместна в регулярной переписке с коллегами и знакомыми клиентами.",
+  "<strong>Sincerely,</strong> — formal. В UK — для очень официальных писем (юр., HR, рекомендательные). В US — чуть свободнее.",
+  "<strong>Yours faithfully,</strong> — UK, очень formal. Парная формула к <em>Dear Sir or Madam</em>.",
+  "<strong>Yours sincerely,</strong> — UK, formal. Парная формула к <em>Dear Mr Smith</em>.",
+  "<strong>Thanks,</strong> / <strong>Thank you,</strong> — нейтрально-благодарственное завершение, особенно когда что-то просил.",
+  "<strong>Cheers,</strong> — informal, чаще UK / AU. С клиентом — нет, с коллегой — нормально.",
+  "Не варьируй закрытие в каждом письме одной цепочки. <em>Best regards</em> два раза подряд — нормально и ожидаемо.",
+]} />
+
+## 11. Cross-cultural — что прозвучит грубо
+
+Прямота в русском деловом письме — норма. В английском — почти всегда требует обёртки. Особенно это чувствуется в UK: британцы доводят вежливое смягчение до уровня искусства. US — прямее британцев, но мягче CIS. Понять разницу проще на примерах.
+
+<Compare leftLabel="Что напишет CIS-автор" rightLabel="Как прочитает носитель">
+  <div slot="left">
+    <strong>«Send me the report by Friday.»</strong><br/>
+    Для автора — нейтрально-деловая просьба.<br/><br/>
+    <strong>«You did not answer my question.»</strong><br/>
+    Для автора — констатация факта.<br/><br/>
+    <strong>«This is wrong.»</strong><br/>
+    Для автора — обратная связь по делу.<br/><br/>
+    <strong>«I need this now.»</strong><br/>
+    Для автора — обозначение срочности.<br/><br/>
+    <strong>«We must discuss this.»</strong><br/>
+    Для автора — нейтральная необходимость.
+  </div>
+  <div slot="right">
+    <strong>«Send me the report by Friday.»</strong><br/>
+    Для UK / US — приказ. <em>Could you please send the report by Friday?</em><br/><br/>
+    <strong>«You did not answer my question.»</strong><br/>
+    Для UK / US — упрёк. <em>I wanted to follow up on my earlier question.</em><br/><br/>
+    <strong>«This is wrong.»</strong><br/>
+    Для UK / US — грубо. <em>I think there might be an error here — could you double-check?</em><br/><br/>
+    <strong>«I need this now.»</strong><br/>
+    Для UK / US — почти агрессивно. <em>This is time-sensitive — could we get it today if possible?</em><br/><br/>
+    <strong>«We must discuss this.»</strong><br/>
+    Для UK / US — давление. <em>Could we set up a quick call to discuss?</em>
+  </div>
+</Compare>
+
+Главная ловушка для CIS-автора — модальные `must` и `need` в формальном письме. Они звучат жёстче, чем кажется по словарю. В деловой переписке мягче: `could`, `would`, `might`, `should`.
+
+## 12. Когда email, когда чат, когда созвон
+
+<RuleList rules={[
+  "<strong>Email</strong> — когда нужен письменный след, контекст для будущей справки, охват нескольких получателей в копии, асинхронный ответ. Договорённости, утверждения, формальные запросы.",
+  "<strong>Slack / Teams / чат</strong> — короткие вопросы внутри команды, быстрые сверки, статус-обновления. Если переписка вышла за 5-6 сообщений с обеих сторон — переходи в email или созвон.",
+  "<strong>Созвон</strong> — когда тема нуждается в двух-трёх итерациях уточнений, когда чувствуется напряжение в переписке, когда речь о решениях с участием 3+ человек.",
+  "<strong>Async > sync.</strong> Не зови на созвон, если вопрос решается одним абзацем в письме. Уважение к чужому времени — ключевое в деловой культуре UK / US.",
+  "Если переписка превратилась в спор — выноси в созвон. В тексте обе стороны окопаются, в живом разговоре договорятся за 15 минут.",
+]} />
+
+## 13. Примеры в живом контексте
+
+### Внутри офиса
+
+<Example ru="Привет, Том, продолжаю по вчерашнему созвону. Можешь прислать слайды до конца дня?">Hi Tom, following up on our call yesterday. Could you send over the slides by end of day?</Example>
+<Example ru="Здравствуйте, команда, краткое обновление по статусу проекта на этой неделе.">Hello team, a quick update on this week's project status.</Example>
+<Example ru="К сожалению, я не смогу присоединиться к четверговой встрече — есть конфликт по расписанию.">Unfortunately, I won't be able to join Thursday's meeting — I have a scheduling conflict.</Example>
+<Example ru="Не могла бы ты подтвердить, что финальная версия одобрена?">Could you please confirm that the final version has been approved?</Example>
+<Example ru="Спасибо за быстрый разворот по этому вопросу.">Thanks for the quick turnaround on this.</Example>
+<Example ru="Просто напоминаю про вчерашнее письмо, на случай если потерялось.">Just a gentle reminder about my email from yesterday, in case it got buried.</Example>
+<Example ru="Я уточню детали у руководителя и вернусь к концу дня.">I'll check the details with my manager and get back to you by EOD.</Example>
+
+### Клиент и вендор
+
+<Example ru="Здравствуйте, Анна, пишу, чтобы продолжить разговор по предложению, отправленному на прошлой неделе.">Dear Anna, I'm writing to follow up on the proposal we shared last week.</Example>
+<Example ru="Спасибо за подробный ответ. У меня есть несколько уточнений по контракту.">Thank you for the detailed reply. I have a few follow-up questions about the contract.</Example>
+<Example ru="К сожалению, нам придётся отказаться от этого предложения. Бюджет в этом квартале уже распределён.">Unfortunately, we have to pass on this proposal — our budget is already allocated for this quarter.</Example>
+<Example ru="Был бы признателен за обратную связь к концу недели.">I'd appreciate any feedback by the end of the week.</Example>
+<Example ru="Срок поджимает — могли бы мы получить документ сегодня, если возможно?">This is time-sensitive — could we get the document today if possible?</Example>
+<Example ru="Прилагаю обновлённый счёт — пожалуйста, дайте знать, если что-то нужно поправить.">Please find the updated invoice attached — let me know if anything needs to be amended.</Example>
+<Example ru="Будем рады продолжить сотрудничество в следующем квартале.">We'd be glad to continue working with you next quarter.</Example>
+
+### Нейтрально-айтишное
+
+<Example ru="Короткий вопрос: финальный дедлайн по миграции всё ещё пятница?">Quick question: is the migration deadline still Friday?</Example>
+<Example ru="Просто на всякий случай — у вас был доступ к репозиторию, или нужно его выдать?">Just checking — do you already have access to the repo, or should I grant it?</Example>
+<Example ru="Мне кажется, в требованиях ошибка — могли бы вы перепроверить раздел 2?">I think there might be an error in the spec — could you double-check section 2?</Example>
+<Example ru="Я залил черновую документацию, любая обратная связь приветствуется.">I've uploaded a draft of the docs — any feedback is welcome.</Example>
+
+## 14. Templates — готовые шаблоны
+
+<Callout type="teal" title="Template: Follow-up">
+**Когда использовать:** прошло 2-5 рабочих дней, ответа нет, нужно мягко напомнить.
+
+```
+Subject: Following up — Project Atlas brief
+
+Hi Anna,
+
+Just following up on my email from Monday about the Project Atlas brief.
+
+When you get a chance, could you confirm whether the scope is approved, or share any feedback you have? Happy to jump on a quick call if it's easier.
+
+Thanks,
+Maria
+```
+
+**Разбор:** subject начинается с *Following up* — получатель сразу понимает контекст. Первая строка ссылается на конкретное предыдущее письмо. *When you get a chance* — мягкое смягчение. Альтернатива созвоном снимает давление.
+</Callout>
+
+<Callout type="teal" title="Template: Request">
+**Когда использовать:** что-то нужно от получателя — документ, доступ, одобрение, информация.
+
+```
+Subject: Access request — staging environment
+
+Hi Tom,
+
+I'm onboarding to the project this week and need access to the staging environment to start testing.
+
+Could you please add me to the relevant group? My email is maria.k@company.com.
+
+Let me know if you need anything from my side.
+
+Best regards,
+Maria
+```
+
+**Разбор:** конкретный subject — *Access request*. Первый абзац — контекст («зачем»). Второй — конкретный запрос с *Could you please*. Третий — открытость к встречному запросу.
+</Callout>
+
+<Callout type="teal" title="Template: Apology">
+**Когда использовать:** ошибся, задержал ответ, прислал не то, нарушил договорённость.
+
+```
+Subject: Apologies for the wrong attachment
+
+Hi Anna,
+
+Apologies for the confusion in my previous email — I attached the wrong version of the contract.
+
+The correct file is attached now. Please disregard the earlier one.
+
+Thank you for your patience.
+
+Best,
+Maria
+```
+
+**Разбор:** короткое признание ошибки без оправданий, конкретное исправление, благодарность за терпение вместо повторного извинения. Без длинных объяснений «как это получилось».
+</Callout>
+
+<Callout type="teal" title="Template: Decline (мягкий отказ)">
+**Когда использовать:** отказываешь — от предложения, от встречи, от участия.
+
+```
+Subject: Re: Partnership proposal
+
+Dear David,
+
+Thank you for considering us for this opportunity, and for the detailed proposal.
+
+After reviewing internally, we won't be able to move forward at this time. Our priorities for this quarter are already committed, and we wouldn't be able to give the project the attention it deserves.
+
+I'd be happy to revisit this conversation later in the year if the timing works on both sides.
+
+Best regards,
+Maria
+```
+
+**Разбор:** буфер благодарности перед отказом. Конкретная причина без долгих оправданий. Дверь открыта на будущее — без обещаний. *Wouldn't be able to give the attention it deserves* — вежливая формула «это не приоритет для нас сейчас».
+</Callout>
+
+<Callout type="teal" title="Template: Introduction">
+**Когда использовать:** представляешь себя или представляешь двух человек друг другу.
+
+```
+Subject: Introduction — Maria from Acme Design
+
+Hi Anna,
+
+I'm Maria from Acme Design — Tom suggested I reach out, as you're leading the brand work on the Atlas project.
+
+I'd love to set up a quick intro call next week to align on scope and timelines. Are you free Tuesday or Wednesday afternoon?
+
+Looking forward to working together.
+
+Best,
+Maria
+```
+
+**Разбор:** в subject слово *Introduction* — получатель сразу понимает контекст. Первая строка: кто я, откуда узнал про получателя, зачем пишу. Конкретное предложение по времени, а не «когда вам удобно?» — экономит обмен письмами.
+</Callout>
+
+<Callout type="teal" title="Template: Gentle reminder">
+**Когда использовать:** дедлайн близко или прошёл, действие не выполнено, нужно напомнить без давления.
+
+```
+Subject: Reminder — feedback on draft due Friday
+
+Hi team,
+
+A gentle reminder that feedback on the draft proposal is due by end of day Friday.
+
+If you've already sent yours, please disregard. If you need more time, let me know — we can extend by a day or two if needed.
+
+Thanks everyone,
+Maria
+```
+
+**Разбор:** *Gentle reminder* — мягкий тон без упрёка. Сразу страховка для тех, кто уже ответил. Готовность сдвинуть дедлайн — снимает напряжение, оставляет инициативу за получателями.
+</Callout>
+
+## 15. Мнемоника
+
+<Callout type="teal" title="Лайфхак запоминания">
+Держи в голове **четыре вопроса** перед отправкой любого письма: 1) «Subject — конкретный или общий?», 2) «Тон соответствует регистру получателя?», 3) «Главное — в первом абзаце?», 4) «Можно ли это сократить вдвое без потери смысла?». Если на любой ответ нет — переписывай. И простой тест на грубость: прочитай вслух «своим начальственным голосом». Если получилось приказно — добавь *Could you please* и *if possible*.
+</Callout>
+
+## 16. Грубо vs корректно
+
+<Compare leftLabel="Прозвучит грубо" rightLabel="Корректно по тону">
+  <div slot="left">
+    <strong>Send me the report.</strong><br/>
+    <strong>You did not answer my question.</strong><br/>
+    <strong>This is wrong, fix it.</strong><br/>
+    <strong>I need this now.</strong><br/>
+    <strong>We must discuss this immediately.</strong><br/>
+    <strong>Why didn't you reply?</strong>
+  </div>
+  <div slot="right">
+    <strong>Could you please send me the report?</strong><br/>
+    <strong>I wanted to follow up on my earlier question.</strong><br/>
+    <strong>I think there might be an error — could you double-check?</strong><br/>
+    <strong>This is time-sensitive — could we get it today if possible?</strong><br/>
+    <strong>Could we set up a quick call to discuss?</strong><br/>
+    <strong>Just bumping this up in case it got buried.</strong>
+  </div>
+</Compare>
+
+## 17. Дерево решений: какое приветствие выбрать
+
+<DecisionTree nodes={[
+  { q: "Это очень официальное письмо (юрист, банк, госорган, заявление, рекомендательное)?", yes: "Dear Mr/Ms [Surname], или To Whom It May Concern, если адресат неизвестен.", no: "к вопросу 2" },
+  { q: "Это первый контакт с человеком, и ты знаешь только имя?", yes: "Dear [First name], — формально-дружелюбный default.", no: "к вопросу 3" },
+  { q: "Имя получателя вообще неизвестно (общий ящик, форма поддержки)?", yes: "Dear Sir or Madam, — нейтрально, слегка формально.", no: "к вопросу 4" },
+  { q: "Это рассылка на группу / команду / распределённый список?", yes: "Hello team, / Hi everyone, / Hi all,", no: "к вопросу 5" },
+  { q: "Регулярная переписка с этим человеком, уже на 'ты' по тону?", yes: "Hi [Name], — нейтрально-дружелюбное.", no: "к вопросу 6" },
+  { q: "Близкий коллега, чат-like переписка, обмен короткими сообщениями?", yes: "Hey [Name], — informal. С клиентом нельзя.", no: "По умолчанию Hello [Name], — безопасный default." },
+]} />
+
+## 18. Типовые ошибки русскоязычных
+
+| Неверно | Верно | Почему |
+| --- | --- | --- |
+| Send me the report by Friday. | Could you please send me the report by Friday? | Без модального оборота — прямой приказ. UK / US воспримут как грубость. |
+| I hereby inform you that the meeting is rescheduled. | I wanted to let you know the meeting has been rescheduled. | <em>Hereby</em> + <em>inform</em> — почти ирония в обычной переписке. Звучит как пародия на 19 век. |
+| Find attached please the contract. | Please find the contract attached. / Please see attached. | Порядок слов: <em>please</em> в начале, <em>attached</em> после существительного или перед глаголом. |
+| ASAP? COB? FYI? — без понимания | ASAP = as soon as possible. EOD = end of day. COB = close of business. FYI = for your information. TBD = to be determined. | Аббревиатуры — стандарт, но без понимания легко поставить не там. <em>FYI</em> в просьбе — странно. |
+| Best regards, (в каждом письме одной цепочки) | Best regards, → Best, → Thanks, — варьировать по уместности | Шаблонное закрытие в десятый раз подряд звучит механически. Внутри одной короткой ветки норм, в долгой — варьируй. |
+| I want a refund. | I would like to request a refund. | <em>I want</em> в формальном письме звучит требовательно. <em>I would like to...</em> — стандартная мягкая форма запроса. |
+| I have a question to you. | I have a question for you. | Калька с русского «вопрос к вам». В английском — <em>question for someone</em>. |
+| Tell me your opinion about it. | I'd love to hear your thoughts on this. / What's your take on this? | <em>Tell me</em> — приказно. Мягкая форма — <em>I'd love to hear...</em> или <em>What's your take...</em>. |
+| Subject: Question | Subject: Question about onboarding doc — section 3 | Общий subject = низкий приоритет в чужом ящике. Конкретный — экономит время и получает ответ быстрее. |
+| You did not reply to my previous email. | Just following up on my previous email — bumping this up in case it got buried. | Прямой упрёк = испорченные отношения. Мягкая формула передаёт ту же информацию без обвинения. |
+| Hello dear Anna! | Hi Anna, / Dear Anna, | <em>Dear</em> + <em>Hello</em> вместе — избыточно. И <em>!</em> в деловом приветствии — необычно. |
+| Thanks in advance for your urgent response! | I'd appreciate your reply when you get a chance. | <em>Thanks in advance</em> + <em>urgent</em> — давление, граничащее с пассивной агрессией. |
+| I am writing this email to inform you that I would like to ask if you could possibly... | Could you please...? | Гипер-вежливость в трёх оборотах подряд = подозрительно. Один модальный мягкий запрос — достаточно. |
+
+## 19. Шпаргалка — фразы по регистру
+
+| Функция | Formal | Neutral | Informal |
+| --- | --- | --- | --- |
+| Приветствие | Dear Mr Smith, | Hello Anna, | Hi Anna, / Hey Anna, |
+| Открытие | I am writing to enquire about... | I'm writing to follow up on... | Quick question — ... |
+| Запрос | I would appreciate it if you could... | Could you please...? | Could you...? / Mind ...ing? |
+| Извинение | I apologise for any inconvenience caused. | Apologies for the delay. | Sorry for the late reply. |
+| Плохая новость | We regret to inform you that... | Unfortunately, ... | I'm afraid... / Bad news — ... |
+| Напоминание | I wish to follow up on my previous correspondence. | Just following up on my email. | Bumping this up. |
+| Благодарность | I am very grateful for your assistance. | Thank you for your help. | Thanks! / Cheers! |
+| Закрытие | Yours sincerely, / Yours faithfully, | Best regards, / Kind regards, | Best, / Thanks, / Cheers, |
+| Аттачмент | Please find attached the document. | The document is attached. | Attached. / Here's the file. |
+| Срочность | This matter is of considerable urgency. | This is time-sensitive. | Need this ASAP. |
+
+## 20. Аббревиатуры
+
+| Аббревиатура | Расшифровка | Когда уместно |
+| --- | --- | --- |
+| ASAP | as soon as possible | Срочно, но не приказно: лучше с *if possible* |
+| EOD | end of day | Конец рабочего дня (обычно ~17:00–19:00 локального времени) |
+| COB | close of business | То же, что EOD; чуть формальнее |
+| EOW | end of week | До конца рабочей недели (обычно пятница вечер) |
+| FYI | for your information | Информация без требования действий |
+| FYA | for your action | Требуется действие от получателя |
+| FYR | for your reference | Для справки, чтобы было под рукой |
+| TBD | to be determined | Ещё не решено, уточнится позже |
+| TBC | to be confirmed | Договорённость есть, но нужно финальное подтверждение |
+| OOO | out of office | Не на связи (отпуск, командировка) |
+| WFH | working from home | На удалёнке |
+| BTW | by the way | Кстати — informal, в переписке с коллегами |
+| IMO / IMHO | in my opinion / in my humble opinion | По моему мнению — informal |
+| NRN | no reply necessary | Ответ не требуется — экономит чужое время |
+
+## 21. Словарь урока
+
+<Vocab items={[
+  { term: "Dear [Name],", meaning: "Уважаемый [имя], — formal приветствие" },
+  { term: "Hello [Name],", meaning: "Здравствуйте, [имя], — нейтральный default" },
+  { term: "Hi [Name],", meaning: "Привет, [имя], — полу-нейтрально, дружелюбно" },
+  { term: "Hey [Name],", meaning: "Привет, [имя], — informal, только с близкими коллегами" },
+  { term: "Dear Sir or Madam,", meaning: "Если адресат неизвестен, очень формально" },
+  { term: "To Whom It May Concern,", meaning: "Для официальных писем, ещё формальнее" },
+  { term: "Best regards,", meaning: "С уважением — нейтральный default закрытия" },
+  { term: "Kind regards,", meaning: "С уважением — мягче и теплее" },
+  { term: "Sincerely,", meaning: "Искренне ваш — formal" },
+  { term: "Yours faithfully,", meaning: "UK formal, пара к Dear Sir or Madam" },
+  { term: "Yours sincerely,", meaning: "UK formal, пара к Dear [Surname]" },
+  { term: "Best,", meaning: "Короткое дружелюбное закрытие" },
+  { term: "Cheers,", meaning: "Informal закрытие, чаще UK / AU" },
+  { term: "I'm writing to follow up on...", meaning: "Пишу, чтобы продолжить (предыдущий разговор / письмо)" },
+  { term: "Thank you for your email regarding...", meaning: "Спасибо за письмо касательно... (вежливый ответ)" },
+  { term: "I hope this email finds you well.", meaning: "Надеюсь, у вас всё хорошо — классическая вежливая формула" },
+  { term: "Quick question:", meaning: "Короткий вопрос: (informal начало)" },
+  { term: "I wanted to reach out about...", meaning: "Я хотел(а) написать по поводу... — мягкое начало" },
+  { term: "Apologies for the late reply.", meaning: "Извините за задержку с ответом" },
+  { term: "Could you please...?", meaning: "Не могли бы вы, пожалуйста, ...? — стандартный мягкий запрос" },
+  { term: "Would you mind ...ing?", meaning: "Не возражаете ли вы ...? — ещё мягче" },
+  { term: "I'd appreciate it if you could...", meaning: "Я был бы признателен, если бы вы... — формальный мягкий запрос" },
+  { term: "If possible, ...", meaning: "Если возможно, ... — оставляет пространство для отказа" },
+  { term: "When you get a chance, ...", meaning: "Когда будет возможность, ... — несрочный запрос" },
+  { term: "I apologise for the delay.", meaning: "Извините за задержку (UK орфография)" },
+  { term: "Thank you for your patience.", meaning: "Спасибо за терпение — вместо повторного извинения" },
+  { term: "Unfortunately, ...", meaning: "К сожалению, ... — буфер перед плохой новостью" },
+  { term: "I'm afraid that...", meaning: "Боюсь, что... — мягкое сожаление" },
+  { term: "We regret to inform you that...", meaning: "С сожалением сообщаем, что... — formal отказ" },
+  { term: "Just following up on...", meaning: "Просто продолжаю по... — стандартный reminder" },
+  { term: "As a gentle reminder, ...", meaning: "В качестве мягкого напоминания, ..." },
+  { term: "Bumping this up.", meaning: "Поднимаю наверх — informal-нейтральный reminder" },
+  { term: "Please find attached.", meaning: "Прилагаю / см. вложение" },
+  { term: "Please see attached.", meaning: "Пожалуйста, см. вложение" },
+  { term: "Looking forward to ...ing", meaning: "С нетерпением жду ... — частая формула в конце письма" },
+  { term: "Let me know if...", meaning: "Дайте знать, если... — открытое предложение к диалогу" },
+  { term: "Get back to someone", meaning: "Вернуться к кому-то с ответом" },
+  { term: "Touch base", meaning: "Сверить позиции, коротко связаться — informal" },
+  { term: "Loop someone in", meaning: "Подключить кого-то к переписке — informal-нейтрально" },
+  { term: "Circle back", meaning: "Вернуться к теме позже — corporate-сленг" },
+  { term: "End of day (EOD)", meaning: "Конец рабочего дня" },
+  { term: "Close of business (COB)", meaning: "Конец рабочего дня, чуть формальнее" },
+  { term: "ASAP", meaning: "As soon as possible — как можно скорее" },
+  { term: "FYI", meaning: "For your information — для информации" },
+  { term: "TBD / TBC", meaning: "To be determined / to be confirmed — уточняется / подтверждается" },
+  { term: "Out of office (OOO)", meaning: "Не на связи (отпуск, командировка)" },
+  { term: "Working from home (WFH)", meaning: "Работаю из дома" },
+  { term: "Active voice", meaning: "Активный залог — конкретнее и читается легче" },
+  { term: "Subject line", meaning: "Тема письма" },
+  { term: "CC / BCC", meaning: "Copy / blind copy — копия / скрытая копия в заголовке письма" },
+]} />
+
+## 22. Тренажёры
+
+После теории — закрепи в шести тренажёрах разных типов:
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Email-фраза → смысл и регистр</span>
+    <span class="kc-trainer-hint">Запомни значение и где использовать</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-match')}>
+    <span class="kc-trainer-kind">Match</span>
+    <span class="kc-trainer-title">Ситуация → подходящая фраза</span>
+    <span class="kc-trainer-hint">Соотнеси контекст с уместным оборотом</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-categorize')}>
+    <span class="kc-trainer-kind">Категории</span>
+    <span class="kc-trainer-title">Formal / Neutral / Informal</span>
+    <span class="kc-trainer-hint">Разложи фразы по регистрам</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Уместная фраза в контексте</span>
+    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши недостающее слово</span>
+    <span class="kc-trainer-hint">Восстанови email-формулу</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери письмо из частей</span>
+    <span class="kc-trainer-hint">Расставь блоки email или фразу</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## 23. Источники
+
+- **Cambridge Business English Dictionary** — dictionary.cambridge.org/dictionary/english/ (раздел business correspondence)
+- **Purdue OWL — Professional, Technical Writing** — owl.purdue.edu/owl/subject_specific_writing/professional_technical_writing/
+- **Grammarly — Business Writing Guides** — grammarly.com/blog/category/business/
+- **BBC Learning English — Business English** — bbc.co.uk/learningenglish/english/features/english-at-work

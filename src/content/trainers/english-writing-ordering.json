@@ -1,0 +1,67 @@
+{
+  "course": "english",
+  "lesson": "english-writing",
+  "title": "Собери email из частей",
+  "description": "Расставь блоки письма в правильном порядке или восстанови email-формулу. Следи за порядком слов в фиксированных фразах.",
+  "data": {
+    "type": "ordering",
+    "items": [
+      {
+        "words": ["Could", "you", "please", "send", "me", "the", "latest", "draft", "by", "EOD?"],
+        "answer": ["Could", "you", "please", "send", "me", "the", "latest", "draft", "by", "EOD?"],
+        "translation": "Не могли бы вы прислать мне последнюю версию черновика до конца дня?",
+        "explain": "Could you please — фиксированный мягкий запрос. EOD = end of day, стандартный таймфрейм. Порядок: модальный → подлежащее → please → глагол.",
+        "hint": "мягкий запрос с дедлайном"
+      },
+      {
+        "words": ["Hi", "Anna,", "I'm", "writing", "to", "follow", "up", "on", "our", "call", "yesterday."],
+        "answer": ["Hi", "Anna,", "I'm", "writing", "to", "follow", "up", "on", "our", "call", "yesterday."],
+        "translation": "Привет, Анна, пишу, чтобы продолжить по вчерашнему созвону.",
+        "explain": "Стандартное открытие: приветствие + I'm writing to follow up on + конкретный референс. Follow up on — фразовый глагол.",
+        "hint": "приветствие + открытие письма"
+      },
+      {
+        "words": ["Please", "find", "the", "updated", "invoice", "attached."],
+        "answer": ["Please", "find", "the", "updated", "invoice", "attached."],
+        "translation": "Прилагаю обновлённый счёт.",
+        "explain": "Фиксированная формула для аттачментов: Please find [noun] attached. Порядок ключевой: please → find → object → attached. Не Find attached please.",
+        "hint": "вложение в письме"
+      },
+      {
+        "words": ["Unfortunately,", "we", "won't", "be", "able", "to", "move", "forward", "at", "this", "time."],
+        "answer": ["Unfortunately,", "we", "won't", "be", "able", "to", "move", "forward", "at", "this", "time."],
+        "translation": "К сожалению, в данный момент мы не сможем двигаться дальше.",
+        "explain": "Стандартный мягкий отказ. Unfortunately — буфер. At this time — дверь оставлена приоткрытой (намёк на возможный возврат).",
+        "hint": "мягкий отказ от предложения"
+      },
+      {
+        "words": ["Just", "following", "up", "on", "my", "email", "from", "Monday."],
+        "answer": ["Just", "following", "up", "on", "my", "email", "from", "Monday."],
+        "translation": "Просто продолжаю по моему письму от понедельника.",
+        "explain": "Стандартный нейтральный reminder. Конкретная привязка к дню (from Monday) помогает получателю быстро найти оригинал.",
+        "hint": "напоминание без упрёка"
+      },
+      {
+        "words": ["I'd", "appreciate", "it", "if", "you", "could", "review", "the", "draft", "by", "Friday."],
+        "answer": ["I'd", "appreciate", "it", "if", "you", "could", "review", "the", "draft", "by", "Friday."],
+        "translation": "Был бы признателен, если бы вы посмотрели черновик до пятницы.",
+        "explain": "Формально-вежливая форма запроса. Стандартная конструкция: I'd appreciate it if you could + глагол + конкретный дедлайн.",
+        "hint": "формальная просьба с дедлайном"
+      },
+      {
+        "words": ["Thank", "you", "for", "your", "patience", "while", "we", "look", "into", "this."],
+        "answer": ["Thank", "you", "for", "your", "patience", "while", "we", "look", "into", "this."],
+        "translation": "Спасибо за терпение, пока мы разбираемся.",
+        "explain": "Thank you for your patience — обходной манёвр вместо повторного «sorry». Look into — фразовый глагол «разбираться, изучать».",
+        "hint": "благодарность за ожидание"
+      },
+      {
+        "words": ["I", "think", "there", "might", "be", "an", "error", "in", "section", "2", "—", "could", "you", "double-check?"],
+        "answer": ["I", "think", "there", "might", "be", "an", "error", "in", "section", "2", "—", "could", "you", "double-check?"],
+        "translation": "Мне кажется, в разделе 2 может быть ошибка — могли бы вы перепроверить?",
+        "explain": "Мягкое указание на ошибку. I think + might + конкретный раздел + просьба перепроверить. Вместо прямого «this is wrong» — сохраняет лицо обеим сторонам.",
+        "hint": "вежливо указать на ошибку"
+      }
+    ]
+  }
+}

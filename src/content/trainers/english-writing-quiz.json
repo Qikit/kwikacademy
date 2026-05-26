@@ -1,0 +1,154 @@
+{
+  "course": "english",
+  "lesson": "english-writing",
+  "title": "Уместная email-фраза в контексте",
+  "description": "12 ситуаций. Выбери вариант, который не прозвучит грубо, фамильярно или странно для UK / US получателя.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Первое письмо незнакомому клиенту, имя ты знаешь. Какое приветствие выбрать?",
+        "options": [
+          "Hey Anna!",
+          "Dear Anna,",
+          "Hi Anna,",
+          "Dear Sir or Madam,"
+        ],
+        "correctIndex": 1,
+        "explain": "Dear [First name] — формально-дружелюбный default для первого контакта. Hey — фамильярно, Hi — рано, Dear Sir or Madam — не подходит, имя ведь известно."
+      },
+      {
+        "prompt": "Нужно попросить коллегу прислать отчёт. Какой формулировкой?",
+        "options": [
+          "Send me the report.",
+          "I require you to send the report.",
+          "Could you please send the report?",
+          "You must send the report."
+        ],
+        "correctIndex": 2,
+        "explain": "Could you please — стандартный мягкий запрос. Send me — звучит приказно. I require / You must — почти угроза в email-контексте."
+      },
+      {
+        "prompt": "Отвечаешь с задержкой в три дня. Как лучше открыть письмо?",
+        "options": [
+          "Sorry sorry sorry for being so late, I was very busy and there were many things to do...",
+          "Apologies for the late reply.",
+          "Why are you asking now, anyway?",
+          "I hereby acknowledge the delay in my response."
+        ],
+        "correctIndex": 1,
+        "explain": "Одно короткое извинение и переход к делу. Длинные оправдания читаются как самооправдание, hereby — пародия на канцелярит."
+      },
+      {
+        "prompt": "Сообщаешь клиенту, что проект задержится на неделю. С чего начать?",
+        "options": [
+          "We can't make the deadline.",
+          "Bad news — we're late.",
+          "Unfortunately, we won't make the original deadline — we need one more week.",
+          "Sorry, no can do."
+        ],
+        "correctIndex": 2,
+        "explain": "Unfortunately — стандартный буфер перед плохой новостью + конкретный новый срок. «We can't» без буфера звучит резко, «Bad news» — слишком чат-like для клиента."
+      },
+      {
+        "prompt": "Прилагаешь договор к письму. Как правильно?",
+        "options": [
+          "Find attached please the contract.",
+          "I send you the contract in attach.",
+          "Please find the contract attached.",
+          "Contract attached. Read."
+        ],
+        "correctIndex": 2,
+        "explain": "Please find the contract attached — фиксированная формула. Порядок слов важен: please в начале, attached после существительного."
+      },
+      {
+        "prompt": "На письмо не ответили три дня. Как мягко напомнить?",
+        "options": [
+          "You did not reply to my previous email.",
+          "Why are you ignoring me?",
+          "Just following up on my email from Monday — bumping this up in case it got buried.",
+          "I am still waiting for your response."
+        ],
+        "correctIndex": 2,
+        "explain": "Reminder через Just following up + bumping this up снимает напряжение. Все остальные — прямой упрёк, испортит отношения с получателем."
+      },
+      {
+        "prompt": "Какое закрытие выбрать для письма HR с заявлением на отпуск?",
+        "options": [
+          "Cheers,",
+          "xoxo,",
+          "Best regards,",
+          "Later!"
+        ],
+        "correctIndex": 2,
+        "explain": "Best regards — нейтрально-формальный default, подходит для HR-переписки. Cheers и Later — informal, xoxo — не деловой регистр вообще."
+      },
+      {
+        "prompt": "Хочешь отказать партнёру от предложения, но не сжигать мосты.",
+        "options": [
+          "No, thanks.",
+          "We won't be able to move forward at this time, but I'd be happy to revisit this later in the year.",
+          "Not interested.",
+          "We will not do this. Goodbye."
+        ],
+        "correctIndex": 1,
+        "explain": "Мягкий отказ с буфером благодарности (подразумевается) + дверь на будущее через at this time. Резкие варианты убивают возможность вернуться."
+      },
+      {
+        "prompt": "Какая аббревиатура означает «к концу рабочего дня»?",
+        "options": [
+          "ASAP",
+          "FYI",
+          "EOD",
+          "TBD"
+        ],
+        "correctIndex": 2,
+        "explain": "EOD = End of Day. ASAP — как можно скорее, FYI — для информации, TBD — to be determined (ещё не решено)."
+      },
+      {
+        "prompt": "Указываешь коллеге на возможную ошибку в спеке. Как?",
+        "options": [
+          "This is wrong, fix it.",
+          "You made a mistake.",
+          "I think there might be an error in section 2 — could you double-check?",
+          "Your spec is bad."
+        ],
+        "correctIndex": 2,
+        "explain": "Мягкое предположение «might be an error» + конкретный раздел + просьба перепроверить. Прямое «wrong» / «mistake» — обвинение, портит отношения."
+      },
+      {
+        "prompt": "Subject письма с одним конкретным вопросом по разделу 3 онбординг-документа:",
+        "options": [
+          "Question",
+          "Important — please read!!!",
+          "Question about onboarding doc — section 3",
+          "Hello"
+        ],
+        "correctIndex": 2,
+        "explain": "Конкретный subject = высокий приоритет в чужом ящике и быстрый ответ. Question / Hello — никакая тема, !!! и Important — давление и беспредметность."
+      },
+      {
+        "prompt": "Просишь, чтобы коллегу включили в email-переписку. Какой оборот уместен?",
+        "options": [
+          "Add him to the email.",
+          "I'll loop in Tom so he's aware.",
+          "Send Tom the email also.",
+          "Tom should receive this email."
+        ],
+        "correctIndex": 1,
+        "explain": "Loop someone in — стандартное офисное выражение для «добавить в email-цепочку». Остальные варианты понятны, но звучат прямолинейно или калькой с русского."
+      },
+      {
+        "prompt": "В каком случае уместно «I hope this email finds you well»?",
+        "options": [
+          "В каждом письме коллеге по проекту",
+          "В чате в Slack",
+          "В первом письме малознакомому деловому контакту",
+          "В письме с плохой новостью"
+        ],
+        "correctIndex": 2,
+        "explain": "Классическая вежливая формула — для первого контакта или редкой переписки с малознакомым адресатом. С коллегой по проекту — избыточно, в чате — странно, перед плохой новостью — фальшиво."
+      }
+    ]
+  }
+}

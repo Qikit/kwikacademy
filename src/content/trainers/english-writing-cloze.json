@@ -1,0 +1,83 @@
+{
+  "course": "english",
+  "lesson": "english-writing",
+  "title": "Допиши email-формулу",
+  "description": "Восстанови недостающее слово или короткую конструкцию в стандартной фразе деловой переписки. Регистр и порядок слов критичны.",
+  "data": {
+    "type": "cloze",
+    "items": [
+      {
+        "text": "Could you ___ send me the latest draft by Friday?",
+        "answers": ["please"],
+        "explain": "Стандартный мягкий запрос — Could you please. Без please фраза звучит сухо и почти приказно.",
+        "hint": "вежливое слово после Could you"
+      },
+      {
+        "text": "I'm writing to follow ___ on our call yesterday.",
+        "answers": ["up"],
+        "explain": "Follow up on — фиксированный фразовый глагол «продолжать (по предыдущему контакту)». Без up — не работает.",
+        "hint": "follow ___ on = продолжить по"
+      },
+      {
+        "text": "___, we won't be able to meet the original deadline.",
+        "answers": ["Unfortunately"],
+        "explain": "Стандартный одно-словный буфер перед плохой новостью. Без него «we won't» бьёт по получателю в лоб.",
+        "hint": "буфер перед плохой новостью"
+      },
+      {
+        "text": "Please find the contract ___.",
+        "answers": ["attached"],
+        "explain": "Фиксированная формула для аттачментов: Please find [noun] attached. Порядок: please → object → attached.",
+        "hint": "вложение"
+      },
+      {
+        "text": "Thank you for your ___ — I'm still checking with the team.",
+        "answers": ["patience"],
+        "explain": "Thank you for your patience — обходной манёвр вместо повторного извинения. Звучит профессиональнее, чем «sorry again».",
+        "hint": "терпение"
+      },
+      {
+        "text": "Best ___,\nMaria",
+        "answers": ["regards"],
+        "explain": "Best regards — нейтрально-формальный default закрытия. Безопасный выбор почти везде.",
+        "hint": "стандартное закрытие"
+      },
+      {
+        "text": "Just following ___ on my email from Monday.",
+        "answers": ["up"],
+        "explain": "Following up on — тот же фразовый глагол. Стандартный нейтральный reminder без упрёка.",
+        "hint": "продолжение"
+      },
+      {
+        "text": "I'd ___ it if you could review by Friday.",
+        "answers": ["appreciate"],
+        "explain": "I'd appreciate it if you could — формальный мягкий запрос. Подходит для писем клиентам и руководителям.",
+        "hint": "был бы признателен"
+      },
+      {
+        "text": "When you ___ a chance, take a look at the updated brief.",
+        "answers": ["get"],
+        "explain": "When you get a chance — несрочный запрос. Снимает давление, оставляет инициативу за получателем.",
+        "hint": "когда будет возможность"
+      },
+      {
+        "text": "I'm ___ that won't work for us — we're already committed elsewhere.",
+        "answers": ["afraid"],
+        "explain": "I'm afraid — мягкая форма отказа. Не про страх, а про вежливое сожаление.",
+        "hint": "мягкий отказ"
+      },
+      {
+        "text": "I'll loop ___ Anna so she's aware of the change.",
+        "answers": ["in"],
+        "explain": "Loop someone in — стандартное офисное выражение «добавить в email-цепочку». Без in — не работает.",
+        "hint": "подключить в переписку"
+      },
+      {
+        "text": "Apologies ___ the late reply — I was travelling last week.",
+        "answers": ["for"],
+        "explain": "Apologies for — фиксированный предлог. Не to, не about. Короткое уместное извинение.",
+        "hint": "предлог после Apologies"
+      }
+    ]
+  }
+}

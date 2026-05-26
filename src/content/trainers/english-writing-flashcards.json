@@ -1,0 +1,111 @@
+{
+  "course": "english",
+  "lesson": "english-writing",
+  "title": "Email-фразы: смысл и регистр",
+  "description": "18 ходовых формул деловой переписки. На обороте — значение и пометка регистра (formal / neutral / informal).",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      {
+        "front": "Dear Mr Smith,",
+        "back": "Уважаемый г-н Смит, — formal приветствие по фамилии. Для юридических писем, банков, первого контакта с малознакомым клиентом.",
+        "hint": "формула + фамилия"
+      },
+      {
+        "front": "Hi Anna,",
+        "back": "Привет, Анна, — нейтрально-дружелюбный default для регулярной переписки в команде и со знакомым клиентом.",
+        "hint": "neutral, по имени"
+      },
+      {
+        "front": "To Whom It May Concern,",
+        "back": "Для тех, кого это касается — очень formal, для официальных писем и рекомендательных, когда адресат неизвестен.",
+        "hint": "formal, шаблон"
+      },
+      {
+        "front": "I'm writing to follow up on...",
+        "back": "Пишу, чтобы продолжить (по предыдущему письму или разговору). Нейтральный безопасный default для открытия письма.",
+        "hint": "neutral, opening"
+      },
+      {
+        "front": "I hope this email finds you well.",
+        "back": "Надеюсь, у вас всё хорошо — классическая вежливая формула. Слегка устарела, но всё ещё уместна с малознакомым адресатом.",
+        "hint": "formal-leaning, opening"
+      },
+      {
+        "front": "Could you please send the report?",
+        "back": "Не могли бы вы прислать отчёт? — стандартный мягкий запрос. Нейтрально-вежливый default вместо приказного «Send me».",
+        "hint": "neutral, soft request"
+      },
+      {
+        "front": "I'd appreciate it if you could...",
+        "back": "Я был бы признателен, если бы вы... — формально-вежливая просьба. Для писем клиентам, руководителям.",
+        "hint": "formal, polite request"
+      },
+      {
+        "front": "Would you mind sending it by EOD?",
+        "back": "Не возражаете прислать это до конца дня? — ещё мягче, чем Could you please. После mind — ing-форма глагола.",
+        "hint": "neutral, very soft"
+      },
+      {
+        "front": "Unfortunately, we can't meet the deadline.",
+        "back": "К сожалению, мы не успеваем к дедлайну. — «Unfortunately» работает как буфер перед плохой новостью. Универсально по регистру.",
+        "hint": "neutral, bad news"
+      },
+      {
+        "front": "I'm afraid that won't work for us.",
+        "back": "Боюсь, это нам не подойдёт. — мягкая форма отказа. Не про страх, а про вежливое сожаление.",
+        "hint": "neutral, soft refusal"
+      },
+      {
+        "front": "Thank you for your patience.",
+        "back": "Спасибо за терпение. — обходной манёвр вместо повторного извинения. Звучит профессионально и не суетливо.",
+        "hint": "neutral, instead of apology"
+      },
+      {
+        "front": "Apologies for the late reply.",
+        "back": "Извините за задержку с ответом. — короткое уместное извинение, без долгих оправданий.",
+        "hint": "neutral, brief apology"
+      },
+      {
+        "front": "Just following up on my email.",
+        "back": "Просто продолжаю по моему письму. — стандартный нейтральный reminder без упрёка.",
+        "hint": "neutral, reminder"
+      },
+      {
+        "front": "Bumping this up.",
+        "back": "Поднимаю наверх — informal-нейтральный reminder. Часто с in case it got buried.",
+        "hint": "informal, reminder"
+      },
+      {
+        "front": "Please find attached.",
+        "back": "Прилагаю / см. вложение. Стандартная формула для аттачментов. Альтернатива: Please see attached.",
+        "hint": "neutral, attachment"
+      },
+      {
+        "front": "Best regards,",
+        "back": "С уважением, — нейтральный default закрытия письма. Подходит почти везде. Альтернатива: Kind regards.",
+        "hint": "neutral, closing"
+      },
+      {
+        "front": "Cheers,",
+        "back": "Бывай, / Спасибо, — informal закрытие, чаще UK / AU. С клиентом нельзя, с коллегой — нормально.",
+        "hint": "informal, closing"
+      },
+      {
+        "front": "Looking forward to hearing from you.",
+        "back": "С нетерпением жду вашего ответа. — частая формула в конце письма, нейтрально-вежливая.",
+        "hint": "neutral, closing-line"
+      },
+      {
+        "front": "Let me know if you need anything from my side.",
+        "back": "Дайте знать, если что-то нужно с моей стороны. — открытое предложение к диалогу, заканчивает запрос мягко.",
+        "hint": "neutral, closing-line"
+      },
+      {
+        "front": "Loop me in if needed.",
+        "back": "Подключите меня к переписке, если нужно. — informal-нейтральное офисное выражение. Loop someone in = добавить в email-цепочку.",
+        "hint": "informal-neutral, office"
+      }
+    ]
+  }
+}

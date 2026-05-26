@@ -1,0 +1,81 @@
+{
+  "course": "english",
+  "lesson": "english-writing",
+  "title": "Ситуация → email-фраза",
+  "description": "Соотнеси контекст письма с уместным оборотом. Регистр и тон критичны: формальный отказ и informal-напоминание — разные миры.",
+  "data": {
+    "type": "match",
+    "pairs": [
+      {
+        "left": "Первое письмо незнакомому юристу",
+        "right": "Dear Mr Smith,",
+        "explain": "Formal-контекст, без личного знакомства — приветствие по фамилии, не Hi и не Hey."
+      },
+      {
+        "left": "Регулярная переписка с коллегой по проекту",
+        "right": "Hi Tom,",
+        "explain": "Знакомый коллега, повседневный рабочий тон — нейтрально-дружелюбное Hi."
+      },
+      {
+        "left": "Рассылка обновления на всю команду",
+        "right": "Hello team,",
+        "explain": "Группа адресатов — групповое приветствие. Альтернативы: Hi everyone, Hi all."
+      },
+      {
+        "left": "Отвечаешь с задержкой в три дня",
+        "right": "Apologies for the late reply.",
+        "explain": "Короткое уместное извинение в начале письма. Не оправдания на абзац — одна фраза и переход к сути."
+      },
+      {
+        "left": "Просишь клиента прислать документ",
+        "right": "Could you please send the document?",
+        "explain": "Запрос к клиенту требует смягчения. Could you please — стандартный мягкий default."
+      },
+      {
+        "left": "Сообщаешь, что не успеваешь к дедлайну",
+        "right": "Unfortunately, we won't make the original deadline.",
+        "explain": "Плохая новость требует буфера. Unfortunately смягчает первый удар."
+      },
+      {
+        "left": "Напоминаешь про письмо, на которое не ответили",
+        "right": "Just following up on my previous email.",
+        "explain": "Reminder без упрёка. Ни You didn't reply, ни I'm still waiting — это испортит отношения."
+      },
+      {
+        "left": "Прилагаешь договор к письму",
+        "right": "Please find the contract attached.",
+        "explain": "Стандартная формула для аттачментов. Не Find attached please — порядок слов фиксирован."
+      },
+      {
+        "left": "Закрываешь письмо клиенту",
+        "right": "Best regards,",
+        "explain": "Нейтрально-формальный default закрытия. Подходит почти всем деловым адресатам."
+      },
+      {
+        "left": "Просишь о действии без срочности",
+        "right": "When you get a chance, take a look at the brief.",
+        "explain": "Несрочный запрос — когда у получателя будет время. Снимает давление, оставляет инициативу за ним."
+      },
+      {
+        "left": "Отказываешь от предложения партнёрства",
+        "right": "We won't be able to move forward at this time.",
+        "explain": "Мягкий отказ без бытового No. Дверь оставлена приоткрытой через at this time."
+      },
+      {
+        "left": "Подтверждаешь, что сейчас уточнишь и вернёшься",
+        "right": "I'll check with my manager and get back to you by EOD.",
+        "explain": "Get back to you = вернусь с ответом. EOD = end of day, стандартный таймфрейм для офиса."
+      },
+      {
+        "left": "Указываешь на возможную ошибку в документе",
+        "right": "I think there might be an error — could you double-check?",
+        "explain": "Вместо This is wrong — мягкое предположение. Сохраняет лицо обеим сторонам."
+      },
+      {
+        "left": "Хочешь подключить третьего человека к обсуждению",
+        "right": "I'll loop in Anna so she's aware.",
+        "explain": "Loop someone in — стандартное офисное выражение «добавить в email-цепочку»."
+      }
+    ]
+  }
+}

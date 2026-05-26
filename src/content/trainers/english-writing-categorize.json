@@ -1,0 +1,86 @@
+{
+  "course": "english",
+  "lesson": "english-writing",
+  "title": "Регистр email-фраз",
+  "description": "Разложи фразы по трём корзинам: Formal (юр. / банк / официальное), Neutral (большинство деловых писем), Informal (близкие коллеги, чат-like).",
+  "data": {
+    "type": "categorize",
+    "categories": [
+      { "id": "formal", "label": "Formal" },
+      { "id": "neutral", "label": "Neutral" },
+      { "id": "informal", "label": "Informal" }
+    ],
+    "items": [
+      {
+        "text": "Dear Sir or Madam,",
+        "category": "formal",
+        "explain": "Очень формальное приветствие для случая, когда адресат неизвестен (общий ящик, заявление, официальное письмо)."
+      },
+      {
+        "text": "To Whom It May Concern,",
+        "category": "formal",
+        "explain": "Формальная шапка для рекомендательных писем и официальной корреспонденции."
+      },
+      {
+        "text": "Yours faithfully,",
+        "category": "formal",
+        "explain": "UK formal закрытие, парная формула к Dear Sir or Madam. В обычной переписке звучит холодно."
+      },
+      {
+        "text": "We regret to inform you that...",
+        "category": "formal",
+        "explain": "Очень формальный буфер перед отказом. Используется в официальных письмах (отказ от вакансии, отказ от контракта)."
+      },
+      {
+        "text": "I would appreciate it if you could...",
+        "category": "formal",
+        "explain": "Формальный мягкий запрос. Уместен в письмах клиентам и руководителям. Не для чата с коллегой."
+      },
+      {
+        "text": "Hi Anna,",
+        "category": "neutral",
+        "explain": "Нейтрально-дружелюбное приветствие — стандарт для регулярной деловой переписки."
+      },
+      {
+        "text": "Best regards,",
+        "category": "neutral",
+        "explain": "Нейтрально-формальный default закрытия. Безопасный выбор почти везде."
+      },
+      {
+        "text": "Could you please send me the report?",
+        "category": "neutral",
+        "explain": "Стандартный мягкий запрос. Универсальный default для деловой переписки."
+      },
+      {
+        "text": "Unfortunately, we can't meet the deadline.",
+        "category": "neutral",
+        "explain": "Нейтральный буфер перед плохой новостью. Уместен почти в любом деловом контексте."
+      },
+      {
+        "text": "Just following up on my email.",
+        "category": "neutral",
+        "explain": "Нейтральный reminder без упрёка. Подходит и для коллег, и для клиентов."
+      },
+      {
+        "text": "Hey Tom,",
+        "category": "informal",
+        "explain": "Informal приветствие — только с близкими коллегами и в чат-like переписке. С клиентом фамильярно."
+      },
+      {
+        "text": "Cheers,",
+        "category": "informal",
+        "explain": "Informal закрытие, чаще UK / AU. Уместно с коллегами, не уместно с клиентами и в формальной переписке."
+      },
+      {
+        "text": "Quick question — is the deadline still Friday?",
+        "category": "informal",
+        "explain": "Informal начало для короткого письма с одним конкретным вопросом. Не для писем малознакомым адресатам."
+      },
+      {
+        "text": "Bumping this up in case it got buried.",
+        "category": "informal",
+        "explain": "Informal-нейтральный reminder с дружелюбным «может, потерялось в ящике». В формальном письме — нет."
+      }
+    ]
+  }
+}

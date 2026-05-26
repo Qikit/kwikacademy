@@ -16,7 +16,6 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
-import Scale from '../../components/lesson/Scale.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем эта тема
@@ -71,16 +70,12 @@ Advanced Grammar — это не «правильнее», а «точнее и 
 
 Не все Advanced-конструкции уместны везде. Часть — строго формальные (письмо, презентация, отчёт), часть — нейтральные, часть — нормальные и в разговоре.
 
-<Scale
-  axis="Где какие конструкции живут"
-  leftLabel="Разговор"
-  rightLabel="Формально"
-  items={[
-    { position: 8, label: "Разговор", note: "wish, gerund/infinitive, causative get, basic relative clauses" },
-    { position: 50, label: "Нейтрально", note: "cleft (it-cleft, what-cleft), reduced relatives, participle clauses, formal linkers (however, despite)" },
-    { position: 92, label: "Формально", note: "inversion после negative adverbs, subjunctive (I suggest he be), hedging (it would appear that)" },
-  ]}
-/>
+| Разговор | Нейтрально | Формально |
+|---|---|---|
+| wish | cleft (it-cleft, what-cleft) | inversion после negative adverbs |
+| gerund / infinitive | reduced relatives | subjunctive (I suggest he be) |
+| causative get | participle clauses | hedging (it would appear that) |
+| basic relative clauses | formal linkers (however, despite) | mandative constructions |
 
 ## 6. Группы конструкций
 

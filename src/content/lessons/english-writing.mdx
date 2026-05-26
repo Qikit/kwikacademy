@@ -16,7 +16,6 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
-import Scale from '../../components/lesson/Scale.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем уметь писать email
@@ -67,16 +66,13 @@ Subject — самая недооценённая часть. «Question» в т
 
 ## 5. Шкала регистра приветствий
 
-<Scale
-  title="От formal к informal"
-  items={[
-    { label: "Dear Mr/Ms [Surname]", note: "Максимально формально: юрист, банк, незнакомый клиент, официальное письмо" },
-    { label: "Dear [First name]", note: "Формально, но теплее: имя уже знаешь, но регистр держишь" },
-    { label: "Hello [Name]", note: "Нейтрально, безопасный default для большинства рабочих писем" },
-    { label: "Hi [Name]", note: "Полу-нейтрально: коллега, знакомый клиент, регулярная переписка" },
-    { label: "Hey [Name]", note: "Informal: только с близкими коллегами и в чат-like переписке" },
-  ]}
-/>
+| Приветствие | Регистр | Когда уместно |
+|---|---|---|
+| Dear Mr/Ms [Surname] | максимально формально | юрист, банк, незнакомый клиент, официальное письмо |
+| Dear [First name] | формально, но теплее | имя уже знаешь, но регистр держишь |
+| Hello [Name] | нейтрально | безопасный default для большинства рабочих писем |
+| Hi [Name] | полу-нейтрально | коллега, знакомый клиент, регулярная переписка |
+| Hey [Name] | informal | близкие коллеги, чат-like переписка |
 
 Безопасный default для незнакомого делового адресата — `Dear [First name]` или `Hello [Name]`. `Hi` уместен, как только обе стороны перешли на имена и формат расслабился. `Hey` в первом письме клиенту — почти всегда промах.
 

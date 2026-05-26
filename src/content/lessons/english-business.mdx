@@ -15,7 +15,6 @@ import Example from '../../components/lesson/Example.astro';
 import RuleList from '../../components/lesson/RuleList.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
-import Scale from '../../components/lesson/Scale.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем нужен Business English
@@ -70,16 +69,13 @@ Business English = **обычный английский + специальны�
 
 Одна мысль — три уровня формальности. Выбор зависит от адресата (коллега / руководитель / клиент) и канала (чат / email / контракт).
 
-<Scale
-  labels={["informal", "neutral", "formal"]}
-  items={[
-    { left: "Hey, can we chat?", center: "Can we have a quick call?", right: "I would like to schedule a call at your convenience." },
-    { left: "I can't make it.", center: "I won't be able to attend.", right: "I regret that I will be unable to attend." },
-    { left: "Got it, thanks!", center: "Thanks, noted.", right: "Thank you, I have noted your request." },
-    { left: "What's up with the report?", center: "Any update on the report?", right: "Could you please provide an update on the report?" },
-    { left: "Sorry, my bad.", center: "Sorry about that.", right: "I apologise for the inconvenience." },
-  ]}
-/>
+| Informal | Neutral | Formal |
+|---|---|---|
+| Hey, can we chat? | Can we have a quick call? | I would like to schedule a call at your convenience. |
+| I can't make it. | I won't be able to attend. | I regret that I will be unable to attend. |
+| Got it, thanks! | Thanks, noted. | Thank you, I have noted your request. |
+| What's up with the report? | Any update on the report? | Could you please provide an update on the report? |
+| Sorry, my bad. | Sorry about that. | I apologise for the inconvenience. |
 
 Базовое правило: **в чате с командой — нейтрально, в email клиенту или незнакомому коллеге — формально, в неформальном чате после работы — informal**. Промахи с регистром заметнее в обе стороны: слишком формально в чате звучит холодно, слишком informally в email клиенту — непрофессионально.
 

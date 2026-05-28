@@ -10,43 +10,100 @@ const lessons = await getCollection('lessons');
 const trainers = await getCollection('trainers');
 const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slug);
 const trainersFor = (slug: string) => trainers.filter((t) => t.data.course === slug);
+
+// Deterministic asymmetric layout: flagship first, then varied spans + jitter.
+const spanCycle = [6, 4, 5, 4, 4, 5, 4, 5, 4];
+const sizeCycle: ('lg' | 'md' | 'sm')[] = ['md', 'sm', 'md', 'sm', 'md', 'sm', 'md', 'sm', 'md'];
+function cell(i: number) {
+  if (i === 0) return { span: 7, size: 'lg' as const, rot: -1.5, mt: 0 };
+  const span = spanCycle[i % spanCycle.length];
+  const size = sizeCycle[i % sizeCycle.length];
+  const rot = ((i * 37) % 5) - 2; // -2..2 deterministic
+  const mt = (i % 3) * 22; // 0 / 22 / 44 vertical offset
+  return { span, size, rot, mt };
+}
 ---
 
 <section class="showcase">
-  <h2>Курсы</h2>
+  <p class="eyebrow">Каталог</p>
+  <h2>Девять направлений, один темп</h2>
   <div class="cards">
     {
-      courses.map((c) => (
-        <CourseCard
-          client:visible
-          href={withBase(`/topics/${c.id}`)}
-          title={c.data.title}
-          eyebrow={c.data.subtitle}
-          glyph={c.data.glyph}
-          meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
-          lessonSlugs={lessonsFor(c.id)
-            .filter((l) => !l.data.placeholder)
-            .map((l) => l.id)}
-          trainerSlugs={trainersFor(c.id).map((t) => t.id)}
-        />
-      ))
+      courses.map((c, i) => {
+        const { span, size, rot, mt } = cell(i);
+        return (
+          <div class="cell" style={`grid-column:span ${span};--rot:${rot}deg;--mt:${mt}px`}>
+            <CourseCard
+              client:visible
+              href={withBase(`/topics/${c.id}`)}
+              title={c.data.title}
+              eyebrow={c.data.subtitle}
+              glyph={c.data.glyph}
+              gradient={c.data.gradient}
+              size={size}
+              meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
+              lessonSlugs={lessonsFor(c.id)
+                .filter((l) => !l.data.placeholder)
+                .map((l) => l.id)}
+              trainerSlugs={trainersFor(c.id).map((t) => t.id)}
+            />
+          </div>
+        );
+      })
     }
   </div>
 </section>
 
 <style>
   .showcase {
-    max-width: 1000px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 0 24px 96px;
+    padding: 8px 24px 110px;
   }
   h2 {
-    font-size: 24px;
-    margin-bottom: 32px;
+    font-size: clamp(24px, 3.5vw, 36px);
+    font-weight: 800;
+    margin: 8px 0 40px;
+    max-width: 12ch;
   }
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px 26px;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 44px 28px;
+    align-items: start;
+  }
+  .cell {
+    transform: rotate(var(--rot));
+    margin-top: var(--mt);
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .cell:hover {
+    transform: rotate(0);
+    z-index: 2;
+  }
+  @media (max-width: 880px) {
+    .cards {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .cell {
+      grid-column: span 3 !important;
+    }
+  }
+  @media (max-width: 600px) {
+    .cards {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .cell {
+      grid-column: auto !important;
+      transform: none !important;
+      margin-top: 0 !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cell {
+      transform: none;
+      margin-top: 0;
+    }
   }
 </style>

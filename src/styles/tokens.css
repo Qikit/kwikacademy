@@ -31,6 +31,34 @@
   --c-purple: #7c6cf0;
   --c-pink: #f06cc0;
   --c-blue: #6c9cf0;
+
+  /* per-topic gradients */
+  --grad-blue: linear-gradient(135deg, #5b8def, #6c9cf0);
+  --grad-sky: linear-gradient(135deg, #4cb8e8, #6ccff0);
+  --grad-cyan: linear-gradient(135deg, #2bc4c4, #4ce0d0);
+  --grad-teal: linear-gradient(135deg, #2bb89a, #4cd0a8);
+  --grad-green: linear-gradient(135deg, #34b56a, #6cd08a);
+  --grad-gold: linear-gradient(135deg, #e6a92b, #f0c84c);
+  --grad-orange: linear-gradient(135deg, #ec7d3c, #f0a86c);
+  --grad-rose: linear-gradient(135deg, #ec4c8c, #f06cb0);
+  --grad-violet: linear-gradient(135deg, #7c5cf0, #a16cf0);
+  --grad-indigo: linear-gradient(135deg, #5a5cf0, #7c7cf0);
+
+  /* per-topic solid accents */
+  --c-aurora: #a16cf0;
+  --c-blue-purple: #7c8cf0;
+  --c-purple-pink: #c97cf0;
+  --c-teal-blue: #5bc7d8;
+  --c-amber-coral: #f0905c;
+  --c-sky: #4cb8e8;
+  --c-cyan: #2bc4c4;
+  --c-teal: #2bb89a;
+  --c-green: #34b56a;
+  --c-gold: #e6a92b;
+  --c-orange: #ec7d3c;
+  --c-rose: #ec4c8c;
+  --c-violet: #7c5cf0;
+  --c-indigo: #5a5cf0;
 }
 
 :root[data-theme='light'] {

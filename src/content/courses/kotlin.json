@@ -3,7 +3,7 @@
   "subtitle": "Программирование",
   "description": "Идиоматичный Kotlin с нуля: типы, корутины, DSL, бэкенд. Язык, на котором приятно писать.",
   "glyph": "KT",
-  "gradient": "purple-pink",
+  "gradient": "violet",
   "order": 2,
   "accent": "light",
   "estimatedHours": 40,

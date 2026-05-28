@@ -112,7 +112,6 @@ a {
   position: relative;
   display: block;
   width: 100%;
-  max-width: 300px;
 }
 .kc-l {
   position: absolute;
@@ -125,14 +124,26 @@ a {
 .kc-la {
   width: 84%;
   top: -16px;
-  background: var(--grad-purple-pink);
-  opacity: 0.45;
+  background: var(--card-grad, var(--grad-blue-purple));
+  opacity: 0.4;
 }
 .kc-lb {
   width: 92%;
   top: -8px;
-  background: var(--grad-blue-purple);
+  background: var(--card-grad, var(--grad-blue-purple));
   opacity: 0.7;
+}
+/* size variants */
+.kc-stack[data-size='lg'] .kc-card,
+.kc-stack[data-size='lg'] .kc-l {
+  height: 296px;
+}
+.kc-stack[data-size='lg'] .kc-title {
+  font-size: 30px;
+}
+.kc-stack[data-size='sm'] .kc-card,
+.kc-stack[data-size='sm'] .kc-l {
+  height: 184px;
 }
 .kc-stack:hover .kc-la {
   transform: translateX(-50%) translateY(-6px) rotate(-3deg);
@@ -151,7 +162,8 @@ a {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-soft);
-  transition: transform 0.35s;
+  transition: transform 0.18s ease-out;
+  transform-style: preserve-3d;
   display: block;
 }
 .kc-stack:hover .kc-card {
@@ -167,7 +179,14 @@ a {
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s;
-  background: radial-gradient(circle, rgba(157, 140, 255, 0.5), transparent 60%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--card-accent, #9d8cff) 45%, transparent),
+    transparent 60%
+  );
+}
+.kc-card:hover .kc-spot {
+  opacity: 0.85;
 }
 :root[data-theme='dark'] .kc-card:hover .kc-spot {
   opacity: 1;
@@ -188,6 +207,7 @@ a {
 }
 .kc-fill {
   fill: none;
+  stroke: var(--card-accent, #7c6cf0);
   stroke-width: 3.5;
   stroke-linecap: round;
   animation: kcBreathe 2.4s ease-in-out infinite;
@@ -195,10 +215,10 @@ a {
 @keyframes kcBreathe {
   0%,
   100% {
-    filter: drop-shadow(0 0 3px rgba(124, 108, 240, 0.5));
+    filter: drop-shadow(0 0 3px color-mix(in srgb, var(--card-accent, #7c6cf0) 50%, transparent));
   }
   50% {
-    filter: drop-shadow(0 0 9px rgba(124, 108, 240, 0.95)) drop-shadow(0 0 16px rgba(240, 108, 192, 0.6));
+    filter: drop-shadow(0 0 10px var(--card-accent, #7c6cf0));
   }
 }
 .kc-glyph {
@@ -209,7 +229,7 @@ a {
   font-size: 30px;
   font-weight: 800;
   z-index: 3;
-  background: var(--grad-aurora);
+  background: var(--card-grad, var(--grad-aurora));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -250,7 +270,7 @@ a {
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
-  color: var(--c-purple);
+  color: var(--card-accent, var(--c-purple));
   z-index: 3;
 }
 

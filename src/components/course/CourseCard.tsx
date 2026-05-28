@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { createStore } from '../../lib/progress/store';
 
 export interface CourseCardProps {
@@ -7,6 +7,8 @@ export interface CourseCardProps {
   eyebrow: string;
   glyph: string;
   meta: string; // e.g. "17 уроков"
+  gradient: string; // token name, e.g. "blue", "green"
+  size?: 'lg' | 'md' | 'sm';
   lessonSlugs: string[];
   trainerSlugs: string[];
 }
@@ -17,40 +19,61 @@ export default function CourseCard({
   eyebrow,
   glyph,
   meta,
+  gradient,
+  size = 'md',
   lessonSlugs,
   trainerSlugs,
 }: CourseCardProps) {
   const spot = useRef<HTMLDivElement>(null);
-  const gradId = useId().replace(/:/g, '');
-  // Read progress on the client so React owns the value (no external DOM patching to clobber).
+  const card = useRef<HTMLDivElement>(null);
   const [pct, setPct] = useState(0);
 
   useEffect(() => {
-    setPct(createStore().getOverallProgress(lessonSlugs, trainerSlugs));
+    const s = createStore();
+    s.ready.then(() => setPct(s.getOverallProgress(lessonSlugs, trainerSlugs)));
   }, [lessonSlugs, trainerSlugs]);
 
+  const reduce =
+    typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function onMove(e: React.MouseEvent<HTMLAnchorElement>) {
-    const el = spot.current;
-    if (!el) return;
     const r = e.currentTarget.getBoundingClientRect();
-    el.style.left = `${e.clientX - r.left}px`;
-    el.style.top = `${e.clientY - r.top}px`;
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    if (spot.current) {
+      spot.current.style.left = `${x}px`;
+      spot.current.style.top = `${y}px`;
+    }
+    if (card.current && !reduce) {
+      const rx = ((y / r.height) * 2 - 1) * -4;
+      const ry = ((x / r.width) * 2 - 1) * 4;
+      card.current.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-5px)`;
+    }
   }
 
+  function onLeave() {
+    if (card.current) card.current.style.transform = '';
+  }
+
+  const style = {
+    '--card-grad': `var(--grad-${gradient})`,
+    '--card-accent': `var(--c-${gradient})`,
+  } as CSSProperties;
+
   return (
-    <a className="kc-stack" href={href} onMouseMove={onMove}>
+    <a
+      className="kc-stack"
+      href={href}
+      data-size={size}
+      style={style}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
       <span className="kc-l kc-la" />
       <span className="kc-l kc-lb" />
-      <div className="kc-card">
+      <div className="kc-card" ref={card}>
         <div className="kc-spot" ref={spot} aria-hidden="true" />
         <svg className="kc-peri" viewBox="0 0 260 210" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="var(--c-purple)" />
-              <stop offset=".5" stopColor="#b07cf0" />
-              <stop offset="1" stopColor="var(--c-pink)" />
-            </linearGradient>
-          </defs>
           <rect className="kc-track" x="2.5" y="2.5" width="255" height="205" rx="21" pathLength={100} />
           <rect
             className="kc-fill"
@@ -60,7 +83,6 @@ export default function CourseCard({
             height="205"
             rx="21"
             pathLength={100}
-            stroke={`url(#${gradId})`}
             style={{ strokeDasharray: `${pct} 100` }}
           />
         </svg>

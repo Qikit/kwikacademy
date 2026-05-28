@@ -3,7 +3,7 @@
   "subtitle": "Программирование",
   "description": "Фундамент JVM: ООП, коллекции, многопоточность, экосистема. База, на которой держится индустрия.",
   "glyph": "JV",
-  "gradient": "amber-coral",
+  "gradient": "orange",
   "order": 3,
   "accent": "light",
   "estimatedHours": 45,

@@ -3,7 +3,7 @@
   "subtitle": "Язык",
   "description": "От артиклей до свободной речи и профессионального английского. Дорожная карта из двух фаз — бытовой и рабочий язык.",
   "glyph": "EN",
-  "gradient": "blue-purple",
+  "gradient": "blue",
   "order": 1,
   "accent": "light",
   "estimatedHours": 60,

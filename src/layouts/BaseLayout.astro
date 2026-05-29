@@ -13,6 +13,7 @@ import '../styles/global.css';
 import Navbar from '../components/ui/Navbar.astro';
 import AuroraBlobs from '../components/ui/AuroraBlobs.astro';
 import { themeInitScript } from '../lib/theme';
+import { withBase } from '../lib/url';
 
 interface Props {
   title: string;
@@ -28,6 +29,10 @@ const { title, description = 'Открытая платформа знаний K
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="apple-touch-icon" href={withBase('/favicon.svg')} />
+    <meta name="theme-color" content="#eef0f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#120f1c" media="(prefers-color-scheme: dark)" />
     <script is:inline set:html={themeInitScript()} />
   </head>
   <body>

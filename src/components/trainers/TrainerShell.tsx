@@ -35,7 +35,9 @@ export default function TrainerShell({
   useEffect(() => {
     if (!nav) return;
     const store = createStore();
-    setCourseDone(nav.courseTrainerSlugs.filter((s) => store.isTrainerDone(s)).length);
+    store.ready.then(() =>
+      setCourseDone(nav.courseTrainerSlugs.filter((s) => store.isTrainerDone(s)).length),
+    );
   }, [nav, finished]);
 
   function next() {

@@ -29,7 +29,7 @@ export default function Dashboard() {
   const store = useRef(createStore());
 
   useEffect(() => {
-    setSnap(store.current.snapshot());
+    store.current.ready.then(() => setSnap(store.current.snapshot()));
   }, []);
 
   function doExport() {
@@ -56,8 +56,7 @@ export default function Dashboard() {
 
   function reset() {
     if (confirm('Стереть весь прогресс на этом устройстве?')) {
-      localStorage.clear();
-      store.current = createStore();
+      store.current.clear();
       setSnap(store.current.snapshot());
     }
   }

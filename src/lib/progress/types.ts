@@ -9,7 +9,6 @@ export interface TrainerResult {
 
 export interface ProgressState {
   version: 1;
-  theme: ThemeChoice | null; // null = follow system
   lessonsDone: string[]; // lesson slugs
   lessonPositions: Record<string, string>; // lessonSlug -> last section id
   trainerResults: Record<string, TrainerResult>; // trainerSlug -> best result
@@ -18,11 +17,15 @@ export interface ProgressState {
 
 export const EMPTY_STATE: ProgressState = {
   version: 1,
-  theme: null,
   lessonsDone: [],
   lessonPositions: {},
   trainerResults: {},
   lastActivity: 0,
 };
 
+/** Legacy localStorage key (pre-IndexedDB) — read once for migration. */
 export const STORAGE_KEY = 'kwik:v1:progress';
+/** Theme lives in localStorage for synchronous, flash-free reads. */
+export const THEME_KEY = 'kwik:theme';
+/** Key inside the localForage instance. */
+export const LF_KEY = 'progress';

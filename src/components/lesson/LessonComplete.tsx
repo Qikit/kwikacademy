@@ -6,7 +6,8 @@ export default function LessonComplete({ slug, nextHref }: { slug: string; nextH
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    setDone(createStore().isLessonDone(slug));
+    const s = createStore();
+    s.ready.then(() => setDone(s.isLessonDone(slug)));
   }, [slug]);
 
   function complete() {

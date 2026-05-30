@@ -1,92 +1,114 @@
+import localforage from 'localforage';
 import {
-  EMPTY_STATE,
-  STORAGE_KEY,
-  type ProgressState,
-  type ThemeChoice,
-  type TrainerResult,
-} from './types';
+  emptyState,
+  migrate,
+  isLessonDone,
+  markLessonDone,
+  isTrainerDone,
+  recordTrainerResult,
+  getTrainerResult,
+  getCourseProgress,
+  getOverallProgress,
+} from './state';
+import { LF_KEY, STORAGE_KEY, THEME_KEY, type ProgressState, type ThemeChoice, type TrainerResult } from './types';
 
-function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
-}
+// Progress lives in IndexedDB (large quota, future-proof). Theme stays in
+// localStorage so it can be read synchronously before first paint (no flash).
+// NOTE: IndexedDB is NOT permanent — clearing site data, private mode, and
+// Safari's 7-day cap evict it just like localStorage. The real backup is the
+// JSON export on /progress; persist() only reduces low-disk auto-eviction.
+const lf =
+  typeof window !== 'undefined'
+    ? localforage.createInstance({ name: 'kwikacademy', storeName: 'progress' })
+    : null;
 
-/** Fresh empty state — never share EMPTY_STATE's nested objects across stores. */
-function emptyState(): ProgressState {
-  return structuredClone(EMPTY_STATE);
-}
+let state: ProgressState = emptyState();
 
-function migrate(raw: unknown): ProgressState {
-  // version 1 is current; future versions branch here before returning.
-  if (!raw || typeof raw !== 'object') return emptyState();
-  const r = raw as Partial<ProgressState>;
-  if (r.version !== 1) return emptyState();
-  return {
-    ...emptyState(),
-    ...r,
-    lessonsDone: Array.isArray(r.lessonsDone) ? r.lessonsDone : [],
-    lessonPositions: r.lessonPositions ?? {},
-    trainerResults: r.trainerResults ?? {},
-  };
-}
+let resolveReady!: () => void;
+export const ready = new Promise<void>((r) => {
+  resolveReady = r;
+});
 
-function read(): ProgressState {
-  if (!isBrowser()) return emptyState();
+async function init() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return emptyState();
-    return migrate(JSON.parse(raw));
+    let loaded: unknown = await lf!.getItem(LF_KEY);
+    if (!loaded) {
+      // one-time migration from the old localStorage key
+      try {
+        const old = localStorage.getItem(STORAGE_KEY);
+        if (old) {
+          loaded = JSON.parse(old);
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+    state = migrate(loaded);
+    await lf!.setItem(LF_KEY, state);
+    try {
+      await navigator.storage?.persist?.();
+    } catch {
+      /* best-effort */
+    }
   } catch {
-    return emptyState();
+    state = emptyState();
+  } finally {
+    resolveReady();
   }
+}
+
+if (lf) init();
+else resolveReady();
+
+function persist() {
+  lf?.setItem(LF_KEY, state).catch(() => {});
 }
 
 export function createStore() {
-  let state = read();
-
-  function persist() {
-    state.lastActivity = Date.now();
-    if (isBrowser()) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
   return {
-    isLessonDone: (slug: string) => state.lessonsDone.includes(slug),
+    ready,
+    isLessonDone: (slug: string) => isLessonDone(state, slug),
     markLessonDone(slug: string) {
-      if (!state.lessonsDone.includes(slug)) state.lessonsDone.push(slug);
+      markLessonDone(state, slug);
       persist();
     },
-    getCourseProgress(lessonSlugs: string[]): number {
-      if (lessonSlugs.length === 0) return 0;
-      const done = lessonSlugs.filter((s) => state.lessonsDone.includes(s)).length;
-      return Math.round((done / lessonSlugs.length) * 100);
-    },
+    isTrainerDone: (slug: string) => isTrainerDone(state, slug),
+    getTrainerResult: (slug: string): TrainerResult | null => getTrainerResult(state, slug),
     recordTrainerResult(result: TrainerResult) {
-      const prev = state.trainerResults[result.trainerSlug];
-      if (!prev || result.score > prev.score) state.trainerResults[result.trainerSlug] = result;
+      recordTrainerResult(state, result);
       persist();
     },
-    getTrainerResult: (slug: string): TrainerResult | null => state.trainerResults[slug] ?? null,
-    isTrainerDone: (slug: string) => slug in state.trainerResults,
-    getOverallProgress(lessonSlugs: string[], trainerSlugs: string[]): number {
-      const total = lessonSlugs.length + trainerSlugs.length;
-      if (total === 0) return 0;
-      const doneLessons = lessonSlugs.filter((s) => state.lessonsDone.includes(s)).length;
-      const doneTrainers = trainerSlugs.filter((s) => s in state.trainerResults).length;
-      return Math.round(((doneLessons + doneTrainers) / total) * 100);
-    },
-    getTheme: (): ThemeChoice | null => state.theme,
-    setTheme(theme: ThemeChoice) {
-      state.theme = theme;
-      persist();
-    },
+    getCourseProgress: (lessonSlugs: string[]) => getCourseProgress(state, lessonSlugs),
+    getOverallProgress: (lessonSlugs: string[], trainerSlugs: string[]) =>
+      getOverallProgress(state, lessonSlugs, trainerSlugs),
     setLessonPosition(slug: string, sectionId: string) {
       state.lessonPositions[slug] = sectionId;
       persist();
     },
     snapshot: (): ProgressState => structuredClone(state),
+    getTheme(): ThemeChoice | null {
+      try {
+        return localStorage.getItem(THEME_KEY) as ThemeChoice | null;
+      } catch {
+        return null;
+      }
+    },
+    setTheme(theme: ThemeChoice) {
+      try {
+        localStorage.setItem(THEME_KEY, theme);
+      } catch {
+        /* ignore */
+      }
+    },
     exportAll: (): string => JSON.stringify(state, null, 2),
     importAll(json: string) {
       state = migrate(JSON.parse(json));
       persist();
+    },
+    clear() {
+      state = emptyState();
+      lf?.removeItem(LF_KEY).catch(() => {});
     },
   };
 }

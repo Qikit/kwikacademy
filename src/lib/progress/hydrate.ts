@@ -1,7 +1,8 @@
-import { createStore } from './store';
+import { createStore, ready } from './store';
 
 /** Mark finished trainers in a topic's trainer list with a badge and best score. */
-export function hydrateTrainerList() {
+export async function hydrateTrainerList() {
+  await ready;
   const store = createStore();
   document.querySelectorAll<HTMLElement>('[data-trainer]').forEach((el) => {
     const slug = el.dataset.trainer;
@@ -15,7 +16,8 @@ export function hydrateTrainerList() {
 }
 
 /** Update roadmap node states from stored progress. */
-export function hydrateRoadmap() {
+export async function hydrateRoadmap() {
+  await ready;
   const store = createStore();
   const nodes = Array.from(document.querySelectorAll<HTMLElement>('.rnode'));
   let currentSet = false;

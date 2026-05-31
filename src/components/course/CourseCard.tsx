@@ -25,7 +25,6 @@ export default function CourseCard({
   trainerSlugs,
 }: CourseCardProps) {
   const spot = useRef<HTMLDivElement>(null);
-  const card = useRef<HTMLDivElement>(null);
   const [pct, setPct] = useState(0);
 
   useEffect(() => {
@@ -33,26 +32,12 @@ export default function CourseCard({
     s.ready.then(() => setPct(s.getOverallProgress(lessonSlugs, trainerSlugs)));
   }, [lessonSlugs, trainerSlugs]);
 
-  const reduce =
-    typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   function onMove(e: React.MouseEvent<HTMLAnchorElement>) {
+    const el = spot.current;
+    if (!el) return;
     const r = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    if (spot.current) {
-      spot.current.style.left = `${x}px`;
-      spot.current.style.top = `${y}px`;
-    }
-    if (card.current && !reduce) {
-      const rx = ((y / r.height) * 2 - 1) * -4;
-      const ry = ((x / r.width) * 2 - 1) * 4;
-      card.current.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-5px)`;
-    }
-  }
-
-  function onLeave() {
-    if (card.current) card.current.style.transform = '';
+    el.style.left = `${e.clientX - r.left}px`;
+    el.style.top = `${e.clientY - r.top}px`;
   }
 
   const style = {
@@ -61,17 +46,10 @@ export default function CourseCard({
   } as CSSProperties;
 
   return (
-    <a
-      className="kc-stack"
-      href={href}
-      data-size={size}
-      style={style}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-    >
+    <a className="kc-stack" href={href} data-size={size} style={style} onMouseMove={onMove}>
       <span className="kc-l kc-la" />
       <span className="kc-l kc-lb" />
-      <div className="kc-card" ref={card}>
+      <div className="kc-card">
         <div className="kc-spot" ref={spot} aria-hidden="true" />
         <svg className="kc-peri" viewBox="0 0 260 210" preserveAspectRatio="none" aria-hidden="true">
           <rect className="kc-track" x="2.5" y="2.5" width="255" height="205" rx="21" pathLength={100} />

@@ -854,19 +854,6 @@ a {
   font-weight: 600;
   color: var(--text);
 }
-.kc-match-select {
-  padding: 10px 12px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-}
-.kc-match-select:focus {
-  outline: none;
-  border-color: var(--c-blue);
-}
 .kc-match-correct {
   grid-column: 1 / -1;
   font-size: 13px;
@@ -875,6 +862,118 @@ a {
 }
 .kc-match-actions {
   margin-top: 8px;
+}
+
+/* ===== Custom Select (accessible listbox) ===== */
+.kc-select {
+  position: relative;
+  width: 100%;
+}
+.kc-select.is-open {
+  z-index: 30;
+}
+.kc-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+.kc-select-trigger:hover:not(:disabled) {
+  border-color: var(--c-blue);
+}
+.kc-select-trigger:disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+.kc-select-trigger.is-ok {
+  border-color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+}
+.kc-select-trigger.is-no {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+.kc-select-value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kc-select-value.is-placeholder {
+  color: var(--text-3);
+}
+.kc-select-caret {
+  flex-shrink: 0;
+  color: var(--text-3);
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.kc-select.is-open .kc-select-caret {
+  transform: rotate(180deg);
+}
+.kc-select-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  max-height: 280px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-border);
+  background: var(--surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-soft);
+  transform-origin: top center;
+  animation: kcSelectIn 0.16s cubic-bezier(0.2, 0.9, 0.25, 1.1);
+  outline: none;
+}
+@keyframes kcSelectIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.kc-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.kc-select-option.is-active {
+  background: rgba(96, 165, 250, 0.12);
+}
+.kc-select-option.is-selected {
+  color: var(--c-blue);
+  font-weight: 600;
+}
+.kc-select-tick {
+  flex-shrink: 0;
+  color: var(--c-blue);
 }
 
 /* Trainer: Review block */

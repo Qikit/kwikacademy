@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
+import Select, { type SelectOption } from '../ui/Select';
 import { scoreMatch } from '../../lib/trainers/score';
 
 export interface MatchPair {
@@ -15,6 +16,20 @@ function shuffle<T>(arr: T[]): T[] {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+// Несколько маркеров могут указывать на один ответ (классификация),
+// поэтому варианты в списке — только уникальные правые значения, без повторов.
+function uniqueRights(pairs: MatchPair[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const p of pairs) {
+    if (!seen.has(p.right)) {
+      seen.add(p.right);
+      out.push(p.right);
+    }
+  }
+  return out;
 }
 
 export default function Match({
@@ -36,7 +51,9 @@ export default function Match({
 function MatchBody({ pairs, shell }: { pairs: MatchPair[]; shell: ShellRenderProps }) {
   const { finish } = shell;
   const correct = Object.fromEntries(pairs.map((p) => [p.left, p.right]));
-  const [rights] = useState(() => shuffle(pairs.map((p) => p.right)));
+  const [options] = useState<SelectOption[]>(() =>
+    shuffle(uniqueRights(pairs)).map((r) => ({ value: r, label: r })),
+  );
   const [picked, setPicked] = useState<Record<string, string>>({});
   const [revealed, setRevealed] = useState(false);
   const [warn, setWarn] = useState(false);
@@ -80,20 +97,14 @@ function MatchBody({ pairs, shell }: { pairs: MatchPair[]; shell: ShellRenderPro
             className={`kc-match-row ${ok ? 'is-ok' : ''} ${wrong ? 'is-no' : ''}`}
           >
             <span className="kc-match-left">{p.left}</span>
-            <select
+            <Select
+              options={options}
               value={userPick ?? ''}
-              onChange={(e) => set(p.left, e.target.value)}
-              aria-label={`Пара для «${p.left}»`}
+              onChange={(v) => set(p.left, v)}
+              ariaLabel={`Пара для «${p.left}»`}
               disabled={revealed}
-              className="kc-match-select"
-            >
-              <option value="">— выбери —</option>
-              {rights.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
+              status={revealed ? (ok ? 'ok' : wrong ? 'no' : undefined) : undefined}
+            />
             {revealed && wrong && (
               <div className="kc-match-correct">
                 Правильно: <strong>{p.right}</strong>

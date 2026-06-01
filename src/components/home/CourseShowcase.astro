@@ -3,6 +3,11 @@ import { getCollection } from 'astro:content';
 import CourseCard from '../course/CourseCard.tsx';
 import { withBase } from '../../lib/url';
 
+interface Props {
+  header?: boolean;
+}
+const { header = true } = Astro.props;
+
 const courses = (await getCollection('courses'))
   .filter((c) => !c.data.hidden)
   .sort((a, b) => a.data.order - b.data.order);
@@ -27,8 +32,14 @@ const fallback = { area: 'auto', size: 'md' as const };
 ---
 
 <section class="showcase">
-  <p class="eyebrow">Каталог</p>
-  <h2>Девять направлений, один темп</h2>
+  {
+    header && (
+      <>
+        <p class="eyebrow">Каталог</p>
+        <h2>Девять направлений, один темп</h2>
+      </>
+    )
+  }
   <div class="bento">
     {
       courses.map((c) => {
@@ -44,9 +55,7 @@ const fallback = { area: 'auto', size: 'md' as const };
               gradient={c.data.gradient}
               size={p.size}
               meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
-              lessonSlugs={lessonsFor(c.id)
-                .filter((l) => !l.data.placeholder)
-                .map((l) => l.id)}
+              lessonSlugs={lessonsFor(c.id).map((l) => l.id)}
               trainerSlugs={trainersFor(c.id).map((t) => t.id)}
             />
           </div>
@@ -76,8 +85,8 @@ const fallback = { area: 'auto', size: 'md' as const };
   .bento {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 94px;
-    gap: 18px;
+    grid-auto-rows: 100px;
+    gap: 30px;
   }
   .cell {
     min-width: 0;
@@ -87,7 +96,8 @@ const fallback = { area: 'auto', size: 'md' as const };
   @media (max-width: 920px) {
     .bento {
       grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 210px;
+      grid-auto-rows: 220px;
+      gap: 24px;
     }
     .cell {
       grid-area: auto !important;
@@ -98,7 +108,7 @@ const fallback = { area: 'auto', size: 'md' as const };
     .bento {
       grid-template-columns: 1fr;
       grid-auto-rows: 200px;
-      gap: 26px;
+      gap: 22px;
     }
     .eyebrow,
     h2 {

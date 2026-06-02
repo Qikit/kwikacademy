@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
 import { scoreQuiz } from '../../lib/trainers/score';
+import { shuffleOptions } from '../../lib/trainers/shuffle';
 
 export interface QuizQuestion {
   prompt: string;
@@ -27,8 +28,16 @@ export default function Quiz({
 
 function QuizBody({ questions, shell }: { questions: QuizQuestion[]; shell: ShellRenderProps }) {
   const { index, next, prev, canGoBack, finish } = shell;
+  // Перемешиваем варианты один раз на заход: инициализатор useState выполняется
+  // при mount, а смена attempt (кнопка «Заново») ремаунтит компонент → новый порядок.
+  const [shuffled] = useState(() =>
+    questions.map((qq) => {
+      const s = shuffleOptions(qq.options, qq.correctIndex);
+      return { ...qq, options: s.options, correctIndex: s.correctIndex };
+    }),
+  );
   const [picks, setPicks] = useState<number[]>([]);
-  const q = questions[index];
+  const q = shuffled[index];
   const picked = picks[index];
   const revealed = typeof picked === 'number';
 
@@ -40,10 +49,10 @@ function QuizBody({ questions, shell }: { questions: QuizQuestion[]; shell: Shel
   }
 
   function advance() {
-    if (index === questions.length - 1) {
-      const correctIndices = questions.map((x) => x.correctIndex);
+    if (index === shuffled.length - 1) {
+      const correctIndices = shuffled.map((x) => x.correctIndex);
       const score = scoreQuiz(picks, correctIndices).score;
-      const review: ReviewItem[] = questions.map((qq, i) => ({
+      const review: ReviewItem[] = shuffled.map((qq, i) => ({
         prompt: qq.prompt,
         userAnswer: typeof picks[i] === 'number' ? qq.options[picks[i]] : '—',
         correctAnswer: qq.options[qq.correctIndex],

@@ -1,0 +1,106 @@
+---
+interface Props {
+  title?: string;
+  checklist?: string[];
+}
+const { title, checklist = [] } = Astro.props;
+---
+
+<div class="pr">
+  <div class="pr-head">
+    <span class="pr-tag">Практикум</span>
+    {title && <strong class="pr-title">{title}</strong>}
+  </div>
+  <div class="pr-brief"><slot /></div>
+  {checklist.length > 0 && (
+    <div class="pr-check">
+      <span class="pr-check-label">Сверься сам</span>
+      <ul>
+        {checklist.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  )}
+  <details class="pr-solution">
+    <summary>Показать разбор</summary>
+    <div class="pr-solution-body"><slot name="solution" /></div>
+  </details>
+</div>
+
+<style>
+  .pr {
+    margin: 20px 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-left: 3px solid #34d399;
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+    padding: 16px 18px;
+  }
+  .pr-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .pr-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #34d399;
+    font-family: var(--font-mono);
+  }
+  .pr-title {
+    font-size: 15px;
+    color: var(--text);
+  }
+  .pr-brief {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .pr-check {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--glass-border);
+  }
+  .pr-check-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+  }
+  .pr-check ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .pr-solution {
+    margin-top: 14px;
+  }
+  .pr-solution summary {
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 600;
+    list-style: none;
+    user-select: none;
+  }
+  .pr-solution summary::-webkit-details-marker {
+    display: none;
+  }
+  .pr-solution summary::before {
+    content: '▸ ';
+    color: #34d399;
+  }
+  .pr-solution[open] summary::before {
+    content: '▾ ';
+  }
+  .pr-solution-body {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+</style>

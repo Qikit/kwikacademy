@@ -12,6 +12,7 @@ import Callout from '../../components/lesson/Callout.astro';
 import Compare from '../../components/lesson/Compare.astro';
 import Example from '../../components/lesson/Example.astro';
 import RuleList from '../../components/lesson/RuleList.astro';
+import Practice from '../../components/lesson/Practice.astro';
 
 ## Раздел один
 
@@ -27,3 +28,11 @@ import RuleList from '../../components/lesson/RuleList.astro';
 </Compare>
 
 <Example ru="Перевод примера">This is an example.</Example>
+
+<Practice title="Собери выноску" checklist={["Указан тип", "Есть заголовок", "Текст без воды"]}>
+Опиши своими словами, когда уместна выноска `Callout`, и приведи один пример.
+
+<div slot="solution">
+`Callout` уместен для короткого акцента — ядро правила, лайфхак, предупреждение. Пример: <Callout type="teal" title="Лайфхак">Сначала пример, потом самостоятельная задача.</Callout>
+</div>
+</Practice>

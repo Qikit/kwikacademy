@@ -15,7 +15,7 @@ const links = [
     <span class="logo-mark"><Icon name="graduation-cap" size={18} /></span>
     KwikAcademy
   </a>
-  <nav class="pill">
+  <nav class="pill" data-open="false" aria-label="Разделы">
     {
       links.map((l) => (
         <a href={l.href}>
@@ -27,6 +27,30 @@ const links = [
   </nav>
   <ThemeToggle client:load />
 </header>
+
+<script>
+  // Mobile only: tapping the collapsed pill expands it (liquid-glass morph) to reveal
+  // section labels. A second tap on a link navigates; a tap outside collapses.
+  const pill = document.querySelector<HTMLElement>('header .pill');
+  if (pill) {
+    const mq = matchMedia('(max-width: 600px)');
+    pill.addEventListener('click', (e) => {
+      if (!mq.matches) return;
+      if (pill.dataset.open !== 'true') {
+        // first tap on the collapsed pill: expand instead of following the link
+        const a = (e.target as HTMLElement).closest('a');
+        if (a) e.preventDefault();
+        pill.dataset.open = 'true';
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!mq.matches) return;
+      if (pill.dataset.open === 'true' && !pill.contains(e.target as Node)) {
+        pill.dataset.open = 'false';
+      }
+    });
+  }
+</script>
 
 <style>
   .bar {
@@ -65,6 +89,11 @@ const links = [
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
+    transition:
+      padding 0.45s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+      gap 0.45s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+      box-shadow 0.35s,
+      background 0.3s;
   }
   .pill a {
     display: inline-flex;
@@ -75,18 +104,46 @@ const links = [
     padding: 8px 15px;
     border-radius: var(--r-full);
     color: var(--text-2);
-    transition: color 0.2s, background 0.2s;
+    transition:
+      color 0.2s,
+      background 0.2s,
+      padding 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.1);
+  }
+  .pill a span {
+    transition:
+      max-width 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+      opacity 0.3s,
+      margin 0.4s;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .pill a:hover {
     color: var(--c-purple);
     background: var(--track);
   }
   @media (max-width: 600px) {
-    .pill a span {
-      display: none;
-    }
     .pill a {
       padding: 9px;
+    }
+    /* collapsed by default: icons only */
+    .pill[data-open='false'] a span {
+      max-width: 0;
+      opacity: 0;
+      margin-left: -7px;
+    }
+    /* expanded liquid-glass state on tap */
+    .pill[data-open='true'] {
+      padding: 8px 10px;
+      gap: 4px;
+      background: color-mix(in srgb, var(--glass-bg) 96%, transparent);
+      box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.35);
+    }
+    .pill[data-open='true'] a {
+      padding: 10px 14px;
+    }
+    .pill[data-open='true'] a span {
+      max-width: 160px;
+      opacity: 1;
     }
   }
 </style>

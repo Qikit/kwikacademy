@@ -1,13 +1,37 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ComponentType } from 'react';
+import {
+  Atom,
+  BookOpen,
+  Briefcase,
+  Code,
+  Coffee,
+  Database,
+  Globe,
+  Sparkles,
+  Users,
+  type LucideProps,
+} from 'lucide-react';
 import { createStore } from '../../lib/progress/store';
+
+const ICONS: Record<string, ComponentType<LucideProps>> = {
+  'book-open': BookOpen,
+  code: Code,
+  coffee: Coffee,
+  atom: Atom,
+  globe: Globe,
+  sparkles: Sparkles,
+  briefcase: Briefcase,
+  users: Users,
+  database: Database,
+};
 
 export interface CourseCardProps {
   href: string;
   title: string;
   eyebrow: string;
-  glyph: string;
+  icon: string;
   meta: string;
-  gradient: string; // token name
+  gradient: string;
   size?: 'lg' | 'md' | 'sm';
   lessonSlugs: string[];
   trainerSlugs: string[];
@@ -17,7 +41,7 @@ export default function CourseCard({
   href,
   title,
   eyebrow,
-  glyph,
+  icon,
   meta,
   gradient,
   size = 'md',
@@ -34,7 +58,6 @@ export default function CourseCard({
     s.ready.then(() => setPct(s.getOverallProgress(lessonSlugs, trainerSlugs)));
   }, [lessonSlugs, trainerSlugs]);
 
-  // Track actual card pixel size so the SVG outline geometry stays correct at any aspect.
   useEffect(() => {
     const el = cardEl.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
@@ -62,6 +85,8 @@ export default function CourseCard({
   } as CSSProperties;
 
   const done = pct >= 100;
+  const Ico = ICONS[icon] ?? BookOpen;
+  const iconSize = size === 'lg' ? 26 : 22;
 
   return (
     <a
@@ -72,6 +97,8 @@ export default function CourseCard({
       style={style}
       onMouseMove={onMove}
     >
+      <span className="kc-l kc-la" />
+      <span className="kc-l kc-lb" />
       <div className="kc-card" ref={cardEl}>
         <div className="kc-spot" ref={spot} aria-hidden="true" />
         <svg
@@ -102,7 +129,9 @@ export default function CourseCard({
             style={{ strokeDasharray: `${pct} 100` }}
           />
         </svg>
-        <span className="kc-glyph">{glyph}</span>
+        <span className="kc-glyph" aria-hidden="true">
+          <Ico size={iconSize} strokeWidth={1.7} />
+        </span>
         <span className="kc-eyebrow">{eyebrow}</span>
         <span className="kc-title">{title}</span>
         <span className="kc-meta">{meta}</span>

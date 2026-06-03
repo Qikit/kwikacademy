@@ -114,10 +114,32 @@ a {
   width: 100%;
   height: 100%;
 }
-/* layered "peek" elements live in the DOM history; in bento they make the grid look
-   uneven, so we hide them by default. */
 .kc-l {
-  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: var(--r-lg);
+  height: 100%;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.kc-la {
+  width: 86%;
+  top: -10px;
+  background: var(--card-grad, var(--grad-blue-purple));
+  opacity: 0.32;
+}
+.kc-lb {
+  width: 93%;
+  top: -5px;
+  background: var(--card-grad, var(--grad-blue-purple));
+  opacity: 0.55;
+}
+.kc-stack:hover .kc-la {
+  transform: translateX(-50%) translateY(-4px) rotate(-1.8deg);
+}
+.kc-stack:hover .kc-lb {
+  transform: translateX(-50%) translateY(-2px) rotate(1.4deg);
 }
 /* larger tiles get a bigger title */
 .kc-stack[data-size='lg'] .kc-title {
@@ -208,16 +230,23 @@ a {
 }
 .kc-glyph {
   position: absolute;
-  top: 20px;
-  right: 22px;
-  font-family: var(--font-display);
-  font-size: 30px;
-  font-weight: 800;
-  z-index: 3;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  color: #fff;
   background: var(--card-grad, var(--grad-aurora));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  box-shadow: 0 8px 22px -10px color-mix(in srgb, var(--card-accent, #7c6cf0) 60%, transparent);
+  z-index: 3;
+}
+.kc-stack[data-size='lg'] .kc-glyph {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
 }
 .kc-eyebrow {
   display: block;

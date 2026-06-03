@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { shuffleOptions } from './shuffle';
+import { shuffleOptions, shuffleArray } from './shuffle';
 
 describe('shuffleOptions', () => {
   const opts = ['A', 'B', 'C', 'D'];
@@ -27,5 +27,21 @@ describe('shuffleOptions', () => {
     const input = [...opts];
     shuffleOptions(input, 0, () => 0.3);
     expect(input).toEqual(opts);
+  });
+});
+
+describe('shuffleArray', () => {
+  const arr = ['a', 'b', 'c', 'd', 'e'];
+
+  it('preserves all elements', () => {
+    const r = shuffleArray(arr, () => 0.5);
+    expect([...r].sort()).toEqual([...arr].sort());
+    expect(r).toHaveLength(arr.length);
+  });
+
+  it('does not mutate the input', () => {
+    const input = [...arr];
+    shuffleArray(input, () => 0.3);
+    expect(input).toEqual(arr);
   });
 });

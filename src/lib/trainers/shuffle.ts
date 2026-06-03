@@ -20,3 +20,16 @@ export function shuffleOptions(
     correctIndex: order.indexOf(correctIndex),
   };
 }
+
+/**
+ * Перемешивает массив (Fisher-Yates), не мутируя вход. Источник случайности
+ * инжектируется. Для тренажёров: новый порядок элементов на каждый заход.
+ */
+export function shuffleArray<T>(arr: T[], rng: () => number = Math.random): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}

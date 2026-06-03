@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
 import { scoreCategorize } from '../../lib/trainers/score';
+import { shuffleArray } from '../../lib/trainers/shuffle';
 
 export interface CategorizeCategory {
   id: string;
@@ -48,6 +49,8 @@ function CategorizeBody({
   shell: ShellRenderProps;
 }) {
   const { finish } = shell;
+  // Перемешиваем элементы один раз на заход, чтобы порядок/группировку нельзя было угадать.
+  const [shuffledItems] = useState(() => shuffleArray(items));
   const [picks, setPicks] = useState<Map<string, string>>(new Map());
   const [revealed, setRevealed] = useState(false);
   const [warn, setWarn] = useState(false);
@@ -61,7 +64,7 @@ function CategorizeBody({
       return next;
     });
   }
-  const allPicked = items.every((it) => picks.has(it.text));
+  const allPicked = shuffledItems.every((it) => picks.has(it.text));
   const categoryLabel = (id?: string) =>
     (id && categories.find((c) => c.id === id)?.label) || '—';
 
@@ -74,8 +77,8 @@ function CategorizeBody({
   }
 
   function complete() {
-    const score = scoreCategorize(items, picks).score;
-    const review: ReviewItem[] = items.map((it) => {
+    const score = scoreCategorize(shuffledItems, picks).score;
+    const review: ReviewItem[] = shuffledItems.map((it) => {
       const userId = picks.get(it.text);
       return {
         prompt: it.text,
@@ -91,7 +94,7 @@ function CategorizeBody({
   return (
     <div className="kc-categorize">
       <div className="kc-categ-items">
-        {items.map((it) => {
+        {shuffledItems.map((it) => {
           const picked = picks.get(it.text);
           const correct = revealed && picked === it.category;
           const wrong = revealed && picked && picked !== it.category;

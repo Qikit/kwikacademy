@@ -1,0 +1,52 @@
+---
+interface Props {
+  q: string;
+}
+const { q } = Astro.props;
+---
+
+<details class="kc-reveal">
+  <summary><span class="kc-reveal-tag">Попробуй ответить</span>{q}</summary>
+  <div class="kc-reveal-body"><slot /></div>
+</details>
+
+<style>
+  .kc-reveal {
+    margin: 16px 0;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-md);
+    background: var(--glass-bg);
+    padding: 12px 16px;
+  }
+  .kc-reveal summary {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    list-style: none;
+  }
+  .kc-reveal summary::-webkit-details-marker {
+    display: none;
+  }
+  .kc-reveal-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7c6cf0;
+    font-family: var(--font-mono);
+    margin-right: 8px;
+  }
+  .kc-reveal summary::after {
+    content: ' ▸';
+    color: #7c6cf0;
+  }
+  .kc-reveal[open] summary::after {
+    content: ' ▾';
+  }
+  .kc-reveal-body {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+</style>

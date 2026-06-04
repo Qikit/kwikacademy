@@ -5,8 +5,9 @@ import { withBase } from '../../lib/url';
 
 interface Props {
   header?: boolean;
+  narrow?: boolean; // catalog uses a tighter container (no break-out)
 }
-const { header = true } = Astro.props;
+const { header = true, narrow = false } = Astro.props;
 
 const courses = (await getCollection('courses'))
   .filter((c) => !c.data.hidden)
@@ -31,7 +32,7 @@ const place: Record<string, { area: string; size: 'lg' | 'md' | 'sm' }> = {
 const fallback = { area: 'auto', size: 'md' as const };
 ---
 
-<section class="showcase">
+<section class={`showcase ${narrow ? 'narrow' : ''}`}>
   {
     header && (
       <>
@@ -51,7 +52,7 @@ const fallback = { area: 'auto', size: 'md' as const };
               href={withBase(`/topics/${c.id}`)}
               title={c.data.title}
               eyebrow={c.data.subtitle}
-              glyph={c.data.glyph}
+              icon={c.data.icon}
               gradient={c.data.gradient}
               size={p.size}
               meta={`${lessonsFor(c.id).length} ур · ${trainersFor(c.id).length} трен`}
@@ -71,6 +72,10 @@ const fallback = { area: 'auto', size: 'md' as const };
     max-width: min(1320px, 94vw);
     margin: 0 auto;
     padding: 8px 24px 110px;
+  }
+  .showcase.narrow {
+    /* catalog — stays within the central content column */
+    max-width: 1080px;
   }
   .eyebrow,
   h2 {

@@ -2,7 +2,7 @@
   "title": "Java",
   "subtitle": "Программирование",
   "description": "Фундамент JVM: ООП, коллекции, многопоточность, экосистема. База, на которой держится индустрия.",
-  "glyph": "JV",
+  "icon": "coffee",
   "gradient": "orange",
   "order": 3,
   "accent": "light",

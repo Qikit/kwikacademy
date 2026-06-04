@@ -2,7 +2,7 @@
   "title": "Базы данных",
   "subtitle": "Технологии",
   "description": "SQL и не только: реляционная модель, индексы, транзакции, проектирование схем. Данные под контролем.",
-  "glyph": "DB",
+  "icon": "database",
   "gradient": "gold",
   "order": 7,
   "accent": "light",

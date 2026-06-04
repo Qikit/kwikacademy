@@ -2,7 +2,7 @@
   "title": "Менеджмент",
   "subtitle": "Управление",
   "description": "Команды, процессы, решения: как вести людей и проекты к результату, не выгорая сам.",
-  "glyph": "PM",
+  "icon": "users",
   "gradient": "sky",
   "order": 8,
   "accent": "light",

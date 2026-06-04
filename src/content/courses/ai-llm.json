@@ -2,7 +2,7 @@
   "title": "ИИ и LLM",
   "subtitle": "Технологии",
   "description": "Как думают большие языковые модели: токены, контекст, промптинг, агенты. Без магии — по сути.",
-  "glyph": "AI",
+  "icon": "sparkles",
   "gradient": "indigo",
   "order": 6,
   "accent": "dark",

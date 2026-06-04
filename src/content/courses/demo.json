@@ -2,7 +2,7 @@
   "title": "Демо-курс",
   "subtitle": "Проверка движков",
   "description": "Технический курс-рыба для проверки уроков и тренажёров.",
-  "glyph": "★",
+  "icon": "sparkles",
   "gradient": "aurora",
   "order": 0,
   "accent": "light",

@@ -2,7 +2,7 @@
   "title": "Современный веб",
   "subtitle": "Фронтенд",
   "description": "Как делают мощные сайты сегодня: HTML/CSS на новом уровне, анимации, перформанс, инструменты сборки.",
-  "glyph": "</>",
+  "icon": "globe",
   "gradient": "rose",
   "order": 5,
   "accent": "light",

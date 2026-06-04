@@ -2,7 +2,7 @@
   "title": "React",
   "subtitle": "Фронтенд",
   "description": "Современный React: компоненты, хуки, состояние, производительность. Интерфейсы, которые живут.",
-  "glyph": "RE",
+  "icon": "atom",
   "gradient": "cyan",
   "order": 4,
   "accent": "light",

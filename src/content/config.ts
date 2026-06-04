@@ -7,7 +7,7 @@ const courses = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     description: z.string(),
-    glyph: z.string(), // short symbol e.g. "AI", "{ }"
+    icon: z.string(), // lucide-react icon key, e.g. "book-open", "code"
     gradient: z.enum([
       'aurora',
       'blue-purple',

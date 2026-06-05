@@ -122,29 +122,57 @@ const links = [
     background: var(--track);
   }
   @media (max-width: 600px) {
+    /* Pill is always absolute on mobile — same position type in both states means
+       every other property (width, top, padding, gap, radius) interpolates smoothly. */
+    .pill {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      box-sizing: border-box;
+      overflow: hidden;
+      will-change: width, top, padding;
+      transition:
+        width 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        top 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        padding 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        gap 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        border-radius 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        background 0.3s,
+        box-shadow 0.3s;
+    }
     .pill a {
       padding: 9px;
+      transition:
+        padding 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.1),
+        border-radius 0.3s,
+        color 0.2s,
+        background 0.2s;
     }
-    /* collapsed: icons only, inline in the bar */
+    /* Collapsed: compact icon strip anchored to the right edge of the bar. */
+    .pill[data-open='false'] {
+      width: 152px;
+      padding: 6px;
+      gap: 4px;
+      border-radius: var(--r-full);
+      flex-direction: row;
+      justify-content: flex-end;
+    }
     .pill[data-open='false'] a span {
       max-width: 0;
       opacity: 0;
       margin-left: -7px;
     }
-    /* expanded: drops down as a vertical glass menu, doesn't blow up the bar */
+    /* Expanded: full-width vertical menu just below the navbar. */
     .pill[data-open='true'] {
-      position: absolute;
-      top: calc(100% + 6px);
-      right: clamp(16px, 4vw, 40px);
-      flex-direction: column;
-      align-items: stretch;
-      padding: 8px;
+      width: calc(100vw - 32px);
+      top: 62px;
+      padding: 10px;
       gap: 4px;
       border-radius: 20px;
-      min-width: min(220px, calc(100vw - 32px));
+      flex-direction: column;
+      align-items: stretch;
       background: color-mix(in srgb, var(--glass-bg) 96%, transparent);
       box-shadow: 0 22px 50px -16px rgba(0, 0, 0, 0.45);
-      animation: pillDrop 0.32s cubic-bezier(0.2, 0.9, 0.25, 1.1);
     }
     .pill[data-open='true'] a {
       justify-content: flex-start;
@@ -152,19 +180,10 @@ const links = [
       border-radius: 14px;
     }
     .pill[data-open='true'] a span {
-      max-width: 200px;
+      max-width: 240px;
       opacity: 1;
       margin-left: 0;
-    }
-    @keyframes pillDrop {
-      from {
-        opacity: 0;
-        transform: translateY(-8px) scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      transition: max-width 0.45s cubic-bezier(0.2, 0.9, 0.25, 1.1) 0.12s, opacity 0.3s 0.18s;
     }
   }
 </style>

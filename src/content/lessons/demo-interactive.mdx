@@ -1,0 +1,81 @@
+---
+course: demo
+order: 2
+title: "Интерактивные компоненты"
+eyebrow: "Demo · Витрина"
+readingMinutes: 3
+summary: "Витрина переиспользуемых интерактивных lesson-компонентов для визуальной проверки."
+tags: [demo]
+---
+
+import BarMeter from '../../components/lesson/BarMeter.astro';
+import StepThrough from '../../components/lesson/StepThrough.astro';
+import TryParam from '../../components/lesson/TryParam.tsx';
+import QuickCheck from '../../components/lesson/QuickCheck.tsx';
+import Annotated from '../../components/lesson/Annotated.tsx';
+import Quadrant from '../../components/lesson/Quadrant.tsx';
+import Trace from '../../components/lesson/Trace.tsx';
+
+## BarMeter — сравнение величин
+
+<BarMeter caption="Косинусное сходство" max={1} items={[
+  { label: "кот ↔ кошка", value: 0.94, color: "teal" },
+  { label: "кот ↔ собака", value: 0.78, color: "teal" },
+  { label: "кот ↔ авто", value: 0.18, color: "rose" },
+  { label: "кот ↔ программа", value: 0.09, color: "rose", note: "почти не связаны" }
+]} />
+
+## StepThrough — пошаговый разбор
+
+<StepThrough caption="Как работает RAG" steps={[
+  { title: "Retrieval — поиск", badge: "1", body: "Вопрос превращается в вектор, по нему ищутся близкие по смыслу куски документов." },
+  { title: "Augmented — дополнение", body: "Найденные куски вставляются в промпт как контекст." },
+  { title: "Generation — генерация", body: "Модель отвечает, опираясь на найденное, а не на память — меньше галлюцинаций." }
+]} />
+
+## TryParam — покрути параметр
+
+<TryParam client:visible label="Temperature" min={0} max={2} step={0.1} default={0.7} bands={[
+  { upTo: 0.3, title: "Точно и предсказуемо", text: "Детерминированный вывод — для кода, извлечения фактов, структурированных данных." },
+  { upTo: 1.0, title: "Сбалансированно", text: "Немного вариативности в формулировках при сохранении осмысленности." },
+  { upTo: 2.0, title: "Хаос и творчество", text: "Максимум разнообразия, но выше риск бессвязного вывода." }
+]} />
+
+## QuickCheck — микро-вопрос с разбором
+
+<QuickCheck client:visible
+  prompt="Что «тяжелее» в токенах при одинаковой длине на глаз?"
+  options={["Английский абзац", "Тот же абзац на русском", "Оба одинаково"]}
+  correctIndex={1}
+  explain="Кириллица дробится мельче — тот же смысл на русском стоит больше токенов." />
+
+## Annotated — разбор фрагмента по частям
+
+<Annotated client:visible parts={[
+  { text: "Ты — ревьюер кода. ", note: "Роль задаёт тон, глубину и терминологию ответа." },
+  { text: "Найди баги в функции ниже " },
+  { text: "и верни список строго в JSON.", note: "Формат вывода — чтобы результат можно было распарсить кодом." }
+]} />
+
+## Quadrant — матрица 2×2
+
+<Quadrant client:visible
+  xAxis={{ label: "Срочность", low: "не срочно", high: "срочно" }}
+  yAxis={{ label: "Важность", low: "не важно", high: "важно" }}
+  cells={[
+    { title: "Планировать", color: "teal", note: "Важное без дедлайна — защищать отдельным слотом, иначе вытеснит срочное." },
+    { title: "Делать сейчас", color: "rose", note: "Важное и срочное — берём первым." },
+    { title: "Удалить", color: "indigo", note: "Ни то ни то — выбросить без сожалений." },
+    { title: "Делегировать", color: "gold", note: "Срочное, но не важное — передать другому." }
+  ]} />
+
+## Trace — проигрывание процесса
+
+<Trace client:visible caption="Агент решает задачу" steps={[
+  { actor: "user", label: "Найди топ-3 вакансии и составь таблицу" },
+  { actor: "think", label: "Нужен поиск", detail: "Выбираю инструмент web_search." },
+  { actor: "tool", label: "web_search(«вакансии …»)", detail: "Вызов инструмента." },
+  { actor: "result", label: "Найдены ссылки на вакансии" },
+  { actor: "think", label: "Данных достаточно", detail: "Формирую таблицу." },
+  { actor: "answer", label: "Таблица с зарплатами готова" }
+]} />

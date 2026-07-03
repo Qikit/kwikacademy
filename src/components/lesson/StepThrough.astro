@@ -1,0 +1,114 @@
+---
+interface Step {
+  title: string;
+  body: string;
+  badge?: string;
+}
+interface Props {
+  steps: Step[];
+  caption?: string;
+}
+const { steps, caption } = Astro.props;
+---
+
+<div class="st">
+  {caption && <p class="st-caption">{caption}</p>}
+  {steps.map((s, i) => (
+    <details class="st-step">
+      <summary class="st-sum">
+        <span class="st-num">{i + 1}</span>
+        <span class="st-title">{s.title}</span>
+        {s.badge && <span class="st-badge">{s.badge}</span>}
+      </summary>
+      <div class="st-body">{s.body}</div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .st {
+    margin: 18px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .st-caption {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    margin-bottom: 4px;
+  }
+  .st-step {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-md);
+    background: var(--glass-bg);
+    padding: 12px 16px;
+  }
+  .st-sum {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .st-sum::-webkit-details-marker {
+    display: none;
+  }
+  .st-num {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: var(--r-full, 9999px);
+    background: var(--track);
+    color: var(--c-violet);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .st-title {
+    flex: 1;
+    font-weight: 500;
+  }
+  .st-badge {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--c-violet);
+    background: var(--track);
+    padding: 2px 8px;
+    border-radius: var(--r-sm);
+    font-family: var(--font-mono);
+  }
+  .st-sum::after {
+    content: '▸';
+    color: var(--text-3);
+    font-size: 11px;
+    transition: transform 0.2s;
+  }
+  .st-step[open] .st-sum::after {
+    transform: rotate(90deg);
+  }
+  .st-body {
+    margin-top: 10px;
+    padding-left: 32px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .st-sum::after {
+      transition: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .st-body {
+      padding-left: 0;
+    }
+  }
+</style>

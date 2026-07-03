@@ -1,0 +1,115 @@
+---
+import { barPercent } from '../../lib/lesson/meter';
+
+interface BarItem {
+  label: string;
+  value: number;
+  color?: string;
+  note?: string;
+}
+interface Props {
+  items: BarItem[];
+  caption?: string;
+  max?: number;
+  unit?: string;
+}
+const { items, caption, max = 1, unit } = Astro.props;
+const fmt = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(2));
+---
+
+<figure class="bm">
+  {caption && <figcaption class="bm-caption">{caption}</figcaption>}
+  <div class="bm-rows">
+    {items.map((it) => (
+      <div class="bm-row">
+        <div class="bm-head">
+          <span class="bm-label">{it.label}</span>
+          {it.note && <span class="bm-note">{it.note}</span>}
+        </div>
+        <span class="bm-track">
+          <span
+            class="bm-fill"
+            style={`transform: scaleX(${barPercent(it.value, max) / 100}); background: var(--c-${it.color ?? 'blue'});`}
+          />
+        </span>
+        <span class="bm-val">{fmt(it.value)}{unit ? ` ${unit}` : ''}</span>
+      </div>
+    ))}
+  </div>
+</figure>
+
+<style>
+  .bm {
+    margin: 18px 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-md);
+    padding: 18px 20px;
+  }
+  .bm-caption {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    margin-bottom: 14px;
+  }
+  .bm-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bm-row {
+    display: grid;
+    grid-template-columns: minmax(90px, 190px) 1fr auto;
+    align-items: center;
+    gap: 12px;
+  }
+  .bm-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .bm-label {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .bm-note {
+    font-size: 11px;
+    color: var(--text-3);
+  }
+  .bm-track {
+    height: 9px;
+    background: var(--track);
+    border-radius: var(--r-full, 9999px);
+    overflow: hidden;
+  }
+  .bm-fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform-origin: left center;
+    border-radius: inherit;
+    transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .bm-val {
+    font-size: 12px;
+    color: var(--text-2);
+    font-family: var(--font-mono);
+    text-align: right;
+    min-width: 42px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bm-fill {
+      transition: none;
+    }
+  }
+  @media (max-width: 520px) {
+    .bm-row {
+      grid-template-columns: minmax(70px, 130px) 1fr auto;
+      gap: 8px;
+    }
+  }
+</style>

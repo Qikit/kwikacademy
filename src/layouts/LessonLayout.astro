@@ -70,6 +70,9 @@ const { title, eyebrow, readingMinutes, slug, courseHref, prevHref, prevTitle, n
     margin: 12px 0 12px 20px;
     line-height: 1.8;
   }
+  .prose {
+    overflow-wrap: break-word;
+  }
   .prose :global(code) {
     font-family: var(--font-mono);
     font-size: 0.9em;
@@ -77,6 +80,24 @@ const { title, eyebrow, readingMinutes, slug, courseHref, prevHref, prevTitle, n
     border: 1px solid var(--glass-border);
     border-radius: 6px;
     padding: 2px 6px;
+  }
+  /* Code blocks: scroll horizontally instead of overflowing the page (clipped on mobile). */
+  .prose :global(pre) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-md);
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .prose :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
   }
   .prose :global(table) {
     width: 100%;

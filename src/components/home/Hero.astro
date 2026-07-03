@@ -57,10 +57,14 @@ const line1 = ['Знания,', 'которые'];
   }
   .word {
     display: inline-block;
+    margin-right: 0.28em;
     opacity: 0;
     transform: translateY(0.5em) rotate(2deg);
     animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
     animation-delay: var(--d);
+  }
+  .accent {
+    margin-right: 0;
   }
   @keyframes rise {
     to {

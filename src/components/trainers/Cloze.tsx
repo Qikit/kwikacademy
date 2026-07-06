@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
+import { matchesBlank } from '../../lib/trainers/score';
 
 export interface ClozeItem {
   text: string;
-  answers: string[];
+  // per-blank answer: a single string, or an array of accepted variants
+  answers: (string | string[])[];
   explain?: string;
   hint?: string;
 }
-
-const norm = (s: string) => s.trim().toLowerCase();
 
 interface ItemResult {
   correct: boolean[];
@@ -50,7 +50,7 @@ function ClozeBody({ items, shell }: { items: ClozeItem[]; shell: ShellRenderPro
   function check(): boolean {
     const current = inputs[index];
     if (current.some((v) => v.trim() === '')) return false;
-    const perBlank = it.answers.map((ans, i) => norm(ans) === norm(current[i] ?? ''));
+    const perBlank = it.answers.map((ans, i) => matchesBlank(ans, current[i] ?? ''));
     const itemCorrect = perBlank.every(Boolean);
     const updated = [...results];
     updated[index] = { correct: perBlank, itemCorrect };
@@ -67,7 +67,8 @@ function ClozeBody({ items, shell }: { items: ClozeItem[]; shell: ShellRenderPro
       const filled = item.text.split('___').reduce<string>((acc, part, j) => {
         if (j === 0) return part;
         const ans = item.answers[j - 1];
-        return acc + ` [${ans}] ` + part;
+        const shown = Array.isArray(ans) ? ans.join(' / ') : ans;
+        return acc + ` [${shown}] ` + part;
       }, '');
       const userFilled = item.text.split('___').reduce<string>((acc, part, j) => {
         if (j === 0) return part;
@@ -193,7 +194,7 @@ function ItemView({
               Правильно: {item.answers.map((a, i) => (
                 <span key={i}>
                   {i > 0 && ', '}
-                  <strong>{a}</strong>
+                  <strong>{Array.isArray(a) ? a.join(' / ') : a}</strong>
                 </span>
               ))}
             </div>

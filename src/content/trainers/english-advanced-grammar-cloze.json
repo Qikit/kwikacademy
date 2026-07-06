@@ -69,12 +69,12 @@
       },
       {
         "text": "___ the heavy traffic, we managed to arrive on time.",
-        "answers": ["Despite", "In spite of"],
+        "answers": [["Despite", "In spite of"]],
         "explain": "Despite или in spite of + noun. «Despite of» — НЕВЕРНО. Although тут не подойдёт — после него нужен clause (S + V), а здесь существительное."
       },
       {
         "text": "The plan looked risky on paper. ___, it turned out to work perfectly.",
-        "answers": ["However", "Nevertheless", "Nonetheless"],
+        "answers": [["However", "Nevertheless", "Nonetheless"]],
         "explain": "Контраст в начале нового предложения. However / nevertheless / nonetheless — формальные линкеры контраста."
       }
     ]

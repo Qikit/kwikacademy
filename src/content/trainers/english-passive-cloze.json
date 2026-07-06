@@ -44,7 +44,7 @@
       },
       {
         "text": "By Friday the project ___ (complete).",
-        "answers": ["will have been completed"],
+        "answers": [["will have been completed", "will be completed"]],
         "explain": "Future Perfect passive: will + have + been + V3. Маркер «by Friday» = завершено к будущему моменту.",
         "hint": "к моменту в будущем"
       },

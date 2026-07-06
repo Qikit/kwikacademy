@@ -14,7 +14,7 @@
       },
       {
         "text": "My ___ was to align the team and ship the feature on time.",
-        "answers": ["role", "responsibility", "job", "task"],
+        "answers": [["role", "responsibility", "job", "task"]],
         "explain": "Часть T (Task) в STAR: твоя личная роль и цель. Варианты: «My role was to...», «My responsibility was to...», «My job was to...», «My task was to...».",
         "hint": "T в STAR"
       },
@@ -92,7 +92,7 @@
       },
       {
         "text": "Thank you for taking the time to ___ with me today.",
-        "answers": ["speak", "talk", "meet"],
+        "answers": [["speak", "talk", "meet"]],
         "explain": "Формальное начало follow-up email или закрытия интервью: «Thank you for taking the time to speak/talk/meet with me today.» Чуть формальнее, чем просто «Thanks for the chat».",
         "hint": "follow-up email"
       },

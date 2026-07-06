@@ -28,7 +28,7 @@
       },
       {
         "text": "By next year I ___ (work) here for ten years.",
-        "answers": ["will have been working"],
+        "answers": [["will have been working", "will have worked"]],
         "explain": "by + будущее + for + длительность → Future Perfect Continuous: will have been + V-ing."
       },
       {

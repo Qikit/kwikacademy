@@ -12,13 +12,19 @@ export function scoreQuiz(picked: number[], correct: number[]): ScoreResult {
   return { score, total: correct.length };
 }
 
-/** Cloze: each item correct only when ALL its blanks match (normalized). */
-export function scoreCloze(answers: string[][], picked: string[][]): ScoreResult {
+/** A blank accepts a single string or any of several variants (all normalized). */
+export const matchesBlank = (expected: string | string[], got: string): boolean =>
+  Array.isArray(expected)
+    ? expected.some((a) => norm(a) === norm(got))
+    : norm(expected) === norm(got);
+
+/** Cloze: each item correct only when EVERY blank matches one of its accepted variants. */
+export function scoreCloze(answers: (string | string[])[][], picked: string[][]): ScoreResult {
   let score = 0;
   for (let i = 0; i < answers.length; i++) {
     const exp = answers[i];
     const got = picked[i] ?? [];
-    const ok = exp.length === got.length && exp.every((a, j) => norm(a) === norm(got[j] ?? ''));
+    const ok = exp.length === got.length && exp.every((a, j) => matchesBlank(a, got[j] ?? ''));
     if (ok) score++;
   }
   return { score, total: answers.length };

@@ -14,6 +14,19 @@ describe('scoreCloze', () => {
   it('partial blanks count toward total', () => {
     expect(scoreCloze([['a', 'b']], [['a', 'x']])).toEqual({ score: 0, total: 1 });
   });
+  it('accepts any accepted variant on a blank', () => {
+    const answers = [[['must', 'have to']]];
+    expect(scoreCloze(answers, [['have to']])).toEqual({ score: 1, total: 1 });
+    expect(scoreCloze(answers, [['MUST']])).toEqual({ score: 1, total: 1 });
+  });
+  it('is wrong when no variant matches', () => {
+    expect(scoreCloze([[['whether', 'if']]], [['that']])).toEqual({ score: 0, total: 1 });
+  });
+  it('handles a multi-blank item with a variant on one blank', () => {
+    const answers = [['is', ['will go', "'ll go"]]];
+    expect(scoreCloze(answers, [['is', "'ll go"]])).toEqual({ score: 1, total: 1 });
+    expect(scoreCloze(answers, [['is', 'goes']])).toEqual({ score: 0, total: 1 });
+  });
 });
 
 describe('scoreMatch', () => {

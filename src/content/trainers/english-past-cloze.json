@@ -43,7 +43,7 @@
       },
       {
         "text": "He ___ (not / have) breakfast, so he was hungry.",
-        "answers": ["didn't have", "did not have"],
+        "answers": [["didn't have", "did not have"]],
         "explain": "Отрицание Past Simple: didn't + V (начальная форма). НЕ «didn't had»."
       },
       {

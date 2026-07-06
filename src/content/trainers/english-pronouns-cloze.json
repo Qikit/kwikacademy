@@ -38,12 +38,12 @@
       },
       {
         "text": "___ student in the class must submit the form by Friday. (обобщённо)",
-        "answers": ["Every", "every", "Each", "each"],
+        "answers": [["Every", "Each"]],
         "explain": "«Every» подчёркивает группу в целом («все без исключения»), «each» — индивидуально. Оба работают и оба требуют ед. ч. глагола (must submit)."
       },
       {
         "text": "Somebody left ___ umbrella in the office. (gender-neutral possessive)",
-        "answers": ["their", "his or her"],
+        "answers": [["their", "his or her"]],
         "explain": "Для «о ком-то одном» без указания пола в современном английском стандарт — «their»: somebody left their umbrella. Допустимо и формальное «his or her»."
       },
       {
@@ -58,12 +58,12 @@
       },
       {
         "text": "We met ___ at the airport and went to dinner together. (взаимно, друг друга)",
-        "answers": ["each other", "one another"],
+        "answers": [["each other", "one another"]],
         "explain": "Взаимное действие «друг друга» — each other (или формальнее one another). «Ourselves» означало бы «каждый сам себя»."
       },
       {
         "text": "___ guys we saw at the bar yesterday are also developers. (указательное, мн., далеко)",
-        "answers": ["Those", "those"],
+        "answers": ["Those"],
         "explain": "Удалённые/упомянутые ранее + множественное число → those. «These» — для близких, «that» — единственное."
       }
     ]

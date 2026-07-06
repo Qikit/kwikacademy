@@ -18,12 +18,12 @@
       },
       {
         "text": "«I'll call you tomorrow» → He said he would call me the ___ day.",
-        "answers": ["next", "following"],
+        "answers": [["next", "following"]],
         "explain": "tomorrow → the next day / the following day. Оба варианта работают."
       },
       {
         "text": "«Are you ready?» → He asked ___ I was ready.",
-        "answers": ["if", "whether"],
+        "answers": [["if", "whether"]],
         "explain": "Reported yes/no question: asked + if/whether + S + V. Без знака вопроса."
       },
       {

@@ -70,12 +70,23 @@ const clozeData = z.object({
   type: z.literal('cloze'),
   items: z
     .array(
-      z.object({
-        text: z.string(),
-        answers: z.array(z.string()).min(1),
-        explain: z.string().optional(),
-        hint: z.string().optional(),
-      }),
+      z
+        .object({
+          text: z.string(),
+          // per-blank answer: a single string, or an array of accepted variants
+          answers: z.array(z.union([z.string(), z.array(z.string().min(1)).min(1)])).min(1),
+          explain: z.string().optional(),
+          hint: z.string().optional(),
+        })
+        .superRefine((item, ctx) => {
+          const blanks = item.text.split('___').length - 1;
+          if (blanks !== item.answers.length) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: `cloze «${item.text}»: пропусков ${blanks} != answers ${item.answers.length}`,
+            });
+          }
+        }),
     )
     .min(1),
 });

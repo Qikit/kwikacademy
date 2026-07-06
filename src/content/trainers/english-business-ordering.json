@@ -25,10 +25,10 @@
         "explain": "Push back the deadline — сдвинуть срок позже. После него: to + новая дата. «To next Wednesday» = до новой даты-цели."
       },
       {
-        "words": ["loop", "you", "please", "keep", "me", "in", "the", "?"],
-        "answer": ["please", "keep", "me", "in", "the", "loop", "?"],
+        "words": ["loop", "please", "keep", "me", "in", "the", "."],
+        "answer": ["please", "keep", "me", "in", "the", "loop", "."],
         "translation": "Пожалуйста, держи меня в курсе.",
-        "explain": "Keep me in the loop — идиома «держи в курсе». Please стоит перед просьбой для вежливости. Структура: please + V (keep) + object (me) + idiom."
+        "explain": "Keep me in the loop — идиома «держи в курсе». Please перед просьбой для вежливости. Повелительное: please + keep + me + in the loop. Точка, не вопрос."
       },
       {
         "words": ["base", "on", "let's", "Friday", "touch"],
@@ -37,10 +37,10 @@
         "explain": "Touch base — идиома, целиком. Let's + V (touch) + остальное. День недели с предлогом on: on Friday."
       },
       {
-        "words": ["the", "I", "for", "ballpark", "give", "me", "can", "a", "budget", "figure", "?"],
+        "words": ["figure", "you", "give", "a", "ballpark", "can", "me", "for", "budget", "the", "?"],
         "answer": ["can", "you", "give", "me", "a", "ballpark", "figure", "for", "the", "budget", "?"],
         "translation": "Можешь дать примерную оценку бюджета?",
-        "explain": "Ловушка: в исходных словах нет «you», но есть «I» — нужно увидеть, что для вопроса нужно «can you give me». Правильный порядок: can you give me + a ballpark figure + for the budget."
+        "explain": "Вежливый запрос оценки: can you give me + a ballpark figure (примерная оценка) + for the budget. Ballpark figure — идиома «приблизительная цифра»."
       },
       {
         "words": ["bandwidth", "have", "I", "don't", "the", "week", "this"],

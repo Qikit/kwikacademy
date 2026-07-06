@@ -40,7 +40,7 @@
         "words": ["the", "phone", "I", "rang", "reading", "was", "when"],
         "answer": ["I", "was", "reading", "when", "the", "phone", "rang"],
         "translation": "Я читал, когда зазвонил телефон.",
-        "explain": "Фон (was reading) — Past Continuous, прерывание (rang) — Past Simple. Связка through «when»."
+        "explain": "Фон (was reading) — Past Continuous, прерывание (rang) — Past Simple. Связка через «when»."
       },
       {
         "words": ["didn't", "have", "I", "breakfast", "today"],

@@ -26,10 +26,10 @@
         "explain": "The agenda + for today (не «of today»). Стандартный способ обозначить план встречи в начале. Дальше идёт список пунктов."
       },
       {
-        "words": ["that", "to", "5", "I'll", "minutes", "drop", "off", "in", "have"],
+        "words": ["drop", "to", "have", "off", "I'll", "minutes", "in", "5"],
         "answer": ["I'll", "have", "to", "drop", "off", "in", "5", "minutes"],
         "translation": "Мне придётся выйти через пять минут.",
-        "explain": "Drop off — покинуть звонок. I'll have to + V — придётся сделать. In 5 minutes — через 5 минут. Вежливое предупреждение, что уйдёшь раньше. Лишнее слово «that»."
+        "explain": "Drop off — покинуть звонок. I'll have to + V — придётся сделать. In 5 minutes — через 5 минут. Вежливое предупреждение, что уйдёшь раньше."
       },
       {
         "words": ["on", "I'm", "with", "that", "board"],

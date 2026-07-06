@@ -103,7 +103,7 @@
           "Hey,",
           "What's up,",
           "Hi there,",
-          "Dear Mr. Smith,"
+          "Dear Mr Smith,"
         ],
         "correctIndex": 3,
         "explain": "Dear + фамилия — самый формальный вариант. Hi there / Hey — informal. В business email с незнакомым клиентом или вверх по иерархии — Dear."

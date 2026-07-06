@@ -8,82 +8,112 @@
     "questions": [
       {
         "prompt": "This bridge ___ in 1990.",
-        "options": ["built", "was built", "was build", "is built"],
-        "correctIndex": 1,
+        "options": [
+          "built",
+          "was build",
+          "was built",
+          "is built"
+        ],
+        "correctIndex": 2,
         "explain": "Past Simple passive: was/were + V3. build → built. Маркер «in 1990» = прошлое."
       },
       {
         "prompt": "The road ___ this week. They started on Monday.",
-        "options": ["is repaired", "is being repaired", "was repaired", "has repaired"],
-        "correctIndex": 1,
+        "options": [
+          "is being repaired",
+          "is repaired",
+          "was repaired",
+          "has repaired"
+        ],
+        "correctIndex": 0,
         "explain": "Процесс идёт сейчас → Present Continuous passive: is/are + being + V3."
       },
       {
         "prompt": "The report ___. You can read it now.",
-        "options": ["was finishing", "has been finished", "is finishing", "is being finish"],
+        "options": [
+          "was finishing",
+          "has been finished",
+          "is finishing",
+          "is being finish"
+        ],
         "correctIndex": 1,
         "explain": "Результат актуален сейчас («ты можешь читать») → Present Perfect passive: has/have + been + V3."
       },
       {
         "prompt": "This form ___ before submission.",
-        "options": ["must sign", "must be signed", "must to be signed", "must been signed"],
+        "options": [
+          "must sign",
+          "must be signed",
+          "must to be signed",
+          "must been signed"
+        ],
         "correctIndex": 1,
         "explain": "Модальный пассив: must + be + V3. Никаких to и никакого been после must."
       },
       {
         "prompt": "When I arrived, the cake ___.",
-        "options": ["was baking", "was being baked", "had baked", "is being baked"],
-        "correctIndex": 1,
+        "options": [
+          "was baking",
+          "had baked",
+          "is being baked",
+          "was being baked"
+        ],
+        "correctIndex": 3,
         "explain": "Процесс в моменте прошлого, прерванный приходом → Past Continuous passive: was/were + being + V3."
       },
       {
         "prompt": "Choose the correct passive of «Shakespeare wrote this play».",
         "options": [
-          "This play was wrote by Shakespeare.",
           "This play was written by Shakespeare.",
+          "This play was wrote by Shakespeare.",
           "This play is written by Shakespeare.",
           "This play has written by Shakespeare."
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Past Simple passive: was + V3. write — неправильный, V3 = written. Автор важен → by Shakespeare остаётся."
       },
       {
         "prompt": "The letter ___ before I called.",
-        "options": ["was sent", "had been sent", "has sent", "was being sent"],
-        "correctIndex": 1,
+        "options": [
+          "was sent",
+          "has sent",
+          "had been sent",
+          "was being sent"
+        ],
+        "correctIndex": 2,
         "explain": "Действие закончилось до другого прошедшего момента → Past Perfect passive: had + been + V3."
       },
       {
         "prompt": "Choose the correct passive of «She gave me a book».",
         "options": [
           "To me was given a book.",
-          "I was given a book.",
           "Me was given a book.",
-          "A book gave me."
+          "A book gave me.",
+          "I was given a book."
         ],
-        "correctIndex": 1,
+        "correctIndex": 3,
         "explain": "Пассив с двумя дополнениями: получатель (me → I) становится подлежащим. Калька «To me was given» — невозможна в английском."
       },
       {
         "prompt": "By Friday the project ___.",
         "options": [
           "will completed",
-          "will be completed",
+          "will be completing",
           "will have been completed",
           "will being completed"
         ],
         "correctIndex": 2,
-        "explain": "Маркер «by Friday» = завершено к будущему моменту → Future Perfect passive: will + have + been + V3."
+        "explain": "«By Friday» = завершено к будущему моменту → Future Perfect passive: will + have + been + V3. Остальные формы сломаны: не хватает have / been или залог не тот."
       },
       {
         "prompt": "Which sentence cannot be made passive?",
         "options": [
+          "The accident happened on Friday.",
           "They built a new office.",
           "She wrote a letter.",
-          "The accident happened on Friday.",
           "Someone has stolen my bike."
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "explain": "happen — непереходный глагол, не имеет прямого объекта → пассив невозможен. Только актив: «The accident happened on Friday»."
       },
       {
@@ -99,8 +129,13 @@
       },
       {
         "prompt": "Letters ___ every morning at our office.",
-        "options": ["deliver", "delivered", "are delivered", "are being delivered"],
-        "correctIndex": 2,
+        "options": [
+          "deliver",
+          "delivered",
+          "are being delivered",
+          "are delivered"
+        ],
+        "correctIndex": 3,
         "explain": "Регулярный факт настоящего → Present Simple passive: am/is/are + V3. Letters во множественном → are."
       }
     ]

@@ -10,11 +10,11 @@
         "prompt": "Первое письмо незнакомому клиенту, имя ты знаешь. Какое приветствие выбрать?",
         "options": [
           "Hey Anna!",
-          "Dear Anna,",
           "Hi Anna,",
+          "Dear Anna,",
           "Dear Sir or Madam,"
         ],
-        "correctIndex": 1,
+        "correctIndex": 2,
         "explain": "Dear [First name] — формально-дружелюбный default для первого контакта. Hey — фамильярно, Hi — рано, Dear Sir or Madam — не подходит, имя ведь известно."
       },
       {
@@ -31,12 +31,12 @@
       {
         "prompt": "Отвечаешь с задержкой в три дня. Как лучше открыть письмо?",
         "options": [
-          "Sorry sorry sorry for being so late, I was very busy and there were many things to do...",
           "Apologies for the late reply.",
+          "Sorry sorry sorry for being so late, I was very busy and there were many things to do...",
           "Why are you asking now, anyway?",
           "I hereby acknowledge the delay in my response."
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Одно короткое извинение и переход к делу. Длинные оправдания читаются как самооправдание, hereby — пародия на канцелярит."
       },
       {
@@ -44,21 +44,21 @@
         "options": [
           "We can't make the deadline.",
           "Bad news — we're late.",
-          "Unfortunately, we won't make the original deadline — we need one more week.",
-          "Sorry, no can do."
+          "Sorry, no can do.",
+          "Unfortunately, we won't make the original deadline — we need one more week."
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "Unfortunately — стандартный буфер перед плохой новостью + конкретный новый срок. «We can't» без буфера звучит резко, «Bad news» — слишком чат-like для клиента."
       },
       {
         "prompt": "Прилагаешь договор к письму. Как правильно?",
         "options": [
+          "Please find the contract attached.",
           "Find attached please the contract.",
           "I send you the contract in attach.",
-          "Please find the contract attached.",
           "Contract attached. Read."
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "explain": "Please find the contract attached — фиксированная формула. Порядок слов важен: please в начале, attached после существительного."
       },
       {
@@ -66,10 +66,10 @@
         "options": [
           "You did not reply to my previous email.",
           "Why are you ignoring me?",
-          "Just following up on my email from Monday — bumping this up in case it got buried.",
-          "I am still waiting for your response."
+          "I am still waiting for your response.",
+          "Just following up on my email from Monday — bumping this up in case it got buried."
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "Reminder через Just following up + bumping this up снимает напряжение. Все остальные — прямой упрёк, испортит отношения с получателем."
       },
       {
@@ -77,54 +77,54 @@
         "options": [
           "Cheers,",
           "xoxo,",
-          "Best regards,",
-          "Later!"
+          "Later!",
+          "Best regards,"
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "Best regards — нейтрально-формальный default, подходит для HR-переписки. Cheers и Later — informal, xoxo — не деловой регистр вообще."
       },
       {
         "prompt": "Хочешь отказать партнёру от предложения, но не сжигать мосты.",
         "options": [
-          "No, thanks.",
           "We won't be able to move forward at this time, but I'd be happy to revisit this later in the year.",
+          "No, thanks.",
           "Not interested.",
           "We will not do this. Goodbye."
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Мягкий отказ с буфером благодарности (подразумевается) + дверь на будущее через at this time. Резкие варианты убивают возможность вернуться."
       },
       {
         "prompt": "Какая аббревиатура означает «к концу рабочего дня»?",
         "options": [
           "ASAP",
-          "FYI",
           "EOD",
+          "FYI",
           "TBD"
         ],
-        "correctIndex": 2,
+        "correctIndex": 1,
         "explain": "EOD = End of Day. ASAP — как можно скорее, FYI — для информации, TBD — to be determined (ещё не решено)."
       },
       {
         "prompt": "Указываешь коллеге на возможную ошибку в спеке. Как?",
         "options": [
+          "I think there might be an error in section 2 — could you double-check?",
           "This is wrong, fix it.",
           "You made a mistake.",
-          "I think there might be an error in section 2 — could you double-check?",
           "Your spec is bad."
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "explain": "Мягкое предположение «might be an error» + конкретный раздел + просьба перепроверить. Прямое «wrong» / «mistake» — обвинение, портит отношения."
       },
       {
         "prompt": "Subject письма с одним конкретным вопросом по разделу 3 онбординг-документа:",
         "options": [
           "Question",
-          "Important — please read!!!",
           "Question about onboarding doc — section 3",
+          "Important — please read!!!",
           "Hello"
         ],
-        "correctIndex": 2,
+        "correctIndex": 1,
         "explain": "Конкретный subject = высокий приоритет в чужом ящике и быстрый ответ. Question / Hello — никакая тема, !!! и Important — давление и беспредметность."
       },
       {

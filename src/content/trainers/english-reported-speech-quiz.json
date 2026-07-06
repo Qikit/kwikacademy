@@ -21,33 +21,33 @@
         "prompt": "«I will help you» → She said ___",
         "options": [
           "she will help me",
-          "she would help me",
           "she would helped me",
-          "she helps me"
+          "she helps me",
+          "she would help me"
         ],
-        "correctIndex": 1,
+        "correctIndex": 3,
         "explain": "will → would. you (мне) → me. После would — начальная форма (help)."
       },
       {
         "prompt": "«Where do you live?» → He asked ___",
         "options": [
           "where do I live",
-          "where did I live",
           "where I lived",
+          "where did I live",
           "where I live"
         ],
-        "correctIndex": 2,
+        "correctIndex": 1,
         "explain": "Reported wh-question: прямой порядок (where + S + V), без do/did, backshift (live → lived)."
       },
       {
         "prompt": "«Are you ready?» → He asked ___",
         "options": [
+          "if I was ready",
           "are I ready",
           "was I ready",
-          "if I was ready",
           "if was I ready"
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "explain": "Reported yes/no question: asked + if + S + V (прямой порядок), без инверсии, backshift (are → was)."
       },
       {
@@ -99,43 +99,43 @@
         "options": [
           "tomorrow",
           "the day before",
-          "the next day",
-          "yesterday"
+          "yesterday",
+          "the next day"
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "tomorrow в reported → the next day / the following day. Точка отсчёта сдвинулась в прошлое."
       },
       {
         "prompt": "«Help me, please» → He asked me ___",
         "options": [
-          "help him",
           "to help him",
+          "help him",
           "that I help him",
           "help me"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Просьба → ask + obj + to + V. me (того, кого просили) → him (рассказчик пересказывает за себя)."
       },
       {
         "prompt": "«Why didn't you call?» → Dad asked ___",
         "options": [
-          "why didn't I call",
           "why I hadn't called",
+          "why didn't I call",
           "why I didn't call",
           "why hadn't I called"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Reported wh-question: прямой порядок (why + S + V), без do/did. Past Simple (didn't call) → Past Perfect (hadn't called)."
       },
       {
         "prompt": "«He must be tired» → She said ___",
         "options": [
           "he had to be tired",
-          "he must be tired",
           "he was must be tired",
-          "he might be tired"
+          "he might be tired",
+          "he must be tired"
         ],
-        "correctIndex": 1,
+        "correctIndex": 3,
         "explain": "must в значении дедукции («наверное») НЕ сдвигается. Остаётся must в reported."
       }
     ]

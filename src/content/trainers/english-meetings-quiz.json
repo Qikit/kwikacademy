@@ -20,12 +20,12 @@
       {
         "prompt": "Ты не расслышал, что сказал коллега из-за связи. Как переспросить?",
         "options": [
+          "Sorry, you cut out — could you repeat that?",
           "Repeat please?",
           "What?",
-          "Sorry, you cut out — could you repeat that?",
           "I don't understand."
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "explain": "Сваливает причину на связь («you cut out»), вежливо просит повторить через модальное «could». «Repeat please» — команда. «What?» — резко. «I don't understand» — звучит как претензия."
       },
       {
@@ -33,21 +33,21 @@
         "options": [
           "I want to say something.",
           "Excuse me, may I speak?",
-          "I'd like to add something here.",
-          "Listen, I have an idea."
+          "Listen, I have an idea.",
+          "I'd like to add something here."
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "Нейтрально-вежливая формула входа в разговор. «I want to say» — требовательно. «Excuse me, may I speak» — как ученик у доски. «Listen» — начало нравоучения."
       },
       {
         "prompt": "Открываешь встречу с новыми участниками. Что сказать первым?",
         "options": [
-          "Hello, my name is John.",
           "Thanks everyone for joining. Quick round of introductions?",
+          "Hello, my name is John.",
           "OK, let's begin.",
           "Why is everyone here?"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Стандартное открытие: благодарность за подключение + предложение представиться. Joining — про онлайн-формат. «Quick round of introductions» — мостик к знакомству."
       },
       {
@@ -55,10 +55,10 @@
         "options": [
           "I have to go now.",
           "Bye, I'm leaving.",
-          "I'll have to drop off in 5 minutes — I have another call.",
-          "Sorry, I'm busy."
+          "Sorry, I'm busy.",
+          "I'll have to drop off in 5 minutes — I have another call."
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "Предупреждение заранее + причина. Drop off — стандарт для выхода из звонка. Без причины звучит грубо."
       },
       {
@@ -87,33 +87,33 @@
         "prompt": "Хочешь убедиться, что все понимают одинаково, не звуча как «я не понял»?",
         "options": [
           "I don't understand. Explain again.",
-          "Are you sure about that?",
           "Just to make sure we're on the same page...",
+          "Are you sure about that?",
           "What did you mean?"
         ],
-        "correctIndex": 2,
+        "correctIndex": 1,
         "explain": "Универсальная переспрашивающая формула, которая звучит как «давайте синхронизируемся», а не как «я не въехал». Идиома on the same page = одинаковое понимание."
       },
       {
         "prompt": "Хочешь предложить созвониться сегодня — нейтрально, не сухо. Как?",
         "options": [
-          "We must talk by phone today.",
           "Can we hop on a call today?",
+          "We must talk by phone today.",
           "Phone me, please.",
           "Call me immediately."
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "explain": "Современная нейтрально-неформальная формула. Hop on a call — без бюрократии. «Must talk» / «immediately» — звучит как ультиматум. «Phone me» — устаревшее."
       },
       {
         "prompt": "Перед презентацией хочешь расшарить экран. Стандартная фраза?",
         "options": [
           "I show you my screen now.",
-          "Look at my screen.",
           "Let me share my screen — can you see it?",
+          "Look at my screen.",
           "Watch what I do."
         ],
-        "correctIndex": 2,
+        "correctIndex": 1,
         "explain": "Share my screen — устоявшаяся коллокация (не show). Сразу следом проверка видимости. Стандартный ритуал перед демо в Zoom/Teams."
       },
       {
@@ -121,21 +121,21 @@
         "options": [
           "I don't understand anything you said.",
           "That made no sense.",
-          "Could you walk me through that again?",
-          "Repeat all of it."
+          "Repeat all of it.",
+          "Could you walk me through that again?"
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "Walk me through = провести по шагам. Признаёт непонимание мягко, без обвинения. «I don't understand anything» — преувеличение и претензия. «That made no sense» — обвиняет говорящего."
       },
       {
         "prompt": "Хочешь мягко возразить против таймлайна на встрече команды. Как?",
         "options": [
           "This timeline is impossible.",
-          "I'd push back a bit on that timeline — it feels tight.",
           "No way we can do that.",
+          "I'd push back a bit on that timeline — it feels tight.",
           "You're being unrealistic."
         ],
-        "correctIndex": 1,
+        "correctIndex": 2,
         "explain": "Push back — устоявшийся бизнес-термин для возражения. «A bit» смягчает. «Feels tight» — мягкая характеристика. Остальные варианты — категоричны или личный выпад."
       }
     ]

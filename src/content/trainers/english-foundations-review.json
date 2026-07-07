@@ -1,0 +1,82 @@
+{
+  "course": "english",
+  "title": "Сводный тест по основам",
+  "description": "Смешанные случаи из грамматики фазы 1: артикли, времена, предлоги, модальные, вопросы, сравнения.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "She works as ___ engineer at ___ big company.",
+        "options": ["an / a", "a / a", "an / the", "the / an"],
+        "correctIndex": 0,
+        "explain": "«engineer» начинается со звука [e] → an. «Big company» — впервые, одна из многих → a."
+      },
+      {
+        "prompt": "Listen! Someone ___ at the door.",
+        "options": ["knocks", "is knocking", "knock", "knocked"],
+        "correctIndex": 1,
+        "explain": "«Listen!» указывает на момент сейчас → Present Continuous: is + V-ing."
+      },
+      {
+        "prompt": "I ___ TV when the phone rang.",
+        "options": ["watched", "was watch", "was watching", "watch"],
+        "correctIndex": 2,
+        "explain": "Длительный фон, прерванный коротким действием (rang) → Past Continuous: was + V-ing."
+      },
+      {
+        "prompt": "The train ___ at 6:00 tomorrow — it's in the timetable.",
+        "options": ["will leave", "is leaving", "is going to leave", "leaves"],
+        "correctIndex": 3,
+        "explain": "Расписание, объективный факт, не зависит от говорящего → Present Simple: leaves."
+      },
+      {
+        "prompt": "The meeting is ___ Monday ___ 9 a.m.",
+        "options": ["on / at", "in / on", "at / on", "on / in"],
+        "correctIndex": 0,
+        "explain": "День недели → on Monday. Точное время → at 9 a.m."
+      },
+      {
+        "prompt": "You ___ wear a helmet here — it's a safety rule.",
+        "options": ["should", "have to", "might", "could"],
+        "correctIndex": 1,
+        "explain": "Внешнее правило, обязанность → have to (или must). should — только совет."
+      },
+      {
+        "prompt": "___ your brother live in London?",
+        "options": ["Do", "Is", "Does", "Are"],
+        "correctIndex": 2,
+        "explain": "Present Simple, 3-е лицо ед. (brother) → вспомогательный Does."
+      },
+      {
+        "prompt": "This task is ___ than the last one.",
+        "options": ["more easy", "more easier", "easiest", "easier"],
+        "correctIndex": 3,
+        "explain": "«easy» оканчивается на -y → -ier: easier. Не «more easy» и не двойное «more easier»."
+      },
+      {
+        "prompt": "My sister is ___ doctor. She ___ at a hospital.",
+        "options": ["a / works", "the / works", "a / is working", "an / works"],
+        "correctIndex": 0,
+        "explain": "Профессия → a doctor. Постоянный факт (её работа вообще) → Present Simple works."
+      },
+      {
+        "prompt": "By the time we arrived, the film ___.",
+        "options": ["already started", "had already started", "has already started", "was starting"],
+        "correctIndex": 1,
+        "explain": "Действие завершилось ДО другого прошлого (arrived) → Past Perfect: had + already + V3."
+      },
+      {
+        "prompt": "I've worked here ___ 2019.",
+        "options": ["from", "for", "since", "at"],
+        "correctIndex": 2,
+        "explain": "Точка отсчёта в прошлом → since 2019. for — про длительность (for three years)."
+      },
+      {
+        "prompt": "It's late and she's not answering — she ___ asleep.",
+        "options": ["can be", "should be", "might been", "must be"],
+        "correctIndex": 3,
+        "explain": "Дедукция с высокой уверенностью (поздно + не отвечает) → must be. can be — общая возможность, не вывод."
+      }
+    ]
+  }
+}

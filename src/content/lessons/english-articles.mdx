@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Pronunciation from '../../components/lesson/Pronunciation.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем артикли
@@ -26,6 +27,8 @@ import { withBase } from '../../lib/url';
 В русском такого слова нет. Эту работу выполняет порядок слов, контекст и интонация: «на столе книга» (какая-то), «книга на столе» (та самая). В английском порядок жёсткий, поэтому смысл несут именно артикли. Поставил не тот — фраза не сломается, но прозвучит странно, иногда смешно, иногда двусмысленно.
 
 Артикли — самая частая ошибка русскоязычных. Не потому, что правило сложное, а потому, что в родном языке выбора просто нет. Этот урок — справочник. Один раз пройти, потом возвращаться, когда не уверен.
+
+После этого урока ты будешь ставить артикль не наугад, а по короткому алгоритму: решать, нужен ли **a/an**, **the** или ничего, и ловить типовые ловушки — an hour, a university, the USA.
 
 ## 2. Главное правило
 
@@ -45,7 +48,7 @@ import { withBase } from '../../lib/url';
 
 ## 4. Аналогия с русским
 
-<AnalogyBox note="В русском смысл «какой-то / тот самый» передаётся порядком слов и контекстом. Английский эту работу делегирует артиклю, поэтому артикль обязателен в каждой фразе с существительным. Русскоязычные привычно «не замечают» эту слот в речи и пропускают — отсюда главная ошибка.">
+<AnalogyBox note="В русском смысл «какой-то / тот самый» передаётся порядком слов и контекстом. Английский эту работу делегирует артиклю, поэтому артикль обязателен в каждой фразе с существительным. Русскоязычные привычно «не замечают» этот слот в речи и пропускают — отсюда главная ошибка.">
   <div slot="ru">
     «На столе <strong>книга</strong>.» — какая-то, впервые.<br/>
     «<strong>Книга</strong> на столе.» — та самая, о которой шла речь.<br/>
@@ -57,6 +60,10 @@ import { withBase } from '../../lib/url';
     Порядок слов фиксирован, а смысл несёт артикль.
   </div>
 </AnalogyBox>
+
+<Reveal q="«Я купил книгу. Книга оказалась скучной.» Какие артикли в двух предложениях и почему?">
+«I bought a book. The book was boring.» Первое упоминание — a (одна из многих), повторное — the (та самая, уже известна собеседнику). Это ядро всей системы: новое → a/an, известное → the.
+</Reveal>
 
 ## 5. Когда a, а когда an
 
@@ -269,7 +276,7 @@ a и an — одно и то же по смыслу. Выбор зависит *
 | at **the** 11 PM | at 11 PM | «at + конкретное время» — без артикля. |
 | **an** university | **a** university | «университи» начинается со звука «ю» (согласный). |
 | **a** hour | **an** hour | h немая, звучит «ауэр» — гласный звук. |
-| **a** SQL query | **an** SQL query | «эс-кью-эл» — гласный «э». |
+| **an** European tool | **a** European tool | «European» начинается со звука «ю» [j] — согласный → a. |
 | go to **the** school every day | go to school every day | «Учиться» — без артикля (функция). |
 | **The** life is hard. | Life is hard. | Абстрактное понятие в общем смысле. |
 | by **the** car | by car | «by + транспорт» — без артикля. |
@@ -346,7 +353,7 @@ a и an — одно и то же по смыслу. Выбор зависит *
   <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-articles-cloze')}>

@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Timeline from '../../components/lesson/Timeline.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем столько способов сказать о будущем
@@ -28,6 +29,8 @@ import { withBase } from '../../lib/url';
 Перепутаешь — фраза не сломается. Но прозвучит странно. «I will meet Anna at 7» вместо «I'm meeting Anna at 7» звучит так, будто решение возникло у тебя только что, в момент речи. А ты с ней договаривался неделю назад. Носитель уловит, что что-то не так, даже если не сразу скажет, что именно.
 
 Этот урок про то, как выбирать форму будущего автоматически: по смыслу, а не по совпадению со словарём.
+
+После этого урока ты будешь выбирать между will, going to, Present Continuous и Present Simple по смыслу — спонтанное решение, намерение, договорённость или расписание.
 
 ## 2. Главное правило
 
@@ -98,6 +101,10 @@ import { withBase } from '../../lib/url';
   </div>
 </AnalogyBox>
 
+<Reveal q="«I'll meet Anna at 5» или «I'm meeting Anna at 5» — что скажешь, если встреча уже назначена?">
+«I'm meeting Anna at 5» — договорённость уже есть (Present Continuous). «I'll meet» звучало бы как решение прямо сейчас. Запланированное — Present Continuous, спонтанное — will.
+</Reveal>
+
 ## 5. Визуальная схема
 
 **will vs be going to** — отличаются не временем действия, а моментом принятия решения.
@@ -157,7 +164,7 @@ import { withBase } from '../../lib/url';
   "<strong>Запланированное конкретное событие в близком будущем.</strong> Есть договорённость, время, место — кто-то уже знает и ждёт. <em>We're meeting Anna at 7 tonight.</em>",
   "<strong>Билеты куплены, бронь сделана, в календаре записано.</strong> Это уже почти происходит, машина запущена. <em>I'm flying to Lisbon on Friday.</em>",
   "<strong>Личные встречи, поездки, ужины, занятия с конкретным временем.</strong> <em>She's having a job interview on Monday.</em>",
-  "<strong>Не используется для отдалённого будущего без точной даты.</strong> «Когда-нибудь я переду в Берлин» — это не Present Continuous. Это going to или will.",
+  "<strong>Не используется для отдалённого будущего без точной даты.</strong> «Когда-нибудь я перееду в Берлин» — это не Present Continuous. Это going to или will.",
 ]} />
 
 ### Когда Present Simple (как будущее)
@@ -310,7 +317,7 @@ import { withBase } from '../../lib/url';
 <Vocab items={[
   { term: "will / 'll", meaning: "модальный для спонтанных решений, предсказаний, обещаний" },
   { term: "won't", meaning: "сокращение от will not — отрицание" },
-  { term: "shall", meaning: "устаревший аналог will для I/we; сейчас — только в предложениях: Shall we go?" },
+  { term: "shall", meaning: "формальный/книжный вариант will для I/we (BrE); в речи — для предложений: Shall we go?" },
   { term: "be going to", meaning: "конструкция для заранее принятых планов и видимых предсказаний" },
   { term: "gonna", meaning: "разговорное сокращение от going to (только в речи, не в письме)" },
   { term: "Present Continuous (для будущего)", meaning: "запланированное событие с договорённостью" },
@@ -371,7 +378,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-future-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-future-cloze')}>

@@ -15,6 +15,7 @@ import Example from '../../components/lesson/Example.astro';
 import RuleList from '../../components/lesson/RuleList.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем разработчику свой пласт английского
@@ -24,6 +25,8 @@ import { withBase } from '../../lib/url';
 Беда в том, что общая лексика тут не выручает. `Make` вместо `do`, `actual` вместо `current`, `deploy on prod` вместо `deploy to prod`, `pull request` вместо `git pull` в смысле «обнови репозиторий» — каждое такое слово сразу выдаёт, что человек переводит дословно. Локально это понятно, на работе — мешает: коллеги переспрашивают, ревью буксует, оценки задач читаются криво.
 
 Этот урок — про базовый словарь и набор готовых фраз, без которых рабочая коммуникация в IT не складывается. Не про продвинутую техническую дискуссию о distributed systems, а про каркас: процесс, код и git, архитектура, частые офисные ситуации. После него стандартный рабочий день — standup, обсуждение тикета, поход за код-ревью, «у меня сломалось» — собирается на знакомых блоках, а не переводится на лету.
+
+После этого урока ты будешь описывать процесс разработки по-английски — давать статус на standup, комментировать в code review и говорить «я заблокирован» без калек.
 
 ## 2. Главное правило
 
@@ -66,6 +69,10 @@ Tech English — это не «английский плюс термины», �
     На работе говорят коротко, не «academic».
   </div>
 </AnalogyBox>
+
+<Reveal q="«I'm blocked» — а на чём? Какой предлог: on, by или with?">
+«I'm blocked on the review» или «blocked by the API bug». On — про задачу или этап, by — про причину. «I'm on it» = «беру в работу». Эти предлоги — часть рабочего сленга, их учат как формулы.
+</Reveal>
 
 ## 6. Лексика по областям
 
@@ -271,7 +278,7 @@ Tech English — это не «английский плюс термины», �
 ## 9. Мнемоника и лайфхаки
 
 <Callout type="teal" title="Артикль перед IT-аббревиатурами">
-Артикль определяется **звуком первой буквы аббревиатуры, не написанием**. `MVP` читается как «эм-ви-пи» — начинается на гласный звук, значит **an MVP**. `SQL` чаще читается «эс-кью-эл», тоже на гласный — **an SQL query**. `API` — «эй-пи-ай», но первый звук [eɪ] — гласный, **an API**. А `UI` — «ю-ай», первый звук [j] — согласный, поэтому **a UI**. `URL` — «ю-ар-эл», тоже **a URL**. Запомни: проговори вслух первую букву, и артикль вылезет сам.
+Артикль определяется **звуком первой буквы аббревиатуры, не написанием**. `MVP` читается как «эм-ви-пи» — начинается на гласный звук, значит **an MVP**. `SQL` при чтении «эс-кью-эл» начинается на гласный — **an SQL query** (а у тех, кто читает «сиквел», — **a SQL query**; оба варианта нормативны). `API` — «эй-пи-ай», но первый звук [eɪ] — гласный, **an API**. А `UI` — «ю-ай», первый звук [j] — согласный, поэтому **a UI**. `URL` — «ю-ар-эл», тоже **a URL**. Запомни: проговори вслух первую букву, и артикль вылезет сам.
 </Callout>
 
 ## 10. UK vs US — мелкие отличия
@@ -288,7 +295,7 @@ Tech English — это не «английский плюс термины», �
 | What is the actual status? | What is the current status? | `Actual` — это «реальный / фактический», не «актуальный». «Актуальный» = `current / up-to-date / relevant`. Один из самых частых ложных друзей. |
 | Make me a code review, please | Could you review my PR? | `Make a code review` — калька с русского. По-английски: `review my PR`, `take a look at my PR`, `do a quick review`. Глагол — `review`, не `make`. |
 | Please accept my PR | Please approve my PR | В git/GitHub PR не «принимают» — его `approve` (одобряют), затем `merge` (сливают). `Accept` подходит для предложения о работе или приглашения, не для PR. |
-| an UI / a API / a SQL query | a UI / an API / an SQL query | Артикль по **первому звуку аббревиатуры**. UI — [juː], согласный → `a`. API — [eɪ], гласный → `an`. SQL — [es], гласный → `an`. |
+| an UI / a API | a UI / an API | Артикль по **первому звуку аббревиатуры**. UI — [juː], согласный → `a`. API — [eɪ], гласный → `an`. |
 | I will ship the file to you | I'll send you the file | `Ship` в IT = выкатить в прод. Файл — `send`, `share`, `attach`. Иначе звучит, что ты деплоишь файл. |
 | Please make git pull request | Please open a pull request | `Pull request` — это сущность в GitHub/GitLab. Создают её через `open / create / submit a PR`. `Git pull` — другая команда, она про подтягивание изменений из remote. Разные вещи, не смешивать. |
 | Deploy on prod | Deploy to prod | `Deploy to <environment>`. Предлог `to` — направление действия. `On prod` уместно для состояния: `the bug shows up on prod`. Для деплоя — только `to`. |
@@ -312,7 +319,7 @@ Tech English — это не «английский плюс термины», �
 
 | Ловушка | Запомни |
 | --- | --- |
-| Артикль перед аббрев. | По первому звуку: an MVP, an API, an SQL, **a** UI, **a** URL |
+| Артикль перед аббрев. | По первому звуку: an MVP, an API, **a** UI, **a** URL |
 | deploy to / push to prod | Предлог `to`, не `on` |
 | review my PR | Глагол `review`, не `make a review` |
 | approve / merge PR | Не `accept` |
@@ -409,7 +416,7 @@ Tech English — это не «английский плюс термины», �
   <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Tech English в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов: выбери правильный термин или фразу</span>
+    <span class="kc-trainer-hint">вопросы: выбери правильный термин или фразу</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-tech-cloze')}>

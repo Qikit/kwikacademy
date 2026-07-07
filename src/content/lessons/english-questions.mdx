@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем разбирать вопросы отдельно
@@ -26,7 +27,9 @@ import { withBase } from '../../lib/url';
 
 В английском вопрос — это структура. Глагол-помощник встаёт перед подлежащим, у глагола `be` свои правила, у вопроса о подлежащем — третий сценарий, у косвенного вопроса — четвёртый. Плюс tag questions («right?», «isn't it?»), без которых разговорный английский звучит сухо. И отдельный пласт — отрицания во всех временах с их короткими формами.
 
-Этот урок собирает всё это в одну карту: какие бывают типы вопросов, как они строятся, где русскоязычные ломают конструкцию и какие кратки отрицаний нужно держать в активной памяти.
+Этот урок собирает всё это в одну карту: какие бывают типы вопросов, как они строятся, где русскоязычные ломают конструкцию и какие краткие отрицания нужно держать в активной памяти.
+
+После этого урока ты будешь строить любой из шести типов вопросов и краткие отрицания без русской инверсии — знать, когда нужен do-support, а когда порядок остаётся прямым.
 
 ## 2. Главное правило
 
@@ -177,6 +180,10 @@ import { withBase } from '../../lib/url';
     Вопросительное слово + аукс + подлежащее + смысловой глагол. Четыре слота, порядок жёсткий.
   </div>
 </AnalogyBox>
+
+<Reveal q="«Who ___ this song?» (написал) — нужен ли did?">
+«Who wrote this song?» — субъектный вопрос (who = подлежащее), do-support НЕ нужен, порядок прямой. did понадобился бы в объектном: «Who did you meet?» (who = дополнение).
+</Reveal>
 
 ## 5. Визуальная схема — какой вопрос я строю
 
@@ -467,7 +474,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-questions-cloze')}>

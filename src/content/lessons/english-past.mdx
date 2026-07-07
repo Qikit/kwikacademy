@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Timeline from '../../components/lesson/Timeline.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем три прошедших
@@ -26,6 +27,8 @@ import { withBase } from '../../lib/url';
 В английском под эти три ситуации — три отдельные формы. **Past Simple** — факт в прошлом, точка или последовательность («работал до восьми»). **Past Continuous** — процесс, развёрнутый во времени прошлого («работал, когда…»). **Past Perfect** — действие, законченное до другого момента в прошлом («уже отработал к тому моменту»).
 
 Перепутать — фраза не сломается, поймут. Но смысл поплывёт. «I had dinner when she called» и «I was having dinner when she called» — это две разные истории: в первой ужин уже был съеден, а потом был звонок; во второй звонок прервал процесс ужина. Этот урок про то, как выбирать форму осознанно и автоматически, и про то, как сладить с неправильными глаголами.
+
+После этого урока ты будешь различать три прошедших времени — факт (Past Simple), фон (Past Continuous) и «до того как» (Past Perfect) — и перестанешь спотыкаться на неправильных глаголах.
 
 ## 2. Главное правило
 
@@ -97,6 +100,10 @@ import { withBase } from '../../lib/url';
     Три разные формы для трёх разных смыслов.
   </div>
 </AnalogyBox>
+
+<Reveal q="«When I arrived, she left» и «When I arrived, she had left» — в чём разница смысла?">
+«she left» (Past Simple) — ушла ПОСЛЕ моего прихода (последовательность). «she had left» (Past Perfect) — ушла ДО, я её не застал. Past Perfect показывает, что действие было раньше другого прошлого.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -350,7 +357,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-past-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">10 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-past-cloze')}>

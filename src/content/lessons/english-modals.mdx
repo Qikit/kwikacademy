@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Scale from '../../components/lesson/Scale.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем модальные
@@ -26,6 +27,8 @@ import { withBase } from '../../lib/url';
 В английском под каждый смысл — отдельный модальный. **must** — внутренняя обязанность и сильное предположение. **have to** — внешнее правило. **should** — совет. **may / might** — возможность и формальное разрешение. **can / could** — способность, разрешение, просьба. **will / would** — намерение, вежливость, бывшая привычка. Замешать их — фраза не сломается, но смысл поплывёт: «You must go to the gym» вместо «You should go to the gym» звучит как приказ от человека, у которого есть на это право, а не как дружеский совет.
 
 Этот урок про то, как выбирать модальный по смыслу, а не по словарному переводу. И про десяток ловушек, в которые регулярно попадают русскоязычные: `mustn't` vs `don't have to`, `can` vs `be able to`, дедукция через `must be` / `can't be`, особенности отрицания и вопроса.
+
+После этого урока ты будешь передавать модальными то, что в русском несёт интонация: разрешение, запрет, обязанность, совет и степень уверенности — и различать must / have to / should.
 
 ## 2. Главное правило
 
@@ -61,7 +64,7 @@ import { withBase } from '../../lib/url';
 
 - `have to + V` — внешняя обязанность. *I have to wear a uniform.*
 - `ought to + V` — совет (синоним should, чуть более формальный). *You ought to apologise.*
-- `used to + V` — бывшая привычка (был тема прошедшего урока). *I used to smoke.*
+- `used to + V` — бывшая привычка (была темой прошлого урока). *I used to smoke.*
 
 `have to` — единственный из них, который ведёт себя как обычный глагол: меняется по лицам (`he has to`), берёт вспомогательный `do` в вопросе и отрицании (`Do you have to work?`, `I don't have to go`). Остальные — настоящие модальные с инверсией.
 
@@ -94,6 +97,10 @@ import { withBase } from '../../lib/url';
     Каждый смысл — свой модальный.
   </div>
 </AnalogyBox>
+
+<Reveal q="«You mustn't go» и «You don't have to go» — оба про «не». В чём разница?">
+«mustn't» = запрет (нельзя). «don't have to» = отсутствие обязанности (не обязан, но можно). Русское «не должен» коварно ложится на оба, а смыслы противоположные.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -439,13 +446,13 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-categorize')}>
     <span class="kc-trainer-kind">Категории</span>
     <span class="kc-trainer-title">Какой смысл несёт модальный?</span>
-    <span class="kc-trainer-hint">Разложи предложения по пяти корзинам</span>
+    <span class="kc-trainer-hint">Разложи предложения по четырём корзинам</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-modals-cloze')}>

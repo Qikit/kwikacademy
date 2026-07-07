@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем косвенная речь
@@ -25,6 +26,8 @@ import { withBase } from '../../lib/url';
 В русском пересказ устроен почти как прямая речь: «Он сказал, что устал», «Она спросила, где я живу». Времена согласуются мягко: можно сказать «Он сказал, что устаёт» (настоящее в придаточном после прошедшего в главном), и никто не споткнётся. Английский так не работает. Если в главном предложении прошедшее время (`said`, `asked`, `told`), то и придаточное чаще всего сдвигается «на шаг назад» во времени — это **backshift**, согласование времён. Плюс меняются лица, указатели времени и места.
 
 Перепутать — фраза не сломается, поймут. Но звучит ломано. «He said he is tired» вместо «He said he was tired» сразу выдаёт нерод­ного. А в вопросах русскоязычные регулярно ломают конструкцию: «He asked where did I live» — калька с английского прямого вопроса, в reported так нельзя. Этот урок про три кита косвенной речи: что сдвигается (backshift), что заменяется (лица, обстоятельства), и какие три формы есть у самих конструкций (statements, questions, imperatives).
+
+После этого урока ты будешь пересказывать чужие слова со сдвигом времён, лиц и обстоятельств — и строить косвенные вопросы без русской инверсии в придаточном.
 
 ## 2. Главное правило
 
@@ -81,10 +84,11 @@ import { withBase } from '../../lib/url';
 - **tell** — с объектом обязательно: *He told me (that)...*. Нельзя *«He told that»*.
 - **ask** — для вопросов и просьб: *He asked me (where I lived) / (to wait)*.
 - **explain to / mention to** — требуют `to + obj`: *He explained to me that...*.
-- **suggest** — без объекта, с `V-ing` или `that S should V`: *He suggested going / He suggested that we should go*.
-- **advise / recommend / warn / order / urge / beg / remind** — с объектом и `to + V`: *She advised me to wait*.
+- **suggest / recommend** — без объекта, с `V-ing` или `that S should V`: *He suggested going / She recommended that we wait*. (Не *recommend me to wait* — это ошибка.)
+- **advise / warn / order / urge / beg / remind** — с объектом и `to + V`: *She advised me to wait*.
 - **promise / agree / offer / threaten / refuse** — с `to + V`: *He promised to call*.
-- **complain / deny / insist** — с `that` или `V-ing`: *He denied taking the money / He denied that he had taken the money*.
+- **deny / admit** — с `that` или `V-ing`: *He denied taking the money / He denied that he had taken it*.
+- **complain about / insist on** — перед герундием нужен предлог: *He complained about waiting. She insisted on paying*.
 
 ## 4. Аналогия с русским
 
@@ -104,6 +108,10 @@ import { withBase } from '../../lib/url';
     Backshift почти всегда обязателен, в вопросе — прямой порядок без аукса.
   </div>
 </AnalogyBox>
+
+<Reveal q="Прямая речь вчера: «I am tired». В косвенной: «He said he ___ tired.»">
+«He said he was tired» — backshift: am → was (сдвиг на шаг назад, ведь said в прошлом). Так же now → then, today → that day. Сегодняшнее «am» в пересказе становится «was».
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -371,7 +379,7 @@ Backshift — не педантизм и не «согласование рад�
 
 ## 15. Тренажёры
 
-После теории — закрепи в шести тренажёрах разных типов:
+После теории — закрепи в тренажёрах, а в конце проверь себя сводным тестом по всей первой фазе:
 
 <div class="kc-trainer-grid">
   <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-flashcards')}>
@@ -395,7 +403,7 @@ Backshift — не педантизм и не «согласование рад�
   <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором, ловушки порядка и reporting verb</span>
+    <span class="kc-trainer-hint">вопросы с разбором, ловушки порядка и reporting verb</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-reported-speech-cloze')}>
@@ -408,6 +416,12 @@ Backshift — не педантизм и не «согласование рад�
     <span class="kc-trainer-kind">Порядок</span>
     <span class="kc-trainer-title">Собери reported</span>
     <span class="kc-trainer-hint">Reported statements, questions, imperatives</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/english/english-foundations-review')}>
+    <span class="kc-trainer-kind">Сводный тест</span>
+    <span class="kc-trainer-title">Основы вместе</span>
+    <span class="kc-trainer-hint">Смешанные случаи фазы 1: артикли, времена, предлоги, модальные</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
 </div>

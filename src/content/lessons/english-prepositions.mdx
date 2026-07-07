@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Scale from '../../components/lesson/Scale.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем разбираться с in / on / at
@@ -28,6 +29,8 @@ import { withBase } from '../../lib/url';
 Поверх этого есть ещё один пласт — предлоги, намертво пришитые к глаголам. `Listen to music`, не `listen music`. `Wait for somebody`, не `wait somebody`. `Depend on`, не `depend from`. Эти связки запоминаются как фразы, а не выводятся по логике предлога.
 
 Этот урок про то, как выбирать `in / on / at` за полсекунды и не спотыкаться о фиксированные связки.
+
+После этого урока ты перестанешь ставить один русский «в» везде: будешь выбирать in/on/at по масштабу времени и места и знать предлоги, намертво пришитые к глаголам (depend on, arrive at).
 
 ## 2. Главное правило
 
@@ -96,6 +99,10 @@ import { withBase } from '../../lib/url';
     Тонко настроенный выбор под смысл.
   </div>
 </AnalogyBox>
+
+<Reveal q="in the morning, ___ Monday, ___ 7 o'clock — какие предлоги в пропусках?">
+on Monday, at 7 o'clock. Логика «от крупного к точке»: in (месяц, год, часть суток) → on (день, дата) → at (точное время). Но at night — исключение, которое просто запоминается.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -189,7 +196,7 @@ import { withBase } from '../../lib/url';
 <Example ru="Встречаемся в субботу в семь.">We're meeting on Saturday at seven.</Example>
 <Example ru="Я родился пятого марта.">I was born on March 5.</Example>
 <Example ru="В понедельник утром у меня созвон.">On Monday morning I have a call.</Example>
-<Example ru="Релиз запланирован на пятницу.">The release is scheduled on Friday.</Example>
+<Example ru="Релиз запланирован на пятницу.">The release is scheduled for Friday.</Example>
 
 ### Время — период и часть дня (in)
 
@@ -402,7 +409,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-prepositions-cloze')}>

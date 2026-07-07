@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Scale from '../../components/lesson/Scale.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем уметь сравнивать
@@ -26,6 +27,8 @@ import { withBase } from '../../lib/url';
 В русском у нас тоже два способа сделать степень: суффикс («длиннее», «теплее») и аналитика («более длинный», «более тёплый»). В английском та же логика: короткие прилагательные берут суффикс `-er / -est`, длинные — конструкцию `more / the most`. Проблема в том, что русскоязычные регулярно ошибаются в трёх местах: смешивают оба способа («more better»), забывают артикль `the` перед превосходной («best player» вместо «the best player») и не различают `farther / further`, `less / fewer`, `as ... as / -er than`.
 
 Этот урок даёт правила выбора и орфографии так, чтобы форма приходила автоматически, и закрывает типовые ошибки, по которым русскоязычного слышно сразу.
+
+После этого урока ты будешь строить обе степени сравнения без ошибок: короткую через -er/-est и длинную через more/most, знать неправильные (good/better/best) и конструкцию as … as.
 
 ## 2. Главное правило
 
@@ -65,7 +68,7 @@ import { withBase } from '../../lib/url';
 
 | Правило | Положительная | Сравнительная | Превосходная |
 | --- | --- | --- | --- |
-| Молчаливое `-e` исчезает | late | later | the latest |
+| Немая `-e`: только +-r / -st | late | later | the latest |
 | То же | nice | nicer | the nicest |
 | Короткий CVC удваивает согласную | big | bigger | the biggest |
 | То же | thin | thinner | the thinnest |
@@ -126,6 +129,10 @@ CVC = согласная + гласная + согласная в конце с�
     3+ слога → `more / the most`, без суффикса.
   </div>
 </AnalogyBox>
+
+<Reveal q="«more big» или «bigger»? А «more interesting» или «interestinger»?">
+bigger (короткое слово → -er) и more interesting (длинное → more). Граница по числу слогов: 1 слог и часть 2-сложных берут -er/-est, длинные — more/most. «interestinger» не существует.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -313,7 +320,7 @@ CVC = согласная + гласная + согласная в конце с�
 | He runs good | He runs well | После глагола действия — наречие `well`, не прилагательное `good`. |
 | She is as faster as him | She is as fast as him | Между `as ... as` идёт основная форма, не сравнительная. |
 | He's taller than I am taller | He's taller than I am / He's taller than me | Во второй части сравнения сравнительная форма не повторяется. |
-| Better than then | Better than than | (опечатка примера) — путаница `than` (для сравнения) и `then` (затем). `Better than that. Then we left.` |
+| Better than then | Better than that | Путаница `than` (сравнение) и `then` (затем, потом). Сравнение — только `than`: `better than that`. `Then we left` — это «потом». |
 | I need more further information | I need further information | `further` уже несёт смысл «дополнительный», `more` тут лишнее. |
 | The most longest movie | The longest movie | Тоже двойная превосходная: либо `the longest`, либо `the most long` (последнее неверно для `long`). |
 | She is very faster than him | She is much faster than him | `very` сочетается только с основной формой (`very fast`). С сравнительной — `much / far / a lot`. |
@@ -413,7 +420,7 @@ CVC = согласная + гласная + согласная в конце с�
   <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-comparisons-cloze')}>

@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем учить местоимения отдельной темой
@@ -25,6 +26,8 @@ import { withBase } from '../../lib/url';
 Дальше — больше. У английского местоимения есть не один «дополнительный» падеж, а целая семья форм: subject, object, possessive-adjective, possessive-pronoun, reflexive. Пять форм на каждое лицо. Плюс отдельный набор для указания (this / that), отдельный — для количества (some / any / much / many / few / little), отдельный — для «кто-то / что-то / нигде» (somebody / anything / nowhere), отдельный — для «каждый / все» (each / every / all). Всё это разные системы со своими правилами выбора.
 
 Хорошая новость: каждая система маленькая и логичная. Эта тема не про зубрёжку, а про то, чтобы один раз увидеть всю карту и перестать гадать.
+
+После этого урока ты будешь уверенно выбирать нужное местоимение из семи семей — включая its/it's, her/hers, few/a few и гендерно-нейтральное their.
 
 ## 2. Главное правило
 
@@ -105,6 +108,10 @@ import { withBase } from '../../lib/url';
     <strong>I cut myself.</strong> — Возвратность вынесена в отдельное слово «-self».
   </div>
 </AnalogyBox>
+
+<Reveal q="«The dog wagged ___ tail» — its или it's?">
+its (притяжательное, без апострофа). it's = it is или it has. Апостроф здесь — самая частая ошибка: «it's tail» дословно «оно есть хвост». Притяжательные its/his/hers/theirs апострофа не берут.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -481,7 +488,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-pronouns-cloze')}>

@@ -3,10 +3,10 @@ course: english
 order: 10
 phase: "Фаза 1 · Бытовой английский"
 title: "Условные предложения — Zero, First, Second, Third, Mixed"
-eyebrow: "Грамматика · уровень B1"
-readingMinutes: 28
+eyebrow: "Грамматика · уровень B1-B2"
+readingMinutes: 14
 summary: "Четыре типа условных и смешанный. Когда «если» — реальное, когда «если бы» — про настоящее, а когда — про упущенное прошлое. Wish, unless и почему в if-clause никогда нет will."
-tags: [conditionals, grammar, B1]
+tags: [conditionals, grammar, B1, B2]
 ---
 
 import Callout from '../../components/lesson/Callout.astro';
@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Timeline from '../../components/lesson/Timeline.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем разбираться в условных
@@ -28,6 +29,8 @@ import { withBase } from '../../lib/url';
 Перепутаешь — фраза грамматически останется, но смысл сместится. «If I knew, I would tell you» и «If I had known, I would have told you» — это две разные истории. В первой я сейчас не знаю и поэтому не говорю. Во второй тогда не знал и поэтому тогда не сказал. Между ними годы и упущенный шанс.
 
 Этот урок — про то, как выбирать тип условного автоматически: сначала спросить себя про реальность («это вообще может произойти?»), потом про время («это про будущее, настоящее или прошлое?»), и только потом подбирать формулу.
+
+После этого урока ты будешь различать все типы условных — реальное «если» (First), нереальное про настоящее (Second) и упущенное прошлое (Third) — и не поставишь will в if-часть.
 
 ## 2. Главное правило
 
@@ -85,6 +88,10 @@ import { withBase } from '../../lib/url';
     Каждый смысл — своя пара времён.
   </div>
 </AnalogyBox>
+
+<Reveal q="«If I ___ (be) you, I'd take the job» — какая форма be?">
+«If I were you» — Second Conditional (нереальное, совет). Для всех лиц — were, не was: «if I were», «if he were». Это след старого сослагательного, живёт именно во «if I were you».
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -410,7 +417,7 @@ Past Simple в Second conditional («If I had a car») не означает р�
   <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-conditionals-cloze')}>

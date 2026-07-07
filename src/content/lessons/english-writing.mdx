@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем уметь писать email
@@ -25,6 +26,8 @@ import { withBase } from '../../lib/url';
 Русскоязычные авторы регулярно ловят две крайности. Первая — переводят дословно с русского: получается либо холодно-приказно («Send me the report by Friday»), либо приторно-канцелярски («I hereby kindly request you to send the aforementioned document»). Носитель в первом случае подумает, что его построили, во втором — что письмо генерировал бот из 1970 года. Вторая крайность — слепое копирование шаблона из интернета без понимания, к какому регистру он относится. Так в письмо клиенту попадает «Hey buddy», а в чат с коллегой — «I would like to humbly request your assistance».
 
 Этот урок — про структуру email, про шкалу регистров от formal до informal, про готовые шаблоны для типовых ситуаций (follow-up, request, apology, decline, introduction, reminder) и про культурные ловушки: что для UK или US аудитории прозвучит грубо, даже если по-русски это норма.
+
+После этого урока ты будешь писать деловые письма с правильной структурой и регистром — от formal до informal — и смягчать тон так, чтобы не прозвучать грубо для UK/US адресата.
 
 ## 2. Главное правило
 
@@ -63,6 +66,10 @@ Subject — самая недооценённая часть. «Question» в т
     <strong>Best regards, Anna</strong> — стандартное закрытие, безопасный default.
   </div>
 </AnalogyBox>
+
+<Reveal q="«Send me the report by Friday.» — что не так для письма клиенту?">
+Звучит как приказ. Смягчи: «Could you send me the report by Friday?» или «Would you be able to…». Прямой императив без please или could читается резко — тон решает не меньше содержания.
+</Reveal>
 
 ## 5. Шкала регистра приветствий
 
@@ -553,7 +560,7 @@ Maria
   <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Уместная фраза в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-writing-cloze')}>

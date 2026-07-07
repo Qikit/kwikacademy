@@ -17,6 +17,7 @@ import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import Timeline from '../../components/lesson/Timeline.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем два настоящих
@@ -26,6 +27,8 @@ import { withBase } from '../../lib/url';
 В английском такого универсального глагола нет. Есть два настоящих времени, и они отвечают на разные вопросы. **Present Simple** — про то, что верно всегда или регулярно. **Present Continuous** — про то, что происходит сейчас или временно.
 
 Перепутаешь — фраза не сломается, носитель поймёт. Но прозвучит странно: «I am living in Moscow» вместо «I live in Moscow» звучит как «я тут проездом, временно живу», а не «Москва — мой постоянный город». Этот урок про то, как ставить выбор автоматически, не задумываясь.
+
+После этого урока ты будешь автоматически выбирать между Present Simple и Continuous — по смыслу (факт или привычка против процесса сейчас), а не наугад, и не поставишь глаголы состояния в -ing.
 
 ## 2. Главное правило
 
@@ -73,6 +76,10 @@ import { withBase } from '../../lib/url';
     Структура `am/is/are + V-ing` буквально означает «есть [находящийся в процессе] работы».
   </div>
 </AnalogyBox>
+
+<Reveal q="«I have a car» и «I'm having lunch» — почему have в одном случае нельзя в Continuous, а в другом можно?">
+Have = «владеть» — глагол состояния, только Simple: I have a car. Have = «есть или проводить» (lunch, a meeting, a shower) — действие, можно Continuous: I'm having lunch. Один глагол, два разных have.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -148,7 +155,7 @@ import { withBase } from '../../lib/url';
 
 <Example ru="Мы встречаемся с Анной сегодня в семь.">We are meeting Anna at seven tonight.</Example>
 <Example ru="В пятницу я лечу в Лиссабон.">On Friday I am flying to Lisbon.</Example>
-<Example ru="Цены растут уже несколько месяцев.">Prices are going up for several months now.</Example>
+<Example ru="Цены сейчас растут.">Prices are going up right now.</Example>
 
 ### Глаголы состояния — только Simple
 
@@ -294,7 +301,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-present-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-present-cloze')}>

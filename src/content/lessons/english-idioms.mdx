@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем учить идиомы
@@ -27,6 +28,8 @@ import { withBase } from '../../lib/url';
 Опасность не только в непонимании. Большинство идиом помечены как **informal**: они уместны в дружеской переписке, чате с коллегой, разговоре в кафе — и неуместны в резюме, юридическом письме, официальном пресс-релизе. `I threw in the towel and quit my job` звучит живо в чате другу и неуместно в заявлении об увольнении. Поэтому к каждой идиоме держи в голове две вещи: что она значит и где её можно сказать.
 
 Этот урок — про 30–40 ходовых идиом по бытовым тематикам, про то, как не попасться на дословный перевод, про регистр и про различия между британским и американским вариантами там, где это критично.
+
+После этого урока ты будешь узнавать бытовые идиомы, смысл которых не выводится из слов, чувствовать их регистр и не переводить дословно (break a leg — не про ногу).
 
 ## 2. Главное правило
 
@@ -123,6 +126,10 @@ import { withBase } from '../../lib/url';
     Картинки разные, функция одна: компактно передать состояние или оценку.
   </div>
 </AnalogyBox>
+
+<Reveal q="Коллеге перед выступлением говорят «Break a leg!». Это угроза?">
+Нет — «break a leg» = «удачи!» (театральное суеверие: прямо пожелать удачи — сглазить). Дословное «сломай ногу» уводит в обратную сторону. Идиому берут целиком, не по словам.
+</Reveal>
 
 ## 5. Визуальная схема
 
@@ -227,7 +234,7 @@ import { withBase } from '../../lib/url';
 
 <Example ru="Я сдался после третьей переписки — пусть кто-то другой добивает баг.">I threw in the towel after the third rewrite — let someone else fix this bug.</Example>
 <Example ru="Все ринулись на хайп вокруг новой библиотеки, не разобравшись.">Everyone jumped on the bandwagon around that new library without checking it.</Example>
-<Example ru="Эта рефакторинг окупится в долгосрочной перспективе.">This refactor will pay off in the long run.</Example>
+<Example ru="Этот рефакторинг окупится в долгосрочной перспективе.">This refactor will pay off in the long run.</Example>
 <Example ru="Мы с новым тимлидом сразу нашли общий язык на онбординге.">I hit it off with the new tech lead during onboarding.</Example>
 
 ## 8. Контрасты с похожими темами
@@ -437,7 +444,7 @@ import { withBase } from '../../lib/url';
   <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Идиома в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-idioms-cloze')}>
@@ -456,7 +463,7 @@ import { withBase } from '../../lib/url';
 
 ## 16. Источники
 
-- **Murphy R., English Grammar in Use** — Units 137-145 (collocations, idioms with verbs).
+- **McCarthy M., O'Dell F., English Idioms in Use (Intermediate)** — тематические юниты по бытовым идиомам.
 - **Swan M., Practical English Usage** — §305 (idioms, collocations and fixed expressions), §319 (informal language).
 - **Cambridge Dictionary — Idioms** — dictionary.cambridge.org/dictionary/english/idiom
 - **British Council LearnEnglish** — learnenglish.britishcouncil.org/vocabulary/english-idioms

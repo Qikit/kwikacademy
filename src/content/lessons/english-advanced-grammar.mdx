@@ -4,7 +4,7 @@ order: 21
 phase: "Фаза 2 · Рабочий английский"
 title: "Advanced Grammar — продвинутая грамматика"
 eyebrow: "Грамматика · уровень B2-C1"
-readingMinutes: 30
+readingMinutes: 18
 summary: "Inversion, cleft sentences, relative clauses глубоко, participles, gerund vs infinitive, causative, subjunctive, discourse markers — всё, что отличает B1 от C1."
 tags: [advanced, grammar, B2, C1]
 ---
@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем эта тема
@@ -25,6 +26,8 @@ import { withBase } from '../../lib/url';
 Advanced Grammar — это не про «более правильный» английский. Это про инструменты выразительности. Инверсия делает фразу драматичной. Cleft-конструкции выделяют то, что важно, в начало. Reduced relative clauses сжимают рыхлый текст. Participle clauses позволяют связывать две мысли без союза. Discourse markers ведут читателя по аргументу. Hedging смягчает категоричность там, где это нужно. Знать всё это — значит уметь сказать одну и ту же вещь пятью разными способами и выбрать подходящий по контексту.
 
 Этот урок — сборник десяти таких групп. Они не связаны между собой одной формулой: каждая решает свою задачу. Поэтому подход — не «запомнить правило», а «понять, для чего инструмент, и научиться его узнавать в чужом тексте». Активное использование приходит позже — через много повторений в письме.
+
+После этого урока ты будешь владеть конструкциями уровня B2-C1 — инверсия, cleft, participle clauses, gerund vs infinitive и subjunctive — тем, что отличает беглую речь от школьной.
 
 ## 2. Главное правило
 
@@ -65,6 +68,10 @@ Advanced Grammar — это не «правильнее», а «точнее и 
     Каждый русский акцент имеет английский шаблон — выбор зависит от того, что именно выделяешь.
   </div>
 </AnalogyBox>
+
+<Reveal q="«Never I have seen this» — что здесь не так?">
+После начального «Never» нужна инверсия, как в вопросе: «Never have I seen this.» Отрицательное или ограничительное слово в начале (Never, Rarely, Not only) → вспомогательный перед подлежащим. Без инверсии — типичная ошибка.
+</Reveal>
 
 ## 5. Регистр конструкций
 
@@ -229,7 +236,7 @@ Discourse markers — слова-указатели в речи и письме:
 
 ### Cleft sentences
 
-<Example ru="Это именно он сломал принтер.">It was he who broke the printer.</Example>
+<Example ru="Это именно он сломал принтер.">It was him who broke the printer.</Example>
 <Example ru="Именно в субботу мы наконец встретились.">It was on Saturday that we finally met.</Example>
 <Example ru="Что мне действительно нужно — это отпуск.">What I really need is a holiday.</Example>
 <Example ru="Что он сделал — это вышел, не попрощавшись.">What he did was leave without saying goodbye.</Example>
@@ -370,7 +377,7 @@ Discourse markers — слова-указатели в речи и письме:
 | I enjoy to swim | I enjoy swimming | Enjoy требует -ing. Это глагол из списка «только gerund». |
 | He stopped to smoke when his wife asked him | He stopped smoking when his wife asked him | Бросил курить — stop + -ing. Stop + to V — остановился, чтобы покурить. |
 | Although of the difficulty | Despite the difficulty / Although it was difficult | Although только с clause (S + V). С существительным — только despite / in spite of. |
-| It was John that broken the vase | It was John who broke the vase | В it-cleft для людей — who, не that. И глагол в нормальном виде — broke, не broken. |
+| It was John that broken the vase | It was John who broke the vase | Реальная ошибка — форма глагола: broke, не broken. (that в it-cleft для людей тоже допустим, who просто привычнее.) |
 | What I want is to leave immediately the office | What I want is to leave the office immediately | В what-cleft порядок обычный после is. Наречие — в нормальной позиции. |
 
 ## 13. Шпаргалка
@@ -494,7 +501,7 @@ Discourse markers — слова-указатели в речи и письме:
   <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">14 вопросов с разбором каждого</span>
+    <span class="kc-trainer-hint">вопросы с разбором каждого</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-advanced-grammar-cloze')}>
@@ -514,6 +521,6 @@ Discourse markers — слова-указатели в речи и письме:
 ## 16. Источники
 
 - **Carter R., McCarthy M., Cambridge Grammar of English** — Sections on inversion, cleft sentences, participle clauses, formal register.
-- **Hewings M., Advanced Grammar in Use (Cambridge)** — Units 23-34 (relative clauses, participles), Units 53-57 (inversion, cleft).
-- **Swan M., Practical English Usage** — §301-307 (inversion), §130-133 (cleft), §494-500 (relative clauses), §296 (gerund vs infinitive).
+- **Hewings M., Advanced Grammar in Use (Cambridge)** — разделы про relative clauses, participles, inversion и cleft.
+- **Swan M., Practical English Usage** — статьи про inversion, cleft sentences, relative clauses, gerund vs infinitive.
 - **Oxford Learner's Dictionaries — Grammar Reference** — oxfordlearnersdictionaries.com/grammar

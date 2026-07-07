@@ -12,9 +12,9 @@ tags: [business, vocabulary, work, B1, B2]
 import Callout from '../../components/lesson/Callout.astro';
 import Compare from '../../components/lesson/Compare.astro';
 import Example from '../../components/lesson/Example.astro';
-import RuleList from '../../components/lesson/RuleList.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем нужен Business English
@@ -24,6 +24,8 @@ import { withBase } from '../../lib/url';
 Вторая сложность — регистр. Одна и та же мысль звучит по-разному в чате с коллегой и в письме клиенту. «I want a call tomorrow» технически грамматически правильно, но в email звучит как требование, а не просьба. «I would like to schedule a call tomorrow» — та же мысль в нейтрально-вежливом регистре. Русскоязычные часто переносят прямой стиль из родного языка и непреднамеренно звучат грубо, особенно в письменной форме, где нет интонации.
 
 Этот урок — про базовый набор деловой лексики и про чувство регистра. Не «выучи 500 идиом» (это бесполезно), а «знай 100 ключевых слов по областям и умей переключать формальность под ситуацию». Это фундамент, на котором уже можно работать в международной команде — а дальше доращивается специфика твоей профессии.
+
+После этого урока ты будешь свободно владеть базовой деловой лексикой — роли, финансы, процессы — и переключать регистр от формального к нейтральному под ситуацию.
 
 ## 2. Главное правило
 
@@ -64,6 +66,10 @@ Business English = **обычный английский + специальны�
     Same grammar, more precise vocabulary, more polite register.
   </div>
 </AnalogyBox>
+
+<Reveal q="revenue, profit и income — это одно и то же?">
+Нет. revenue — вся выручка (сколько пришло). profit — прибыль (выручка минус расходы). income — доход, чаще личный или итоговый. Путать их в деловом разговоре — сразу выдаёт неносителя.
+</Reveal>
 
 ## 5. Шкала регистров
 
@@ -194,7 +200,7 @@ Business English = **обычный английский + специальны�
 <Example ru="Мне нужно отойти на десять минут — у меня встреча со стейкхолдерами.">I need to step out for ten minutes — I have a meeting with the stakeholders.</Example>
 <Example ru="Давайте созвонимся в пятницу и подведём промежуточные итоги.">Let's touch base on Friday and review where we are.</Example>
 <Example ru="Я не успею в эту неделю — у меня нет свободных ресурсов.">I won't be able to take this on this week — I don't have the bandwidth.</Example>
-<Example ru="Поставщик задержал поставку, нам нужен запасной план.">The supplier has delayed the delivery, we need a backup plan.</Example>
+<Example ru="Поставщик задержал поставку, нам нужен запасной план.">The supplier has delayed the delivery, so we need a backup plan.</Example>
 <Example ru="Я возвращаюсь с вопросом по нашему предыдущему обсуждению.">I'm following up on our previous discussion.</Example>
 
 ### Переговоры и процесс
@@ -246,7 +252,7 @@ Business English = **обычный английский + специальны�
   </div>
 </Compare>
 
-Заметь характерные маркеры формального регистра: модальные `would / could`, существительные вместо глаголов (`apologise → apologies`, `delay → delayed delivery`), фразы вежливости (`at your convenience`, `much appreciated`), отказ от сокращений (`I will`, не `I'll`).
+Заметь характерные маркеры формального регистра: модальные `would / could`, фразы вежливости (`at your convenience`, `much appreciated`), полные формы вместо сокращений (`I will`, не `I'll`), безличные обороты (`the delay`, а не `we were late`).
 
 ## 9. Мнемоника
 
@@ -289,7 +295,7 @@ Business English = **обычный английский + специальны�
 | How much money do you earn? | (не задавать в большинстве культур) | Прямой вопрос о зарплате в англоязычном бизнес-контексте считается грубым. В small talk — табу. |
 | I will make a meeting on Monday | I will schedule a meeting on Monday / I will set up a meeting on Monday | «Make a meeting» — калька. Правильно schedule (запланировать), set up (организовать), arrange (договориться). |
 | The deadline is on next week | The deadline is next week | С временными выражениями next/last не используется «on». «On Monday» — да, «on next week» — нет. |
-| Please find attached the document | Please find the document attached / I have attached the document | Старая формула «Please find attached» считается архаичной и канцелярской. Современно — «Attached is...» или «I've attached...». |
+| Please find attached the document | Please find the document attached / I've attached the document | «Please find … attached» — стандартная деловая формула, но формальная. Порядок: find + the document + attached. Нейтральнее и короче — «I've attached the document» / «Attached is the document». |
 | Our company makes a profit of $1M | Our company makes $1M in profit / Our profit is $1M | «Makes a profit OF» — допустимо, но «$1M in profit» или «Our profit is $1M» звучит естественнее. |
 
 ## 12. Шпаргалка
@@ -421,7 +427,7 @@ Business English = **обычный английский + специальны�
   <a class="kc-trainer-card" href={withBase('/practice/english/english-business-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Регистр и точность</span>
-    <span class="kc-trainer-hint">12 вопросов: выбери формальный/точный вариант</span>
+    <span class="kc-trainer-hint">вопросы: выбери формальный/точный вариант</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-business-cloze')}>

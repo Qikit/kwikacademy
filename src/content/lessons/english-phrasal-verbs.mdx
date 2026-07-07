@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем учить phrasal verbs
@@ -25,6 +26,8 @@ import { withBase } from '../../lib/url';
 В русском в этой роли работают **приставочные глаголы**: при-ходить, у-ходить, под-ходить, об-ходить. Корень один, приставка меняет смысл. В английском роль приставки выполняет частица после глагола: `come`, `come in`, `come back`, `come up with`, `come across`. Корень один — а смыслов столько же, сколько частиц, и они часто никак не выводятся из «суммы частей». `Look up the word in the dictionary` ничего общего не имеет со «смотреть вверх»: это «найди слово в словаре».
 
 Главная сложность для русскоязычного — два разных пласта. Первый: запомнить значение целиком, не пытаясь перевести по частям. Второй: уметь правильно расставить частицу и объект в предложении — где-то их можно разделить, где-то нельзя, и с местоимением правила ужесточаются. Этот урок про базовый набор фразовых глаголов уровня B1 и про оба механических правила, без которых даже знакомые PV ставятся не туда.
+
+После этого урока ты будешь понимать фразовые глаголы, смысл которых не складывается из частей, и знать, когда их можно разрывать (turn it off), а когда нет (look after him).
 
 ## 2. Главное правило
 
@@ -128,6 +131,10 @@ Phrasal verb = **глагол + частица** (предлог или наре
   </div>
 </AnalogyBox>
 
+<Reveal q="«turn off the light» и «turn the light off» — оба верны? А «turn it off» или «turn off it»?">
+«turn off the light» = «turn the light off» — separable, с существительным можно как угодно. Но местоимение — только внутри: «turn it off», НЕ «turn off it». Это главное правило разделяемых.
+</Reveal>
+
 ## 5. Визуальная схема
 
 Три класса PV по поведению с объектом — отличаются только тем, можно ли вклинить объект между глаголом и частицей.
@@ -216,7 +223,7 @@ Phrasal verb = **глагол + частица** (предлог или наре
 <RuleList rules={[
   "<strong>give up + V-ing</strong>, не to + V. <em>I gave up smoking.</em> — да. <em>I gave up to smoke.</em> — нет.",
   "<strong>look forward to + V-ing</strong>, не to + V. Здесь <em>to</em> — это предлог, не маркер инфинитива. <em>I look forward to seeing you.</em> — да. <em>I look forward to see you.</em> — нет.",
-  "<strong>run out of</strong> — обязательное <em>of</em>. Без него меняется смысл: <em>run out</em> (без объекта) = выбежать наружу.",
+  "<strong>run out of</strong> — <em>of</em> обязателен перед объектом. Без объекта <em>run out</em> = «закончиться, истощиться»: <em>The milk ran out. Time is running out.</em>",
   "<strong>put up with</strong> — три части, целиком non-separable: <em>I can't put up with him.</em> — да. <em>I can't put him up with.</em> — нет.",
 ]} />
 
@@ -366,7 +373,7 @@ Phrasal verb = **глагол + частица** (предлог или наре
 | I can't put him up with anymore | I can't put up with him anymore | put up with — три части, целиком non-separable. Объект (даже местоимение) только после всей конструкции. |
 | The plane took off the runway | The plane took off | take off в смысле «взлетать» — intransitive, без объекта. Объект (одежда) у sep-варианта: take off the coat / take the coat off. |
 | He turned out a great manager | He turned out to be a great manager | turn out в смысле «оказаться кем-то» требует to be. Без to be turn out = в итоге случиться. |
-| We run out milk | We are running out of milk | run out of требует обязательного of. Без of — другой PV: run out = выбегать наружу. |
+| We run out milk | We are running out of milk | Перед объектом (milk) нужен of. Без объекта run out = «закончиться»: We've run out. |
 | She gone off the milk | The milk has gone off | go off о еде = испортилась, и подлежащее — сама еда, не человек. Также часто в Present Perfect (есть последствие сейчас). |
 
 ## 13. Шпаргалка
@@ -470,7 +477,7 @@ Phrasal verb = **глагол + частица** (предлог или наре
   <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">PV в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов: выбери правильный PV под смысл</span>
+    <span class="kc-trainer-hint">вопросы: выбери правильный PV под смысл</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-phrasal-verbs-cloze')}>

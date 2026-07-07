@@ -3,10 +3,10 @@ course: english
 order: 12
 phase: "Фаза 1 · Бытовой английский"
 title: "Passive Voice — пассивный залог"
-eyebrow: "Грамматика · уровень B1"
+eyebrow: "Грамматика · уровень B1-B2"
 readingMinutes: 26
 summary: "Конструкция be + V3 во всех временах. Когда выбирать пассив, когда оставлять by + agent, как звучит «было сделано» по-английски без калек с русского."
-tags: [passive, grammar, B1]
+tags: [passive, grammar, B1, B2]
 ---
 
 import Callout from '../../components/lesson/Callout.astro';
@@ -16,6 +16,7 @@ import RuleList from '../../components/lesson/RuleList.astro';
 import DecisionTree from '../../components/lesson/DecisionTree.astro';
 import Vocab from '../../components/lesson/Vocab.astro';
 import AnalogyBox from '../../components/lesson/AnalogyBox.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
 import { withBase } from '../../lib/url';
 
 ## 1. Зачем пассив
@@ -25,6 +26,8 @@ import { withBase } from '../../lib/url';
 Без пассива не получится написать ни одного нормального формального текста. Инструкции к технике, новости, отчёты, научные статьи, описания процессов, юридические документы, политики компаний — там пассив базовая ткань языка. «The form must be signed before submission.», «The package was delivered yesterday.», «The bug has been fixed.» — выкинь пассив, придётся придумывать активного героя, которого в реальности нет, или который не важен.
 
 Перепутаешь форму — фраза не сломается, но прозвучит коряво или сменит смысл. «The cake was baking when I arrived» (пирог сам пёкся) ≠ «The cake was being baked when I arrived» (его пекли, когда я пришёл). Этот урок про то, как собирать пассив осознанно во всех временах, как решать, оставлять ли `by + agent`, и где русскоязычные регулярно спотыкаются.
+
+После этого урока ты будешь строить be + V3 в любом времени, понимать, когда пассив уместнее актива, и не калькировать русское «было сделано» напрямую.
 
 ## 2. Главное правило
 
@@ -103,6 +106,10 @@ Future Continuous (`will be being done`) теоретически существ
   </div>
 </AnalogyBox>
 
+<Reveal q="«Someone stole my bike» — как это звучит в пассиве?">
+«My bike was stolen» (by someone обычно опускают, если исполнитель неважен или неизвестен). Пассив как раз для этого: фокус на действии и объекте, а не на том, кто это сделал.
+</Reveal>
+
 ## 5. Визуальная схема
 
 Когда выбирать пассив — это вопрос фокуса, а не формы. Дерево ниже помогает решить, нужен ли он в конкретной фразе.
@@ -145,7 +152,7 @@ Future Continuous (`will be being done`) теоретически существ
 <RuleList rules={[
   "<strong>Любой модальный + be + V3.</strong> Модальный не меняется по лицам, после него — be, потом V3. <em>This form must be signed. The bug should be fixed today. Payments can be made online.</em>",
   "<strong>must be — обязательство или сильное предположение.</strong> <em>Helmets must be worn on site. The package must be delivered by Friday.</em>",
-  "<strong>should be — рекомендация или ожидание.</strong> <em>Backups should be made weekly. The report should be ready by tonight.</em>",
+  "<strong>should be — рекомендация или ожидание.</strong> <em>Backups should be made weekly. The report should be submitted by tonight.</em>",
   "<strong>can / could / may / might be — возможность.</strong> <em>The problem can be solved easily. The meeting might be postponed.</em>",
   "<strong>has to be — внешняя обязанность.</strong> <em>The application has to be submitted by 5 PM.</em>",
   "<strong>have to be в прошлом — had to be.</strong> <em>The flight had to be cancelled because of fog.</em>",
@@ -414,7 +421,7 @@ Future Continuous (`will be being done`) теоретически существ
   <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Правила в контексте</span>
-    <span class="kc-trainer-hint">12 вопросов с разбором</span>
+    <span class="kc-trainer-hint">вопросы с разбором</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/english/english-passive-cloze')}>

@@ -1,0 +1,102 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-style",
+  "title": "Допиши по соглашениям",
+  "description": "Исправь имя по соглашениям или впиши ключевое слово, команду, настройку. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "const val maxItems = 3   →   const val ___ = 3",
+        "answers": [
+          "MAX_ITEMS"
+        ],
+        "explain": "Имя const val пишут в SCREAMING_SNAKE_CASE: заглавные буквы, слова через подчёркивание."
+      },
+      {
+        "text": "class order_item   →   class ___",
+        "answers": [
+          "OrderItem"
+        ],
+        "explain": "Имена классов пишут в PascalCase: каждое слово с заглавной, без подчёркиваний."
+      },
+      {
+        "text": "fun Total_Price()   →   fun ___()",
+        "answers": [
+          "totalPrice"
+        ],
+        "explain": "Имена функций пишут в camelCase: первое слово со строчной, следующие с заглавной, без подчёркиваний."
+      },
+      {
+        "text": "val TAGS = mutableListOf(\"new\")   →   val ___ = …",
+        "answers": [
+          "tags"
+        ],
+        "explain": "Капс по соглашениям — для констант и глубоко неизменяемых данных. Изменяемый список верхнего уровня получает имя в camelCase."
+      },
+      {
+        "text": "} ___ {   // вторая ветка if",
+        "answers": [
+          "else"
+        ],
+        "explain": "else пишут на одной строке с закрывающей скобкой первой ветки: } else {."
+      },
+      {
+        "text": "val total = price ___   // прибавить 50 со следующей строки",
+        "answers": [
+          "+"
+        ],
+        "explain": "При переносе бинарный оператор оставляют в конце строки. Если начать следующую строку с + 50, Kotlin закончит выражение на price."
+      },
+      {
+        "text": "kotlin.code.style=___   // стиль из соглашений Kotlin",
+        "answers": [
+          "official"
+        ],
+        "explain": "kotlin.code.style=official в gradle.properties задаёт официальный стиль при импорте проекта в IDE."
+      },
+      {
+        "text": "ktlint ___   // исправить нарушения автоматически",
+        "answers": [
+          [
+            "--format",
+            "-F"
+          ]
+        ],
+        "explain": "ktlint --format, или коротко -F, исправляет всё, что можно исправить однозначно, а остальное печатает."
+      },
+      {
+        "text": "ktlint_code_style = ___   // стиль ktlint по умолчанию",
+        "answers": [
+          "ktlint_official"
+        ],
+        "explain": "С версии 1.0 ktlint по умолчанию работает в стиле ktlint_official, он строже соглашений. Для совместимости с IntelliJ IDEA ставят intellij_idea."
+      },
+      {
+        "text": "detekt-cli --baseline b.xml ___   // записать находки",
+        "answers": [
+          [
+            "--create-baseline",
+            "-cb"
+          ]
+        ],
+        "explain": "Флаг --create-baseline, коротко -cb, записывает текущие находки в baseline; следующие запуски с --baseline сообщают только о новых."
+      },
+      {
+        "text": "@Suppress(\"___\")   // правило detekt о числах без имени",
+        "answers": [
+          [
+            "MagicNumber",
+            "style:MagicNumber",
+            "style.MagicNumber",
+            "detekt:MagicNumber",
+            "detekt:style:MagicNumber",
+            "detekt.style.MagicNumber"
+          ]
+        ],
+        "explain": "Правило detekt про числа без имени называется MagicNumber; подавлять его стоит точечно, над конкретным объявлением."
+      }
+    ]
+  }
+}

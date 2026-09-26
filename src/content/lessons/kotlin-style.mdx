@@ -4,10 +4,493 @@ order: 6
 phase: "Основы"
 title: "Стиль и соглашения: как пишут на Kotlin в команде"
 eyebrow: "Kotlin · Основы"
-readingMinutes: 15
-summary: "Писать код в официальном стиле Kotlin и проверять его автоматически с ktlint и detekt."
+readingMinutes: 19
+summary: "Писать код в официальном стиле Kotlin и проверять его автоматически с ktlint и detekt, чтобы ревью не уходило на споры о пробелах."
 tags: [kotlin, basics]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Стиль и соглашения: как пишут на Kotlin в команде» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты собрал классы: свойства в конструкторе, `data class`, `object` и `companion object`. Первый пулреквест (pull request) с таким кодом возвращается с двадцатью замечаниями: «пробел после `if`», «скобку на ту же строку», «у нас константы капсом». Про логику из них два.
+
+Кажется, что стиль — дело вкуса и спорить о нём придётся всегда. Руководство по Go отвечает иначе: форматирование вызывает больше всего споров и меньше всего влияет на результат, поэтому его отдали программе. У Kotlin есть официальные соглашения и инструменты, которые их проверяют.
+
+После урока ты сможешь привести код к официальному стилю Kotlin, выбрать имена по соглашениям и настроить ktlint и detekt так, чтобы стиль проверяла машина, а ревьюер читал смысл.
+
+## Ядро: стиль проверяет машина, ревьюер читает смысл
+
+<Callout type="purple" title="Суть">
+У Kotlin один официальный стиль — **соглашения о коде** (coding conventions) на kotlinlang.org: имена, организация файлов, форматирование, идиомы. Форматирование применяет IntelliJ IDEA и проверяет ktlint, сложные функции и числа без имени ищет detekt. Настройки лежат в репозитории, а ревьюеру остаётся то, чего машина не видит.
+</Callout>
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Ты включил в IntelliJ IDEA форматирование при сохранении. Зачем команде ещё и ktlint в CI, на сервере сборки?">
+Затем, что форматирование при сохранении работает только у тебя. У коллеги другие настройки или другой редактор, а на сервере сборки никакой IDE нет. ktlint в CI одинаково проверяет каждый пулреквест, кто бы его ни прислал. Правило: договорённость о стиле держится, пока её проверяет общая сборка.
+</Reveal>
+
+## Как устроено: имена и файлы
+
+Правило для имени зависит от того, что ты называешь:
+
+| Что | Как | Пример |
+| --- | --- | --- |
+| Пакет | строчные, без подчёркиваний | `org.example.shop` |
+| Класс, `object` | **PascalCase**: каждое слово с заглавной | `OrderItem` |
+| Функция, свойство, переменная | **camelCase**: первое слово со строчной | `totalPrice` |
+| Константа | **SCREAMING_SNAKE_CASE**: заглавные через `_` | `MAX_ITEMS` |
+
+Исключения есть: фабричная функция может называться как тип, который она возвращает, а в тестах допустимы имена с пробелами в обратных кавычках.
+
+Капсом пишут `const val` и свойства верхнего уровня или внутри `object` без своего `get`, если данные в них глубоко неизменяемые, то есть не меняется ни ссылка, ни содержимое: `val USER_NAME_FIELD = "UserName"`. Изменяемый список получает camelCase: `val defaultTags = mutableListOf("новинка")`, иначе капс пообещает неизменность, которой нет.
+
+Если класс меняет список внутри, а наружу отдаёт только для чтения, заводят **свойство-хранилище** (backing property) с подчёркиванием в начале имени:
+
+```kotlin
+class Cart {
+    private val _items = mutableListOf<String>()
+
+    val items: List<String>
+        get() = _items
+}
+```
+
+Без хранилища пришлось бы отдать наружу сам `MutableList`, и менять корзину смог бы любой. Не путай его с полем-хранилищем `field` из прошлого урока: там значение хранит компилятор, здесь ты сам заводишь второе, приватное свойство.
+
+Файл с одним классом называют по классу, `OrderItem.kt`, а файл с несколькими объявлениями — по содержимому, тоже в PascalCase. Слова вроде `Util`, `Manager` и `Wrapper` соглашения считают пустыми.
+
+<Callout type="blue" title="Если знаешь Java — файл здесь не равен классу">
+`javac` требует, чтобы публичный класс лежал в файле со своим именем (JLS §7.6 разрешает компилятору такую проверку): «class Order is public, should be declared in a file named Order.java» (javac из JDK 24). Отсюда привычка заводить на каждый класс файл, а вспомогательные функции складывать в `OrderUtils`. Kotlin не требует, чтобы файл назывался по классу, а соглашения поощряют держать в одном файле несколько тесно связанных объявлений, пока в нём не больше нескольких сотен строк.
+</Callout>
+
+<Reveal q="Константа maxPlayers, класс game_room, функция Count_Free, переменная Room. Скомпилируется ли программа ниже и что напечатает?">
+Скомпилируется и напечатает «Арена: свободно 1». Компилятор проверяет синтаксис и типы, а соглашения об именах не проверяет. Их держат инструменты: IntelliJ IDEA подсветит такие имена инспекциями, которые включены по умолчанию, а ktlint и detekt в CI не пропустят.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+const val maxPlayers = 4
+
+class game_room(val Title: String)
+
+fun Count_Free(taken: Int): Int {
+    return maxPlayers - taken
+}
+
+fun main() {
+    val Room = game_room("Арена")
+    println("${Room.Title}: свободно ${Count_Free(3)}")
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом переименуй всё по соглашениям: `MAX_PLAYERS`, `GameRoom`, `title`, `countFree`, `room`. Вывод не изменится, а по регистру станет видно, где класс, а где константа.
+
+## Как устроено: форматирование
+
+- Отступ — четыре пробела, без табов.
+- Открывающая фигурная скобка — в конце строки с конструкцией, закрывающая — на отдельной строке; `else`, `catch` и `finally` — на строке с закрывающей скобкой: `} else {`.
+- Пробелы вокруг бинарных операторов (`a + b`), кроме диапазона `0..i`, после запятой и между `if`, `when`, `for`, `while` и скобкой; вокруг `.` и `?.` пробелов нет.
+- Двоеточие типа прижато к имени (`name: String`), перед супертипом пробел есть (`class Admin : User()`).
+- Точку с запятой опускают, где можно, `: Unit` не пишут, а фигурные скобки в шаблоне строки только для выражений: `"$name"`, но `"${items.size}"`.
+
+Вот функция до и после:
+
+```kotlin
+fun label(name:String,count:Int):String{
+    return name+": "+count;
+}
+```
+
+```kotlin
+fun label(name: String, count: Int) = "$name: $count"
+```
+
+Заодно тело стало выражением, а сложение — шаблоном: так советуют соглашения.
+
+Если объявление не помещается в строку, каждый параметр ставят на свою строку с отступом в четыре пробела, а после последнего — **завершающую запятую** (trailing comma):
+
+```kotlin
+class DeliveryRequest(
+    val orderId: Long,
+    val customerName: String,
+    val deliveryAddress: String,
+    val requestedDate: String,
+    val courierComment: String,
+)
+```
+
+Соглашения поощряют такие запятые в объявлениях, а в вызовах оставляют на усмотрение команды. Выгода видна в диффе, списке изменений: добавил параметр, и изменилась одна строка.
+
+Публичный код документируют комментарием **KDoc**, аналогом Javadoc с разметкой Markdown. Вместо тегов `@param` и `@return` соглашения советуют упоминать параметры прямо в тексте, в квадратных скобках:
+
+```kotlin
+/**
+ * Возвращает стоимость доставки посылки весом [weight] кг.
+ */
+fun deliveryCost(weight: Int): Int = weight * RATE_PER_KG
+```
+
+У переносов строк тоже есть правила. Сначала предскажи, что напечатает эта программа:
+
+<Reveal q="Цена 100, а 50 к ней прибавляют на следующей строке. Что напечатает программа ниже?">
+100. Грамматика Kotlin не разрешает перенос строки перед `+`, поэтому выражение закончилось на `val total = price`. Строка `+ 50` стала отдельным выражением — унарным плюсом к числу 50, а компилятор лишь предупредил: «Expression is unused» (Kotlin 2.4.20). Правило: бинарный оператор оставляют в конце строки, а `.`, `?.` и `?:` переносят в начало следующей, перед ними перенос разрешён.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val price = 100
+    val total = price
+        + 50
+    println(total)
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом перенеси `+` в конец строки с `price`: программа напечатает 150.
+
+## Идиомы фазы одной таблицей
+
+Почти все идиомы из соглашений ты уже видел в этой фазе. Сначала примени их сам:
+
+```kotlin
+fun price(vip: Boolean): Int {
+    return if (vip) 90 else 100
+}
+
+fun main() {
+    var limit = 3
+    println(price(true) + limit)
+}
+```
+
+<Reveal q="limit дальше в программе не меняется. Что в этом фрагменте поправить по соглашениям?">
+Две вещи. `limit` не переприсваивают, значит, `val`, и Kotlin 2.4.20 сам об этом предупредит. Функция из одного выражения пишется телом-выражением: `fun price(vip: Boolean) = if (vip) 90 else 100`. Правило: `val` и тело-выражение сразу говорят читателю, что значение не меняется, а функция только считает.
+</Reveal>
+
+| Вместо | Пиши | Почему |
+| --- | --- | --- |
+| `var` по привычке | `val`, пока не нужно переприсваивать | видно, что не меняется |
+| `if` с `return` в каждой ветке | `return if (x) a else b` | `if` — выражение |
+| `if-else` на три ветки и больше | `when` | ветки списком |
+| `"Итого: " + sum` | `"Итого: $sum"` | короче |
+| перегрузки `foo()` и `foo(a)` | `fun foo(a: String = "a")` | одна функция |
+| `draw(10, 10, true)` | `draw(x = 10, y = 10, fill = true)` | понятно, что за `true` |
+| `if (x != null) x else y` | `x ?: y` | одна запись |
+
+## Инструменты: IDE, ktlint и detekt
+
+IntelliJ IDEA включает официальный стиль по умолчанию с Kotlin 1.4.0. Code | Reformat Code (Ctrl+Alt+L, в macOS ⌥⌘L) переформатирует файл, а Settings | Tools | Actions on Save — при каждом сохранении.
+
+Настройки IDE у каждого свои, а стиль закрепляют в проекте: `kotlin.code.style=official` в `gradle.properties` действует при импорте в IDE, а **.editorconfig** читают многие редакторы, IntelliJ IDEA и ktlint. Секции файла читаются сверху вниз, и поздняя перекрывает раннюю, поэтому общая `[*]` идёт первой:
+
+```ini
+root = true
+
+[*]
+insert_final_newline = true
+
+[*.{kt,kts}]
+indent_style = space
+indent_size = 4
+max_line_length = 120
+ktlint_code_style = intellij_idea
+```
+
+ktlint 1.8.0 (последняя стабильная версия на сентябрь 2026) — **линтер** (linter), программа, которая проверяет код и сообщает о нарушениях, и одновременно **форматтер** (formatter), который сам переписывает отступы, пробелы и переносы. Без настройки он работает в собственном стиле `ktlint_official`: тот собран из соглашений Kotlin и Android, но строже. Не путай его с `kotlin.code.style=official`: официальному стилю Kotlin в ktlint соответствует `intellij_idea`, раньше он так и назывался, `official`.
+
+```bash
+ktlint --relative          # проверить .kt и .kts в папке
+ktlint --format            # исправить всё, что можно
+ktlint installGitPreCommitHook
+# в Windows: ktlint.bat из релиза или java -jar ktlint
+```
+
+На программе с `game_room` и этим `.editorconfig` ktlint находит пять нарушений, вот два из них:
+
+```text
+Room.kt:3:7: Class or object name should start with an uppercase letter and use camel case (standard:class-naming)
+Room.kt:5:5: Function name should start with a lowercase letter (except factory methods) and use camel case (standard:function-naming)
+```
+
+`ktlint --format` исправит всё, что можно исправить однозначно, а имена оставит тебе с пометкой «cannot be auto-corrected», потому что хорошее имя машина не угадает. В Gradle ktlint подключают сторонним плагином, ktlint-gradle или kotlinter: их советует документация ktlint.
+
+Предела длины строки в соглашениях нет, а инструменты расходятся: ktlint в `ktlint_official` ставит 140 символов, в `android_studio` — 100, в `intellij_idea` длину не проверяет, detekt ругается на строки длиннее 120. Число выбирают одно на оба конфига.
+
+detekt 1.23.8 (тоже последняя стабильная на сентябрь 2026) — **статический анализатор**: он проверяет код без запуска и ищет **запахи кода** (code smells), места, которые работают, но тяжело читаются. Пороги по умолчанию:
+
+| Правило | Когда срабатывает |
+| --- | --- |
+| LongMethod | функция от 60 строк |
+| LongParameterList | от 6 параметров у функции, от 7 у конструктора |
+| NestedBlockDepth | от 4 уровней вложенности |
+| ComplexCondition | от 4 частей в одном условии |
+| MagicNumber | **магическое число**, число без имени; кроме -1, 0, 1, 2 |
+
+В этой функции detekt найдёт шесть нарушений, вот первые два:
+
+```kotlin
+fun cost(weight: Int, zone: Int, express: Boolean): Int {
+    if (weight > 0 && zone > 0 && zone < 5 && !express) {
+        return weight * 30 + zone * 150
+    }
+    return weight * 45 + 500
+}
+```
+
+```text
+Delivery.kt:2:9: This condition is too complex (4). Defined complexity threshold for conditions is set to '4' [ComplexCondition]
+Delivery.kt:2:42: This expression contains a magic number. Consider defining it to a well named constant. [MagicNumber]
+```
+
+Условие стоит вынести в функцию с понятным именем, числа — в константы. Запускают detekt командой из архива `detekt-cli-1.23.8.zip` с GitHub:
+
+```bash
+detekt-cli --input src --build-upon-default-config
+detekt-cli --input src --baseline base.xml --create-baseline
+detekt-cli --input src --baseline base.xml
+```
+
+Любая находка даёт код выхода 2, и сборка в CI падает. Вторая команда записывает текущие находки в **baseline**, третья дальше сообщает только о новых; у ktlint то же делает `ktlint --baseline=ktlint-baseline.xml`. Gradle-плагин detekt 1.23.8 собран под Gradle 8.12 и Kotlin 2.0 и на JDK 25, как в этом курсе, не запускается, а CLI на нём работает.
+
+<Callout type="teal" title="Как принято">
+Переформатирование делают отдельным коммитом. После смены стиля `git blame`, который показывает автора каждой строки, чаще указывает на коммиты не по делу, и руководство JetBrains советует не смешивать их со смысловыми правками. Про сами коммиты — в уроке про командную работу.
+</Callout>
+
+<Reveal q="На верхнем уровне файла две строки: val MAX_RETRIES = 3 и val BLOCKED_USERS = mutableListOf(«anna»). ktlint молчит на обеих. Какая нарушает соглашения?">
+Вторая. `MAX_RETRIES` хранит число, оно глубоко неизменяемое, и капс здесь законен. `BLOCKED_USERS` держит изменяемый список, поэтому нужно `blockedUsers`. Документация правила property-naming прямо говорит, что оно ловит только случаи, где уверено в ошибке. Инструмент проверяет форму имени, а подходит ли она к данным, решает человек.
+</Reveal>
+
+## Как на практике
+
+- **Форматируй до коммита.** Reformat Code при сохранении или `ktlint --format`, а git-хук от `ktlint installGitPreCommitHook` не пропустит нарушения в коммит.
+- **Держи последний рубеж в CI.** Так советует документация ktlint: плагин в IDE, хук, сборка.
+- **Выбери одного хозяина форматирования.** Либо IntelliJ IDEA и ktlint в стиле `intellij_idea`, либо `ktlint_official` и плагин ktlint вместо форматтера IDE.
+- **Подавляй правило точечно.** `@Suppress("MagicNumber")` над одним объявлением лучше, чем выключенный набор правил.
+
+## Три разбора
+
+**Разбор 1. ktlint спорит с IDE.**
+После Reformat Code ktlint в CI падает на `class OrderItem(val title: String, val price: Int)`: «Newline expected after opening parenthesis». Стиль по умолчанию, `ktlint_official`, разносит по строкам параметры любого конструктора, а IntelliJ IDEA оставляет короткий класс в одну строку. Ход: прописать `ktlint_code_style = intellij_idea` или отдать форматирование плагину ktlint. Вывод: стиль ktlint выбирают под форматтер, которым команда пользуется.
+
+**Разбор 2. Старый проект и сотни находок.**
+ktlint и detekt на пятилетнем проекте находят сотни нарушений. Выключить наборы правил нельзя: перестанет проверяться и новый код. Ход: форматирование чинит `ktlint --format` одним отдельным коммитом, а имена и находки detekt за день не исправить, их записывают в baseline и правят, когда трогают файл. Вывод: машинные правки делают сразу, ручные — постепенно, через baseline.
+
+**Разбор 3. Число, которое не магическое.**
+detekt отметил MagicNumber в `done * 100 / total`. Константа `PERCENT_MULTIPLIER = 100` ничего не объяснит сверх самого числа. Ход: `@Suppress("MagicNumber")` над функцией или, если такие формулы по всему проекту, добавить `'100'` в `ignoreNumbers` в `detekt.yml`. Вывод: если имя не добавляет смысла, правило настраивают.
+
+## ktlint или detekt
+
+<Compare leftLabel="ktlint" rightLabel="detekt">
+  <div slot="left">
+  • Смотрит, как код записан: отступы, пробелы, скобки, переносы<br/>
+  • Большую часть исправляет сам<br/>
+  • Настройки в `.editorconfig`
+  </div>
+  <div slot="right">
+  • Смотрит, как код устроен: длина, сложность, вложенность, числа без имени<br/>
+  • Правила по умолчанию код не исправляют<br/>
+  • Настройки в `detekt.yml`
+  </div>
+</Compare>
+
+Пересекаются они в мелочах: имена и длину строки проверяют оба.
+
+## Кто поймает замечание
+
+<DecisionTree nodes={[
+  { q: "Замечание про пробел, отступ, скобку, перенос или запятую?", yes: "ktlint: ktlint --format исправит сам", no: "к следующему вопросу" },
+  { q: "Про регистр имени: maxItems вместо MAX_ITEMS, order_item вместо OrderItem?", yes: "ktlint или detekt найдут, переименуешь сам", no: "к следующему вопросу" },
+  { q: "Про размер и сложность: длинная функция, глубокая вложенность, число без имени?", yes: "detekt: исправь или осознанно смени порог", no: "к следующему вопросу" },
+  { q: "Про смысл: имя вводит в заблуждение, капс у изменяемого списка, файл Utils.kt?", yes: "Ревьюер: инструменты этого не видят", no: "Договоритесь в команде и запишите правило в .editorconfig или detekt.yml" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `val DEFAULT_TAGS = mutableListOf(…)` | Капс обещает неизменяемые данные | camelCase: `defaultTags` |
+| Стиль настроен только в своей IDE | У коллег и в CI другие настройки | `.editorconfig` в репозитории |
+| `+ 50` в начале перенесённой строки | Выражение закончилось на переносе | Оператор в конце строки: `price +` |
+| Выключить detekt из-за старых находок | Новый код тоже не проверяется | baseline |
+| Файлы `Utils.kt` и `Helpers.kt` | Имя не говорит, что внутри | Имя по содержимому: `PriceFormatting.kt` |
+
+## Практикум
+
+<Practice title="Приведи код к официальному стилю" checklist={["Класс в PascalCase, функции и переменные в camelCase", "const val в SCREAMING_SNAKE_CASE, изменяемый список в camelCase", "Пробелы вокруг операторов, после запятой, после if и for, после двоеточия типа", "Фигурная скобка в конце строки, else на одной строке с закрывающей скобкой", "Нет точек с запятой и лишних фигурных скобок в шаблоне", "Вывод не изменился: «Итого: 550 [новинка, скидка]»", ".editorconfig: секция для kt и kts, стиль intellij_idea, строка 120"]}>
+Код ниже работает, но написан как попало. Приведи его к официальному стилю и для каждой правки назови правило из урока, не меняя вывода. `listOf` здесь создаёт список только для чтения, подробно — в уроке про коллекции. Потом напиши `.editorconfig` для команды, где форматирует IntelliJ IDEA, а строки ограничены 120 символами.
+
+<KotlinPlayground>
+
+```kotlin
+const val maxItems=3
+val TAGS = mutableListOf("новинка")
+
+class order_item(val Title:String, val price : Int)
+
+fun Total_Price(items:List<order_item>):Int
+{
+    var sum=0;
+    for(item in items){ sum+=item.price }
+    return sum;
+}
+
+fun main()
+{
+    val items=listOf(order_item("Книга",500),order_item("Ручка",50))
+    TAGS.add("скидка")
+    if(items.size>maxItems) { println("Много") }
+    else { println("Итого: ${Total_Price(items)} ${TAGS}") }
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+const val MAX_ITEMS = 3
+val tags = mutableListOf("новинка")
+
+class OrderItem(val title: String, val price: Int)
+
+fun totalPrice(items: List<OrderItem>): Int {
+    var sum = 0
+    for (item in items) {
+        sum += item.price
+    }
+    return sum
+}
+
+fun main() {
+    val items = listOf(
+        OrderItem("Книга", 500),
+        OrderItem("Ручка", 50),
+    )
+    tags.add("скидка")
+    if (items.size > MAX_ITEMS) {
+        println("Много")
+    } else {
+        println("Итого: ${totalPrice(items)} $tags")
+    }
+}
+```
+
+```ini
+root = true
+
+[*.{kt,kts}]
+max_line_length = 120
+ktlint_code_style = intellij_idea
+```
+
+Что поменялось:
+
+- **Имена.** `MAX_ITEMS` — это `const val`; `tags` — список меняется; `OrderItem`, `title`, `totalPrice` — по регистру своего вида.
+- **Пробелы.** Вокруг операторов, после запятых, после `for` и `if`; двоеточие прижато к имени.
+- **Скобки.** Открывающая в конце строки, тела блоков на своих строках, `} else {` одной строкой.
+- **Лишнее и перенос.** Нет точек с запятой, `$tags` без фигурных скобок, аргументы `listOf` по строкам с завершающей запятой.
+
+С этим `.editorconfig` ktlint на решении молчит, а detekt отметит 500 и 50 как магические числа.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Какой свой проект на Kotlin ты прогонишь через ktlint до пятницы? Подойдёт и учебный: запусти `ktlint --format` в его корне и посмотри, что осталось на тебя. Через неделю-две прогони его через `detekt-cli` и посмотри, какие правила срабатывают чаще.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Класс, `object`, файл с одним классом | PascalCase: `OrderItem`, `OrderItem.kt` |
+| Функция, свойство, переменная | camelCase: `totalPrice` |
+| Константа | `const val MAX_ITEMS = 3`; изменяемый список — camelCase |
+| Отступ и скобки | 4 пробела; `{` в конце строки; `} else {` |
+| Перенос | оператор в конце строки, `.`, `?.` и `?:` в начале следующей |
+| Стиль в проекте | `kotlin.code.style=official`, `.editorconfig` |
+| Проверка | `ktlint`, `ktlint --format`, `detekt-cli --input src` |
+| Старый код | `ktlint --baseline=…`, `detekt-cli … --create-baseline` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Соглашения о коде (coding conventions)", meaning: "Официальные правила стиля Kotlin на kotlinlang.org: имена, организация файлов, форматирование, идиомы." },
+  { term: "camelCase", meaning: "Имя без подчёркиваний, где каждое слово, кроме первого, начинается с заглавной: totalPrice; так пишут функции, свойства и переменные." },
+  { term: "PascalCase (upper camel case)", meaning: "Имя, где с заглавной начинается каждое слово, включая первое: OrderItem; так пишут классы, object и имена файлов." },
+  { term: "SCREAMING_SNAKE_CASE", meaning: "Заглавные буквы через подчёркивание: MAX_ITEMS; так пишут константы и глубоко неизменяемые данные верхнего уровня." },
+  { term: "Свойство-хранилище (backing property)", meaning: "Приватное свойство с подчёркиванием в начале имени, которое хранит данные для публичного свойства: _items и items." },
+  { term: "Форматтер (formatter)", meaning: "Инструмент, который сам переписывает отступы, пробелы и переносы по правилам стиля, например Reformat Code в IntelliJ IDEA." },
+  { term: "Линтер (linter)", meaning: "Программа, которая проверяет код на нарушения правил и сообщает, где они." },
+  { term: "Статический анализатор (static analyzer)", meaning: "Программа, которая проверяет код без запуска и ищет сложные функции, магические числа и другие подозрительные места." },
+  { term: "ktlint", meaning: "Линтер и форматтер для Kotlin, который проверяет код по соглашениям и сам исправляет форматирование." },
+  { term: "detekt", meaning: "Статический анализатор Kotlin с настраиваемыми правилами о сложности, стиле и именах." },
+  { term: "Запах кода (code smell)", meaning: "Место, которое работает, но плохо читается и тяжело меняется: длинная функция, глубокая вложенность." },
+  { term: "Магическое число (magic number)", meaning: "Число в коде без имени, смысл которого приходится угадывать." },
+  { term: ".editorconfig", meaning: "Файл в репозитории с настройками стиля, который читают редакторы, IntelliJ IDEA и ktlint." },
+  { term: "Завершающая запятая (trailing comma)", meaning: "Запятая после последнего элемента в многострочном списке параметров или аргументов." },
+  { term: "Baseline", meaning: "Файл с уже известными нарушениями: инструмент их пропускает и сообщает только о новых." },
+  { term: "KDoc", meaning: "Язык документирующих комментариев Kotlin, аналог Javadoc с разметкой Markdown." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что запомнилось, а что нет.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-style-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Стиль Kotlin: понятия</span>
+    <span class="kc-trainer-hint">Имена, файлы, инструменты</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-style-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Стиль в сценариях</span>
+    <span class="kc-trainer-hint">Кто поймает и как исправить</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-style-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши по соглашениям</span>
+    <span class="kc-trainer-hint">Имена, команды, настройки</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-style-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери код в официальном стиле</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-basics-review')}>
+    <span class="kc-trainer-kind">Сводный</span>
+    <span class="kc-trainer-title">Сводный: основы Kotlin</span>
+    <span class="kc-trainer-hint">Темы фазы вперемешку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Coding conventions** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-09-26) — имена, файлы, форматирование, идиомы.
+- **Kotlin — Migrate to Kotlin code style; KDoc** ([kotlinlang.org/docs](https://kotlinlang.org/docs/code-style-migration-guide.html), сверено 2026-09-26) — `kotlin.code.style=official`, KDoc.
+- **ktlint 1.8.0** ([ktlint.github.io](https://ktlint.github.io/ktlint/1.8.0/), сверено 2026-09-26) — команды, стили; вывод получен запуском.
+- **detekt 1.23.8** ([detekt.dev](https://detekt.dev/docs/1.23.8/intro), сверено 2026-09-26) — правила, CLI, baseline; вывод получен запуском.
+- **IntelliJ IDEA — Reformat code, EditorConfig** ([jetbrains.com/help/idea](https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html), сверено 2026-09-26) — Reformat Code и `.editorconfig`.
+- **Android — Kotlin style guide** ([developer.android.com](https://developer.android.com/kotlin/style-guide), сверено 2026-09-26) — перенос после оператора.
+- **Effective Go — Formatting** ([go.dev](https://go.dev/doc/effective_go#formatting), сверено 2026-09-26) — почему форматирование отдают программе.

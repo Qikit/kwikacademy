@@ -3,7 +3,20 @@ import { Download, FileText, FileType } from 'lucide-react';
 import { buildLessonHtml } from '../../lib/export/lessonHtml';
 
 function getProse(): string {
-  return document.querySelector('.lesson .prose')?.innerHTML ?? '';
+  const prose = document.querySelector('.lesson .prose');
+  if (!prose) return '';
+  const copy = prose.cloneNode(true) as HTMLElement;
+  copy.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((a) => a.setAttribute('href', a.href));
+  copy.querySelectorAll<HTMLElement>('.kc-kp').forEach((block) => {
+    const source = block.dataset.source;
+    if (source === undefined) return;
+    const pre = document.createElement('pre');
+    const code = document.createElement('code');
+    code.textContent = source;
+    pre.append(code);
+    block.replaceChildren(pre);
+  });
+  return copy.innerHTML;
 }
 
 function download(blob: Blob, name: string) {

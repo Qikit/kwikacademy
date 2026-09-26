@@ -1,0 +1,56 @@
+---
+interface Props {
+  readOnly?: boolean;
+  args?: string;
+}
+const { readOnly = false, args } = Astro.props;
+---
+
+<div class="kc-kp" data-read-only={readOnly ? 'true' : undefined} data-args={args}>
+  <slot />
+</div>
+
+<script>
+  const KOTLIN_VERSION = '2.4.20';
+
+  async function mountPlaygrounds() {
+    const blocks = [...document.querySelectorAll<HTMLElement>('.kc-kp:not([data-ready])')];
+    if (!blocks.length) return;
+    const targets: HTMLElement[] = [];
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'darcula' : 'idea';
+    for (const block of blocks) {
+      block.dataset.ready = 'true';
+      const pre = block.querySelector('pre');
+      if (!pre) continue;
+      const source = (pre.textContent ?? '').replace(/\n$/, '');
+      block.dataset.source = source;
+      const code = document.createElement('code');
+      code.textContent = source;
+      code.setAttribute('data-version', KOTLIN_VERSION);
+      code.setAttribute('theme', theme);
+      code.setAttribute('match-brackets', 'true');
+      if (block.dataset.args) code.setAttribute('args', block.dataset.args);
+      if (block.dataset.readOnly) code.setAttribute('data-highlight-only', '');
+      pre.replaceWith(code);
+      targets.push(code);
+    }
+    if (!targets.length) return;
+    const mod: any = await import('kotlin-playground');
+    const playground = mod.default?.default ?? mod.default ?? mod;
+    for (const target of targets) playground(target);
+  }
+
+  document.addEventListener('astro:page-load', mountPlaygrounds);
+  mountPlaygrounds();
+</script>
+
+<style>
+  .kc-kp {
+    margin: 16px 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .kc-kp :global(textarea) {
+    font-size: 16px;
+  }
+</style>

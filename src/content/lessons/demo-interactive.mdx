@@ -15,6 +15,7 @@ import QuickCheck from '../../components/lesson/QuickCheck.tsx';
 import Annotated from '../../components/lesson/Annotated.tsx';
 import Quadrant from '../../components/lesson/Quadrant.tsx';
 import Trace from '../../components/lesson/Trace.tsx';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
 
 ## BarMeter — сравнение величин
 
@@ -79,3 +80,26 @@ import Trace from '../../components/lesson/Trace.tsx';
   { actor: "think", label: "Данных достаточно", detail: "Формирую таблицу." },
   { actor: "answer", label: "Таблица с зарплатами готова" }
 ]} />
+
+## KotlinPlayground — запуск кода
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val name = "Kotlin"
+    println("Привет, $name! Длина имени: ${name.length}")
+}
+```
+
+</KotlinPlayground>
+
+Только для чтения:
+
+<KotlinPlayground readOnly>
+
+```kotlin
+data class User(val name: String, val age: Int)
+```
+
+</KotlinPlayground>

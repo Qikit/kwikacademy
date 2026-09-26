@@ -1,0 +1,78 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-functions",
+  "title": "Допиши функцию",
+  "description": "Впиши ключевое слово, знак, тип, аннотацию или имя. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "___ area(w: Int, h: Int): Int = w * h",
+        "answers": [
+          "fun"
+        ],
+        "explain": "Любую функцию, и main тоже, объявляют словом fun."
+      },
+      {
+        "text": "fun max(a: Int, b: Int) ___ if (a > b) a else b",
+        "answers": [
+          [
+            "=",
+            ": Int ="
+          ]
+        ],
+        "explain": "Тело-выражение пишут после знака =, без фигурных скобок и return. Тип результата компилятор выведет сам."
+      },
+      {
+        "text": "fun area(w: Int, h: Int): ___ { return w * h }",
+        "answers": [
+          "Int"
+        ],
+        "explain": "У блочного тела тип результата пишут сами, иначе функция вернёт Unit. Произведение двух Int — тоже Int."
+      },
+      {
+        "text": "export(report, ___ = true) // compress или notify? Уведомить",
+        "answers": [
+          "notify"
+        ],
+        "explain": "Имя параметра привязывает значение: notify = true включает уведомление, а compress остаётся false по умолчанию."
+      },
+      {
+        "text": "fun total(___ prices: Int): Int   // любое число цен",
+        "answers": [
+          "vararg"
+        ],
+        "explain": "Модификатор vararg разрешает передать сколько угодно значений; внутри функции prices — массив."
+      },
+      {
+        "text": "total(___cart, 50)   // cart — IntArray",
+        "answers": [
+          "*"
+        ],
+        "explain": "Оператор распаковки * передаёт элементы массива в vararg. Без него будет ошибка Argument type mismatch."
+      },
+      {
+        "text": "@file:___(\"Prices\")   // имя класса для Java",
+        "answers": [
+          "JvmName"
+        ],
+        "explain": "Аннотация @file:JvmName в начале файла задаёт имя Java-класса вместо PricesKt."
+      },
+      {
+        "text": "@___ fun draw(s: String, w: Int = 1) // Java: draw(\"x\")",
+        "answers": [
+          "JvmOverloads"
+        ],
+        "explain": "@JvmOverloads генерирует для Java перегрузку на каждый параметр со значением по умолчанию: здесь появится draw(String)."
+      },
+      {
+        "text": "___.formatPrice(1500, \"₽\")   // Java, файл Prices.kt",
+        "answers": [
+          "PricesKt"
+        ],
+        "explain": "Функции верхнего уровня из Prices.kt в Java — статические методы класса PricesKt: имя файла плюс Kt."
+      }
+    ]
+  }
+}

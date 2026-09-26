@@ -1,0 +1,146 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-functions",
+  "title": "Собери функцию",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Объяви функцию max с телом-выражением выше main и напечатай большее из 3 и 7.",
+        "words": [
+          "    println(max(3, 7))",
+          "fun main() {",
+          "    if (a > b) a else b",
+          "}",
+          "fun max(a: Int, b: Int) ="
+        ],
+        "answer": [
+          "fun max(a: Int, b: Int) =",
+          "    if (a > b) a else b",
+          "fun main() {",
+          "    println(max(3, 7))",
+          "}"
+        ],
+        "explain": "Тело-выражение идёт после знака =, его можно перенести на следующую строку с отступом. if здесь выражение, поэтому return не нужен. Программа напечатает 7."
+      },
+      {
+        "task": "Собери функцию greet: сначала обязательное имя, потом приветствие со значением по умолчанию. Результат — строка.",
+        "words": [
+          "): String =",
+          "    \"$greeting, $name!\"",
+          "fun greet(",
+          "    greeting: String = \"Привет\",",
+          "    name: String,"
+        ],
+        "answer": [
+          "fun greet(",
+          "    name: String,",
+          "    greeting: String = \"Привет\",",
+          "): String =",
+          "    \"$greeting, $name!\""
+        ],
+        "explain": "Параметр с умолчанием стоит после обязательного, поэтому greet(«Аня») сработает и без имени аргумента. Тело — одно выражение, поэтому после типа String идёт знак =, а return не нужен."
+      },
+      {
+        "task": "Собери функцию, которая складывает любое число цен.",
+        "words": [
+          "    return sum",
+          "    for (price in prices) sum += price",
+          "}",
+          "fun total(vararg prices: Int): Int {",
+          "    var sum = 0"
+        ],
+        "answer": [
+          "fun total(vararg prices: Int): Int {",
+          "    var sum = 0",
+          "    for (price in prices) sum += price",
+          "    return sum",
+          "}"
+        ],
+        "explain": "vararg превращает prices в массив, по которому идёт цикл. Сумма растёт, поэтому она var; вернуть её можно только после цикла."
+      },
+      {
+        "task": "Функция total уже объявлена. Передай в неё массив cart и ещё 50, напечатай сумму.",
+        "words": [
+          "    println(sum)",
+          "    val sum = total(*cart, 50)",
+          "}",
+          "    val cart = intArrayOf(300, 450)",
+          "fun main() {"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val cart = intArrayOf(300, 450)",
+          "    val sum = total(*cart, 50)",
+          "    println(sum)",
+          "}"
+        ],
+        "explain": "Звёздочка распаковывает массив в vararg. Сначала массив, потом вызов, потом печать: программа выведет 800."
+      },
+      {
+        "task": "Собери функцию с локальным помощником add, который прибавляет цену к total. Сначала хлеб, потом молоко, в конце итог.",
+        "words": [
+          "    add(milk)",
+          "fun printReceipt(bread: Int, milk: Int) {",
+          "}",
+          "    println(\"Итого: $total ₽\")",
+          "    fun add(price: Int) { total += price }",
+          "    var total = 0",
+          "    add(bread)"
+        ],
+        "answer": [
+          "fun printReceipt(bread: Int, milk: Int) {",
+          "    var total = 0",
+          "    fun add(price: Int) { total += price }",
+          "    add(bread)",
+          "    add(milk)",
+          "    println(\"Итого: $total ₽\")",
+          "}"
+        ],
+        "explain": "Локальная функция видит переменную total внешней функции, поэтому total объявляют раньше add. Локальную функцию вызывают после объявления."
+      },
+      {
+        "task": "Посчитай цену со скидкой, не переприсваивая параметр price.",
+        "words": [
+          "    val result = price - cut",
+          "}",
+          "    return result",
+          "fun discounted(price: Int, percent: Int): Int {",
+          "    val cut = price * percent / 100"
+        ],
+        "answer": [
+          "fun discounted(price: Int, percent: Int): Int {",
+          "    val cut = price * percent / 100",
+          "    val result = price - cut",
+          "    return result",
+          "}"
+        ],
+        "explain": "Параметры только для чтения, поэтому новые значения кладут в локальные val. Скидку считают раньше итоговой цены, которая от неё зависит."
+      },
+      {
+        "task": "Функция connect(host, port = 80, timeoutMs = 5_000) уже объявлена. Вызови её без порта, передав таймаут по имени, и напечатай результат.",
+        "words": [
+          "        timeoutMs = 1_000,",
+          "    println(url)",
+          "fun main() {",
+          "    )",
+          "        \"example.com\",",
+          "}",
+          "    val url = connect("
+        ],
+        "answer": [
+          "fun main() {",
+          "    val url = connect(",
+          "        \"example.com\",",
+          "        timeoutMs = 1_000,",
+          "    )",
+          "    println(url)",
+          "}"
+        ],
+        "explain": "Позиционный host идёт первым, пропущенный port берётся из умолчания, а таймаут после пропуска пишут по имени. Программа напечатает example.com:80, таймаут 1000 мс."
+      }
+    ]
+  }
+}

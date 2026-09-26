@@ -1,0 +1,146 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-lambdas",
+  "title": "Собери лямбду",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери функцию counter: она возвращает лямбду, и каждый вызов этой лямбды даёт следующее число, начиная с 1.",
+        "words": [
+          "    return next",
+          "}",
+          "    val next = { ++count }",
+          "fun counter(): () -> Int {",
+          "    var count = 0"
+        ],
+        "answer": [
+          "fun counter(): () -> Int {",
+          "    var count = 0",
+          "    val next = { ++count }",
+          "    return next",
+          "}"
+        ],
+        "explain": "Лямбда захватывает переменную count, поэтому count объявляют раньше лямбды. Функцию возвращают как обычное значение: тип результата counter — () -> Int."
+      },
+      {
+        "task": "Сложи цены дороже 1000 ₽ и напечатай сумму. Программа должна вывести 3500.",
+        "words": [
+          "        .forEach { total += it }",
+          "    println(total)",
+          "fun main() {",
+          "        .filter { it > 1000 }",
+          "}",
+          "    var total = 0",
+          "    listOf(300, 1500, 2000)"
+        ],
+        "answer": [
+          "fun main() {",
+          "    var total = 0",
+          "    listOf(300, 1500, 2000)",
+          "        .filter { it > 1000 }",
+          "        .forEach { total += it }",
+          "    println(total)",
+          "}"
+        ],
+        "explain": "Лямбда в forEach меняет захваченный var total. Сначала фильтр, потом forEach: forEach ничего не возвращает, и после него цепочку не продолжить. Печатают сумму после обхода, иначе выйдет 0."
+      },
+      {
+        "task": "Функция discount(percent) уже объявлена и возвращает функцию-скидку. Получи скидку 30 %, примени её к ценам 1000 и 2500 и напечатай [700, 1750].",
+        "words": [
+          "    println(prices)",
+          "fun main() {",
+          "    val prices = listOf(1000, 2500).map(sale)",
+          "}",
+          "    val sale: (Int) -> Int = discount(30)"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val sale: (Int) -> Int = discount(30)",
+          "    val prices = listOf(1000, 2500).map(sale)",
+          "    println(prices)",
+          "}"
+        ],
+        "explain": "discount(30) возвращает значение типа (Int) -> Int, его кладут в переменную и передают в map без лямбды. Каждая строка использует результат предыдущей."
+      },
+      {
+        "task": "Преобразуй слова в верхний регистр, а вместо пустой строки верни «(пусто)». Программа печатает РАЗ, (пусто), ДВА.",
+        "words": [
+          "        word.uppercase()",
+          "}",
+          "    }.forEach(::println)",
+          "fun main() {",
+          "        if (word.isEmpty()) return@map \"(пусто)\"",
+          "    listOf(\"раз\", \"\", \"два\").map { word ->"
+        ],
+        "answer": [
+          "fun main() {",
+          "    listOf(\"раз\", \"\", \"два\").map { word ->",
+          "        if (word.isEmpty()) return@map \"(пусто)\"",
+          "        word.uppercase()",
+          "    }.forEach(::println)",
+          "}"
+        ],
+        "explain": "return@map завершает только текущий вызов лямбды и отдаёт map значение «(пусто)». Для остальных слов результатом становится последнее выражение, word.uppercase(). Лямбда в две строки, и параметр в ней нужен дважды, поэтому ему дали имя word: it оставляют коротким лямбдам."
+      },
+      {
+        "task": "Собери функцию finish: она составляет имя файла, печатает «Сохраняю …» и только потом вызывает колбэк, если он передан.",
+        "words": [
+          "    onDone?.invoke(file)",
+          "fun finish(name: String, onDone: ((String) -> Unit)?) {",
+          "}",
+          "    println(\"Сохраняю $file\")",
+          "    val file = \"$name.pdf\""
+        ],
+        "answer": [
+          "fun finish(name: String, onDone: ((String) -> Unit)?) {",
+          "    val file = \"$name.pdf\"",
+          "    println(\"Сохраняю $file\")",
+          "    onDone?.invoke(file)",
+          "}"
+        ],
+        "explain": "Колбэк может отсутствовать, поэтому его тип nullable целиком: ((String) -> Unit)?. Вызывают его через ?.invoke: если onDone равен null, ничего не произойдёт."
+      },
+      {
+        "task": "Передай Java-интерфейсу Runnable лямбду, которая печатает приветствие из переменной, и запусти задачу.",
+        "words": [
+          "    task.run()",
+          "    val greeting = \"Привет из Runnable\"",
+          "}",
+          "fun main() {",
+          "    val task = Runnable { println(greeting) }"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val greeting = \"Привет из Runnable\"",
+          "    val task = Runnable { println(greeting) }",
+          "    task.run()",
+          "}"
+        ],
+        "explain": "SAM-преобразование превращает лямбду в реализацию Runnable. Лямбда захватывает greeting, поэтому переменную объявляют раньше, а run вызывают после создания задачи."
+      },
+      {
+        "task": "Задай порог 5 символов, объяви проверку длинного слова как значение типа функции и отфильтруй ею список. Программа печатает [самолёт].",
+        "words": [
+          "    val longWords = listOf(\"кот\", \"самолёт\").filter(isLong)",
+          "fun main() {",
+          "    println(longWords)",
+          "    val limit = 5",
+          "}",
+          "    val isLong = { s: String -> s.length > limit }"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val limit = 5",
+          "    val isLong = { s: String -> s.length > limit }",
+          "    val longWords = listOf(\"кот\", \"самолёт\").filter(isLong)",
+          "    println(longWords)",
+          "}"
+        ],
+        "explain": "Лямбда захватывает limit, поэтому порог объявляют первым. Тип параметра s указан в самой лямбде: у переменной isLong типа нет, и взять его больше неоткуда. Готовую лямбду передают в filter как значение."
+      }
+    ]
+  }
+}

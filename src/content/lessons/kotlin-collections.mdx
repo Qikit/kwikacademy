@@ -4,10 +4,416 @@ order: 7
 phase: "Идиоматичный Kotlin"
 title: "Коллекции: списки только для чтения и ленивые Sequence"
 eyebrow: "Kotlin · Идиоматичный Kotlin"
-readingMinutes: 15
-summary: "Выбирать между List и MutableList, строить цепочки операций над коллекциями и понимать, когда нужна Sequence."
+readingMinutes: 18
+summary: "Выбирать между List и MutableList, писать обработку данных цепочками операций и понимать, когда цепочке нужна ленивая Sequence."
 tags: [kotlin, idioms]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Коллекции: списки только для чтения и ленивые Sequence» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты привёл код к официальному стилю и встретил свойство-хранилище: внутри класса `private val _items = mutableListOf<String>()`, наружу `val items: List<String>`. Теперь нужно из выгрузки заказов взять оплаченные дороже тысячи рублей, собрать их города без повторов и отсортировать. На Java рука тянется к `stream()`, `filter`, `map`, `distinct`, `sorted` и `collect`. В Kotlin те же операции вызывают прямо у списка.
+
+Здесь Java-разработчика подводят две привычки. Первая — считать `List` неизменяемым списком вроде `List.of`. Вторая — ждать от цепочки `filter` и `map` того же поведения, что у Stream. Обе компилятор пропустит, а проявятся они на живых данных. В первом уроке курса корзину `val cart = mutableListOf…` очистила чужая функция, и мы пообещали списки только для чтения. Выполняем обещание, но «только для чтения» не значит «неизменяемый», и в этой разнице половина урока.
+
+После урока ты сможешь выбрать между `List` и `MutableList` для параметра и свойства, записать обработку данных цепочкой `filter`, `map`, `groupBy` вместо цикла и решить, нужна ли этой цепочке `Sequence`.
+
+## Ядро: тип ограничивает ссылку, операции строят новые коллекции
+
+<Callout type="purple" title="Суть">
+Каждый вид коллекций в Kotlin описан парой интерфейсов: **только для чтения** (`List`, `Set`, `Map`) и **изменяемый** (`MutableList`, `MutableSet`, `MutableMap`). Интерфейс только для чтения запрещает изменения тому, кто держит ссылку, но сам объект может оставаться изменяемым. Операции вроде `filter` и `map` исходную коллекцию не трогают и возвращают новую. Если вычисления нужно отложить до момента, когда понадобится результат, цепочку строят на **`Sequence`**.
+</Callout>
+
+Граница ответственности проходит по типу ссылки: менять коллекцию может тот, у кого изменяемый интерфейс, остальные только читают. Поэтому по сигнатуре функции видно, собирается ли она менять твои данные.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Функция получила параметр items типа List и должна убрать из него повторы. Как ей это сделать?">
+Из самого `items` никак: у `List` нет `remove`, и так и должно быть, ведь список принадлежит вызывающему коду. Функция строит новый список без повторов и возвращает его, например операцией `distinct()`, которая встретится ниже. Заменить ли им старый, решает вызывающий.
+</Reveal>
+
+## Как устроено: List, Set и Map
+
+**Коллекция** (collection) — группа элементов одного типа, с которой работают как с целым. В стандартной библиотеке три основных вида:
+
+- **`List`** — список: порядок важен, доступ по индексу с нуля, элементы могут повторяться;
+- **`Set`** — множество уникальных элементов; `setOf` хранит их в порядке добавления;
+- **`Map`** — словарь пар «ключ — значение» с уникальными ключами.
+
+Создают их функциями `listOf`, `setOf` и `mapOf`, изменяемые версии — `mutableListOf`, `mutableSetOf` и `mutableMapOf`. Тип элементов компилятор выводит из значений, а у пустой коллекции его пишут явно: `mutableListOf<String>()`. Пару для словаря записывают через `to`: `"Аня" to 30` создаёт объект `Pair`. Как устроено само `to`, покажет урок про DSL.
+
+Элемент списка читают по индексу: `cities[1]`. За границей списка такой доступ бросает исключение, а `getOrNull` вернёт null. `ages["Вика"]` тоже вернёт null, если ключа нет, поэтому тип результата — `Int?`. Строка `val age: Int = ages["Вика"]` не скомпилируется: «Initializer type mismatch: expected 'Int', actual 'Int?'» (Kotlin 2.4.20). Запасное значение подставит `?:` из урока про null, `ages["Вика"] ?: 0`, или `getOrElse`: `ages.getOrElse("Вика") { 0 }` возьмёт его из фигурных скобок, если ключа нет. У списка `getOrElse` работает по индексу. Если ключ обязан быть и его отсутствие означает ошибку в программе, бери `getValue`. Оператор `in` проверяет, есть ли элемент в списке или ключ в словаре, а `for ((name, age) in ages)` обходит словарь с деструктуризацией, как у data class.
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val cities = listOf("Казань", "Омск", "Казань")
+    val unique = setOf("Казань", "Омск", "Казань")
+    val ages = mapOf("Аня" to 30, "Борис" to 25)
+
+    println(cities)
+    println(unique)
+    println(cities.getOrNull(5))
+    println("Омск" in unique)
+    println(ages["Вика"])
+    for ((name, age) in ages) {
+        println("$name: $age")
+    }
+}
+```
+
+</KotlinPlayground>
+
+Предскажи вывод, запусти и сверься. Потом по очереди замени `cities.getOrNull(5)` на `cities[5]` и `ages["Вика"]` на `ages.getValue("Вика")`. Первая замена уронит программу с `ArrayIndexOutOfBoundsException`, вторая — с `NoSuchElementException` и текстом «Key Вика is missing in the map.».
+
+Массив (`Array`) документация Kotlin коллекцией не считает: размер у него фиксирован, а варианта только для чтения нет. `IntArray` хранит числа как `int[]` в Java, без упаковки в объекты, как у `Array<Int>`. Массивы берут ради совместимости с Java API и в низкоуровневых задачах.
+
+## Как устроено: только для чтения и изменяемые
+
+Изменяемый интерфейс расширяет интерфейс только для чтения: `MutableList` умеет всё, что `List`, и вдобавок `add`, `remove` и `clear`. Поэтому изменяемый список можно передать туда, где ждут `List`. Вот корзина со свойством-хранилищем из прошлого урока, а `main` пытается очистить её через приведение `as`:
+
+<KotlinPlayground>
+
+```kotlin
+class Cart {
+    private val _items = mutableListOf("книга")
+
+    val items: List<String>
+        get() = _items
+
+    fun add(item: String) {
+        _items.add(item)
+    }
+}
+
+fun main() {
+    val cart = Cart()
+    val seen = cart.items
+    cart.add("ручка")
+    println(seen)
+    (cart.items as MutableList<String>).clear()
+    println(cart.items)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Что напечатают два println в программе выше?">
+`[книга, ручка]` и `[]`. `seen` — не копия, а ещё одна ссылка на тот же `_items`, и новая ручка видна через неё. Приведение `as MutableList` компилятор пропускает, потому что `MutableList` расширяет `List`. Во время выполнения под ссылкой и правда лежит изменяемый список, так что `clear` очищает корзину. Если нужен список, который уже не изменится, делай копию.
+</Reveal>
+
+Запусти, потом замени в геттере `_items` на `_items.toList()`. Теперь `seen` останется `[книга]`, а `clear` очистит копию, и корзина не пострадает. `toList()` делает **снимок** (snapshot): новую коллекцию с теми же элементами на момент вызова.
+
+<Callout type="blue" title="Если знаешь Java — List здесь не List.of">
+В Java `List.of("Аня")` возвращает неизменяемый список, но у типа `java.util.List` есть `add`, так что вызов скомпилируется и упадёт с `UnsupportedOperationException`. В Kotlin наоборот: у `List` нет `add`, ошибку ловит компилятор, зато объект за ссылкой может оказаться изменяемым. Для Java-кода `List` и `MutableList` — один и тот же `java.util.List` со всеми методами записи. Java-код, получив `cart.getItems()`, спокойно вызовет `add` и `clear` и изменит корзину. Отдаёшь коллекцию в Java — отдавай снимок.
+</Callout>
+
+## Как устроено: цепочки операций
+
+Большинство операций над коллекциями принимает **лямбду** (lambda): кусок кода в фигурных скобках, который операция вызывает для элементов. Если у лямбды один параметр, его можно не объявлять, и тогда он называется `it`. Лямбду, которая стоит последним аргументом, пишут за круглыми скобками, а пустые скобки опускают: `prices.filter { it > 100 }`. Подробно о лямбдах — в следующем уроке.
+
+Вот операции, с которых удобно начать. Все примеры — на двух списках:
+
+```kotlin
+val prices = listOf(120, 80, 300)
+val words = listOf("кот", "слон", "ёж", "лев")
+```
+
+| Операция | Пример | Результат |
+| --- | --- | --- |
+| Отобрать | `prices.filter { it > 100 }` | `[120, 300]` |
+| Преобразовать | `prices.map { it * 2 }` | `[240, 160, 600]` |
+| Первый подходящий | `prices.firstOrNull { it > 500 }` | `null` |
+| Есть ли такой | `prices.any { it < 100 }` | `true` |
+| Сколько таких | `prices.count { it > 100 }` | `2` |
+| Сумма | `words.sumOf { it.length }` | `12` |
+| Сортировка | `words.sortedBy { it.length }` | `[ёж, кот, лев, слон]` |
+| Группы | `words.groupBy { it.length }` | `{3=[кот, лев], 4=[слон], 2=[ёж]}` |
+| Словарь по ключу | `words.associateBy { it.first() }` | `{к=кот, с=слон, ё=ёж, л=лев}` |
+| Первые N | `words.take(2)` | `[кот, слон]` |
+| Без повторов | `listOf(1, 1, 2).distinct()` | `[1, 2]` |
+
+Рядом с `any` живут `all` и `none`. `first { … }` без `OrNull` бросает `NoSuchElementException`, если подходящего элемента нет. `associateBy` в отличие от `groupBy` оставляет по ключу один элемент, последний. Ни одна операция не меняет `prices` и `words`, а версии на месте есть у `MutableList`: `sort()` рядом с `sorted()`, как в уроке про стиль.
+
+Операции над списком, которые возвращают коллекцию, **жадные** (eager): каждая сразу строит готовый результат, и только потом начинается следующий шаг. В цепочке `filter`, `map`, `take` получится три списка, и два промежуточных пойдут в мусор.
+
+**Последовательность** (`Sequence`) устроена иначе. Её получают из коллекции вызовом `asSequence()`, и операции у неё те же. Но `filter` и `map` у последовательности — **промежуточные операции** (intermediate): они возвращают новую последовательность и ничего не считают. Вычисления запускает **терминальная операция** (terminal), которая возвращает результат: `toList()`, `first()`, `sum()`, `count()`. Такой подход называют **ленивыми вычислениями** (lazy evaluation).
+
+Функции `isBig` и `twice` ниже печатают, с каким элементом их вызвали. До черты цепочка над списком, после — та же цепочка над последовательностью. Сначала предскажи вывод, потом запускай.
+
+<KotlinPlayground>
+
+```kotlin
+fun isBig(price: Int): Boolean {
+    println("filter $price")
+    return price > 100
+}
+
+fun twice(price: Int): Int {
+    println("map $price")
+    return price * 2
+}
+
+fun main() {
+    val prices = listOf(120, 80, 300)
+    println(prices.filter { isBig(it) }.map { twice(it) })
+    println("---")
+    val lazy = prices.asSequence()
+        .filter { isBig(it) }
+        .map { twice(it) }
+    println(lazy.toList())
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="В каком порядке появятся строки «filter» и «map» после черты?">
+filter 120, map 120, filter 80, filter 300, map 300. Последовательность проводит элемент через всю цепочку и только потом берёт следующий, а 80 до `map` не доходит. До черты порядок другой: сначала три «filter», потом два «map». Результат в обоих случаях `[240, 600]`, отличается только порядок работы.
+</Reveal>
+
+Запусти, потом замени `lazy.toList()` на `lazy.first()`: после черты останутся «filter 120» и «map 120», до 80 и 300 дело не дойдёт. А если удалить последний `println` целиком, после черты не напечатается ничего: без терминальной операции последовательность не считает.
+
+<Callout type="blue" title="Если знаешь Java — цепочка здесь не Stream">
+Stream в Java ленивый: по документации промежуточная операция вроде `filter` ничего не фильтрует, а проход по данным начинается с терминальной. Если переписать пример выше на Stream, Java-версия напечатает строки в том же порядке, что после черты. Цепочка над `List` в Kotlin выглядит похоже, но работает жадно, и `stream()` с `collect` ей не нужны. Ленивый аналог Stream в Kotlin — `Sequence`.
+</Callout>
+
+Документация Kotlin предупреждает, что у последовательностей есть накладные расходы, заметные на маленьких коллекциях и простых вычислениях, и советует выбирать между `Sequence` и списком под задачу. Марцин Москала в Effective Kotlin (совет 54) даёт правило: предпочитай `Sequence` для больших коллекций с несколькими шагами, а большими считает и длинные коллекции, и тяжёлые. Второй повод на большой коллекции — **ранний выход**: `first`, `firstOrNull` и `take` останавливают последовательность, как только результат готов.
+
+## Как на практике
+
+- **Наружу — `List`, внутри — `MutableList`.** Параметры, результаты функций и публичные свойства объявляй интерфейсами только для чтения, а изменяемую коллекцию держи у владельца, как `_items` в корзине.
+- **Цепочка вместо цикла с `add`.** `filter` и `map` описывают результат: что отобрать и во что превратить. Временный `mutableListOf` и `var`-счётчик не нужны.
+- **Бери варианты с `OrNull`, когда элемента может не быть.** `firstOrNull`, `getOrNull` и `map[key]` вернут null, а запасное значение даст `?:` или `getOrElse`.
+- **Ключ обязан быть — `getValue`.** Если ключа всё же нет, исключение назовёт его, а `!!` бросит NullPointerException без подробностей.
+- **Отдаёшь наружу — отдавай снимок.** Геттер `get() = _items.toList()` не даст ни приведению, ни Java-коду изменить твою коллекцию.
+
+<Callout type="teal" title="Как принято">
+Соглашения о коде Kotlin советуют всегда объявлять коллекции, которые не меняются, интерфейсами `List`, `Set`, `Map` или общим для списков и множеств `Collection`. Там они названы immutable, но речь об интерфейсах только для чтения. Создавать их советуют функциями, которые возвращают такие интерфейсы: `listOf`, но не `arrayListOf` с её изменяемым `ArrayList`. Циклам соглашения предпочитают операции вроде `filter` и `map`. Исключение — `forEach`: вместо него пишут обычный `for`, кроме длинных цепочек и вызова на nullable-значении. При переносе цепочки `.` ставят в начало следующей строки с одним отступом.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Корзина, которую очистила чужая функция.**
+В первом уроке курса корзина `val cart = mutableListOf<String>()` уходила в три функции, и одна из них по ошибке вызывала `cart.clear()`. Ход: функциям, которые корзину только читают, дать параметр `List<String>`. Теперь `clear` внутри не скомпилируется: `Unresolved reference 'clear' on receiver of type 'List<String>'`. Вывод: `List` в параметре не даёт функции менять список, и нарушение ловит компилятор.
+
+**Разбор 2. Первая ошибка в большом логе.**
+Сервис читает лог на миллион строк, функцией `parse` превращает каждую строку в запись с полем `level` и ищет первую ошибку:
+
+```kotlin
+val firstError = lines
+    .map { parse(it) }
+    .firstOrNull { it.level == "ERROR" }
+```
+
+Ошибка нашлась в десятой строке.
+
+<Reveal q="Сколько раз вызовется parse в этой версии и сколько, если вставить asSequence() сразу после lines?">
+Миллион раз, а с последовательностью — десять. Жадный `map` разбирает все строки и строит список из миллиона записей, и только потом `firstOrNull` находит десятую. Последовательность ведёт строки по одной и останавливается на первой ошибке.
+</Reveal>
+
+Ход: вставить `.asSequence()` после `lines`. Результат тот же, а `parse` вызывается в сто тысяч раз реже. Вывод: большая коллекция и ранний выход вместе — повод для последовательности.
+
+**Разбор 3. Sequence для пяти пунктов меню.**
+Коллега прочитал про ленивость и теперь пишет `asSequence()` в начале и `toList()` в конце каждой цепочки, даже для меню из пяти пунктов. Выигрыша нет: промежуточный список из пяти элементов крошечный, а накладные расходы последовательности остаются. Ход: убрать `asSequence()` и `toList()`, цепочка над списком и так вернёт `List`. Вывод: `Sequence` ставят по конкретному поводу, а не по привычке.
+
+## Нужна ли Sequence
+
+<DecisionTree nodes={[
+  { q: "Коллекция маленькая, например корзина или меню?", yes: "Обычные операции над списком: накладные расходы Sequence тут не окупятся", no: "к следующему вопросу" },
+  { q: "В цепочке одна операция?", yes: "Обычная операция: промежуточных списков и так нет", no: "к следующему вопросу" },
+  { q: "Нужен только первый результат или несколько первых: first, firstOrNull, take?", yes: "asSequence(): обработка остановится, как только результат готов", no: "Скорее asSequence(): так советует Effective Kotlin для больших коллекций с несколькими шагами. Сомневаешься — замерь на своих данных" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `MutableList` в параметре функции, которая только читает | Функция может испортить данные вызывающего кода | `List` в сигнатуре |
+| Отдавать наружу `_items` и считать его неизменяемым | Приведение и Java-код меняют его в обход интерфейса | Снимок через `toList()` |
+| Вызвать `filter` и не сохранить результат | Исходный список не изменился, результат потерян | `val paid = orders.filter { … }` |
+| `map[key]!!` | NullPointerException без имени ключа | `?:` с запасным значением; `getValue`, если ключ обязан быть: его исключение назовёт ключ |
+| `first()` там, где совпадения может не быть | NoSuchElementException | `firstOrNull` и `?:` |
+| Ждать от цепочки над `List` ленивости Stream | Каждый шаг строит промежуточный список | `asSequence()` для большой коллекции |
+
+## Практикум
+
+<Practice title="Перепиши циклы цепочками" checklist={["Параметры и результаты функций объявлены как List", "В функциях нет for, var и временного mutableListOf", "Повторы убраны через distinct(), сортировка через sorted()", "Выручка считается через filter и sumOf", "Длинные цепочки перенесены: по операции на строку, точка в начале строки", "Программа печатает «[Анапа, Казань, Омск]» и «7000»"]}>
+Код ниже написан в стиле Java: изменяемые списки в сигнатурах, циклы, временный список и `var`-сумма. Перепиши обе функции цепочками операций, а типы коллекций замени на интерфейсы только для чтения. Вывод должен остаться прежним. Нужна ли здесь `Sequence`, реши сам.
+
+<KotlinPlayground>
+
+```kotlin
+data class Order(
+    val city: String,
+    val total: Int,
+    val paid: Boolean,
+)
+
+fun bigPaidCities(
+    orders: MutableList<Order>,
+): MutableList<String> {
+    val result = mutableListOf<String>()
+    for (order in orders) {
+        if (order.paid && order.total > 1000) {
+            if (!result.contains(order.city)) {
+                result.add(order.city)
+            }
+        }
+    }
+    result.sort()
+    return result
+}
+
+fun paidRevenue(orders: MutableList<Order>): Int {
+    var sum = 0
+    for (order in orders) {
+        if (order.paid) {
+            sum += order.total
+        }
+    }
+    return sum
+}
+
+fun main() {
+    val orders = mutableListOf(
+        Order("Омск", 1500, true),
+        Order("Казань", 800, true),
+        Order("Казань", 2400, true),
+        Order("Омск", 3000, false),
+        Order("Анапа", 1200, true),
+        Order("Омск", 1100, true),
+    )
+    println(bigPaidCities(orders))
+    println(paidRevenue(orders))
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+data class Order(
+    val city: String,
+    val total: Int,
+    val paid: Boolean,
+)
+
+fun bigPaidCities(orders: List<Order>): List<String> =
+    orders
+        .filter { it.paid && it.total > 1000 }
+        .map { it.city }
+        .distinct()
+        .sorted()
+
+fun paidRevenue(orders: List<Order>): Int =
+    orders
+        .filter { it.paid }
+        .sumOf { it.total }
+
+fun main() {
+    val orders = listOf(
+        Order("Омск", 1500, true),
+        Order("Казань", 800, true),
+        Order("Казань", 2400, true),
+        Order("Омск", 3000, false),
+        Order("Анапа", 1200, true),
+        Order("Омск", 1100, true),
+    )
+    println(bigPaidCities(orders))
+    println(paidRevenue(orders))
+}
+```
+
+Программа печатает «[Анапа, Казань, Омск]» и «7000». Шаги цепочки повторяют задачу: отобрать оплаченные крупные заказы, взять город, убрать повторы, отсортировать. `var` и временный список исчезли, а `orders` в `main` создан через `listOf`: его никто не меняет. `Sequence` не нужна: заказов шесть.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Где в твоём коде функция принимает `MutableList` или `ArrayList`, хотя только читает? Найди одну до пятницы, поменяй тип на `List`, а цикл, который собирает результат через `add`, перепиши цепочкой. Через неделю-две вернись к шпаргалке и проверь, какие операции ты уже пишешь не глядя.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Только для чтения | `listOf(…)`, `setOf(…)`, `mapOf(k to v)` |
+| Изменяемые | `mutableListOf()`, пустая — с типом: `mutableListOf<String>()` |
+| Доступ без исключений | `getOrNull(i)`, `firstOrNull { … }`, `map[k] ?: d`, `getOrElse(k) { d }` |
+| Ключ обязан быть | `map.getValue(k)` |
+| Обход словаря | `for ((k, v) in map)` |
+| Отбор и преобразование | `filter { … }`, `map { … }`, `distinct()` |
+| Итоги | `count { … }`, `sumOf { … }`, `any { … }` |
+| Группы и словари | `groupBy { … }`, `associateBy { … }` |
+| Снимок | `toList()`, `toSet()` |
+| Ленивая цепочка | `asSequence()`, в конце `toList()` или `first()` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Коллекция (collection)", meaning: "Группа элементов одного типа, с которой работают как с целым: список, множество или словарь." },
+  { term: "List", meaning: "Упорядоченная коллекция с доступом по индексу; элементы могут повторяться." },
+  { term: "Set", meaning: "Коллекция уникальных элементов; setOf хранит их в порядке добавления." },
+  { term: "Map", meaning: "Словарь пар «ключ — значение» с уникальными ключами." },
+  { term: "Пара (Pair)", meaning: "Объект из двух значений; в mapOf пары записывают через to." },
+  { term: "Коллекция только для чтения (read-only)", meaning: "Интерфейс List, Set или Map без операций записи; сам объект за ним может быть изменяемым." },
+  { term: "Изменяемая коллекция (mutable)", meaning: "Интерфейс MutableList, MutableSet или MutableMap: чтение плюс add, remove и другие операции записи." },
+  { term: "Снимок (snapshot)", meaning: "Новая коллекция с теми же элементами на момент вызова toList() или toSet(); изменения исходной её не касаются." },
+  { term: "Массив (array)", meaning: "Структура фиксированного размера: элементы менять можно, размер нельзя; в Kotlin массив не считается коллекцией." },
+  { term: "Лямбда (lambda)", meaning: "Кусок кода в фигурных скобках, который передают в функцию, например в filter." },
+  { term: "it", meaning: "Имя единственного параметра лямбды, если его не объявили явно." },
+  { term: "Жадная операция (eager)", meaning: "Операция над коллекцией, которая сразу строит готовый результат, прежде чем начнётся следующий шаг цепочки." },
+  { term: "Последовательность (Sequence)", meaning: "Ленивая цепочка обработки: элементы проходят все шаги по одному, когда запрошен результат." },
+  { term: "Ленивые вычисления (lazy evaluation)", meaning: "Вычисления, которые откладываются, пока результат не понадобится." },
+  { term: "Промежуточная операция (intermediate)", meaning: "Операция последовательности, которая возвращает новую последовательность и ничего не считает." },
+  { term: "Терминальная операция (terminal)", meaning: "Операция, которая запускает вычисления последовательности и возвращает результат: toList, first, sum." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-collections-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Коллекции: понятия</span>
+    <span class="kc-trainer-hint">List, операции, Sequence</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-collections-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Коллекции в сценариях</span>
+    <span class="kc-trainer-hint">Что напечатает и что выбрать</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-collections-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши операцию</span>
+    <span class="kc-trainer-hint">Типы, доступ, операции</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-collections-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери цепочку</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Collections overview, Constructing collections** ([kotlinlang.org/docs](https://kotlinlang.org/docs/collections-overview.html), сверено 2026-09-26) — виды коллекций, два интерфейса, копии и общие ссылки.
+- **Kotlin — Collection operations, Sequences** ([kotlinlang.org/docs](https://kotlinlang.org/docs/sequences.html), сверено 2026-09-26) — операции, жадная и ленивая обработка, накладные расходы.
+- **Kotlin — Collections in Java and Kotlin, Java interop, Arrays** ([kotlinlang.org/docs](https://kotlinlang.org/docs/java-to-kotlin-collections-guide.html), сверено 2026-09-26) — отличия от Java, `java.util.List` на JVM, массивы.
+- **Kotlin — Coding conventions, Lambdas** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-09-26) — типы только для чтения, операции вместо циклов, перенос цепочек, `it`.
+- **Марцин Москала — Effective Kotlin, совет 54** ([kt.academy](https://kt.academy/article/ek-sequence), сверено 2026-09-26) — когда предпочитать `Sequence`.
+- **Oracle — Java SE 21 API: java.util.stream, List** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html), сверено 2026-09-26) — ленивость Stream и неизменяемый `List.of`.

@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-lambdas",
+  "title": "Лямбды в деле",
+  "description": "Разбери незнакомый код: какой тип у лямбды, куда уйдёт return и где нужен inline.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "В retry написано repeat(times) { if (action()) return true }, а после него return false. Действие удаётся со второй попытки. Что вернёт retry(3)?",
+        "options": [
+          "true после двух вызовов: return выходит из retry",
+          "false после трёх вызовов: return завершает лишь лямбду",
+          "Ничего: голый return в лямбде repeat не скомпилируется"
+        ],
+        "correctIndex": 0,
+        "explain": "repeat, как и forEach, объявлена inline, поэтому голый return в её лямбде — нелокальный возврат: он выходит из retry на второй попытке. Завершить только вызов лямбды мог бы return@repeat, тогда цикл дошёл бы до конца и сработал бы return false. Ошибкой компиляции голый return стал бы в лямбде обычной, не inline-функции."
+      },
+      {
+        "prompt": "Какой тип компилятор выведет для val isAdult = { age: Int -> age >= 18 }?",
+        "options": [
+          "(Int) -> Unit",
+          "(Int) -> Boolean",
+          "Boolean"
+        ],
+        "correctIndex": 1,
+        "explain": "Лямбда — функция, поэтому её тип — тип функции: параметр Int, а результат — последнее выражение, age >= 18, то есть Boolean. Boolean без стрелки — тип результата вызова isAdult(20), а не самой лямбды. Unit был бы, если бы последним в лямбде стояло действие вроде println."
+      },
+      {
+        "prompt": "var saved = 0, затем val save = { amount: Int -> saved += amount }. Вызвали save(100) и save(50). Что напечатает println(saved)?",
+        "options": [
+          "0: лямбда меняла свою копию saved",
+          "Ничего: захваченный var менять нельзя",
+          "150: лямбда меняет захваченный var"
+        ],
+        "correctIndex": 2,
+        "explain": "Лямбда захватывает саму переменную saved, а не копию значения, и может её менять, поэтому после двух вызовов в ней 150. Запрет менять захваченную переменную — правило Java (final или effectively final), в Kotlin его нет."
+      },
+      {
+        "prompt": "Коллега объявил inline fun format(price: Int) = \"$price ₽\". Что скажет компилятор?",
+        "options": [
+          "Предупредит: параметров-функций нет, выигрыша не будет",
+          "Выдаст ошибку: inline разрешён только функциям с лямбдами",
+          "Промолчит: вызовы ускорятся за счёт подстановки"
+        ],
+        "correctIndex": 0,
+        "explain": "У format нет параметров с типом функции, поэтому компилятор выдаёт предупреждение «Expected performance impact from inlining is insignificant». Код при этом компилируется, ошибки нет. Ускорения ждать не стоит: по документации подстановка такой функции вряд ли окупится."
+      },
+      {
+        "prompt": "В Kotlin-модуле есть interface Formatter { fun format(x: Int): String } и функция render(f: Formatter). Как вызвать render с лямбдой?",
+        "options": [
+          "Сразу render { it.toString() }: сработает SAM-преобразование",
+          "Объявить fun interface Formatter и писать render { it.toString() }",
+          "Никак: лямбду принимают только параметры с типом функции"
+        ],
+        "correctIndex": 1,
+        "explain": "Для интерфейсов, объявленных в Kotlin, SAM-преобразование работает только с fun interface, поэтому достаточно добавить fun перед interface. Сразу лямбда не пройдёт: без fun компилятор не считает обычный интерфейс функциональным. И тип функции не единственный путь: fun interface тоже принимает лямбды."
+      },
+      {
+        "prompt": "Есть fun isValidEmail(s: String): Boolean. Как передать её в filter для списка emails без лямбды?",
+        "options": [
+          "emails.filter { ::isValidEmail }",
+          "emails.filter(String::isValidEmail)",
+          "emails.filter(::isValidEmail)"
+        ],
+        "correctIndex": 2,
+        "explain": "Оператор :: превращает функцию в значение типа (String) -> Boolean, а filter ждёт именно такое. Если завернуть ссылку в фигурные скобки, лямбда вернёт саму функцию вместо Boolean, и типы не сойдутся. Запись String::isValidEmail ищет член класса String, а isValidEmail объявлена на верхнем уровне, поэтому ссылка пишется без имени класса."
+      },
+      {
+        "prompt": "Своя функция fun measure(block: () -> Unit) объявлена без inline. Что будет с кодом measure { if (list.isEmpty()) return }?",
+        "options": [
+          "Ошибка компиляции: голый return здесь запрещён",
+          "return завершит только лямбду, как в Java",
+          "return завершит функцию, которая вызвала measure"
+        ],
+        "correctIndex": 0,
+        "explain": "Нелокальный возврат разрешён только в лямбде, переданной в inline-функцию, а measure не inline. Компилятор ответит «'return' is prohibited here». Выйти только из лямбды можно через return@measure. Завершить внешнюю функцию return смог бы, если бы measure объявили inline."
+      }
+    ]
+  }
+}

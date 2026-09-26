@@ -4,10 +4,440 @@ order: 8
 phase: "Идиоматичный Kotlin"
 title: "Лямбды: функции как значения"
 eyebrow: "Kotlin · Идиоматичный Kotlin"
-readingMinutes: 15
-summary: "Передавать функции в функции, читать типы функций и понимать, что делает inline."
+readingMinutes: 18
+summary: "Передавать функции в функции, читать типы функций, предсказывать, куда уйдёт return из лямбды, и понимать, что делает inline."
 tags: [kotlin, idioms]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Лямбды: функции как значения» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты писал условия в фигурных скобках по образцу: `orders.filter { it.total > 1000 }`. Теперь образца не хватит. В проекте встречается `retry(3) { client.send(order) }`, в объявлении `retry` у параметра тип `() -> Boolean`, а тимлид просит написать такую же обёртку для замера времени.
+
+Опыт Java помогает наполовину. Лямбды там есть, но в Kotlin другие правила в трёх местах: у функций свои типы, лямбда может менять внешние переменные, а `return` внутри неё ведёт себя по-другому. Опаснее всего последнее. `return` внутри `forEach`, написанный по привычке из Java, компилируется без единого предупреждения, а программа ведёт себя не так, как ждал автор.
+
+После урока ты сможешь передать в функцию лямбду или ссылку на функцию, объявить параметр с типом функции, вернуть функцию из функции, предсказать, куда уйдёт `return` из лямбды, и решить, нужен ли `inline`.
+
+## Ядро: функция — значение со своим типом
+
+<Callout type="purple" title="Суть">
+В Kotlin функцию можно положить в переменную, передать в другую функцию и вернуть из неё, как число или строку. У такого значения есть **тип функции** (function type): `(String) -> Boolean` принимает строку и возвращает `Boolean`. Чаще всего значение этого типа записывают **лямбдой** (lambda expression): `{ s: String -> s.isEmpty() }`. Функцию, которая принимает или возвращает функцию, называют **функцией высшего порядка** (higher-order function).
+</Callout>
+
+`filter` и `map` из прошлого урока — функции высшего порядка из стандартной библиотеки. У `filter` для списка строк параметр типа `(String) -> Boolean`, и в фигурных скобках ты передавал как раз такую функцию. Писать подобные функции можно и самому.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Коллега с опытом Java объявил interface ReadyCheck с одним методом check(order: Order): Boolean только ради параметра функции sendAll. Что ты предложишь?">
+Обойтись без интерфейса: объявить параметр `isReady: (Order) -> Boolean`. Тогда `sendAll` вызывают лямбдой, `sendAll(orders) { it.paid }`, или ссылкой на готовую функцию. Отдельный интерфейс в Kotlin оправдан, когда у сущности контракт сложнее одного вызова.
+</Reveal>
+
+## Как устроено: типы функций, лямбды и ссылки
+
+Тип функции записывают так: в скобках типы параметров, после стрелки — тип результата.
+
+```kotlin
+val onClick: () -> Unit = { println("клик") }
+val isLong: (String) -> Boolean = { it.length > 10 }
+val sum: (Int, Int) -> Int = { a, b -> a + b }
+```
+
+`() -> Unit` — функция без параметров и без полезного результата. В объявлении обычной функции `: Unit` опускают, а в типе функции пишут всегда. Типы с разным результатом различаются: лямбду `{ x: Int -> x * 2 }` не положишь в переменную `(Int) -> Long`, будет «Return type mismatch: expected 'Long', actual 'Int'» (Kotlin 2.4.20). Вызывают значение как обычную функцию, `sum(2, 3)`, или через оператор **`invoke`**: `sum.invoke(2, 3)`.
+
+**Лямбда** пишется в фигурных скобках: параметры, стрелка `->`, тело. Если параметров нет, нет и стрелки, как у `onClick`. Результат — последнее выражение тела, `return` не нужен. Типы параметров можно опустить, если их знает контекст, как у `sum`. Единственный параметр можно не объявлять, он доступен под неявным именем **`it`**, как в уроке про коллекции.
+
+Если последний параметр функции — функция, лямбду выносят за скобки: `repeat(3) { println("ура") }` напечатает «ура» трижды. А если других аргументов нет, скобки не пишут совсем: `words.forEach { println(it) }`. Такая запись называется **лямбдой за скобками** (trailing lambda).
+
+Готовую функцию передают без лямбды, через **ссылку на функцию** (function reference): `::isShort` — значение типа `(String) -> Boolean`, а `String::length` ссылается на свойство и работает как функция `(String) -> Int`.
+
+<KotlinPlayground>
+
+```kotlin
+fun isShort(word: String) = word.length <= 3
+
+fun main() {
+    val words = listOf("кот", "самолёт", "дом", "лямбда")
+    val twice: (Int) -> Int = { x -> x * 2 }
+    println(twice(21))
+    println(words.filter { it.length > 3 })
+    println(words.filter(::isShort))
+    println(words.map(String::length))
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом удали у `twice` тип `: (Int) -> Int`. Компилятор ответит «An explicit type is required on a value parameter.»: типу `x` неоткуда взяться. Почини, написав тип в самой лямбде: `{ x: Int -> x * 2 }`.
+
+<Callout type="blue" title="Если знаешь Java — у лямбды есть свой тип">
+В Java у лямбды нет собственного типа: она всегда становится экземпляром **функционального интерфейса** (functional interface) вроде `Function<T, R>`, и какого именно, решает контекст (JLS §15.27). Поэтому `var twice = x -> x * 2;` запрещено (JLS §14.4.1), javac 24 ответит: «cannot infer type for local variable twice (lambda expression needs an explicit target-type)». В Kotlin тип `(Int) -> Int` выводится из самой лямбды, если тип параметра записан в ней: `{ x: Int -> x * 2 }`.
+</Callout>
+
+Функция высшего порядка принимает и возвращает функции, как любые другие значения:
+
+```kotlin
+fun retry(times: Int, action: () -> Boolean): Boolean {
+    for (i in 1..times) if (action()) return true
+    return false
+}
+
+fun discount(percent: Int): (Int) -> Int =
+    { price -> price - price * percent / 100 }
+```
+
+`retry(3) { client.ping() }` вызовет `ping` до трёх раз и остановится на первом успехе. `discount(30)(1000)` даст 700, а `prices.map(discount(10))` снимет 10 % с каждой цены. Лямбда помнит `percent`, хотя `discount` уже завершилась.
+
+<Reveal q="Колбэк onDone может отсутствовать. Где в его типе ставить знак вопроса, если колбэк принимает String и ничего не возвращает?">
+Вокруг всего типа, в скобках: `((String) -> Unit)?`. В записи `(String) -> Unit?` вопрос относится к результату: это обязательная функция, которая возвращает nullable `Unit`, и `null` в такую переменную не положишь. Вызывают необязательный колбэк безопасно: `onDone?.invoke("готово")`.
+</Reveal>
+
+## Как устроено: замыкания
+
+Лямбда видит переменные того места, где её написали, и может их менять. Такие захваченные переменные называют **замыканием** (closure). Пример из документации Kotlin:
+
+```kotlin
+var sum = 0
+ints.filter { it > 0 }.forEach { sum += it }
+```
+
+Замыкание может пережить функцию, в которой родилось: ниже `counter` возвращает лямбду, и `count` живёт дальше внутри неё. Лямбда `{ x: Int -> x * 2 }`, наоборот, ничего не захватывает: всё нужное приходит в параметре.
+
+Сначала предскажи, что напечатает программа, и только потом запускай:
+
+<KotlinPlayground>
+
+```kotlin
+fun counter(): () -> Int {
+    var count = 0
+    return { ++count }
+}
+
+fun main() {
+    val next = counter()
+    println(next())
+    println(next())
+    val other = counter()
+    println(other())
+    println(next())
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Какие четыре числа напечатает программа и почему?">
+1, 2, 1 и 3. Каждый вызов `counter()` создаёт свою переменную `count`, и возвращённая лямбда держит именно её. У `next` и `other` два независимых счётчика: `other()` начинает с единицы, а `next()` продолжает свой отсчёт. Лямбда захватывает саму переменную, а не копию значения.
+</Reveal>
+
+Теперь перенеси `var count = 0` на верхний уровень файла и запусти снова: счётчик станет общим, и выйдет 1, 2, 3, 4.
+
+<Callout type="blue" title="Если знаешь Java — захваченную переменную можно менять">
+В Java локальная переменная, которую использует лямбда, должна быть `final` или фактически неизменяемой (effectively final, JLS §15.27.2). `count++` внутри лямбды javac 24 отвергнет: «local variables referenced from a lambda expression must be final or effectively final». В Kotlin лямбда меняет захваченный `var` напрямую, и обходные пути вроде `int[] count = {0}` не нужны.
+</Callout>
+
+## Как устроено: return в лямбде и inline
+
+Реши до запуска, что напечатает эта программа:
+
+<KotlinPlayground>
+
+```kotlin
+fun printWords(words: List<String>) {
+    words.forEach {
+        if (it == "стоп") return
+        println(it)
+    }
+    println("конец")
+}
+
+fun main() {
+    printWords(listOf("раз", "два", "стоп", "три"))
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Что напечатает программа?">
+Только «раз» и «два», «конец» не появится. `return` без метки выходит из ближайшей функции, объявленной через `fun`, то есть из всей `printWords`, а не из лямбды. В Java такой же код вышел бы только из лямбды (JLS §14.17) и напечатал бы ещё «три» и «конец». Правило: голый `return` в лямбде относится к внешней функции.
+</Reveal>
+
+Замени `return` на `return@forEach` и запусти снова. Теперь напечатаются все слова, кроме «стоп», а в конце — «конец». Это возврат по **метке** (label). Он завершает только текущий вызов лямбды, как `continue` в цикле. Метка по умолчанию совпадает с именем функции, которой передали лямбду, а значение пишут после неё: `return@map 0`. Метка не нужна и в **анонимной функции**: `return` в ней выходит из неё самой. В `printWords` такой вариант тоже напечатает всё, кроме «стоп»:
+
+```kotlin
+words.forEach(fun(word: String) {
+    if (word == "стоп") return
+    println(word)
+})
+```
+
+Голый `return` в `forEach` компилируется потому, что `forEach`, как `filter`, `map` и `repeat`, объявлена `inline`. Выход из внешней функции изнутри лямбды называют **нелокальным возвратом** (non-local return), и он разрешён только в лямбде, переданной в inline-функцию. В лямбде обычной функции компилятор ответит «'return' is prohibited here.». Поэтому `return` работает в `list.filter { … }`, но не в `sequence.filter { … }`: у ленивой `Sequence` `filter` не inline, её лямбда вызывается позже, во время терминальной операции.
+
+**`inline`** просит компилятор подставить в место вызова тело функции вместе с телами переданных лямбд. Без него лямбда — объект, который хранит захваченные переменные, и документация называет цену: выделение памяти и виртуальные вызовы. После подстановки объекта нет, а `return` из лямбды становится обычным `return` твоей функции. Вот обёртка для замера времени из начала урока; `System.nanoTime()` отдаёт время JVM в наносекундах:
+
+```kotlin
+inline fun measure(block: () -> Unit) {
+    val start = System.nanoTime()
+    block()
+    val ms = (System.nanoTime() - start) / 1_000_000
+    println("$ms мс")
+}
+// measure { loadReport() } компилятор развернёт в
+// val start = System.nanoTime()
+// loadReport()
+// …
+```
+
+Бывает, что `inline` лишний или даже мешает:
+
+- у функции нет параметров-функций: компилятор предупредит «Expected performance impact from inlining is insignificant.»;
+- функция большая: её тело копируется в каждое место вызова, и код растёт;
+- лямбду нужно сохранить, например в список слушателей: будет «Illegal usage of inline parameter…». Модификатор **`noinline`** выключает подстановку одного параметра.
+
+Бывает, что inline-функция вызывает лямбду не прямо из тела, а из вложенного объекта или локальной функции, например внутри `Runnable`. Тогда компилятор откажется: «Cannot inline … here: it might contain non-local returns.». Модификатор **`crossinline`** разрешает такой вызов и запрещает в лямбде нелокальный `return`.
+
+## Лямбда вместо интерфейса: SAM и fun interface
+
+Многие Java-API принимают интерфейсы с одним абстрактным методом (SAM, Single Abstract Method): `Runnable`, `Comparator`, `Callable`. Kotlin подставляет в них лямбду сам: **SAM-преобразование** (SAM conversion) превращает лямбду с подходящей сигнатурой в реализацию интерфейса. Вместо анонимного объекта `object : Runnable { override fun run() … }`, аналога анонимного класса Java, хватает `Runnable { … }` или лямбды в аргументе: `executor.execute { … }`. Свой интерфейс под лямбды объявляют так:
+
+<KotlinPlayground>
+
+```kotlin
+fun interface PriceRule {
+    fun change(price: Int): Int
+}
+
+fun checkout(price: Int, rule: PriceRule) =
+    rule.change(price)
+
+fun main() {
+    val task = Runnable { println("Задача для Java-API") }
+    task.run()
+    val half = PriceRule { it / 2 }
+    println(checkout(1000, half))
+    println(checkout(1000) { it - 100 })
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Что случится, если убрать слово fun перед interface PriceRule?">
+Программа перестанет компилироваться. Для интерфейсов, объявленных в Kotlin, SAM-преобразование работает только с `fun interface`, поэтому `PriceRule { it / 2 }` и лямбда в `checkout` станут ошибками. Среди них будет «Interface 'interface PriceRule : Any' does not have constructors.». Строка с `Runnable` останется рабочей: Java-интерфейсу слово `fun` не нужно.
+</Reveal>
+
+Проверь: убери `fun` и запусти. **`fun interface`** — функциональный интерфейс Kotlin: один абстрактный метод и сколько угодно методов с реализацией. С абстрактными классами SAM-преобразование не работает, даже если абстрактный метод у них один. Документация советует тип функции, а `fun interface` — когда у сущности есть контракт сложнее одного вызова.
+
+## Как на практике
+
+- **Принимай тип функции, а не интерфейс.** Параметр `isReady: (Order) -> Boolean` принимает и лямбду, и ссылку.
+- **Параметр-функцию ставь последним.** Тогда лямбду пишут за скобками: `retry(3) { client.ping() }`.
+- **Есть готовая функция — передай ссылку.** `orders.filter(::isOverdue)` короче, чем `orders.filter { isOverdue(it) }`.
+- **Пропустить элемент — `filter` или `continue` в `for`, а внутри `forEach` — `return@forEach`.** Голый `return` выйдет из всей функции.
+
+<Callout type="teal" title="Как принято">
+По соглашениям Kotlin вокруг скобок лямбды и вокруг стрелки ставят пробелы: `list.filter { it > 10 }`, а единственную лямбду выносят за скобки. `it` пишут в коротких невложенных лямбдах, во вложенных объявляют имена параметров. Нескольких `return@метка` в одной лямбде избегают, а для последнего выражения метка не нужна.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. `return` в рассылке.**
+Функция шлёт напоминания об оплате: внутри `orders.forEach` стоит `if (it.paid) return`, дальше `notify(it)`. Автор хотел пропустить оплаченные заказы, как в Java. На тестовых данных оплаченных не было, а на живых первый же оплаченный заказ завершил функцию, и клиенты после него напоминаний не получили. Ход: `orders.filter { !it.paid }.forEach(::notify)`, где пропуск выражен самим фильтром. Вывод: пропуск элемента пишут фильтром или меткой.
+
+**Разбор 2. Счётчик из Java.**
+При переносе с Java встречается `int[] processed = {0}` и `processed[0]++` в лямбде: так обходили требование effectively final. Код работает, но массив из одного элемента сбивает читателя. Ход: `var processed = 0` и `processed++` прямо в лямбде. Если же лямбда выполняется в пуле потоков, вспомни обоснование запрета в спецификации Java: захват изменяемых переменных скорее всего привёл бы к проблемам с многопоточностью. Счётчику, который меняют несколько потоков, подойдёт `AtomicInteger`: его значение обновляется атомарно. Вывод: захваченный `var` заменяет обходной путь, но не синхронизацию.
+
+**Разбор 3. Где inline не нужен.**
+Шина событий хранит слушателей: `subscribe(listener: (String) -> Unit)` кладёт лямбду в список, чтобы вызвать позже. Коллега помечает `subscribe` как `inline` «для скорости» и получает «Illegal usage of inline parameter». Добавляет `noinline`, код собирается, но компилятор предупреждает, что выигрыша не будет: подставлять больше нечего. Ход: убрать `inline`. Вывод: `inline` окупается, когда лямбда вызывается во время самого вызова функции.
+
+## Привычки из Java
+
+<Compare leftLabel="Кажется" rightLabel="Есть" verdict="right">
+  <div slot="left">
+  • Для параметра-функции нужен интерфейс<br/>
+  • Захваченная переменная неизменяема<br/>
+  • Любой интерфейс с одним методом примет лямбду<br/>
+  • `inline` ускоряет любую функцию
+  </div>
+  <div slot="right">
+  • Параметр получает тип функции<br/>
+  • Лямбда меняет захваченный `var`<br/>
+  • Kotlin-интерфейс примет, только если он `fun interface`<br/>
+  • `inline` помогает функциям с параметрами-лямбдами
+  </div>
+</Compare>
+
+В Kotlin у лямбды свой тип, поэтому интерфейс нужен, только когда у сущности есть контракт.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `return` в `forEach`, чтобы пропустить элемент | Функция завершается, остальные элементы не обработаны | `return@forEach` или `filter` |
+| `return` в лямбде обычной функции | «'return' is prohibited here» | `return@имяФункции` |
+| `val f = { x -> x * 2 }` | Типу `x` неоткуда взяться | `{ x: Int -> x * 2 }` |
+| `(String) -> Unit?` для необязательного колбэка | `?` относится к результату | `((String) -> Unit)?` |
+| Лямбда в параметр обычного Kotlin-интерфейса | Не компилируется | `fun interface` или тип функции |
+
+## Практикум
+
+<Practice title="Замени интерфейс на тип функции" checklist={["Интерфейса OrderCheck больше нет, у check тип (Order) -> Boolean", "Первый вызов — лямбда за скобками: report(orders) { it.paid }", "Второй вызов — ссылка ::isBig", "Неоплаченный заказ пропускается, отчёт идёт дальше", "«Готово» печатается после каждого отчёта"]}>
+Отчёт по заказам ниже перенесён с Java как есть. Замени интерфейс `OrderCheck` параметром с типом функции, а первый вызов — лямбдой за скобками. Исправь ошибку: первый же неоплаченный заказ обрывает отчёт, а должен пропускаться. Добавь второй отчёт, о заказах дороже 1000 ₽, с условием в функции `isBig`, переданной ссылкой.
+
+<KotlinPlayground>
+
+```kotlin
+data class Order(
+    val id: Int,
+    val total: Int,
+    val paid: Boolean,
+)
+
+interface OrderCheck {
+    fun test(order: Order): Boolean
+}
+
+fun report(orders: List<Order>, check: OrderCheck) {
+    orders.forEach {
+        if (!check.test(it)) return
+        println("Заказ ${it.id}: ${it.total} ₽")
+    }
+    println("Готово")
+}
+
+fun main() {
+    val orders = listOf(
+        Order(1, 500, true),
+        Order(2, 1200, false),
+        Order(3, 3000, true),
+    )
+    report(orders, object : OrderCheck {
+        override fun test(order: Order): Boolean {
+            return order.paid
+        }
+    })
+}
+```
+
+</KotlinPlayground>
+
+Правильная программа печатает заказы 1 и 3 и «Готово», потом заказы 2 и 3 и снова «Готово».
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+data class Order(
+    val id: Int,
+    val total: Int,
+    val paid: Boolean,
+)
+
+fun isBig(order: Order) = order.total > 1000
+
+fun report(orders: List<Order>, check: (Order) -> Boolean) {
+    orders.filter(check).forEach {
+        println("Заказ ${it.id}: ${it.total} ₽")
+    }
+    println("Готово")
+}
+
+fun main() {
+    val orders = listOf(
+        Order(1, 500, true),
+        Order(2, 1200, false),
+        Order(3, 3000, true),
+    )
+    report(orders) { it.paid }
+    report(orders, ::isBig)
+}
+```
+
+В исходном коде голый `return` на втором заказе выходил из `report`, поэтому не было ни третьего заказа, ни «Готово». Минимальная правка — `return@forEach`, но фильтр читается проще: `check` передаётся в `filter` как есть, ведь это уже значение типа `(Order) -> Boolean`.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в своём Java-коде интерфейс с одним методом, который нужен только как параметр, или счётчик `int[]` внутри лямбды. Как это выглядело бы на Kotlin? В Kotlin-коде поищи `return` внутри `forEach`: каждый такой — выход из функции или пропуск элемента? Через неделю вернись и проверь, помнишь ли, куда уходит голый `return`.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Тип функции | `(Int, Int) -> Int`, без результата — `() -> Unit` |
+| Необязательная функция | `((String) -> Unit)?`, вызов `f?.invoke(x)` |
+| Лямбда | `{ a: Int, b: Int -> a + b }` |
+| Один параметр | `{ it > 0 }` |
+| Лямбда за скобками | `repeat(3) { … }` |
+| Ссылка на функцию | `::isShort`, `String::length` |
+| Вернуть функцию | `fun f(): (Int) -> Int = { it * 2 }` |
+| Выйти только из лямбды | `return@forEach`, со значением — `return@map 0` |
+| `inline` | подставляет тело функции и лямбды в место вызова |
+| `noinline`, `crossinline` | лямбду можно сохранить; вызов из вложенного объекта |
+| Лямбда вместо интерфейса | Java SAM — сразу, Kotlin — `fun interface` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Лямбда (lambda expression)", meaning: "Функция без имени в фигурных скобках: параметры, стрелка и тело; результат — последнее выражение." },
+  { term: "Тип функции (function type)", meaning: "Тип вида (Int) -> String: типы параметров в скобках, тип результата после стрелки." },
+  { term: "Функция высшего порядка (higher-order function)", meaning: "Функция, которая принимает функцию параметром или возвращает функцию." },
+  { term: "it", meaning: "Неявное имя единственного параметра лямбды." },
+  { term: "Лямбда за скобками (trailing lambda)", meaning: "Лямбда — последний аргумент, записанный после круглых скобок вызова." },
+  { term: "Ссылка на функцию (function reference)", meaning: "Значение типа функции, полученное оператором :: из готовой функции или свойства: ::isShort, String::length." },
+  { term: "invoke", meaning: "Оператор вызова значения типа функции: f(x) — то же, что f.invoke(x)." },
+  { term: "Замыкание (closure)", meaning: "Переменные внешней области, которые лямбда видит и может менять." },
+  { term: "Нелокальный возврат (non-local return)", meaning: "return внутри лямбды, который выходит из внешней функции; разрешён только в лямбде, переданной в inline-функцию." },
+  { term: "Метка (label)", meaning: "Имя с символом @, по которому return@forEach выходит только из лямбды." },
+  { term: "Анонимная функция (anonymous function)", meaning: "Функция без имени, объявленная через fun(…); return в ней выходит из неё самой." },
+  { term: "inline-функция (inline function)", meaning: "Функция, тело которой компилятор подставляет в место вызова вместе с переданными лямбдами." },
+  { term: "noinline", meaning: "Модификатор параметра inline-функции: эту лямбду не подставлять, чтобы её можно было сохранить или передать дальше." },
+  { term: "crossinline", meaning: "Модификатор параметра inline-функции: разрешает вызвать лямбду из вложенного объекта или локальной функции и запрещает в ней нелокальный return." },
+  { term: "Функциональный интерфейс (functional interface)", meaning: "Интерфейс с одним абстрактным методом; в Kotlin его объявляют как fun interface." },
+  { term: "SAM-преобразование (SAM conversion)", meaning: "Автоматическое превращение лямбды в реализацию функционального интерфейса." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-lambdas-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Лямбды: понятия</span>
+    <span class="kc-trainer-hint">Типы, замыкания, inline</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-lambdas-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Лямбды в деле</span>
+    <span class="kc-trainer-hint">return, inline, интерфейсы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-lambdas-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши лямбду</span>
+    <span class="kc-trainer-hint">Операторы и модификаторы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-lambdas-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери лямбду</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Higher-order functions and lambdas** ([kotlinlang.org/docs](https://kotlinlang.org/docs/lambdas.html), сверено 2026-09-26) — типы функций, лямбды, замыкания.
+- **Kotlin — Inline functions, Returns and jumps** ([kotlinlang.org/docs](https://kotlinlang.org/docs/inline-functions.html), сверено 2026-09-26) — `inline`, `noinline`, `crossinline`, нелокальный возврат и метки.
+- **Kotlin — Functional (SAM) interfaces, Calling Java from Kotlin** ([kotlinlang.org/docs](https://kotlinlang.org/docs/fun-interfaces.html), сверено 2026-09-26) — `fun interface` и SAM-преобразования.
+- **Kotlin — Callable references, Kotlin tour: Functions, Sequences** ([kotlinlang.org/docs](https://kotlinlang.org/docs/reflection.html), сверено 2026-09-26) — ссылки `::`, возврат функции, ленивость `Sequence`.
+- **Kotlin — Coding conventions; API reference** ([kotlinlang.org](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-09-26) — оформление лямбд, inline-функции стандартной библиотеки.
+- **Oracle — JLS SE 21, §14.4.1, §14.17, §15.27; Javadoc AtomicInteger, System** ([docs.oracle.com](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27), сверено 2026-09-26) — лямбды в Java, `AtomicInteger`, `nanoTime`.

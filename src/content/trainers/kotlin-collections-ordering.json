@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-collections",
+  "title": "Собери цепочку",
+  "description": "Расставь строки кода так, чтобы программа печатала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Сложи цены дороже 100 со скидкой 10% и напечатай 369.",
+        "words": ["        .sum()", "    println(total)", "        .map { it * 9 / 10 }", "fun main() {", "    val total = prices", "}", "        .filter { it > 100 }", "    val prices = listOf(110, 80, 300)"],
+        "answer": ["fun main() {", "    val prices = listOf(110, 80, 300)", "    val total = prices", "        .filter { it > 100 }", "        .map { it * 9 / 10 }", "        .sum()", "    println(total)", "}"],
+        "explain": "Сначала отбор, потом скидка: 110 и 300 превращаются в 99 и 270, в сумме 369. Если поменять filter и map местами, 110 со скидкой станет 99 и не пройдёт фильтр, и программа напечатает 270. sum() возвращает число, поэтому стоит в конце цепочки."
+      },
+      {
+        "task": "Напечатай два самых коротких слова: [ёж, кот].",
+        "words": ["        .take(2)", "}", "    val shortest = words", "    println(shortest)", "fun main() {", "        .sortedBy { it.length }", "    val words = listOf(\"слон\", \"ёж\", \"кот\")"],
+        "answer": ["fun main() {", "    val words = listOf(\"слон\", \"ёж\", \"кот\")", "    val shortest = words", "        .sortedBy { it.length }", "        .take(2)", "    println(shortest)", "}"],
+        "explain": "Сначала сортировка по длине, потом первые два. В обратном порядке take(2) взял бы «слон» и «ёж», и после сортировки получилось бы [ёж, слон]."
+      },
+      {
+        "task": "Ленивой цепочкой найди первую цену меньше 100 и удвой её: программа должна напечатать 160 и не проверять цену 300.",
+        "words": ["    println(cheap)", "        .map { it * 2 }", "fun main() {", "        .first()", "    val cheap = prices.asSequence()", "}", "    val prices = listOf(120, 80, 300)", "        .filter { it < 100 }"],
+        "answer": ["fun main() {", "    val prices = listOf(120, 80, 300)", "    val cheap = prices.asSequence()", "        .filter { it < 100 }", "        .map { it * 2 }", "        .first()", "    println(cheap)", "}"],
+        "explain": "asSequence() делает цепочку ленивой, а терминальная first() запускает её и останавливает на первом подходящем элементе, и цену 300 программа не проверяет. Если удвоить раньше фильтра, меньше 100 не окажется ни одной цены, и first() бросит NoSuchElementException."
+      },
+      {
+        "task": "Сними снимок списка до того, как в него добавят ручку. Программа должна напечатать [книга] [книга, ручка].",
+        "words": ["    source.add(\"ручка\")", "}", "    println(\"$snapshot $source\")", "    val snapshot = source.toList()", "fun main() {", "    val source = mutableListOf(\"книга\")"],
+        "answer": ["fun main() {", "    val source = mutableListOf(\"книга\")", "    val snapshot = source.toList()", "    source.add(\"ручка\")", "    println(\"$snapshot $source\")", "}"],
+        "explain": "toList() создаёт новую коллекцию с элементами на момент вызова, поэтому снимок делают до add. Если сделать его после, в обоих списках окажется ручка."
+      },
+      {
+        "task": "data class Order(val id: Int, val city: String, val paid: Boolean) уже объявлен. Собери функцию, которая возвращает города оплаченных заказов без повторов.",
+        "words": ["        .distinct()", "    orders", "        .map { it.city }", "fun paidCities(orders: List<Order>): List<String> =", "        .filter { it.paid }"],
+        "answer": ["fun paidCities(orders: List<Order>): List<String> =", "    orders", "        .filter { it.paid }", "        .map { it.city }", "        .distinct()"],
+        "explain": "Фильтровать по paid можно, пока в цепочке заказы: после map остаются строки, у которых поля paid нет. distinct() стоит после map: заказы с разными id не равны друг другу, и до map повторы городов он бы не убрал. Параметр и результат — List: функция ничего не меняет."
+      },
+      {
+        "task": "Сгруппируй слова по длине и напечатай слова из трёх букв: [кот, лев].",
+        "words": ["    println(threeLetter)", "        .getValue(3)", "fun main() {", "    val threeLetter = words", "}", "        .groupBy { it.length }", "    val words = listOf(\"кот\", \"слон\", \"лев\", \"ёж\")"],
+        "answer": ["fun main() {", "    val words = listOf(\"кот\", \"слон\", \"лев\", \"ёж\")", "    val threeLetter = words", "        .groupBy { it.length }", "        .getValue(3)", "    println(threeLetter)", "}"],
+        "explain": "groupBy строит словарь «длина — список слов», а getValue(3) достаёт из него список для ключа 3. У самого списка getValue нет, поэтому группировка идёт первой."
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "course": "demo",
+  "lesson": "demo-interactive",
+  "title": "Демо: сборка кода",
+  "description": "Проверка режима кода в тренажёре «Порядок».",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери функцию, которая возвращает большее из двух чисел.",
+        "words": ["fun max(a: Int, b: Int): Int {", "    return if (a > b) a else b", "}"],
+        "answer": ["fun max(a: Int, b: Int): Int {", "    return if (a > b) a else b", "}"]
+      },
+      {
+        "task": "Собери цикл, который печатает числа от 1 до 3.",
+        "words": ["for (i in 1..3) {", "    println(i)", "}"],
+        "answer": ["for (i in 1..3) {", "    println(i)", "}"]
+      },
+      {
+        "task": "Собери объявление неизменяемой строки и её вывод.",
+        "words": ["fun main() {", "    val s = \"hi\"", "    println(s)", "}"],
+        "answer": ["fun main() {", "    val s = \"hi\"", "    println(s)", "}"]
+      },
+      {
+        "task": "Собери класс с одним свойством.",
+        "words": ["class Box(", "    val size: Int", ")"],
+        "answer": ["class Box(", "    val size: Int", ")"]
+      },
+      {
+        "task": "Собери when с веткой else.",
+        "words": ["when (x) {", "    1 -> println(\"one\")", "    else -> println(\"other\")", "}"],
+        "answer": ["when (x) {", "    1 -> println(\"one\")", "    else -> println(\"other\")", "}"]
+      },
+      {
+        "task": "Собери функцию-выражение.",
+        "words": ["fun square(x: Int) =", "    x * x", "// готово"],
+        "answer": ["fun square(x: Int) =", "    x * x", "// готово"]
+      }
+    ]
+  }
+}

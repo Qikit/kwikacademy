@@ -9,10 +9,10 @@ import { type TrainerNav } from './TrainerShell';
 export type TrainerData =
   | { type: 'quiz'; questions: QuizQuestion[] }
   | { type: 'flashcards'; cards: Flashcard[] }
-  | { type: 'cloze'; items: ClozeItem[] }
+  | { type: 'cloze'; items: ClozeItem[]; caseSensitive?: boolean }
   | { type: 'match'; pairs: MatchPair[] }
   | { type: 'categorize'; categories: CategorizeCategory[]; items: CategorizeItem[] }
-  | { type: 'ordering'; items: OrderingItem[] };
+  | { type: 'ordering'; items: OrderingItem[]; code?: boolean };
 
 export default function TrainerLoader({
   slug,
@@ -29,7 +29,7 @@ export default function TrainerLoader({
     case 'flashcards':
       return <Flashcards slug={slug} cards={data.cards} nav={nav} />;
     case 'cloze':
-      return <Cloze slug={slug} items={data.items} nav={nav} />;
+      return <Cloze slug={slug} items={data.items} caseSensitive={data.caseSensitive} nav={nav} />;
     case 'match':
       return <Match slug={slug} pairs={data.pairs} nav={nav} />;
     case 'categorize':
@@ -42,6 +42,6 @@ export default function TrainerLoader({
         />
       );
     case 'ordering':
-      return <Ordering slug={slug} items={data.items} nav={nav} />;
+      return <Ordering slug={slug} items={data.items} code={data.code} nav={nav} />;
   }
 }

@@ -3,7 +3,13 @@ export interface ScoreResult {
   total: number;
 }
 
-const norm = (s: string) => s.trim().toLowerCase();
+const norm = (s: string, caseSensitive = false) => {
+  const text = s
+    .replace(/[‘’ʼ]/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+  return caseSensitive ? text : text.toLowerCase();
+};
 
 /** Quiz: each item correct when picked index === correct index. */
 export function scoreQuiz(picked: number[], correct: number[]): ScoreResult {
@@ -13,18 +19,22 @@ export function scoreQuiz(picked: number[], correct: number[]): ScoreResult {
 }
 
 /** A blank accepts a single string or any of several variants (all normalized). */
-export const matchesBlank = (expected: string | string[], got: string): boolean =>
+export const matchesBlank = (expected: string | string[], got: string, caseSensitive = false): boolean =>
   Array.isArray(expected)
-    ? expected.some((a) => norm(a) === norm(got))
-    : norm(expected) === norm(got);
+    ? expected.some((a) => norm(a, caseSensitive) === norm(got, caseSensitive))
+    : norm(expected, caseSensitive) === norm(got, caseSensitive);
 
 /** Cloze: each item correct only when EVERY blank matches one of its accepted variants. */
-export function scoreCloze(answers: (string | string[])[][], picked: string[][]): ScoreResult {
+export function scoreCloze(
+  answers: (string | string[])[][],
+  picked: string[][],
+  caseSensitive = false,
+): ScoreResult {
   let score = 0;
   for (let i = 0; i < answers.length; i++) {
     const exp = answers[i];
     const got = picked[i] ?? [];
-    const ok = exp.length === got.length && exp.every((a, j) => matchesBlank(a, got[j] ?? ''));
+    const ok = exp.length === got.length && exp.every((a, j) => matchesBlank(a, got[j] ?? '', caseSensitive));
     if (ok) score++;
   }
   return { score, total: answers.length };
@@ -67,12 +77,14 @@ export interface OrderingItem {
 export function scoreOrdering(
   items: OrderingItem[],
   userAnswers: Map<number, string[]>,
+  exact = false,
 ): ScoreResult {
   let score = 0;
   for (let i = 0; i < items.length; i++) {
     const exp = items[i].answer;
     const got = userAnswers.get(i) ?? [];
-    const ok = exp.length === got.length && exp.every((w, j) => norm(w) === norm(got[j] ?? ''));
+    const same = (w: string, g: string) => (exact ? w === g : norm(w) === norm(g));
+    const ok = exp.length === got.length && exp.every((w, j) => same(w, got[j] ?? ''));
     if (ok) score++;
   }
   return { score, total: items.length };

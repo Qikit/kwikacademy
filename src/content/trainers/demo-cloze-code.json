@@ -1,0 +1,14 @@
+{
+  "course": "demo",
+  "lesson": "demo-interactive",
+  "title": "Демо: пропуски в коде",
+  "description": "Проверка пропусков с учётом регистра.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "___ name: String = \"Kotlin\"", "answers": ["val"] },
+      { "text": "fun greet(): ___ = \"hi\"", "answers": ["String"] }
+    ]
+  }
+}

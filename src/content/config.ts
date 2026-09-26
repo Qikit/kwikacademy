@@ -68,6 +68,7 @@ const flashData = z.object({
 });
 const clozeData = z.object({
   type: z.literal('cloze'),
+  caseSensitive: z.boolean().default(false),
   items: z
     .array(
       z
@@ -119,9 +120,11 @@ const categorizeData = z.object({
 });
 const orderingData = z.object({
   type: z.literal('ordering'),
+  code: z.boolean().default(false),
   items: z
     .array(
       z.object({
+        task: z.string().optional(),
         words: z.array(z.string().min(1)).min(3),
         answer: z.array(z.string().min(1)).min(3),
         hint: z.string().optional(),

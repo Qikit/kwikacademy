@@ -3,6 +3,7 @@ import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav }
 import { scoreOrdering } from '../../lib/trainers/score';
 
 export interface OrderingItem {
+  task?: string;
   words: string[];
   answer: string[];
   hint?: string;
@@ -22,21 +23,34 @@ function shuffle<T>(arr: T[]): T[] {
 export default function Ordering({
   slug,
   items,
+  code = false,
   nav,
 }: {
   slug: string;
   items: OrderingItem[];
+  code?: boolean;
   nav?: TrainerNav;
 }) {
   return (
     <TrainerShell slug={slug} total={items.length} nav={nav}>
-      {(shell) => <OrderingBody key={shell.attempt} items={items} shell={shell} />}
+      {(shell) => <OrderingBody key={shell.attempt} items={items} code={code} shell={shell} />}
     </TrainerShell>
   );
 }
 
-function OrderingBody({ items, shell }: { items: OrderingItem[]; shell: ShellRenderProps }) {
+function OrderingBody({
+  items,
+  code,
+  shell,
+}: {
+  items: OrderingItem[];
+  code: boolean;
+  shell: ShellRenderProps;
+}) {
   const { finish } = shell;
+  const same = (expected: string, got: string) =>
+    code ? expected === got : expected.trim().toLowerCase() === got.trim().toLowerCase();
+  const show = (parts: string[]) => (code ? <pre className="kc-ord-code">{parts.join('\n')}</pre> : parts.join(' '));
   const shuffled = useMemo(
     () => items.map((it) => shuffle(it.words.map((w, idx) => ({ w, idx })))),
     [items],
@@ -103,17 +117,15 @@ function OrderingBody({ items, shell }: { items: OrderingItem[]; shell: ShellRen
         tokens.map((t) => t.w),
       );
     }
-    const score = scoreOrdering(items, userAnswers).score;
+    const score = scoreOrdering(items, userAnswers, code).score;
     const review: ReviewItem[] = items.map((it, i) => {
       const userSeq = (assembled.get(i) ?? []).map((t) => t.w);
-      const isOk =
-        userSeq.length === it.answer.length &&
-        it.answer.every((w, j) => w.trim().toLowerCase() === (userSeq[j] ?? '').trim().toLowerCase());
+      const isOk = userSeq.length === it.answer.length && it.answer.every((w, j) => same(w, userSeq[j] ?? ''));
       const explainParts = [it.translation, it.explain, it.hint].filter(Boolean).join(' · ');
       return {
-        prompt: `Слова: ${it.words.join(' / ')}`,
-        userAnswer: userSeq.join(' ') || '—',
-        correctAnswer: it.answer.join(' '),
+        prompt: it.task ?? (code ? `Задание ${i + 1}` : `Слова: ${it.words.join(' / ')}`),
+        userAnswer: userSeq.length ? show(userSeq) : '—',
+        correctAnswer: show(it.answer),
         correct: isOk,
         explain: explainParts || undefined,
       };
@@ -122,18 +134,19 @@ function OrderingBody({ items, shell }: { items: OrderingItem[]; shell: ShellRen
   }
 
   return (
-    <div className="kc-ordering">
+    <div className={`kc-ordering ${code ? 'is-code' : ''}`}>
       {items.map((it, i) => {
         const a = assembled.get(i) ?? [];
         const av = available.get(i) ?? [];
         const userSeq = a.map((t) => t.w);
         const correct = revealed && userSeq.length === it.answer.length &&
-          it.answer.every((w, j) => w.trim().toLowerCase() === (userSeq[j] ?? '').trim().toLowerCase());
+          it.answer.every((w, j) => same(w, userSeq[j] ?? ''));
         return (
           <div
             key={i}
             className={`kc-ord-item ${revealed && correct ? 'is-ok' : ''} ${revealed && !correct ? 'is-no' : ''}`}
           >
+            {it.task && <div className="kc-ord-task">{it.task}</div>}
             <div className="kc-ord-target">
               {a.length === 0 && <span className="kc-ord-placeholder">— нажми слова ниже —</span>}
               {a.map((t) => (
@@ -164,7 +177,7 @@ function OrderingBody({ items, shell }: { items: OrderingItem[]; shell: ShellRen
             {revealed && (
               <div className="kc-ord-feedback">
                 <div>
-                  <strong>Правильный порядок:</strong> {it.answer.join(' ')}
+                  <strong>Правильный порядок:</strong> {show(it.answer)}
                 </div>
                 {it.translation && (
                   <div className="kc-ord-translation">{it.translation}</div>

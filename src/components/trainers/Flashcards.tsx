@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TrainerShell, { type TrainerNav } from './TrainerShell';
+import TrainerShell, { type ReviewItem, type ShellRenderProps, type TrainerNav } from './TrainerShell';
 
 export interface Flashcard {
   front: string;
@@ -18,36 +18,46 @@ export default function Flashcards({
 }) {
   return (
     <TrainerShell slug={slug} total={cards.length} nav={nav}>
-      {({ index, next, prev, canGoBack, finish }) => {
-        const isLast = index === cards.length - 1;
-        const advance = () => (isLast ? finish(cards.length) : next());
-        return (
-          <Card
-            key={index}
-            card={cards[index]}
-            isLast={isLast}
-            canGoBack={canGoBack}
-            onPrev={prev}
-            onAdvance={advance}
-          />
-        );
-      }}
+      {(shell) => <FlashcardsBody key={shell.attempt} cards={cards} shell={shell} />}
     </TrainerShell>
   );
 }
 
+function FlashcardsBody({ cards, shell }: { cards: Flashcard[]; shell: ShellRenderProps }) {
+  const { index, next, prev, canGoBack, finish } = shell;
+  const [recalled, setRecalled] = useState<boolean[]>([]);
+  const isLast = index === cards.length - 1;
+
+  function rate(value: boolean) {
+    const marks = [...recalled];
+    marks[index] = value;
+    setRecalled(marks);
+    if (!isLast) {
+      next();
+      return;
+    }
+    const review: ReviewItem[] = cards.map((card, i) => ({
+      prompt: card.front,
+      userAnswer: marks[i] ? 'Вспомнил' : 'Не вспомнил',
+      correctAnswer: card.back,
+      correct: marks[i] === true,
+    }));
+    finish(marks.filter(Boolean).length, review);
+  }
+
+  return <Card key={index} card={cards[index]} canGoBack={canGoBack} onPrev={prev} onRate={rate} />;
+}
+
 function Card({
   card,
-  isLast,
   canGoBack,
   onPrev,
-  onAdvance,
+  onRate,
 }: {
   card: Flashcard;
-  isLast: boolean;
   canGoBack: boolean;
   onPrev: () => void;
-  onAdvance: () => void;
+  onRate: (recalled: boolean) => void;
 }) {
   const [flipped, setFlipped] = useState(false);
   return (
@@ -65,6 +75,8 @@ function Card({
           fontSize: 22,
           color: 'var(--text)',
           padding: 24,
+          overflowWrap: 'break-word',
+          hyphens: 'auto',
         }}
       >
         {flipped ? card.back : card.front}
@@ -76,9 +88,20 @@ function Card({
         <button type="button" className="kc-btn kc-btn-ghost" onClick={onPrev} disabled={!canGoBack}>
           Назад
         </button>
-        <button type="button" className="kc-retry" onClick={onAdvance}>
-          {isLast ? 'Завершить' : 'Следующая карта'}
-        </button>
+        {flipped ? (
+          <div className="kc-rate">
+            <button type="button" className="kc-btn kc-btn-ghost" onClick={() => onRate(false)}>
+              Не вспомнил
+            </button>
+            <button type="button" className="kc-retry" onClick={() => onRate(true)}>
+              Вспомнил
+            </button>
+          </div>
+        ) : (
+          <button type="button" className="kc-retry" onClick={() => setFlipped(true)}>
+            Показать ответ
+          </button>
+        )}
       </div>
     </div>
   );

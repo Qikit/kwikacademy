@@ -18,20 +18,30 @@ interface ItemResult {
 export default function Cloze({
   slug,
   items,
+  caseSensitive = false,
   nav,
 }: {
   slug: string;
   items: ClozeItem[];
+  caseSensitive?: boolean;
   nav?: TrainerNav;
 }) {
   return (
     <TrainerShell slug={slug} total={items.length} nav={nav}>
-      {(shell) => <ClozeBody key={shell.attempt} items={items} shell={shell} />}
+      {(shell) => <ClozeBody key={shell.attempt} items={items} caseSensitive={caseSensitive} shell={shell} />}
     </TrainerShell>
   );
 }
 
-function ClozeBody({ items, shell }: { items: ClozeItem[]; shell: ShellRenderProps }) {
+function ClozeBody({
+  items,
+  caseSensitive,
+  shell,
+}: {
+  items: ClozeItem[];
+  caseSensitive: boolean;
+  shell: ShellRenderProps;
+}) {
   const { index, next, prev, canGoBack, finish } = shell;
   const [inputs, setInputs] = useState<string[][]>(() => items.map((it) => it.answers.map(() => '')));
   const [results, setResults] = useState<(ItemResult | undefined)[]>(() => items.map(() => undefined));
@@ -50,7 +60,7 @@ function ClozeBody({ items, shell }: { items: ClozeItem[]; shell: ShellRenderPro
   function check(): boolean {
     const current = inputs[index];
     if (current.some((v) => v.trim() === '')) return false;
-    const perBlank = it.answers.map((ans, i) => matchesBlank(ans, current[i] ?? ''));
+    const perBlank = it.answers.map((ans, i) => matchesBlank(ans, current[i] ?? '', caseSensitive));
     const itemCorrect = perBlank.every(Boolean);
     const updated = [...results];
     updated[index] = { correct: perBlank, itemCorrect };
@@ -171,6 +181,8 @@ function ItemView({
                   disabled={phase === 'review'}
                   aria-label={`Пропуск ${i + 1}`}
                   autoComplete="off"
+                  autoCapitalize="off"
+                  autoCorrect="off"
                   spellCheck={false}
                   className={`kc-cloze-input ${correct ? 'is-ok' : ''} ${wrong ? 'is-no' : ''}`}
                 />

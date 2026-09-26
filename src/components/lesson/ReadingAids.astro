@@ -10,10 +10,9 @@ import Icon from '../ui/Icon.astro';
 </button>
 
 <script>
-  const fill = document.getElementById('readingFill');
-  const btn = document.getElementById('toTop');
-
   function onScroll() {
+    const fill = document.getElementById('readingFill');
+    const btn = document.getElementById('toTop');
     const doc = document.documentElement;
     const max = doc.scrollHeight - doc.clientHeight;
     const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
@@ -21,10 +20,16 @@ import Icon from '../ui/Icon.astro';
     if (btn) btn.classList.toggle('show', doc.scrollTop > doc.clientHeight * 0.5);
   }
 
-  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  function init() {
+    const btn = document.getElementById('toTop');
+    if (btn) btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    onScroll();
+  }
+
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
-  onScroll();
+  document.addEventListener('astro:page-load', init);
+  init();
 </script>
 
 <style>

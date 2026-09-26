@@ -11,11 +11,11 @@
         "options": [
           "Send me the report by Friday.",
           "I want the report by Friday.",
-          "Could you please send the report by Friday?",
-          "Gimme the report by Friday."
+          "Gimme the report by Friday.",
+          "Could you please send the report by Friday?"
         ],
-        "correctIndex": 2,
-        "explain": "В формальном email клиенту — модальные глаголы + please. Императив «Send me» читается как приказ. «I want» звучит как требование. Вариант 4 — informal slang."
+        "correctIndex": 3,
+        "explain": "В формальном email клиенту — модальные глаголы + please. Императив «Send me» читается как приказ. «I want» звучит как требование. «Gimme» — informal slang."
       },
       {
         "prompt": "Our company makes shoes and sells them in supermarkets. Who buys them?",
@@ -25,19 +25,19 @@
       },
       {
         "prompt": "Annual ___ is $60K and ___ is $15 per hour.",
-        "options": ["wage / salary", "salary / wage", "income / salary", "salary / income"],
-        "correctIndex": 1,
+        "options": ["salary / wage", "wage / salary", "income / salary", "salary / income"],
+        "correctIndex": 0,
         "explain": "Salary — фиксированный годовой оклад. Wage — почасовая оплата. Salary измеряется в годах/месяцах, wage — в часах."
       },
       {
         "prompt": "We need to push back the deadline — what does it mean?",
         "options": [
-          "We need to cancel the project.",
-          "We need to move the deadline earlier.",
           "We need to move the deadline later.",
+          "We need to move the deadline earlier.",
+          "We need to cancel the project.",
           "We need to add a new deadline."
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "explain": "Push back the deadline = сдвинуть срок позже (в будущее). Не отменить, не приблизить. Антоним: move up the deadline (приблизить)."
       },
       {
@@ -55,17 +55,17 @@
           "I shall be absent from the meeting."
         ],
         "correctIndex": 2,
-        "explain": "В informal чате — сокращения (can't), приветствие (Hey). Вариант 1 — formal email. Вариант 4 — очень архаично, не используется."
+        "explain": "В informal чате — сокращения (can't), приветствие (Hey). «I regret that I will be unable to attend» — стиль формального письма. «I shall be absent» — архаично, так не говорят."
       },
       {
         "prompt": "We outsource our customer support — what does it mean?",
         "options": [
           "We do customer support ourselves.",
-          "We hired an external company for customer support.",
+          "We expanded our support team.",
           "We stopped doing customer support.",
-          "We expanded our support team."
+          "We hired an external company for customer support."
         ],
-        "correctIndex": 1,
+        "correctIndex": 3,
         "explain": "Outsource = передать функцию внешнему подрядчику вместо in-house команды. Антоним: insource."
       },
       {
@@ -124,10 +124,10 @@
         "options": [
           "profit / revenue",
           "budget / income",
-          "revenue / profit",
-          "income / cost"
+          "income / cost",
+          "revenue / profit"
         ],
-        "correctIndex": 2,
+        "correctIndex": 3,
         "explain": "$5M — все деньги от продаж = revenue. $200K — что осталось после расходов = profit. Revenue → top line, profit → bottom line."
       }
     ]

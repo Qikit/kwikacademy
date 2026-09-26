@@ -2,13 +2,18 @@
 interface Props {
   leftLabel?: string;
   rightLabel?: string;
+  verdict?: 'left' | 'right';
 }
-const { leftLabel = 'Верно', rightLabel = 'Неверно' } = Astro.props;
+const { leftLabel, rightLabel, verdict } = Astro.props;
+const usesDefaultLabels = leftLabel === undefined && rightLabel === undefined;
+const good = verdict ?? (usesDefaultLabels ? 'left' : undefined);
+const leftTone = good === 'left' ? 'ok' : good === 'right' ? 'no' : '';
+const rightTone = good === 'right' ? 'ok' : good === 'left' ? 'no' : '';
 ---
 
 <div class="cmp">
-  <div class="side ok"><span class="lbl">{leftLabel}</span><slot name="left" /></div>
-  <div class="side no"><span class="lbl">{rightLabel}</span><slot name="right" /></div>
+  <div class={`side ${leftTone}`}><span class="lbl">{leftLabel ?? 'Верно'}</span><slot name="left" /></div>
+  <div class={`side ${rightTone}`}><span class="lbl">{rightLabel ?? 'Неверно'}</span><slot name="right" /></div>
 </div>
 
 <style>
@@ -33,6 +38,7 @@ const { leftLabel = 'Верно', rightLabel = 'Неверно' } = Astro.props;
     letter-spacing: 0.08em;
     margin-bottom: 8px;
     font-family: var(--font-mono);
+    color: #7c6cf0;
   }
   .ok .lbl {
     color: #34d399;

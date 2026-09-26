@@ -1,0 +1,22 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-null-safety",
+  "title": "Null-безопасность: понятия",
+  "description": "Вспомни, чем String? отличается от String, как работают ?. и ?: и где null всё-таки прорывается.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Тип String? и тип String: чем они отличаются?", "back": "В String null положить нельзя, это проверяет компилятор. String? допускает null, но методы у него вызываются только после обработки null." },
+      { "front": "Что вернёт city?.length, если city равен null?", "back": "null. Тип всего выражения — Int?.", "hint": "Безопасный вызов" },
+      { "front": "Что делает оператор ?: в выражении city?.length ?: 0?", "back": "Возвращает длину, если она не null, иначе 0. Правая часть вычисляется только при null." },
+      { "front": "Что компилятор делает с city после проверки if (city != null)?", "back": "Smart cast: внутри ветки city считается String, методы вызываются без ?.", "hint": "Приводить руками не нужно" },
+      { "front": "Когда smart cast невозможен?", "back": "Когда переменная может измениться между проверкой и использованием, например у var-свойства, объявленного вне функций. Помогает копия в локальный val." },
+      { "front": "Что будет, если применить !! к null?", "back": "NullPointerException. У NPE от !! нет текста сообщения, в стектрейсе видна только строка." },
+      { "front": "Что такое платформенный тип?", "back": "Тип из Java-кода без аннотаций, пишется String!. Компилятор разрешает с ним всё, проверка на null остаётся на тебе." },
+      { "front": "Как избавиться от платформенного типа?", "back": "Сразу объявить тип переменной: val mode: String? = System.getProperty(\"app.mode\")." },
+      { "front": "Что нужно Java-методу, чтобы Kotlin видел у него String?, а не платформенный String!", "back": "Когда метод помечен аннотацией nullability, например @Nullable от JetBrains или JSpecify." },
+      { "front": "Чем String? отличается от Optional<String>?", "back": "String? не обёртка: во время работы там строка или null, а проверки делает компилятор. Optional — отдельный объект-контейнер." },
+      { "front": "Что будет при чтении lateinit var до присваивания?", "back": "UninitializedPropertyAccessException: lateinit property … has not been initialized." }
+    ]
+  }
+}

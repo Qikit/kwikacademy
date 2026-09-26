@@ -1,0 +1,54 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-null-safety",
+  "title": "Собери обработку null",
+  "description": "Расставь строки кода так, чтобы программа обрабатывала null, как сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Убери пробелы по краям строки raw через trim(), разбери из неё число, а если не вышло, возьми 0. Напечатай «Штук: …».",
+        "words": ["    println(\"Штук: $count\")", "    val trimmed = raw?.trim()", "}", "    val raw: String? = \" 42 \"", "fun main() {", "    val count = trimmed?.toIntOrNull() ?: 0"],
+        "answer": ["fun main() {", "    val raw: String? = \" 42 \"", "    val trimmed = raw?.trim()", "    val count = trimmed?.toIntOrNull() ?: 0", "    println(\"Штук: $count\")", "}"],
+        "explain": "raw может быть null, поэтому trim вызывается через ?.. Дальше ?. передаёт null по цепочке, а ?: подставляет 0. Программа напечатает «Штук: 42»."
+      },
+      {
+        "task": "findCity(code) возвращает String?. Собери функцию: если города нет, она сразу возвращает «Неизвестно», иначе — название и число букв.",
+        "words": ["    return \"$city, букв: $letters\"", "fun label(code: String): String {", "    val letters = city.length", "}", "    val city = findCity(code) ?: return \"Неизвестно\""],
+        "answer": ["fun label(code: String): String {", "    val city = findCity(code) ?: return \"Неизвестно\"", "    val letters = city.length", "    return \"$city, букв: $letters\"", "}"],
+        "explain": "Элвис с return выходит из функции, если findCity вернула null. После этой строки city уже String, и length вызывается без проверок."
+      },
+      {
+        "task": "findCity(code) возвращает String?. Проверь город на null и внутри проверки напечатай название и длину.",
+        "words": ["        println(\"$city: $len\")", "}", "    if (city != null) {", "fun main() {", "        val len = city.length", "    }", "    val city: String? = findCity(\"KZN\")"],
+        "answer": ["fun main() {", "    val city: String? = findCity(\"KZN\")", "    if (city != null) {", "        val len = city.length", "        println(\"$city: $len\")", "    }", "}"],
+        "explain": "Внутри ветки после city != null компилятор делает smart cast к String, поэтому length вызывается напрямую."
+      },
+      {
+        "task": "findEmail(name) возвращает String?. Если адрес есть, напечатай его и число символов, иначе ничего не делай.",
+        "words": ["    }", "        val size = it.length", "fun main() {", "    email?.let {", "}", "        println(\"$it, символов: $size\")", "    val email: String? = findEmail(\"anna\")"],
+        "answer": ["fun main() {", "    val email: String? = findEmail(\"anna\")", "    email?.let {", "        val size = it.length", "        println(\"$it, символов: $size\")", "    }", "}"],
+        "explain": "?.let выполняет блок, только если email не null; внутри значение доступно как it и уже имеет non-null тип."
+      },
+      {
+        "task": "Прочитай системное свойство app.mode, сразу дай ему тип String с запасным значением «prod» и напечатай режим и длину его названия.",
+        "words": ["    val size = mode.length", "fun main() {", "    println(\"$mode: $size\")", "    val mode: String = raw ?: \"prod\"", "}", "    val raw = System.getProperty(\"app.mode\")"],
+        "answer": ["fun main() {", "    val raw = System.getProperty(\"app.mode\")", "    val mode: String = raw ?: \"prod\"", "    val size = mode.length", "    println(\"$mode: $size\")", "}"],
+        "explain": "getProperty — Java-метод, у raw платформенный тип. Строка с ?: сразу даёт обычный String, и дальше за null снова следит компилятор. Программа напечатает «prod: 4»."
+      },
+      {
+        "task": "Безопасно приведи значение к Int; если не вышло, возьми -1 и напечатай «Результат: …».",
+        "words": ["    val result = n ?: -1", "}", "    val raw: Any = \"42\"", "    println(\"Результат: $result\")", "fun main() {", "    val n = raw as? Int"],
+        "answer": ["fun main() {", "    val raw: Any = \"42\"", "    val n = raw as? Int", "    val result = n ?: -1", "    println(\"Результат: $result\")", "}"],
+        "explain": "В raw лежит строка, поэтому as? Int вернёт null вместо ClassCastException, а ?: подставит -1. Программа напечатает «Результат: -1»."
+      },
+      {
+        "task": "Собери функцию: без значения raw она бросает исключение «Нет PORT», а нечисловое значение заменяет на 8080.",
+        "words": ["    return port", "    val port = s.toIntOrNull() ?: 8080", "fun portFrom(raw: String?): Int {", "}", "    val s = raw ?: throw IllegalStateException(\"Нет PORT\")"],
+        "answer": ["fun portFrom(raw: String?): Int {", "    val s = raw ?: throw IllegalStateException(\"Нет PORT\")", "    val port = s.toIntOrNull() ?: 8080", "    return port", "}"],
+        "explain": "throw — выражение, его можно поставить справа от ?:. После этой строки s уже String, и toIntOrNull вызывается без ?.."
+      }
+    ]
+  }
+}

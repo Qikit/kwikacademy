@@ -1,0 +1,22 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-null-safety",
+  "title": "Допиши обработку null",
+  "description": "Впиши оператор, знак типа или функцию. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "val city: String___ = findCity(code)   // может не найтись", "answers": ["?"], "explain": "Знак ? после типа разрешает null: String? — строка или null." },
+      { "text": "println(city___length)   // длина или null", "answers": ["?."], "explain": "Безопасный вызов ?. возвращает null, если city равен null, и длину, если нет." },
+      { "text": "val len = city?.length ___ 0   // 0, если города нет", "answers": ["?:"], "explain": "Элвис-оператор ?: подставляет правую часть, когда левая равна null." },
+      { "text": "if (city ___ null) println(city.length)   // smart cast", "answers": [["!=", "!=="]], "explain": "После проверки city != null компилятор внутри ветки считает city типом String. Сработает и !==. По документации Kotlin сравнение с null через == и так превращается в ===, так что ради скорости !== писать незачем." },
+      { "text": "val c = findCity(code) ?: ___ \"не найден\"   // выход", "answers": ["return"], "explain": "return — выражение, его можно поставить справа от ?:. Если города нет, функция сразу вернёт текст." },
+      { "text": "val n = \"42\".___()   // Int? вместо исключения", "answers": ["toIntOrNull"], "explain": "toIntOrNull возвращает число или null, если строка не число." },
+      { "text": "val num = raw ___ Int   // null, если это не Int", "answers": ["as?"], "explain": "Безопасное приведение as? возвращает null вместо ClassCastException." },
+      { "text": "city?.___ { println(it) }   // только если не null", "answers": [["let", "also"]], "explain": "Идиома ?.let выполняет блок, только если значение не null; внутри оно доступно как it. also здесь тоже сработает, но для действия над non-null значением документация советует let." },
+      { "text": "___ var token: String   // присвоим позже", "answers": ["lateinit"], "explain": "lateinit обещает присвоить non-null переменную позже. Чтение до этого бросит UninitializedPropertyAccessException." },
+      { "text": "import kotlin.jvm.optionals.___   // Optional в String?", "answers": ["getOrNull"], "explain": "getOrNull превращает Optional из Java в nullable-значение. Без этого импорта вызов opt.getOrNull() не скомпилируется." }
+    ]
+  }
+}

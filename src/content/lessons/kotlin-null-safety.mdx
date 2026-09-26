@@ -4,10 +4,342 @@ order: 4
 phase: "Основы"
 title: "Null-безопасность: null под контролем компилятора"
 eyebrow: "Kotlin · Основы"
-readingMinutes: 15
+readingMinutes: 18
 summary: "Различать nullable-типы, пользоваться ?., ?: и smart cast и знать, где null всё-таки прорывается."
 tags: [kotlin, basics]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Null-безопасность: null под контролем компилятора» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты писал функции верхнего уровня с параметрами по умолчанию. Теперь нужна функция `findCity(code)`: по трёхбуквенному коду она возвращает название города. А если код неизвестен? В Java ты вернул бы `null` и, может быть, упомянул это в Javadoc. Коллега Javadoc не открыл, и через неделю в логах висит NPE (NullPointerException) из кода через два вызова от `findCity`.
+
+Тони Хоар добавил нулевую ссылку в язык ALGOL W в 1965 году, потому что это было «so easy to implement». На QCon London 2009 он назвал её «my billion-dollar mistake», своей ошибкой на миллиард долларов. В аннотации к докладу Хоар пишет, что новые языки объявляют ссылки, которые не бывают null, и это «the solution, which I rejected in 1965». Kotlin пошёл этим путём. Но NPE в нём не исчез, и опаснее всего думать, что исчез: он возвращается через `!!` и Java-код.
+
+После урока ты сможешь объявлять, где null допустим, обрабатывать его через `?.`, `?:` и проверки на null вместо `!!` и находить места, где NPE всё-таки прорывается в Kotlin-код.
+
+## Ядро: null только там, где его разрешил тип
+
+<Callout type="purple" title="Суть">
+В Kotlin `String` и `String?` — разные типы. В `String` null положить нельзя: это **non-null тип**, и компилятор такое присваивание не пропустит. **Nullable-тип** `String?` null допускает, но вызвать у него метод напрямую компилятор не даст, пока ты не обработаешь null — проверкой, оператором `?.` или `?:`. Так NPE превращается из падения программы в ошибку компиляции. Главные лазейки — `!!` и типы, пришедшие из Java.
+</Callout>
+
+Поэтому сигнатура Kotlin-функции говорит правду. `fun findCity(code: String): String?` предупреждает, что города может не оказаться, а `fun cityName(id: Int): String` обещает, что null не придёт. В Java то же самое ты узнавал из документации или из стектрейса.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Есть fun cityName(id: Int): String. Коллега на всякий случай пишет cityName(7)?.length. Что скажет компилятор?">
+Скомпилирует, но предупредит: «Unnecessary safe call on a non-null receiver of type 'String'» (Kotlin 2.4.20). Тип `String` обещает, что null не придёт, и компилятор держит это обещание, поэтому `?.` здесь только шум. Правило: `?.` и `?:` нужны nullable-значениям, у non-null типа они лишние.
+</Reveal>
+
+## Как устроено: nullable-типы и операторы
+
+**Nullable-тип** (nullable type) — обычный тип со знаком вопроса на конце: `String?`, `Int?`. Его возвращают функции, которые могут ничего не найти: твоя `findCity` или `toIntOrNull()` из стандартной библиотеки. `"42".toIntOrNull()` вернёт 42, а для строки `"сорок два"` результатом будет null вместо исключения. А вот пустая строка `""` — обычный `String`, настоящее значение, просто пустое. «Поле оставили пустым» и «поля не прислали» — разные ситуации, и тип умеет их различать.
+
+Инструменты для работы с null:
+
+```kotlin
+val city: String? = findCity("KZN")
+
+if (city != null) println(city.length) // smart cast
+println(city?.length)      // длина или null
+println(city?.length ?: 0) // длина или 0
+println(city!!.length)     // NPE, если city == null
+```
+
+- **Проверка и smart cast.** После `if (city != null)` компилятор внутри ветки считает `city` типом `String`. Это **smart cast** (умное приведение): приводить тип руками не нужно.
+- **Безопасный вызов `?.`** (safe call). `city?.length` вернёт длину или null, тип результата — `Int?`. Цепочка `a?.b?.c` даст null, если null окажется любое звено.
+- **Элвис-оператор `?:`** (Elvis). Возвращает левую часть, если она не null, иначе правую. Правая часть вычисляется только при null, и в ней можно написать даже `return`: `val city = findCity(code) ?: return "Не знаю код"`.
+- **Оператор `!!`** (not-null assertion). Говорит компилятору: «здесь точно не null». Ошибся — получишь NPE.
+- **Безопасное приведение `as?`** (safe cast). `raw as? Int` вернёт число, а если в `raw` не `Int`, то null вместо `ClassCastException`. Пригодится для типа `Any`, котлиновского аналога `Object`.
+
+Для случая «сделай что-то, только если значение есть» пригодится **идиома `?.let`**: `email?.let { println("Пишу на $it") }`. Блок в фигурных скобках — лямбда, а `it` внутри уже non-null значение. Подробно о лямбдах и `let` — в уроках про лямбды и расширения.
+
+Теперь предскажи результат.
+
+<Reveal q="findCity(«MOW») вернула null. Что напечатают три строки в main ниже?">
+`null`, `0` и `Город: null`. Безопасный вызов вернул null вместо длины, Элвис заменил null нулём. А строковый шаблон подставил null словом «null», и компилятор здесь не возражает. Прежде чем показывать nullable-значение человеку, дай запасное через `?:`.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+fun findCity(code: String): String? = when (code) {
+    "KZN" -> "Казань"
+    "LED" -> "Санкт-Петербург"
+    else -> null
+}
+
+fun main() {
+    val city = findCity("MOW")
+    println(city?.length)
+    println(city?.length ?: 0)
+    println("Город: $city")
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверься с ответом. Потом замени `"MOW"` на `"KZN"`: получится `6`, `6` и `Город: Казань`. Напоследок допиши строку `println(city.length)` и прочитай ошибку компилятора.
+
+<Callout type="blue" title="Если знаешь Java — Optional здесь не нужен">
+В Java отсутствие значения выражают через `Optional<T>`, контейнер для результата метода. Но это договорённость: метод с типом `Optional` может вернуть и сам null, документация Java лишь просит так не делать. В Kotlin то же самое записывается как `String?`, и это не обёртка: во время работы там строка или null, а проверки делает компилятор. Поэтому возвращай `String?`, а `Optional` из Java-библиотеки сразу превращай в nullable: `optional.getOrNull()` с импортом `kotlin.jvm.optionals.getOrNull` (Kotlin 1.8 и новее).
+</Callout>
+
+Ещё один случай со smart cast.
+
+<Reveal q="На верхнем уровне файла объявлено var city: String? = «Казань», а в main написано if (city != null) println(city.length). Скомпилируется?">
+Нет: «Smart cast to 'String' is impossible, because 'city' is a mutable property that could be mutated concurrently». Переменную вне функций Kotlin называет свойством (property), подробно — в уроке про классы. Smart cast работает, только если значение не изменится между проверкой и вызовом, а `var`-свойство может перезаписать другой код, даже из другого потока. Правило: скопируй значение в локальный `val` или пиши `city?.length`.
+</Reveal>
+
+## Как устроено: где null всё-таки прорывается
+
+Документация Kotlin перечисляет все случаи, когда в Kotlin-программе может случиться NPE. Кроме явного `throw NullPointerException()` и редких ошибок при создании объектов, на практике встречаются два: оператор `!!` и Java-код. Рядом стоит `lateinit` со своим исключением.
+
+**`!!`.** На Kotlin 2.4.20 `b!!.length` при `b == null` падает с `java.lang.NullPointerException` без текста сообщения, в стектрейсе видна только строка.
+
+**Java-код.** Программа ниже читает системное свойство `app.mode` через Java-метод `System.getProperty`. В Playground такого свойства нет, и по документации Java метод тогда возвращает null.
+
+<Reveal q="System.getProperty(«app.mode») вернёт null. Скомпилируется ли программа ниже и что она напечатает?">
+Скомпилируется: у `mode` платформенный тип `String!`, и компилятор разрешает вызвать `length` без проверки. Первая строка напечатает «Режим: null», вторая упадёт с `NullPointerException: Cannot invoke "String.length()" because "mode" is null`. Поэтому значение из Java сразу клади в переменную с явным типом.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val mode = System.getProperty("app.mode")
+    println("Режим: $mode")
+    println(mode.length)
+}
+```
+
+</KotlinPlayground>
+
+Запусти и найди строку, где упала программа. Потом объяви `val mode: String? = …`, и компилятор подчеркнёт `mode.length` знакомой ошибкой. Исправь программу так, чтобы по умолчанию был режим `"prod"`.
+
+Любая ссылка в Java может быть null, а аннотаций в Java-коде часто нет. Тип, пришедший из такого кода, Kotlin делает **платформенным** (platform type). В подсказках IntelliJ IDEA и в сообщениях компилятора он пишется `String!` и значит «`String` или `String?`, никто не знает». С ним компилятор разрешает всё, как Java, и проверка на null остаётся на тебе.
+
+<Callout type="blue" title="Почему Kotlin не считает всё из Java nullable">
+Документация Kotlin называет строгую null-безопасность для Java-объектов непрактичной. Марцин Москала в «Effective Kotlin» показывает почему: пришлось бы ставить `!!` на каждом вызове, а у `List<User>` из Java проверять и сам список, и каждый элемент. Поэтому там, где Kotlin ничего не знает о null, он доверяет тебе.
+</Callout>
+
+Неясность с `String!` снимают **аннотации nullability**: пометки `@Nullable` и `@NotNull` в Java-коде. Kotlin понимает их из нескольких библиотек — JetBrains, Android, JSR-305 и **JSpecify**, общего для Java набора таких аннотаций, — и видит обычные `String?` и `String`. Вызвать `.length` у результата с `@Nullable` тогда не даст компилятор.
+
+**`lateinit`.** Модификатор `lateinit var` обещает компилятору, что non-null переменную присвоят позже. Если прочитать её раньше, вылетит `UninitializedPropertyAccessException: lateinit property token has not been initialized`. Где `lateinit` уместен, покажет урок про классы.
+
+## Как на практике
+
+- **Делай тип nullable, только если отсутствие значения — нормальный случай.** Поиск может ничего не найти, значит `String?`. Имя при регистрации обязательно, значит `String`, а проверка — там, где данные входят в программу.
+- **Обрабатывай null там, где он появился.** После `val city = findCity(code) ?: return …` до конца функции `city` уже `String`, без проверок в каждой строке.
+- **Запасное значение пиши через `?:`.** `port ?: 8080` короче, чем `if (port == null) 8080 else port`.
+- **Не ставь `!!`, чтобы замолчал компилятор.** Если значение обязано быть, но не пришло, брось понятную ошибку: `?: throw IllegalStateException("Не задан PORT")`. Подробно — в уроке про ошибки.
+- **Типизируй значения из Java сразу.** `val mode: String? = System.getProperty("app.mode")` превращает платформенный тип в обычный, и компилятор снова следит за null.
+
+<Callout type="teal" title="Как принято">
+Официальные идиомы Kotlin для null — `?.`, `?:` и `value?.let { … }` вместо ручных проверок. `String?` пишут без пробела перед `?`. Функции стандартной библиотеки, которые могут вернуть null, часто так и называются: `toIntOrNull`, `getOrNull`, `firstOrNull`. А detekt при анализе с разрешением типов помечает `!!` как потенциальную ошибку (правило UnsafeCallOnNullableType).
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Переменная окружения, которую «всегда задают».**
+В конфиге сервиса есть `fun dbUrl() = System.getenv("DB_URL")`, а в другом файле код проверяет `dbUrl().startsWith("jdbc:")`. На тестовом стенде переменную забыли задать, и NPE `dbUrl(...) must not be null` падает в строке со `startsWith`, в другом файле. Тип результата `dbUrl()` выведен из Java-метода и остался платформенным, поэтому компилятор молчал. Ход: объявить `fun dbUrl(): String` и в том же выражении добавить `?: throw IllegalStateException("DB_URL не задан")`. Вывод: не выпускай платформенный тип из функции, и ошибка вылетит в месте чтения, с понятным текстом.
+
+**Разбор 2. `!!` вместо решения.**
+Коллега переводит Java-класс на Kotlin и везде, где компилятор ругается на nullable-значения, расставляет `!!`: `name!!.trim()`, `email!!.lowercase()`. Код компилируется, но на первом клиенте без email падает NPE, причём без сообщения. Ход: для каждого `!!` решить, возможен ли здесь null. Возможен — `?.` или `?:` со значением по умолчанию, невозможен — non-null тип в объявлении, и `!!` станет лишним. Вывод: `!!` отключает проверку компилятора, и при null программа падает с NPE прямо в этой строке.
+
+**Разбор 3. Nullable «на всякий случай».**
+Разработчик объявляет `fun sendEmail(to: String?, subject: String?)`, чтобы «не упало». Теперь функция начинается с проверок и сама решает, что делать без адреса: молча пропустить письмо или бросить исключение, хотя почему адреса нет, она знать не может. Ход: письма без адресата не бывает, значит `to: String`, а ввод проверяют один раз, там, где адрес пришёл в программу. Вывод: `?` в типе говорит, что отсутствие значения — нормальный случай. Если отсутствие — ошибка, nullable-тип только размазывает проверки по коду.
+
+## Где привычки из Java подводят
+
+<Compare leftLabel="Кажется" rightLabel="Есть" verdict="right">
+  <div slot="left">
+  • В Kotlin NPE больше не бывает<br/>
+  • `String?` — обёртка вроде `Optional`<br/>
+  • `!!` успокаивает компилятор<br/>
+  • Всё из Java приходит как nullable<br/>
+  • Пустая строка безопаснее null
+  </div>
+  <div slot="right">
+  • NPE прорывается через `!!` и Java-код<br/>
+  • `String?` — строка или null, проверки при компиляции<br/>
+  • `!!` бросает NPE, если ты ошибся<br/>
+  • Из Java приходит `String!`, проверка на тебе<br/>
+  • `""` и null значат разное
+  </div>
+</Compare>
+
+Компилятор отвечает за null там, где nullability записана в типе: в Kotlin-коде или в аннотациях Java. Остальное проверяешь ты.
+
+## Что делать с nullable-значением
+
+<DecisionTree nodes={[
+  { q: "Без этого значения дальше работать нечего?", yes: "Выйди сразу: ?: return или ?: throw", no: "к следующему вопросу" },
+  { q: "Есть разумное значение по умолчанию?", yes: "Подставь его: x ?: значение", no: "к следующему вопросу" },
+  { q: "Нужно только выполнить действие, если значение есть?", yes: "x?.let { … } или if (x != null)", no: "к следующему вопросу" },
+  { q: "Вызывающему коду тоже нужно знать, что значения может не быть?", yes: "Верни nullable-результат, дальше через ?.", no: "Проверь тип: возможно, null здесь вообще не нужен" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `!!`, чтобы код скомпилировался | NPE вернётся, причём без сообщения | `?:` с запасным значением или `?: return` |
+| Оставить значению из Java выведенный тип | NPE упадёт в строке использования, иногда в другом файле | Сразу `val x: String? = javaCall()` |
+| Nullable-значение в строковом шаблоне | Пользователь увидит слово «null» | `${city ?: "не указан"}` |
+| Проверка `!= null` у `var`-свойства | Smart cast невозможен, ошибка компиляции | Скопировать в локальный `val` или `?.` |
+| Nullable «на всякий случай» | Проверки расползаются по всему коду | `String`, если значение обязано быть |
+| `Optional<String>` в своём Kotlin-коде | Лишняя обёртка поверх встроенного механизма | `String?`, а `Optional` из Java — через `getOrNull()` |
+
+## Практикум
+
+<Practice title="Почини обработку null в отчёте о заказе" checklist={["В main значение System.getProperty получает запасной код «KZN» через ?:", "Город проверен через ?: return или if (city == null) return", "Количество получено через toIntOrNull() ?: 0", "В коде нет ни одного !!", "Программа печатает три ожидаемые строки"]}>
+Стартовый код ниже падает с `NullPointerException` на первом же вызове `orderLine`. Доведи его до рабочего состояния:
+
+1. Найди, откуда приходит null, и исправь `main` через `?:`: если свойства `app.city` нет, бери код `"KZN"`.
+2. Допиши `orderLine`. Если `findCity` не нашла город, функция возвращает «Не знаю код MOW» с настоящим кодом. Если `rawCount` не число, количество считается нулём. Иначе получается строка вида «Казань: 3 шт.».
+3. Обойдись без `!!`.
+
+Программа должна напечатать «Казань: 3 шт.», «Санкт-Петербург: 0 шт.» и «Не знаю код MOW».
+
+<KotlinPlayground>
+
+```kotlin
+fun findCity(code: String): String? = when (code) {
+    "KZN" -> "Казань"
+    "LED" -> "Санкт-Петербург"
+    else -> null
+}
+
+fun orderLine(code: String, rawCount: String): String {
+    // допиши функцию здесь
+    return ""
+}
+
+fun main() {
+    val code = System.getProperty("app.city")
+    println(orderLine(code, "3"))
+    println(orderLine("LED", "два"))
+    println(orderLine("MOW", "5"))
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+fun findCity(code: String): String? = when (code) {
+    "KZN" -> "Казань"
+    "LED" -> "Санкт-Петербург"
+    else -> null
+}
+
+fun orderLine(code: String, rawCount: String): String {
+    val city = findCity(code) ?: return "Не знаю код $code"
+    val count = rawCount.toIntOrNull() ?: 0
+    return "$city: $count шт."
+}
+
+fun main() {
+    val code = System.getProperty("app.city") ?: "KZN"
+    println(orderLine(code, "3"))
+    println(orderLine("LED", "два"))
+    println(orderLine("MOW", "5"))
+}
+```
+
+Null пришёл из `System.getProperty`: свойства `app.city` нет, а платформенное значение Kotlin проверяет при передаче в параметр `String`, отсюда NPE на строке вызова. `?: "KZN"` делает из него обычный `String` прямо при чтении. В `orderLine` Элвис с `return` выходит из функции, если города нет, а `toIntOrNull() ?: 0` заменяет нечисловое количество нулём. Подойдёт и `if (city == null) return …`: после такой проверки тоже сработает smart cast.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Открой свой Kotlin-проект и найди поиском все `!!`. Для каждого реши, чего там не хватает: обработки null или правки типа в объявлении. Проекта на Kotlin нет — отметь в Java-классе методы, которые могут вернуть null. Что из этого сделаешь до пятницы? Через неделю проверь, не появились ли новые `!!`.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Nullable-тип | `String?` — строка или null |
+| Проверка | `if (x != null) x.length` — smart cast |
+| Безопасный вызов | `x?.length` — длина или null |
+| Запасное значение | `x ?: "нет"` |
+| Ранний выход | `val x = find() ?: return` |
+| Действие, если не null | `x?.let { println(it) }` |
+| Безопасное приведение | `raw as? Int` — null вместо исключения |
+| `!!` | NPE, если null; избегай |
+| Значение из Java | сразу `val x: String? = javaCall()` |
+| `Optional` из Java | `opt.getOrNull()`, импорт `kotlin.jvm.optionals.getOrNull` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Null", meaning: "Значение-отметка «ничего нет»: переменная не указывает ни на какой объект." },
+  { term: "NullPointerException (NPE)", meaning: "Исключение JVM при попытке использовать null там, где нужен объект." },
+  { term: "Ошибка на миллиард долларов (billion-dollar mistake)", meaning: "Так Тони Хоар назвал нулевую ссылку, которую добавил в ALGOL W в 1965 году." },
+  { term: "Nullable-тип (nullable type)", meaning: "Тип со знаком вопроса, например String?, который допускает null." },
+  { term: "Non-null тип", meaning: "Обычный тип вроде String; положить в него null не даст компилятор." },
+  { term: "Безопасный вызов (safe call)", meaning: "Оператор ?.: вызывает метод, если значение не null, иначе возвращает null." },
+  { term: "Элвис-оператор (Elvis)", meaning: "Оператор ?: возвращает левую часть, если она не null, иначе вычисляет правую." },
+  { term: "Оператор !! (not-null assertion)", meaning: "Считает значение non-null, а при null бросает NPE." },
+  { term: "Smart cast (умное приведение)", meaning: "Компилятор сам считает переменную non-null типом после проверки на null, если она не может измениться." },
+  { term: "Безопасное приведение (safe cast)", meaning: "Оператор as? приводит к типу или возвращает null вместо ClassCastException." },
+  { term: "Идиома ?.let", meaning: "Запись x?.let { … }: блок выполняется, только если x не null, и внутри значение доступно как it." },
+  { term: "Платформенный тип (platform type)", meaning: "Тип из Java-кода без аннотаций, пишется String!; на null его проверяешь ты, а не компилятор." },
+  { term: "Аннотации nullability", meaning: "Пометки вроде @Nullable и @NotNull в Java-коде, по которым Kotlin видит String? или String." },
+  { term: "JSpecify", meaning: "Общий для Java набор аннотаций nullability, который Kotlin понимает без дополнительной настройки." },
+  { term: "Optional", meaning: "Класс-контейнер из Java 8, который либо содержит значение, либо пуст." },
+  { term: "lateinit", meaning: "Модификатор var: переменную присвоят позже, а чтение до этого бросает UninitializedPropertyAccessException." }
+]} />
+
+## Закрепи
+
+Тренажёры отложи до завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-null-safety-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Null-безопасность: понятия</span>
+    <span class="kc-trainer-hint">Операторы и платформенные типы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-null-safety-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Где упадёт NPE</span>
+    <span class="kc-trainer-hint">Что скомпилируется и что упадёт</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-null-safety-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши обработку null</span>
+    <span class="kc-trainer-hint">Операторы, типы и функции</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-null-safety-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери обработку null</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Null safety, Type checks and casts** ([kotlinlang.org/docs](https://kotlinlang.org/docs/null-safety.html), сверено 2026-09-26) — операторы для null, smart cast, причины NPE в Kotlin.
+- **Kotlin — Nullability in Java and Kotlin, Calling Java from Kotlin** ([kotlinlang.org/docs](https://kotlinlang.org/docs/java-to-kotlin-nullability-guide.html), сверено 2026-09-26) — платформенные типы и `T!`, аннотации nullability, JSpecify, nullable-тип без обёртки.
+- **Kotlin — Idioms, Coding conventions, Properties, API reference** ([kotlinlang.org/docs](https://kotlinlang.org/docs/idioms.html), сверено 2026-09-26) — идиомы, соглашения, `lateinit`, `toIntOrNull`, `getOrNull`.
+- **Oracle — Java SE 25 API: Optional, System** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Optional.html), сверено 2026-09-26) — назначение `Optional`, null из `getProperty` и `getenv`.
+- **Tony Hoare — Null References: The Billion Dollar Mistake, QCon London 2009** (аннотация на [qconlondon.com](https://qconlondon.com/london-2009/qconlondon.com/london-2009/presentation/Null%2BReferences_%2BThe%2BBillion%2BDollar%2BMistake.html), запись на [infoq.com](https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/), сверено 2026-09-26) — цитаты из аннотации доклада.
+- **Marcin Moskała — Effective Kotlin, Items 3 и 7** ([kt.academy](https://kt.academy/article/ek-platform-types), сверено 2026-09-26) — убирать платформенные типы сразу, nullable-результат при ожидаемом отсутствии значения.
+- **detekt 1.23.8 — Potential bugs** ([detekt.dev](https://detekt.dev/docs/1.23.8/rules/potential-bugs/), сверено 2026-09-26) — правило UnsafeCallOnNullableType против `!!`.

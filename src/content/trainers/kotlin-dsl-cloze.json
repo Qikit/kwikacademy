@@ -1,0 +1,71 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-dsl",
+  "title": "Допиши строитель",
+  "description": "Впиши тип, функцию или имя так, чтобы код компилировался. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "\"Аня\".run { \"Привет, $___\" }   // Привет, Аня",
+        "answers": [
+          [
+            "this",
+            "{this}"
+          ]
+        ],
+        "explain": "run передаёт строку в блок как получатель, и внутри неё строка доступна как this. Шаблон подставит её целиком; length дал бы «Привет, 3»."
+      },
+      {
+        "text": "request { ___.url = \"/users\" }  // (Request) -> Unit",
+        "answers": [
+          "it"
+        ],
+        "explain": "У типа (Request) -> Unit получателя нет: объект приходит единственным параметром, и без явного имени он называется it."
+      },
+      {
+        "text": "fun menu(init: Menu.() -> Unit) = Menu().apply(___)",
+        "answers": [
+          "init"
+        ],
+        "explain": "apply принимает лямбду с получателем того же типа, поэтому init можно передать ей напрямую: apply вызовет блок на новом меню и вернёт меню."
+      },
+      {
+        "text": "inline fun <T> T.apply(block: T.() -> Unit): ___",
+        "answers": [
+          "T"
+        ],
+        "explain": "apply возвращает сам объект, на котором её вызвали, а его тип — T."
+      },
+      {
+        "text": "val report: String = ___ { appendLine(\"Итого\") }",
+        "answers": [
+          "buildString"
+        ],
+        "explain": "appendLine — функция StringBuilder. buildString создаёт его, вызывает блок и возвращает готовую String."
+      },
+      {
+        "text": "val roles: List<String> = ___ { add(\"user\") }",
+        "answers": [
+          "buildList"
+        ],
+        "explain": "Внутри buildList получатель — MutableList, поэтому add работает, а наружу выходит список только для чтения."
+      },
+      {
+        "text": "@___ annotation class MenuDsl  // закрыть внешние получатели",
+        "answers": [
+          "DslMarker"
+        ],
+        "explain": "@DslMarker превращает свою аннотацию в маркер DSL. Помеченные ею получатели не видны из вложенных блоков неявно."
+      },
+      {
+        "text": "server { database { this@___.port = 5432 } }",
+        "answers": [
+          "server"
+        ],
+        "explain": "Метка квалифицированного this совпадает с именем функции, которой передали лямбду. Порт есть у ServerConfig, получателя блока server."
+      }
+    ]
+  }
+}

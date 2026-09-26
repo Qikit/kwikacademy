@@ -1,0 +1,54 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-extensions",
+  "title": "Собери расширение и scope-функцию",
+  "description": "Расставь строки кода так, чтобы программа делала и печатала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Объяви внутри main локальное расширение shout: оно возвращает строку в верхнем регистре с «!» в конце. Вызови его и напечатай «ПРИВЕТ!».",
+        "words": ["    println(\"привет\".shout())", "        uppercase() + \"!\"", "}", "    fun String.shout() =", "fun main() {"],
+        "answer": ["fun main() {", "    fun String.shout() =", "        uppercase() + \"!\"", "    println(\"привет\".shout())", "}"],
+        "explain": "Тип-получатель String стоит перед именем через точку, а uppercase() вызывается на получателе без this, как в методе класса. Локальное расширение видно только внутри main и только после объявления, поэтому вызов идёт последним."
+      },
+      {
+        "task": "Создай StringBuilder, допиши в него «Kotlin» и « 2.4» внутри apply и напечатай «Kotlin 2.4».",
+        "words": ["    }", "        append(\" 2.4\")", "fun main() {", "    println(sb)", "    val sb = StringBuilder().apply {", "}", "        append(\"Kotlin\")"],
+        "answer": ["fun main() {", "    val sb = StringBuilder().apply {", "        append(\"Kotlin\")", "        append(\" 2.4\")", "    }", "    println(sb)", "}"],
+        "explain": "Внутри apply объект виден как this, поэтому append вызывают без имени. apply возвращает сам StringBuilder, и в sb попадает он же, уже заполненный."
+      },
+      {
+        "task": "Возьми строку « Аня », по дороге напечатай её как есть через also, потом обрежь пробелы. Программа печатает «Было: [ Аня ]» и «Стало: [Аня]».",
+        "words": ["    println(\"Стало: [$name]\")", "        .trim()", "fun main() {", "}", "    val name = \" Аня \"", "        .also { println(\"Было: [$it]\") }"],
+        "answer": ["fun main() {", "    val name = \" Аня \"", "        .also { println(\"Было: [$it]\") }", "        .trim()", "    println(\"Стало: [$name]\")", "}"],
+        "explain": "also печатает строку и отдаёт дальше её же, поэтому trim работает с исходным значением. Если поставить trim раньше, первая строка вывода покажет уже обрезанное имя."
+      },
+      {
+        "task": "Строку из одних пробелов замени на «аноним» с помощью takeIf и Элвиса. Программа печатает «аноним».",
+        "words": ["        ?: \"аноним\"", "    println(name)", "    val input = \"   \"", "}", "        .takeIf { it.isNotEmpty() }", "fun main() {", "    val name = input.trim()"],
+        "answer": ["fun main() {", "    val input = \"   \"", "    val name = input.trim()", "        .takeIf { it.isNotEmpty() }", "        ?: \"аноним\"", "    println(name)", "}"],
+        "explain": "trim даёт пустую строку, takeIf превращает её в null, а Элвис подставляет «аноним». Если поставить Элвис перед takeIf, takeIf применится к самой строке «аноним», и программа напечатает пустую строку."
+      },
+      {
+        "task": "Собери функцию label: внутри неё объяви локальное расширение orDash с nullable-получателем и верни «Ник: —», если ника нет.",
+        "words": ["        if (isNullOrBlank()) \"—\" else this", "}", "fun label(nickname: String?): String {", "    return \"Ник: \" + nickname.orDash()", "    fun String?.orDash() ="],
+        "answer": ["fun label(nickname: String?): String {", "    fun String?.orDash() =", "        if (isNullOrBlank()) \"—\" else this", "    return \"Ник: \" + nickname.orDash()", "}"],
+        "explain": "У String? в роли получателя расширение вызывают без ?., а проверку на null делает оно само. После isNullOrBlank() компилятор знает, что в ветке else this уже String. Локальную функцию объявляют до вызова."
+      },
+      {
+        "task": "Собери класс Profile с методом copyTo: он копирует имя текущего профиля в other и возвращает other. Внутри блока other виден как it.",
+        "words": ["        }", "        other.also {", "}", "class Profile(var name: String) {", "            it.name = name", "    fun copyTo(other: Profile) ="],
+        "answer": ["class Profile(var name: String) {", "    fun copyTo(other: Profile) =", "        other.also {", "            it.name = name", "        }", "}"],
+        "explain": "also показывает other как it и не затеняет this класса, поэтому справа name — имя текущего профиля. С apply оба name означали бы свойство other, и имя не скопировалось бы."
+      },
+      {
+        "task": "Допиши « 2.4» в StringBuilder внутри with и получи строку «Kotlin 2.4, длина 10» как результат блока.",
+        "words": ["    println(info)", "        \"$this, длина $length\"", "fun main() {", "    }", "    val sb = StringBuilder(\"Kotlin\")", "}", "        append(\" 2.4\")", "    val info = with(sb) {"],
+        "answer": ["fun main() {", "    val sb = StringBuilder(\"Kotlin\")", "    val info = with(sb) {", "        append(\" 2.4\")", "        \"$this, длина $length\"", "    }", "    println(info)", "}"],
+        "explain": "with возвращает результат лямбды, то есть последнее выражение блока. Поэтому строка-шаблон стоит последней, после append. Внутри with объект виден как this, и length — длина StringBuilder."
+      }
+    ]
+  }
+}

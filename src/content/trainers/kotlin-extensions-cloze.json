@@ -1,0 +1,22 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-extensions",
+  "title": "Допиши расширение и scope-функцию",
+  "description": "Впиши тип-получатель, ключевое слово или имя функции так, чтобы код компилировался и делал то, что нужно. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "fun ___.shout() = uppercase() + \"!\"", "answers": [["String", "kotlin.String"]], "explain": "Тип-получатель пишут перед именем через точку. Внутри вызывается uppercase(), а она есть у String. У CharSequence такой функции нет, а для String? пришлось бы писать ?." },
+      { "text": "val report: Report = Report().___ { title = \"Итоги\" }", "answers": ["apply"], "explain": "Объект виден как this (title без it), а вернуться должен сам Report. Это apply: run вернул бы Unit, результат присваивания." },
+      { "text": "val length: Int = name?.___ { it.length } ?: 0", "answers": ["let"], "explain": "Объект виден как it, а нужен результат лямбды, длина. Это let: also вернул бы саму строку, и тип не совпал бы с Int." },
+      { "text": "val saved: User = save(user).___ { log(it) }  // log: Unit", "answers": ["also"], "explain": "Нужен побочный шаг, после которого в saved попадёт сам User. Объект виден как it, возвращается объект — это also. let вернул бы Unit из log, а в apply нет it." },
+      { "text": "val n = s.___ { it.isNotEmpty() } ?: \"аноним\" // \"\" → аноним", "answers": ["takeIf"], "explain": "takeIf вернёт строку, если она не пустая, и null иначе, а Элвис подставит запасное имя. takeUnless сделал бы наоборот: непустое имя заменил бы на «аноним»." },
+      { "text": "___(order) { println(id + total) }", "answers": ["with"], "explain": "Объект передают аргументом, а внутри он виден как this. Так устроена with, она не расширение." },
+      { "text": "val String.wordCount: Int ___() = split(\" \").size", "answers": ["get"], "explain": "У свойства-расширения нет поля, значение вычисляет геттер get()." },
+      { "text": "fun String?.orDash() = if (___ == null) \"—\" else this", "answers": [["this", "this@orDash"]], "explain": "Внутри расширения получатель доступен как this. У nullable-получателя он может быть null, и проверку делают в самом расширении." },
+      { "text": "println(7.___ { it % 2 != 0 })  // null", "answers": ["takeUnless"], "explain": "7 нечётное, условие выполнено, а напечатан null. Так ведёт себя takeUnless: возвращает null, когда условие выполнено. takeIf вернул бы 7." },
+      { "text": "String m = ___.maskEmail(email);  // Java, Emails.kt", "answers": ["EmailsKt"], "explain": "Расширения из Emails.kt компилируются в статические методы класса EmailsKt, получатель передают первым аргументом." }
+    ]
+  }
+}

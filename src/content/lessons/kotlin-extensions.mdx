@@ -4,10 +4,392 @@ order: 9
 phase: "Идиоматичный Kotlin"
 title: "Расширения и scope-функции: let, run, apply, also, with"
 eyebrow: "Kotlin · Идиоматичный Kotlin"
-readingMinutes: 15
-summary: "Добавлять функции к чужим классам и выбирать scope-функцию по понятному правилу."
+readingMinutes: 18
+summary: "Добавлять функции к чужим классам без утилитных классов и выбирать scope-функцию по двум вопросам, не путаясь в this и it."
 tags: [kotlin, idioms]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Расширения и scope-функции: let, run, apply, also, with» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты передавал функции как значения: лямбду в фигурных скобках, `it`, лямбду за скобками вызова. В Kotlin-сервисе такие лямбды на каждом шагу: `user?.let { … }`, `Request().apply { … }`. Рядом попадётся `email.isNullOrBlank()`. Метода с таким именем нет ни у `String` в Java, ни в классе `kotlin.String`, а вызывается он через точку, как свой. В Java ты искал бы его в каком-нибудь `StringUtils`.
+
+Ошибиться здесь легко в обе стороны. Расширение выглядит как метод, и от него по привычке ждут всего, что умеет метод. Компилятор обращается с ним иначе, и если об этом забыть, программа молча вызовет не ту функцию. Scope-функции выглядят как пять синонимов, и код обрастает `let` внутри `apply` внутри `also`, где никто уже не скажет, что такое `it`. Документация Kotlin сама предупреждает: злоупотребление ими затрудняет чтение и ведёт к ошибкам.
+
+После урока ты сможешь заменить утилитный метод функцией-расширением, предсказать, какая функция вызовется, когда у класса есть метод с тем же именем, и выбрать scope-функцию по двум вопросам: как объект виден внутри блока и что должно вернуться.
+
+## Ядро: снаружи метод, внутри обычная функция
+
+<Callout type="purple" title="Суть">
+**Функция-расширение** (extension function) объявляется вне класса, `fun String.maskEmail()`, а вызывается через точку, как метод: `email.maskEmail()`. Класс при этом **не меняется**: расширение остаётся обычной функцией, точка в вызове — только форма записи. **Scope-функции** `let`, `run`, `with`, `apply` и `also` выполняют лямбду над одним объектом. Выбирают их по двум вопросам: как объект виден внутри блока, как `this` или как `it`, и что вернуть — сам объект или результат лямбды.
+</Callout>
+
+Расширение удобно, когда нужно добавить операцию к классу, который ты не можешь поменять: `String`, `LocalDate`, класс из чужой библиотеки. Scope-функции по документации «don't introduce any new technical capabilities»: ничего нового они не умеют, поэтому их берут там, где код с ними читается проще.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="У класса Price есть публичный метод format(), он возвращает «100 руб.». В своём файле ты объявил расширение fun Price.format() = «100 ₽». Что напечатает println(Price(100).format())?">
+«100 руб.». Если у класса есть доступный метод с тем же именем и подходящими параметрами, компилятор выбирает его, а на расширение выдаёт предупреждение «This extension is shadowed by a member» (Kotlin 2.4.20). Приватный метод снаружи не виден и расширению не мешает. Расширение с другими параметрами, например `format(sign: String)`, сработает как перегрузка. Правило: подменить поведение класса расширением нельзя.
+</Reveal>
+
+## Как устроено: функции-расширения
+
+Перед именем расширения пишут **тип-получатель** (receiver type) и точку. Объект, на котором функцию вызвали, называется **получателем** (receiver). Внутри расширения он доступен как `this`, а его члены, кроме `private` и `protected`, — просто по имени, как в методе класса.
+
+<KotlinPlayground>
+
+```kotlin
+import java.time.DayOfWeek
+import java.time.LocalDate
+
+fun String.maskEmail(): String {
+    val at = indexOf('@')
+    if (at < 1) return this
+    return take(1) + "***" + substring(at)
+}
+
+fun LocalDate.isWeekend() =
+    dayOfWeek == DayOfWeek.SATURDAY ||
+        dayOfWeek == DayOfWeek.SUNDAY
+
+val String.wordCount: Int
+    get() = split(" ").count { it.isNotBlank() }
+
+fun main() {
+    println("anna@mail.ru".maskEmail())
+    println(LocalDate.of(2026, 9, 26).isWeekend())
+    println("раз два  три".wordCount)
+}
+```
+
+</KotlinPlayground>
+
+Запусти: программа напечатает `a***@mail.ru`, `true` и `3`. Два расширения прицеплены к классам, которые писал не ты: к `String` из Kotlin и к `LocalDate` из JDK. Потом замени дату на 28 сентября 2026 года, это понедельник, и `isWeekend()` вернёт `false`.
+
+Третье объявление — **свойство-расширение** (extension property) `wordCount`, у него есть только геттер. Хранить значение ему негде, поэтому `val String.greeting = "Привет"` не скомпилируется (Kotlin 2.4.20): «Extension property cannot be initialized because it has no backing field».
+
+Два контрпримера. Обычная функция `fun maskEmail(email: String)` делает ту же работу, но вызывается как `maskEmail(email)`, и `"anna@mail.ru".maskEmail()` с ней не скомпилируется. Метод внутри класса видит его `private`-члены, а расширение, объявленное снаружи, нет: для `class User(private val password: String)` строка `fun User.isSecure() = password.length >= 8` даст ошибку «Cannot access 'val password: String': it is private in 'User'».
+
+Тип-получатель может быть nullable. Такое расширение вызывают без `?.`, а внутри `this` может оказаться null. Так устроен `isNullOrBlank()` из стандартной библиотеки: он объявлен для `CharSequence?`, поэтому вызов компилируется, даже когда у `nickname` тип `String?`. Своё расширение с **nullable-получателем** (nullable receiver) выглядит так:
+
+```kotlin
+fun String?.orDash(): String =
+    if (isNullOrBlank()) "—" else this
+```
+
+Для `null` оно вернёт «—», для `"Qikit"` — саму строку. В ветке `else` компилятор уже знает, что `this` не null: после `isNullOrBlank()` работает smart cast, так объявлена сама функция. Для контраста: при `nickname: String?` вызов `nickname.maskEmail()` не скомпилируется, у `maskEmail` получатель не nullable.
+
+<Callout type="blue" title="Если знаешь Java — утилитный класс здесь не нужен">
+В Java операции над чужим классом обычно собирают в **утилитный класс** (utility class) со статическими методами. Пример — `StringUtils` из Apache Commons Lang с описанием «Operations on String that are null safe» и вызовами вида `StringUtils.isBlank(name)`. Переносить его в Kotlin как `object StringUtils` незачем: здесь пишут расширения, и `isNullOrBlank()` из стандартной библиотеки тоже безопасно для null. Функции файла `Emails.kt`, включая расширения, компилируются в статические методы класса `EmailsKt`, а получатель становится первым параметром. Из Java вызывают `EmailsKt.maskEmail(email)`, а `"…".maskEmail()` javac не найдёт.
+</Callout>
+
+Раз расширение — обычная функция, как компилятор выбирает между двумя расширениями для родителя и наследника? В программе ниже у `Shape` есть открытый метод `title()` и расширение `name()`, у наследника `Circle` — свои версии обоих. Предскажи вывод до запуска.
+
+<Reveal q="Переменная shape объявлена как Shape, а лежит в ней Circle. Что напечатают shape.title() и shape.name()?">
+«круг» и «фигура». Метод `title()` открыт и переопределён, поэтому во время работы берётся версия настоящего объекта. Расширение `name()` компилятор выбрал заранее, по типу `Shape` из объявления переменной. Правило: поведение, которое должно меняться в наследниках, делай `open`-методом, расширение для этого не годится.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+open class Shape {
+    open fun title() = "фигура"
+}
+
+class Circle : Shape() {
+    override fun title() = "круг"
+}
+
+fun Shape.name() = "фигура"
+fun Circle.name() = "круг"
+
+fun main() {
+    val shape: Shape = Circle()
+    println(shape.title())
+    println(shape.name())
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверься. Такой выбор называют **статическим разрешением** (static dispatch): расширение ищут по объявленному типу получателя, а не по настоящему объекту. Метод с `override` выбирается во время работы, это **виртуальный вызов** (virtual dispatch). Убери из объявления `: Shape`, чтобы осталось `val shape = Circle()`, и запусти снова. Обе строки напечатают «круг», потому что компилятор вывел для `shape` тип `Circle`.
+
+## Как устроено: scope-функции и takeIf
+
+**Scope-функция** (scope function, дословно «функция области видимости») выполняет блок кода в контексте одного объекта. Внутри блока объект доступен без имени, по короткой ссылке. Его называют **объектом контекста** (context object). Функций пять, и делают они одно и то же, а различия сведены в таблицу.
+
+| Функция | Объект внутри | Возвращает |
+| --- | --- | --- |
+| `let` | `it` | результат лямбды |
+| `also` | `it` | сам объект |
+| `run` | `this` | результат лямбды |
+| `with(x)` | `this` | результат лямбды |
+| `apply` | `this` | сам объект |
+
+`let`, `also`, `run` и `apply` — сами расширения, их вызывают через точку: `order.apply { … }`. `with` не расширение, объект передают ей аргументом: `with(order) { … }`. У `run` есть и форма без объекта: `run { … }` просто выполняет блок и возвращает результат. Объект как `it` приходит в лямбду обычным параметром, как в прошлом уроке. Объект как `this` делает блок похожим на тело метода: `id = 1` вместо `it.id = 1`. Как это устроено, разберём в уроке про DSL.
+
+Документация советует `this` для блоков, которые в основном вызывают методы объекта и присваивают его свойства, а `it` — когда объект передают в другие функции или когда нельзя затенять `this` внешнего класса. **Затенение** (shadowing) — случай, когда ближнее имя закрывает дальнее.
+
+`apply` и `also` возвращают сам объект, поэтому встают в цепочку «боковым шагом»: настроил или записал в лог и поехал дальше. `let`, `run` и `with` отдают результат лямбды, её последнее выражение. В программе ниже три заказа создаются через `apply`, `let` и `also`, и в каждом блоке заказу присваивают номер. Предскажи вывод до запуска.
+
+<Reveal q="Что напечатают println(a.id), println(b) и println(c.id)?">
+`1`, `kotlin.Unit` и `3`. `apply` и `also` вернули сам заказ. `let` отдаёт результат лямбды, а последней строкой в ней стоит присваивание, у которого значения нет, поэтому в `b` лежит `Unit`. Правило: чтобы настроить объект и получить его же, бери `apply`; `let` и `run` — когда нужно вычисленное значение.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+class Order {
+    var id = 0
+}
+
+fun main() {
+    val a = Order().apply { id = 1 }
+    val b = Order().let { it.id = 2 }
+    val c = Order().also { it.id = 3 }
+    println(a.id)
+    println(b)
+    println(c.id)
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверься. Потом замени `let { it.id = 2 }` на `apply { id = 2 }`, а `println(b)` на `println(b.id)`: вторая строка станет `2`.
+
+Рядом со scope-функциями в стандартной библиотеке лежат **`takeIf` и `takeUnless`**. `takeIf` возвращает объект, если он подходит под условие, и null, если нет. `takeUnless` делает наоборот. В цепочке это выглядит так: `input.trim().takeIf { it.isNotEmpty() } ?: "аноним"` вернёт «аноним» для строки из одних пробелов. Результат у обеих функций nullable, поэтому следующий вызов пишут через `?.`. Без него `"kotlin".takeIf { it.isNotEmpty() }.uppercase()` не скомпилируется: «Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'String?'».
+
+<Reveal q="Строку обрезают через trim(), потом вызывают takeUnless с условием «строка пустая» и Элвис с запасным «аноним». Что получится для « Аня » и для строки из трёх пробелов?">
+«Аня» и «аноним». Для «Аня» условие не выполнено, и `takeUnless` возвращает саму строку. Три пробела после `trim()` дают пустую строку, условие выполнено, `takeUnless` возвращает null, и Элвис подставляет «аноним». Правило: `takeUnless` — это `takeIf` с перевёрнутым условием.
+</Reveal>
+
+## Как на практике
+
+- **Функцию, которая работает с одним объектом, делай расширением.** `report.describe()` читается слева направо и встаёт в цепочку вызовов, `describe(report)` в неё не встанет.
+- **Сужай видимость.** Помощник для одного файла объявляй как `private fun String.clean()`. Если он нужен одной функции, сделай его локальным расширением внутри неё. Публичное расширение на `String` можно вызвать на любой строке проекта, соглашения называют это засорением API (API pollution).
+- **Не вкладывай.** Два `it` в соседних строках, которые означают разные объекты, — повод переписать: вынести `val`, назвать параметр явно или развернуть цепочку `?.`.
+- **Проверь, не лишняя ли функция.** `name.let { println(it) }` делает то же, что `println(name)`, только длиннее.
+
+<Callout type="teal" title="Как принято">
+Документация Kotlin советует выбирать scope-функцию по цели:
+
+- `let` — действие над не-null значением или локальная переменная с узкой областью;
+- `apply` — настройка объекта;
+- `run` — настройка с вычислением результата, а `run { … }` без объекта — несколько инструкций там, где нужно выражение;
+- `also` — дополнительное действие вроде лога;
+- `with` — группа вызовов на одном объекте.
+
+Там же совет не вкладывать их друг в друга и осторожно сцеплять в цепочки. Про расширения соглашения о коде говорят «Use extension functions liberally». Нужные всем пользователям класса кладут в тот же файл, что и класс, нужные одному месту — рядом с этим местом. Отдельный файл под все расширения класса заводить не советуют.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. `TextUtils` из Java-проекта.**
+В Kotlin-сервис переносят Java-класс `TextUtils` со статическими `maskEmail(String)` и `isBlank(String)`. Вариант `object TextUtils` сохранит вызовы вида `TextUtils.maskEmail(email)`, и Kotlin-код ничего не выиграет. Ход: `maskEmail` объявить расширением `String` в файле `Emails.kt` того же пакета, а в Kotlin-коде вместо `isBlank` звать готовый `isNullOrBlank()`. С `@file:JvmName("TextUtils")` в начале файла Java-вызовы `TextUtils.maskEmail(email)` править не придётся, а вызовы `isBlank` в Java придётся переписать. И учти null: параметр теперь не-null, и `TextUtils.maskEmail(null)` из Java сразу бросит NullPointerException. Вывод: утилитный класс в Kotlin распадается на расширения, а Java видит их как статические методы.
+
+**Разбор 2. Метод `copyTo`.**
+В классе `Profile` метод должен скопировать имя текущего профиля в другой:
+
+```kotlin
+class Profile(var name: String) {
+    fun copyTo(other: Profile) = other.apply {
+        name = name
+    }
+}
+```
+
+Код компилируется без единого предупреждения.
+
+<Reveal q="У anna имя «Аня», у guest — «Гость». Что напечатает println(guest.name) после вызова anna.copyTo(guest)?">
+«Гость». Внутри `apply` оба `name` означают свойство `other`: объект контекста стал ближайшим `this` и затенил `this` класса. Строка присвоила имени гостя его же значение. Исправление — `other.also { it.name = name }`: объект контекста теперь `it`, а `name` снова свойство текущего профиля. Документация советует `also` как раз для случая, когда не хочешь затенять внешний `this`.
+</Reveal>
+
+Вывод: если в блоке нужны и объект контекста, и внешний `this`, бери функцию, где объект виден как `it`.
+
+**Разбор 3. Лесенка из `let`.**
+Нужно напечатать город пользователя, если он известен. На ревью пришёл такой код:
+
+```kotlin
+user?.let {
+    it.address?.let {
+        it.city?.let {
+            println(it)
+        }
+    }
+}
+```
+
+Три `it` означают три разных объекта, и каждый затеняет предыдущий. Цепочка безопасных вызовов из урока про null делает ту же работу в одну строку: `user?.address?.city?.let { println(it) }`. Если с городом нужно сделать ещё что-то, вынеси его в `val city = user?.address?.city ?: return`. Вывод: вложенная scope-функция почти всегда разворачивается в цепочку `?.` или в `val` с понятным именем.
+
+## Какую scope-функцию взять
+
+<DecisionTree nodes={[
+  { q: "Нужно действие, только если значение не null?", yes: "x?.let { … }", no: "к следующему вопросу" },
+  { q: "Настраиваешь объект и хочешь получить его же?", yes: "apply { … }", no: "к следующему вопросу" },
+  { q: "Побочное действие вроде лога, а цепочка идёт дальше с тем же объектом?", yes: "also { … }", no: "к следующему вопросу" },
+  { q: "Вызываешь подряд несколько методов одного объекта, результат не нужен?", yes: "with(x) { … }", no: "к следующему вопросу" },
+  { q: "Настраиваешь объект и тут же вычисляешь из него результат?", yes: "x.run { … }", no: "let { … } с явным именем или обычная val" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `let` для настройки объекта | Вернётся результат лямбды, часто `Unit` | `apply { … }` |
+| `apply` внутри класса с одноимёнными свойствами | Объект контекста затеняет внешний `this` | `also { it.name = name }` |
+| Вложенные `let` с тремя `it` | Непонятно, какой объект в какой строке | Цепочка `?.`, явные имена, `val` |
+| Расширение вместо `open`-метода | Выбирается по объявленному типу | `open fun` и `override` |
+| Вызов после `takeIf` без `?.` | Ошибка компиляции: результат nullable | `takeIf { … }?.uppercase()` |
+
+## Практикум
+
+<Practice title="Наведи порядок в scope-функциях" checklist={["Report настраивается через apply, без it и без возврата it в конце", "Строка «Готово» печатается через also, а в text попадает само описание", "describe стала расширением Report и вызывается через точку", "Нет вложенных scope-функций: адрес проходит одну цепочку ?. с takeIf и let", "Вывод программы не изменился", "С findEmail(2) программа печатает только строку «Готово»"]}>
+Код ниже работает, но scope-функции в нём выбраны неудачно. Перепиши его: отчёт настраивается подходящей scope-функцией, строка «Готово» печатается по дороге, не прерывая цепочку, `describe` становится расширением, пустой адрес отсекается через `takeIf`, а вложенных scope-функций не остаётся. Вывод не должен измениться. Потом замени `findEmail(1)` на `findEmail(2)` и убедись, что письмо не уходит.
+
+<KotlinPlayground>
+
+```kotlin
+class Report {
+    var title = ""
+    var pages = 0
+}
+
+fun describe(report: Report): String =
+    "${report.title}, стр.: ${report.pages}"
+
+fun findEmail(id: Int): String? =
+    if (id == 1) " anna@mail.ru " else null
+
+fun send(to: String, text: String) {
+    println("Отправлено $to: $text")
+}
+
+fun main() {
+    val report = Report().let {
+        it.title = "Итоги квартала"
+        it.pages = 12
+        it
+    }
+    val text = describe(report).run {
+        println("Готово: $this")
+        this
+    }
+    findEmail(1)?.let {
+        it.trim().let {
+            if (it.isNotEmpty()) send(it, text)
+        }
+    }
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант (`Report`, `findEmail` и `send` не меняются):
+
+```kotlin
+fun Report.describe() = "$title, стр.: $pages"
+
+fun main() {
+    val report = Report().apply {
+        title = "Итоги квартала"
+        pages = 12
+    }
+    val text = report.describe()
+        .also { println("Готово: $it") }
+    findEmail(1)
+        ?.trim()
+        ?.takeIf { it.isNotEmpty() }
+        ?.let { send(it, text) }
+}
+```
+
+Вывод прежний. `apply` настраивает объект и возвращает его, поэтому `it` в конце не нужен. `also` печатает описание и отдаёт дальше ту же строку. Вложенные `let` стали цепочкой: `trim` убирает пробелы, `takeIf` отсекает пустую строку, `let` отправляет письмо. С `findEmail(2)` цепочка обрывается на первом `?.`.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в своём коде класс вроде `*Utils`: какие его методы стали бы расширениями? В Kotlin-коде поищи `let` внутри `let` и `apply` в классе с такими же именами свойств. Что из этого ты перепишешь до пятницы? Через неделю загляни в свой свежий код: сколько scope-функций там можно просто убрать?
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Расширение | `fun String.maskEmail(): String`, получатель внутри — `this` |
+| Свойство-расширение | `val String.wordCount get() = …`, без инициализатора |
+| Nullable-получатель | `fun String?.orDash()`, вызов без `?.` |
+| Выбор | Доступный метод класса побеждает, расширение — по объявленному типу |
+| Вызов из Java | `EmailsKt.maskEmail(email)`, имя класса — `@file:JvmName` |
+| `let`, `run` | Результат лямбды; объект как `it` / `this` |
+| `also`, `apply` | Сам объект; объект как `it` / `this` |
+| `with(x)` | Как `run`, но объект передают аргументом |
+| `takeIf`, `takeUnless` | Объект или null, дальше `?.` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Функция-расширение (extension function)", meaning: "Функция, объявленная вне класса с типом-получателем перед именем; вызывается через точку, как метод." },
+  { term: "Свойство-расширение (extension property)", meaning: "Свойство, объявленное вне класса; поля у него нет, значение вычисляет геттер (у var есть ещё сеттер)." },
+  { term: "Получатель (receiver)", meaning: "Объект, на котором вызвали расширение; внутри расширения он доступен как this." },
+  { term: "Тип-получатель (receiver type)", meaning: "Тип перед точкой в объявлении расширения, например String в fun String.maskEmail()." },
+  { term: "Nullable-получатель (nullable receiver)", meaning: "Тип-получатель со знаком вопроса; такое расширение вызывают без ?., а this внутри может быть null." },
+  { term: "Статическое разрешение (static dispatch)", meaning: "Выбор функции при компиляции по объявленному типу; так выбираются расширения." },
+  { term: "Виртуальный вызов (virtual dispatch)", meaning: "Выбор метода во время работы по настоящему объекту; так работают open-методы с override." },
+  { term: "Затенение (shadowing)", meaning: "Ближнее имя закрывает дальнее, например объект контекста в apply закрывает внешний this." },
+  { term: "Утилитный класс (utility class)", meaning: "Класс только со статическими методами, как StringUtils в Java; в Kotlin его заменяют функции верхнего уровня и расширения." },
+  { term: "Scope-функция (scope function)", meaning: "Функция стандартной библиотеки, которая выполняет блок кода в контексте одного объекта: let, run, with, apply, also." },
+  { term: "Объект контекста (context object)", meaning: "Объект, над которым scope-функция выполняет блок; внутри он доступен как this или как it." },
+  { term: "let", meaning: "Scope-функция: объект как it, возвращает результат лямбды; с ?. выполняет блок только для не-null значения." },
+  { term: "apply", meaning: "Scope-функция: объект как this, возвращает сам объект; для настройки объекта." },
+  { term: "also", meaning: "Scope-функция: объект как it, возвращает сам объект; для побочного действия вроде лога." },
+  { term: "run и with", meaning: "Scope-функции: объект как this, возвращают результат лямбды; run вызывают через точку, в with объект передают аргументом." },
+  { term: "takeIf и takeUnless", meaning: "Функции, которые возвращают объект или null в зависимости от условия; следующий вызов пишут через ?." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-extensions-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Расширения и scope-функции: понятия</span>
+    <span class="kc-trainer-hint">Получатель, this и it</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-extensions-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что вызовется и что вернётся</span>
+    <span class="kc-trainer-hint">Сценарии из ревью</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-extensions-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери расширение и scope-функцию</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-extensions-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши расширение и scope-функцию</span>
+    <span class="kc-trainer-hint">Получатели и имена функций</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Extensions** ([kotlinlang.org/docs](https://kotlinlang.org/docs/extensions.html), сверено 2026-09-26) — как устроены и выбираются расширения.
+- **Kotlin — Scope functions** ([kotlinlang.org/docs](https://kotlinlang.org/docs/scope-functions.html), сверено 2026-09-26) — таблица scope-функций, выбор по цели, `takeIf`.
+- **Kotlin — Coding conventions, Idioms** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-09-26) — где объявлять расширения и как называть параметры лямбд.
+- **Kotlin — Calling Kotlin from Java, Comparison to Java** ([kotlinlang.org/docs](https://kotlinlang.org/docs/java-to-kotlin-interop.html), сверено 2026-09-26) — как расширения видны из Java.
+- **Kotlin API reference — let, run, with, apply, also, takeIf, takeUnless, isNullOrBlank** ([kotlinlang.org/api](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/let.html), сверено 2026-09-26) — сигнатуры функций.
+- **Apache Commons Lang — StringUtils** ([commons.apache.org](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html), сверено 2026-09-26) — пример утилитного класса.

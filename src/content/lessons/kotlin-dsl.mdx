@@ -4,10 +4,479 @@ order: 10
 phase: "Идиоматичный Kotlin"
 title: "DSL: лямбды с получателем"
 eyebrow: "Kotlin · Идиоматичный Kotlin"
-readingMinutes: 15
+readingMinutes: 18
 summary: "Читать и писать DSL на лямбдах с получателем — так устроены Gradle Kotlin DSL и маршруты Ktor."
 tags: [kotlin, idioms]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «DSL: лямбды с получателем» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты выбирал scope-функцию: у `apply`, `run` и `with` объект приходит как `this`, и мы обещали объяснить, откуда он там берётся. Ты открываешь `build.gradle.kts` нового сервиса и видишь `dependencies { implementation(project(":shared")) }`. Похоже на конфиг со своим синтаксисом, но это Kotlin: `dependencies` — функция, фигурные скобки — лямбда, а `implementation` — функция объекта, которого в тексте не видно.
+
+Такие блоки легко заучить как заклинание: копируешь строки из README, а когда что-то не компилируется, гадаешь. За Gradle Kotlin DSL и маршрутами Ktor стоит один приём языка: лямбда, внутри которой `this` указывает на заранее созданный объект. Разберёшься в нём — будешь читать чужие DSL по объявлениям функций и сможешь собрать свой.
+
+После урока ты сможешь прочитать тип `T.() -> Unit`, написать функцию-строитель, защитить вложенные блоки аннотацией `@DslMarker` и найти, откуда берутся функции внутри `dependencies { }` и `routing { }`.
+
+## Ядро: внутри блока this — объект, который строят
+
+<Callout type="purple" title="Суть">
+**Лямбда с получателем** (lambda with receiver) имеет тип вида `T.() -> Unit`. Её вызывают на объекте типа `T`, и внутри неё этот объект доступен как `this`: его функции и свойства пишут без префикса. **DSL** (domain-specific language, язык предметной области) на Kotlin собирают из обычных функций, которые последним параметром принимают такую лямбду: функция создаёт объект, вызывает на нём лямбду и возвращает результат.
+</Callout>
+
+Отсюда способ читать любой блок вида `имя { … }`: найди функцию `имя` и посмотри на тип её последнего параметра. Тип перед точкой скажет, чьи функции и свойства доступны внутри фигурных скобок.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Коллега уверен, что apply — особая конструкция языка вроде if и свою такую функцию не напишешь. Прав ли он?">
+Нет. `apply` — обычная `inline`-функция стандартной библиотеки. Её параметр имеет тип `T.() -> Unit`: функция вызывает эту лямбду на объекте и возвращает сам объект, отсюда и `this` внутри блока. Такую же функцию для своего класса ты напишешь в несколько строк, пример — в следующем разделе.
+</Reveal>
+
+## Как устроено: тип с получателем
+
+В уроке про лямбды ты читал типы функций: `(Int) -> String` принимает число и возвращает строку. У типа функции может быть ещё **получатель** (receiver), его тип пишут перед точкой. `A.(B) -> C` — функция, которую вызывают на объекте `A` с параметром `B` и которая возвращает `C`.
+
+Внутри такой лямбды получатель становится **неявным получателем** (implicit receiver): к его функциям и свойствам обращаются без `this.` и без имени объекта. Так же ведёт себя функция-расширение из прошлого урока, поэтому лямбду с получателем удобно считать безымянным расширением. Вызывают её тоже как расширение или передают получатель первым аргументом:
+
+```kotlin
+val greet: String.() -> String = {
+    "Привет, $this! Букв: $length"
+}
+println("Аня".greet())   // Привет, Аня! Букв: 3
+println(greet("Борис"))  // Привет, Борис! Букв: 5
+```
+
+Польза появляется, когда такую лямбду принимает функция. Вот запрос, который настраивают блоком:
+
+<KotlinPlayground>
+
+```kotlin
+class Request {
+    var url = ""
+    var timeout = 1000
+}
+
+fun request(setup: Request.() -> Unit): Request {
+    val r = Request()
+    r.setup()
+    return r
+}
+
+fun main() {
+    val r = request {
+        url = "/users"
+        timeout = 5000
+    }
+    println("${r.url} ${r.timeout}")
+}
+```
+
+</KotlinPlayground>
+
+Запусти: программа напечатает `/users 5000`. Потом сломай пример: замени в объявлении `Request.() -> Unit` на `(Request) -> Unit`, а `r.setup()` на `setup(r)`. Компилятор (Kotlin 2.4.20) ответит «Unresolved reference 'url'» и то же скажет про `timeout`: у обычной лямбды получателя нет, объект приходит параметром, и писать придётся `it.url = "/users"`.
+
+Функцию, которая создаёт объект, настраивает его лямбдой и возвращает, называют **функцией-строителем** (builder function). `apply` устроен почти так же, только объект не создаёт, а получает: `inline fun <T> T.apply(block: T.() -> Unit): T`, где `T` — любой тип (об обобщениях будет отдельный урок).
+
+Готовые строители есть и в стандартной библиотеке. `buildString` создаёт `StringBuilder`, вызывает на нём твой блок и возвращает готовую `String`. Сначала предскажи, что напечатает эта программа:
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val s = buildString {
+        append("Kotlin")
+        append(", длина ")
+        append(length)
+    }
+    println(s)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Что напечатает программа?">
+«Kotlin, длина 14». Внутри блока `this` — `StringBuilder`, поэтому `length` — длина уже собранного текста: 6 символов «Kotlin» и 8 символов «, длина ». Локальной переменной `length` в `main` нет, поэтому компилятор нашёл свойство у получателя: имя без префикса он ищет у получателей, только если не нашёл его среди локальных переменных.
+</Reveal>
+
+Запусти, потом продублируй строку `append(length)` и, прежде чем запускать снова, предскажи новый вывод.
+
+`buildList` работает так же: внутри блока получатель — `MutableList`, наружу выходит список только для чтения.
+
+```kotlin
+val roles = buildList {
+    add("user")
+    if (isAdmin) add("admin")
+}
+```
+
+Вызов `roles.add("guest")` после блока уже не скомпилируется: у `List` нет функции `add`.
+
+<Callout type="blue" title="Если знаешь Java — здесь иначе">
+В Java у лямбды нет получателя: `this` в её теле — тот же объект, что и вокруг (JLS, §15.8.3). Лямбда для `Consumer<Config>` обращается к объекту через параметр: `c -> c.port = 8080`. Объекты вроде `HttpRequest` в Java настраивают строителем: каждый метод настройки `HttpRequest.Builder` меняет его состояние и возвращает тот же экземпляр. Цепочка читается хорошо, пока в ней нет условий: заголовок «только если есть токен» заставляет разорвать её на переменную и `if`. В Kotlin тот же строитель настраивают через `apply`, и внутри блока работает обычный код:
+
+```kotlin
+val request = HttpRequest.newBuilder().apply {
+    uri(URI.create("https://example.com/users"))
+    if (token != null) {
+        header("Authorization", "Bearer $token")
+    }
+}.build()
+```
+
+При этом строитель Java умеет то, чего лямбда с получателем сама не даёт: `build()` проверяет обязательное и без адреса бросит `IllegalStateException`.
+</Callout>
+
+## Как устроено: свой строитель и @DslMarker
+
+Строитель в несколько уровней собирают из тех же деталей. У каждого уровня свой класс, функция вложенного блока — член внешнего класса, а верхний уровень открывает функция-строитель. Документация Kotlin называет такие конструкции **типобезопасными строителями** (type-safe builders): компилятор знает тип каждого получателя и проверяет, что вызывается в блоке. Прочитай конфигурацию сервиса и предскажи вывод до запуска:
+
+<KotlinPlayground>
+
+```kotlin
+class DatabaseConfig {
+    var url = ""
+    var poolSize = 5
+}
+
+class ServerConfig {
+    var port = 80
+    val db = DatabaseConfig()
+
+    fun database(init: DatabaseConfig.() -> Unit) {
+        db.init()
+    }
+}
+
+fun server(init: ServerConfig.() -> Unit): ServerConfig {
+    val config = ServerConfig()
+    config.init()
+    return config
+}
+
+fun main() {
+    val config = server {
+        port = 8080
+        database {
+            url = "jdbc:postgresql://db/shop"
+            port = 5432
+        }
+    }
+    println("сервер: ${config.port}")
+    println("база: ${config.db.url}")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Какой порт программа напечатает для сервера?">
+5432. Внутри `database { }` доступны два неявных получателя: `DatabaseConfig` и внешний `ServerConfig`. У базы свойства `port` нет, компилятор нашёл его у внешнего получателя, и строка молча переписала порт сервера. Ошибки не будет ни при компиляции, ни при запуске, потому что во вложенном блоке видны члены всех внешних получателей.
+</Reveal>
+
+Так устроены неявные получатели: Kotlin может обратиться к любому доступному, у ближайшего только приоритет выше. В DSL это ловушка, и закрывает её **`@DslMarker`**. Объявляешь свою **аннотацию-маркер** словом `annotation class` (в Java это `@interface`), помечаешь её `@DslMarker` и ставишь на все классы-получатели одного DSL:
+
+```kotlin
+@DslMarker
+annotation class ConfigDsl
+
+@ConfigDsl
+class DatabaseConfig { /* … */ }
+
+@ConfigDsl
+class ServerConfig { /* … */ }
+```
+
+Теперь во вложенном блоке доступны члены только ближайшего помеченного получателя, и строка `port = 5432` не скомпилируется: «'var port: Int' cannot be called in this context with an implicit receiver. Use an explicit receiver if necessary». Если к внешнему объекту всё же нужно обратиться, его называют явно, **квалифицированным `this`** (qualified this): `this@server.port = 5432`. Метка совпадает с именем функции, которой передали лямбду.
+
+Добавь маркер в редакторе выше и запусти. Потом убери `@ConfigDsl` с `DatabaseConfig`: программа снова напечатает 5432. Ограничение работает, только когда оба получателя помечены одним маркером.
+
+## Как читать чужие DSL: Gradle и Ktor
+
+Gradle и Ktor подробно будут в последней фазе курса, сейчас задача — прочитать структуру. В IntelliJ IDEA поставь курсор на имя блока и нажми Ctrl+B (на macOS ⌘B): откроется объявление функции, и в нём будет тип её последнего параметра. Вот блоки из документации Gradle, файл `build.gradle.kts`:
+
+```kotlin
+plugins {
+    id("java")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation("junit:junit:4.13")
+    implementation(project(":shared"))
+}
+```
+
+По документации Gradle, блоки скрипта на Kotlin — лямбды с получателем, и тип `this` в каждом известен статически. Скрипт настраивает объект `Project`. Лямбда из `repositories { }` настраивает `RepositoryHandler`, поэтому `mavenCentral()` пишется без префикса. Ctrl+B по `dependencies` покажет расширение `Project`:
+
+```kotlin
+fun Project.dependencies(
+    configuration: DependencyHandlerScope.() -> Unit
+)
+```
+
+`DependencyHandlerScope` — обёртка над `DependencyHandler`, к нему и уходит вызов `implementation(…)`. Явно ту же строку пишут так: `project.dependencies.implementation(…)`.
+
+Само имя `implementation` появилось благодаря плагину `java`. Для конфигураций, которые добавили плагины, Gradle генерирует **типобезопасные функции-доступы** (type-safe accessors), и их набор определяется сразу после блока `plugins {}`. У плагина, подключённого вызовом `apply(plugin = "java")`, таких функций не будет.
+
+Теперь маршрут Ktor и объявления функций из его справочника (Ktor 3.6):
+
+```kotlin
+routing {
+    get("/hello") {
+        call.respondText("Hello")
+    }
+}
+```
+
+```kotlin
+fun Application.routing(
+    configuration: Routing.() -> Unit
+): RoutingRoot
+
+fun Route.get(path: String, body: RoutingHandler): Route
+
+typealias RoutingHandler = suspend RoutingContext.() -> Unit
+```
+
+`typealias` даёт длинному типу второе имя, а `suspend` относится к корутинам, о них будет отдельный урок. `Routing` — разновидность `Route`, поэтому `get` доступна прямо внутри `routing { }`.
+
+<Reveal q="Коллега ищет в файле маршрутов, где объявлена переменная call, и не находит. Откуда она берётся внутри get?">
+Из получателя. Блок `get` имеет тип `RoutingHandler`, то есть это лямбда с получателем `RoutingContext`, а у этого класса есть свойство `call` — вызов, который обрабатывает маршрут. Внутри обработчика `call` значит `this.call`. Правило: незнакомое имя в блоке DSL ищи у получателя, а получателя — в типе последнего параметра функции.
+</Reveal>
+
+Вложенные маршруты читаются так же: `route("/order") { … }` принимает лямбду с получателем `Route`, и каждый вложенный `route` добавляет к пути сегмент. В исходниках Ktor 3.6.0 тело этой функции — одно выражение `createRouteFromPath(path).apply(build)`, и в нём тот самый `apply`.
+
+## Как на практике
+
+- **Строй по схеме «создай, вызови, верни».** Функция-строитель создаёт объект, вызывает на нём лямбду и возвращает его. Вложенный уровень — функция-член внешнего класса по той же схеме.
+- **Помечай все получатели одним маркером.** Аннотация с `@DslMarker` на каждом классе DSL не пускает вложенный блок к внешнему объекту. Нужен внешний — пиши `this@имя`.
+- **Для плоской настройки хватит `apply`.** Если уровней нет, `ServerConfig().apply { port = 8080 }` делает то же, что свой строитель, без новых функций.
+- **Строки и списки по шагам собирай через `buildString` и `buildList`.** Условия и циклы внутри блока читаются проще, чем изменяемая переменная рядом с ним.
+
+<Callout type="teal" title="Как принято">
+Руководство Kotlin для авторов библиотек описывает функции DSL как строители, которые принимают лямбду с получателем последним параметром, поэтому их можно вызывать без круглых скобок. Обязательные значения оно советует передавать параметрами функции: компилятор не может проверить, что лямбда их присвоила. Отсюда `section("Файл") { … }` вместо `section { title = "Файл" }`. Строитель окупается, где объявления повторяются и складываются в иерархию. Ещё один случай из руководства — настройки библиотеки с множеством необязательных опций вроде `Json { … }`: новую опцию туда добавляют, не ломая совместимость. Одному вызову с обязательными параметрами хватит обычной функции.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Отчёт из плюсов.**
+Функция собирает текст отчёта: `var text = "Заказы:\n"`, потом цикл с `text += "- $order\n"` и `if` для скидки. Строки в Kotlin неизменяемые, каждое сложение создаёт новую `String`, и документация отдельно предупреждает про такой код в циклах. Ход: перенести тот же цикл и `if` в блок `buildString`, а сложение заменить на `appendLine`. Вывод: когда текст собирается в цикле и по условиям, `buildString` держит изменяемый `StringBuilder` внутри блока и отдаёт наружу готовую строку.
+
+**Разбор 2. Строитель, который ничего не строит.**
+Разработчик пишет `fun server(init: ServerConfig.() -> Unit)`, создаёт в теле объект и сразу возвращает его. Вызов `server { port = 8080 }` компилируется, но в конфигурации остаётся порт 80: блок никто не вызвал. Ход: между созданием и возвратом добавить `config.init()`. Вывод: если настройки из блока не применились, первым делом проверь, вызывает ли функция-строитель свою лямбду.
+
+**Разбор 3. DSL для одного письма.**
+В сервисе одна функция отправки письма, и её переделали в DSL: `email { subject = "Отчёт"; text = "…" }`. Адресата забыли, и компилятор промолчал: в свойстве `to` осталась пустая строка, и узнают об этом только при запуске. Ход: вернуть функцию `sendEmail(to: String, subject: String, text: String = "")` и вызывать её с именованными аргументами. Без `to` она не скомпилируется: «No value passed for parameter 'to'». Вывод: DSL окупается на повторяющейся иерархии, а плоский вызов с обязательными параметрами надёжнее как функция.
+
+## build.gradle.kts: конфиг или код
+
+<Compare leftLabel="Кажется: конфиг" rightLabel="Есть: код на Kotlin" verdict="right">
+  <div slot="left">
+  • `dependencies { }` — секция файла настроек<br/>
+  • `implementation` — ключевое слово Gradle<br/>
+  • Внутри блоков свой синтаксис<br/>
+  • Непонятное ищут в примерах из README
+  </div>
+  <div slot="right">
+  • `dependencies { }` — вызов функции с лямбдой<br/>
+  • `implementation` — функция, которую Gradle сгенерировал для плагина<br/>
+  • Внутри блоков обычный Kotlin со статическими типами<br/>
+  • Непонятное ищут у получателя через Ctrl+B
+  </div>
+</Compare>
+
+В конфиге читают ключи, в DSL — функции, и тип последнего параметра каждой из них говорит, что доступно внутри блока.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `(T) -> Unit` вместо `T.() -> Unit` | Внутри блока нет `this`, свойства объекта не видны | Получатель перед точкой: `T.() -> Unit` |
+| Строитель без `@DslMarker` или маркер на одном классе | Вложенный блок молча меняет внешний объект | Одна аннотация-маркер на всех классах DSL |
+| Строитель не вызывает лямбду | Объект возвращается ненастроенным, компилятор молчит | Вызвать `init()` до возврата |
+| Обязательное значение — свойством внутри блока | Забытое присваивание всплывёт только при запуске | Параметр функции: `section("Файл") { … }` |
+| Ждать от `buildList` изменяемый список | Наружу выходит `List`, `add` не скомпилируется | Добавлять внутри блока |
+
+## Практикум
+
+<Practice title="Переведи строитель меню с Java на DSL" checklist={["menu принимает Menu.() -> Unit, вызывает лямбду на новом меню и возвращает его", "section — функция-член Menu: заголовок параметром, лямбда Section.() -> Unit последней", "item — функция-член Section, пункты копятся в списке", "Menu и Section помечены одной аннотацией с @DslMarker", "Строка section(«Недавние») { } внутри раздела не компилируется", "Программа печатает «Файл: [Открыть, Сохранить]» и «Правка: [Отменить]»"]}>
+Так в Java-проекте собирают меню приложения. У `Menu.Builder` и `Section.Builder` каждый метод добавляет элемент и возвращает `this`, сами классы здесь опущены:
+
+```java
+Menu menu = new Menu.Builder()
+    .section(new Section.Builder("Файл")
+        .item("Открыть")
+        .item("Сохранить")
+        .build())
+    .section(new Section.Builder("Правка")
+        .item("Отменить")
+        .build())
+    .build();
+```
+
+Напиши на Kotlin классы `Menu` и `Section` и функцию `menu`, чтобы код в `main` скомпилировался и напечатал разделы. У `Menu` должен быть список `sections`, у `Section` — `title` и список `items`. Потом раскомментируй строку с «Недавними» и убедись, что компилятор её не пропускает.
+
+<KotlinPlayground>
+
+```kotlin
+// объяви здесь маркер, Section, Menu и menu
+
+fun main() {
+    // val m = menu {
+    //     section("Файл") {
+    //         item("Открыть")
+    //         item("Сохранить")
+    //         // section("Недавние") { }
+    //     }
+    //     section("Правка") {
+    //         item("Отменить")
+    //     }
+    // }
+    // for (s in m.sections) {
+    //     println("${s.title}: ${s.items}")
+    // }
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+@DslMarker
+annotation class MenuDsl
+
+@MenuDsl
+class Section(val title: String) {
+    val items = mutableListOf<String>()
+
+    fun item(name: String) {
+        items.add(name)
+    }
+}
+
+@MenuDsl
+class Menu {
+    val sections = mutableListOf<Section>()
+
+    fun section(title: String, init: Section.() -> Unit) {
+        val s = Section(title)
+        s.init()
+        sections.add(s)
+    }
+}
+
+fun menu(init: Menu.() -> Unit): Menu {
+    val m = Menu()
+    m.init()
+    return m
+}
+
+fun main() {
+    val m = menu {
+        section("Файл") {
+            item("Открыть")
+            item("Сохранить")
+        }
+        section("Правка") {
+            item("Отменить")
+        }
+    }
+    for (s in m.sections) {
+        println("${s.title}: ${s.items}")
+    }
+}
+```
+
+Программа печатает «Файл: [Открыть, Сохранить]» и «Правка: [Отменить]». Заголовок раздела обязателен, поэтому он параметр функции, а не свойство внутри блока. Строка с «Недавними» не компилируется: у `Section` нет функции `section`, а до внешнего `Menu` маркер не пускает. Без `@MenuDsl` она скомпилировалась бы, и «Недавние» тихо стали бы разделом верхнего уровня.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Где ты применишь это до пятницы? Открой `build.gradle.kts` своего или любого открытого Kotlin-проекта и для трёх блоков найди через Ctrl+B, какой объект приходит в них как `this`. Потом найди в своём Java-коде строитель, цепочку которого пришлось разорвать ради `if`, и прикинь, как он выглядел бы с `apply`. Через неделю-две вернись к шпаргалке и проверь, не просится ли в твой код `buildList` или свой строитель.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Тип с получателем | `T.() -> Unit`, `A.(B) -> C` |
+| Внутри такой лямбды | `this` — получатель, префикс можно не писать |
+| Вызвать | `obj.block()` или `block(obj)` |
+| Функция-строитель | создать объект, вызвать `obj.init()`, вернуть |
+| Строка по шагам | `buildString { append(…) }` |
+| Список по шагам | `buildList { add(…) }`, наружу `List` |
+| Настроить готовый объект | `obj.apply { … }` |
+| Защитить вложенные блоки | `@DslMarker` на своей аннотации, она на всех классах DSL |
+| Внешний получатель явно | `this@server.port = 5432` |
+| Чужой блок | Ctrl+B по имени, смотри тип последнего параметра |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "DSL (domain-specific language)", meaning: "Язык для одной предметной области; в Kotlin его собирают из обычных функций и лямбд с получателем." },
+  { term: "Получатель (receiver)", meaning: "Объект, на котором вызывают функцию-расширение или лямбду с получателем; внутри он доступен как this." },
+  { term: "Тип функции с получателем", meaning: "Тип вида A.(B) -> C: функцию вызывают на объекте A с параметром B, и она возвращает C." },
+  { term: "Лямбда с получателем (lambda with receiver)", meaning: "Лямбда, внутри которой this указывает на переданный объект-получатель." },
+  { term: "Неявный получатель (implicit receiver)", meaning: "Получатель, к членам которого обращаются без this и без имени объекта." },
+  { term: "Функция-строитель (builder function)", meaning: "Функция, которая создаёт объект, настраивает его переданной лямбдой и возвращает." },
+  { term: "Типобезопасный строитель (type-safe builder)", meaning: "Строитель на лямбдах с получателем, в котором компилятор проверяет, какие функции и свойства доступны в каждом блоке." },
+  { term: "buildString", meaning: "Функция стандартной библиотеки: наполняет StringBuilder внутри блока и возвращает готовую String." },
+  { term: "buildList", meaning: "Функция стандартной библиотеки: наполняет MutableList внутри блока и возвращает список только для чтения." },
+  { term: "apply", meaning: "Scope-функция, которая вызывает лямбду с получателем на объекте и возвращает сам объект." },
+  { term: "@DslMarker", meaning: "Аннотация, которая превращает твою аннотацию в маркер DSL." },
+  { term: "Аннотация-маркер (DSL marker)", meaning: "Своя аннотация с @DslMarker; помеченные ею получатели не видны из вложенных блоков неявно." },
+  { term: "Квалифицированный this (qualified this)", meaning: "Запись this@метка, которая явно называет нужный получатель, например this@server." },
+  { term: "Функция-доступ (type-safe accessor)", meaning: "Функция вроде implementation, которую Gradle генерирует для конфигураций, добавленных плагинами из блока plugins." },
+  { term: "Строитель (builder) в Java", meaning: "Объект, методы которого меняют его состояние и возвращают его же, а build() отдаёт готовый результат." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-dsl-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">DSL: понятия</span>
+    <span class="kc-trainer-hint">Получатель, строитель, маркер</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-dsl-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Чей это this</span>
+    <span class="kc-trainer-hint">Блоки в незнакомом коде</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-dsl-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши строитель</span>
+    <span class="kc-trainer-hint">Типы, вызовы, маркер</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-dsl-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери строитель</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Type-safe builders, Higher-order functions and lambdas, This expressions** ([kotlinlang.org/docs](https://kotlinlang.org/docs/type-safe-builders.html), сверено 2026-09-26) — тип с получателем, схема строителя, `@DslMarker`, `this@метка`.
+- **Kotlin — Scope functions, Strings, API reference: apply, buildString, buildList, DslMarker** ([kotlinlang.org](https://kotlinlang.org/api/core/kotlin-stdlib/), сверено 2026-09-26) — объявления функций стандартной библиотеки и правила маркера.
+- **Kotlin — Library authors' guidelines: Readability** ([kotlinlang.org/docs](https://kotlinlang.org/docs/api-guidelines-readability.html), сверено 2026-09-26) — лямбда последним параметром, обязательное — параметрами.
+- **Gradle — Writing Build Scripts, Kotlin DSL Primer, API Kotlin DSL** ([docs.gradle.org](https://docs.gradle.org/current/userguide/writing_build_scripts_intermediate.html), сверено 2026-09-26) — блоки как лямбды с получателем, `DependencyHandlerScope`, функции-доступы.
+- **Ktor 3.6 — Routing, API reference, исходники** ([ktor.io/docs](https://ktor.io/docs/server-routing.html), сверено 2026-09-26) — `routing`, `get`, `RoutingHandler`, `route` через `apply`.
+- **Oracle — Java SE 21: JLS §15.8.3, HttpRequest.Builder, Consumer** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpRequest.Builder.html), сверено 2026-09-26) — `this` в лямбде Java и строитель с цепочкой.

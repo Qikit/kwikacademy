@@ -1,0 +1,140 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-dsl",
+  "title": "Собери строитель",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери функцию-строитель: она создаёт конфигурацию сервера, настраивает её переданным блоком и возвращает.",
+        "words": [
+          "    return config",
+          "    config.init()",
+          "}",
+          "fun server(init: ServerConfig.() -> Unit): ServerConfig {",
+          "    val config = ServerConfig()"
+        ],
+        "answer": [
+          "fun server(init: ServerConfig.() -> Unit): ServerConfig {",
+          "    val config = ServerConfig()",
+          "    config.init()",
+          "    return config",
+          "}"
+        ],
+        "explain": "Схема «создай, вызови, верни»: объект нужен до вызова блока, а вернуть его стоит уже настроенным. Без config.init() настройки из блока не применятся."
+      },
+      {
+        "task": "Собери программу, которая печатает «Kotlin, длина 14».",
+        "words": [
+          "        append(length)",
+          "    println(s)",
+          "fun main() {",
+          "        append(\", длина \")",
+          "    }",
+          "}",
+          "    val s = buildString {",
+          "        append(\"Kotlin\")"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val s = buildString {",
+          "        append(\"Kotlin\")",
+          "        append(\", длина \")",
+          "        append(length)",
+          "    }",
+          "    println(s)",
+          "}"
+        ],
+        "explain": "Внутри buildString получатель — StringBuilder, поэтому length — длина уже собранного текста: 6 + 8 = 14. Если поставить append(length) раньше, число будет другим."
+      },
+      {
+        "task": "ServerConfig и DatabaseConfig помечены одним маркером с @DslMarker; server { } создаёт ServerConfig, database { } — его функция. Задай порт сервера 5432 изнутри database и напечатай его.",
+        "words": [
+          "        }",
+          "    println(config.port)",
+          "            this@server.port = 5432",
+          "fun main() {",
+          "    }",
+          "        database {",
+          "}",
+          "    val config = server {"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val config = server {",
+          "        database {",
+          "            this@server.port = 5432",
+          "        }",
+          "    }",
+          "    println(config.port)",
+          "}"
+        ],
+        "explain": "Маркер закрыл внешний получатель, поэтому к ServerConfig из блока database обращаются явно, через this@server: метка совпадает с именем функции, которой передали лямбду. Программа напечатает 5432."
+      },
+      {
+        "task": "Собери функцию: список ролей начинается с user, а admin добавляется только администратору.",
+        "words": [
+          "        if (isAdmin) add(\"admin\")",
+          "}",
+          "    return buildList {",
+          "        add(\"user\")",
+          "fun roles(isAdmin: Boolean): List<String> {",
+          "    }"
+        ],
+        "answer": [
+          "fun roles(isAdmin: Boolean): List<String> {",
+          "    return buildList {",
+          "        add(\"user\")",
+          "        if (isAdmin) add(\"admin\")",
+          "    }",
+          "}"
+        ],
+        "explain": "Внутри buildList получатель — MutableList, поэтому add пишется без префикса. user добавляется первым и всегда, admin — по условию. Наружу выходит список только для чтения."
+      },
+      {
+        "task": "Объяви лямбду с получателем-строкой и вызови её сначала на «Аня» как расширение, потом с «Борис» аргументом.",
+        "words": [
+          "    println(greet(\"Борис\"))",
+          "    }",
+          "fun main() {",
+          "        \"Привет, $this!\"",
+          "}",
+          "    println(\"Аня\".greet())",
+          "    val greet: String.() -> String = {"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val greet: String.() -> String = {",
+          "        \"Привет, $this!\"",
+          "    }",
+          "    println(\"Аня\".greet())",
+          "    println(greet(\"Борис\"))",
+          "}"
+        ],
+        "explain": "Внутри лямбды this — строка-получатель. Вызвать её можно как расширение, \"Аня\".greet(), или передав получатель первым аргументом, greet(\"Борис\")."
+      },
+      {
+        "task": "Настрой порт готового объекта ServerConfig через apply и напечатай его.",
+        "words": [
+          "    println(config.port)",
+          "        port = 8080",
+          "}",
+          "    val config = ServerConfig().apply {",
+          "fun main() {",
+          "    }"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val config = ServerConfig().apply {",
+          "        port = 8080",
+          "    }",
+          "    println(config.port)",
+          "}"
+        ],
+        "explain": "apply вызывает блок на объекте как на получателе и возвращает сам объект, поэтому port пишется без префикса, а config — уже настроенный ServerConfig. Программа напечатает 8080."
+      }
+    ]
+  }
+}

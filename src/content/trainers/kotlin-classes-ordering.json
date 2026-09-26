@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-classes",
+  "title": "Собери класс",
+  "description": "Расставь строки кода так, чтобы получилось то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Класс data class User(val name: String, val age: Int) уже объявлен. Собери main: создай Аню 30 лет, сделай копию с возрастом 31, разбери копию на name и age и напечатай их.",
+        "words": ["    val (name, age) = older", "}", "    val older = anya.copy(age = 31)", "fun main() {", "    println(\"$name, $age\")", "    val anya = User(\"Аня\", 30)"],
+        "answer": ["fun main() {", "    val anya = User(\"Аня\", 30)", "    val older = anya.copy(age = 31)", "    val (name, age) = older", "    println(\"$name, $age\")", "}"],
+        "explain": "Каждая строка использует результат предыдущей: копию делают из существующего объекта, разбирают уже готовую копию. Программа напечатает «Аня, 31»."
+      },
+      {
+        "task": "Собери класс User: имя приходит в конструктор, а свойство name и при создании, и при каждой записи хранит имя без пробелов по краям.",
+        "words": ["            field = value.trim()", "}", "        set(value) {", "class User(name: String) {", "        }", "    var name: String = name.trim()"],
+        "answer": ["class User(name: String) {", "    var name: String = name.trim()", "        set(value) {", "            field = value.trim()", "        }", "}"],
+        "explain": "Параметр конструктора без val только задаёт начальное значение свойства. Сеттер стоит сразу под свойством и пишет в поле-хранилище через field."
+      },
+      {
+        "task": "Класс open class Shape с функцией open fun area(): Double уже объявлен. Собери наследника Square, который считает площадь в теле функции.",
+        "words": ["    }", "class Square(val side: Double) : Shape() {", "        return side * side", "}", "    override fun area(): Double {"],
+        "answer": ["class Square(val side: Double) : Shape() {", "    override fun area(): Double {", "        return side * side", "    }", "}"],
+        "explain": "После двоеточия указывают родителя и вызывают его конструктор. Открытую функцию родителя переопределяют со словом override."
+      },
+      {
+        "task": "Спрячь конструктор User и дай создавать пользователя только через фабрику guest в companion object.",
+        "words": ["        fun guest() = User(\"Гость\")", "}", "    companion object {", "class User private constructor(val name: String) {", "    }"],
+        "answer": ["class User private constructor(val name: String) {", "    companion object {", "        fun guest() = User(\"Гость\")", "    }", "}"],
+        "explain": "Модификатор первичного конструктора пишут вместе со словом constructor. Фабрика в companion object видит приватный конструктор, а вызывают её через имя класса: User.guest()."
+      },
+      {
+        "task": "Собери класс Order: свойство label объявлено без значения и получает его в блоке init из номера заказа.",
+        "words": ["        label = \"Заказ $id\"", "}", "    init {", "class Order(val id: Int) {", "    }", "    val label: String"],
+        "answer": ["class Order(val id: Int) {", "    val label: String", "    init {", "        label = \"Заказ $id\"", "    }", "}"],
+        "explain": "Свойство объявляют раньше блока init, который его присваивает. Если поставить init выше, компилятор ответит «Variable cannot be initialized before declaration»."
+      },
+      {
+        "task": "Собери класс Point, который при печати показывает координаты в скобках: (1, 2).",
+        "words": ["        return \"($x, $y)\"", "    }", "class Point(val x: Int, val y: Int) {", "}", "    override fun toString(): String {"],
+        "answer": ["class Point(val x: Int, val y: Int) {", "    override fun toString(): String {", "        return \"($x, $y)\"", "    }", "}"],
+        "explain": "toString — открытая функция Any, от которого наследуется любой класс, поэтому её переопределяют со словом override даже в классе без open."
+      }
+    ]
+  }
+}

@@ -4,10 +4,429 @@ order: 5
 phase: "Основы"
 title: "Классы и объекты: final по умолчанию и никакого static"
 eyebrow: "Kotlin · Основы"
-readingMinutes: 15
+readingMinutes: 18
 summary: "Объявлять классы со свойствами, data class и object и помнить, что классы закрыты для наследования по умолчанию."
 tags: [kotlin, basics]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Классы и объекты: final по умолчанию и никакого static» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты видел, как компилятор держит null под контролем: `String?`, `?.`, `?:` и smart cast. В настоящем проекте данные лежат в объектах: заказ, пользователь, корзина. Ты открываешь модель в Kotlin-сервисе и видишь одну строку `data class Order(val id: Long, val total: Int)` там, где в Java-классе без record был бы экран полей, конструктора, геттеров, `equals`, `hashCode` и `toString`. Пишешь наследника от соседнего класса `User`, и компилятор отказывает. Ищешь, куда положить статическую фабрику, а слова `static` в языке нет.
+
+Если переносить привычки из Java как есть, получится Kotlin с Java-болезнями. Язык поменял умолчания: класс закрыт для наследования, связку из поля, геттера и сеттера заменило свойство, а синглтон и равенство по содержимому стали частью языка.
+
+После урока ты сможешь объявить класс со свойствами в первичном конструкторе, выбрать между обычным классом, `data class` и `object`, открыть класс для наследования там, где это задумано, и заменить `static` функцией верхнего уровня или `companion object`.
+
+## Ядро: класс закрыт, пока его не открыли
+
+<Callout type="purple" title="Суть">
+Класс в Kotlin обычно объявляют вместе с первичным конструктором, и параметры с `val` или `var` сразу становятся **свойствами**: геттер и сеттер пишет компилятор. Класс **final по умолчанию**: от обычного класса наследуются, только если он помечен `open`, а переопределяют только открытые члены и всегда со словом `override`. Абстрактные классы и интерфейсы открыты сами. Для данных есть **`data class`**, а вместо `static` — функции верхнего уровня, `object` и `companion object`.
+</Callout>
+
+Отсюда правило для ревью: каждое `open` — решение автора класса. Если класс не задуман как базовый, писать ничего не нужно, он и так закрыт.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="В обычном классе class Point(val x: Int, val y: Int) ты пишешь override fun toString() = «($x, $y)». Слова open в коде нет. Скомпилируется?">
+Да. Каждый класс неявно наследует `Any`, а у него `toString`, `equals` и `hashCode` объявлены открытыми. Закрыт для наследования сам `Point`, но открытые члены своего родителя он переопределять может, и `override` здесь обязателен. Правило: `override` работает для любого открытого члена родителя, в том числе из `Any`.
+</Reveal>
+
+## Как устроено: конструктор, свойства и видимость
+
+**Первичный конструктор** (primary constructor) стоит прямо в заголовке класса: `class User(val name: String, var age: Int)`. Параметр с `val` становится свойством только для чтения, с `var` — изменяемым свойством. Параметр без них в объекте не хранится: его можно использовать в начальных значениях свойств и в `init`, а из метода компилятор его уже не найдёт. Объект создают вызовом конструктора без `new`: `User("Аня", 30)`.
+
+Код, который нужно выполнить при создании объекта, кладут в блок **`init`**. Блоки `init` и начальные значения свойств выполняются по очереди, сверху вниз. Есть и **вторичные конструкторы** (`constructor(...) : this(...)`): если у класса есть первичный, вторичный вызывает его напрямую или через другой вторичный.
+
+**Свойство** (property) заменяет связку из поля, геттера и сеттера. `user.name` вызывает геттер, `user.age = 31` — сеттер, а Java-код видит их как `getName()` и `setAge()`. Свои геттер и сеттер пишут, когда нужна логика:
+
+<KotlinPlayground>
+
+```kotlin
+class Account(val owner: String) {
+    var balance: Int = 0
+        private set
+
+    val isEmpty: Boolean
+        get() = balance == 0
+
+    fun deposit(amount: Int) {
+        balance += amount
+    }
+}
+
+fun main() {
+    val acc = Account("Аня")
+    println(acc.isEmpty)
+    acc.deposit(500)
+    println("${acc.owner}: ${acc.balance}")
+    println(acc.isEmpty)
+}
+```
+
+</KotlinPlayground>
+
+Предскажи три строки вывода и запусти. Потом добавь в конец `main` строку `acc.balance = 1_000_000`. Компилятор (Kotlin 2.4.20) ответит «Cannot access 'balance': it is private in 'Account'»: читать баланс может кто угодно, а менять — только методы самого класса.
+
+`isEmpty` значение не хранит, его геттер вычисляется при каждом обращении. Сравни два свойства комнаты с изменяемой шириной:
+
+```kotlin
+class Room(var width: Int, var height: Int) {
+    val area: Int
+        get() = width * height
+    val areaAtStart: Int = width * height
+}
+```
+
+После `room.width = 5` у комнаты 3 на 4 свойство `area` вернёт 20, а `areaAtStart` останется 12: его посчитали один раз при создании. Когда сеттеру нужно сохранить значение, он обращается к **полю-хранилищу** (backing field) через слово `field`. Этот сеттер сохраняет имя без пробелов по краям:
+
+```kotlin
+var name: String = ""
+    set(value) {
+        field = value.trim()
+    }
+```
+
+**Модификатор видимости** по умолчанию — `public`, и его не пишут. `private` прячет член внутри класса, а объявление верхнего уровня — внутри файла. `protected` открывает член ещё и наследникам, `internal` — всему **модулю**: модулю IntelliJ IDEA, проекту Maven или source set в Gradle, причём тесты видят `internal` из main. Пакетной видимости, как в Java, нет, и `protected` соседу по пакету не виден.
+
+<Callout type="blue" title="lateinit: обещание вместо значения">
+Обычно свойство получает значение при создании объекта. Если его присваивает фреймворк или метод настройки теста, пишут `lateinit var template: String`, и компилятор верит, что значение появится до первого чтения. Как и с `!!` из прошлого урока, проверка переходит от компилятора к тебе: чтение до присваивания бросит `UninitializedPropertyAccessException` с текстом «lateinit property template has not been initialized». `lateinit` работает только с `var` ненулевого типа и не работает с примитивами вроде `Int`.
+</Callout>
+
+<Reveal q="В классе User есть val nickname: String?. Скомпилируется ли if (user.nickname != null) println(user.nickname.length)? А если nickname объявлен через var?">
+С `val` из того же модуля — да: значение не поменяется между проверкой и чтением, и smart cast срабатывает. С `var` — нет, как с `var` верхнего уровня в прошлом уроке: «Smart cast to 'String' is impossible». Не спасёт и `val` со своим геттером: он вычисляется при каждом чтении и может вернуть другое. Выход тот же: локальный `val` или `?.`.
+</Reveal>
+
+## Как устроено: наследование и data class
+
+Родителя указывают после двоеточия и сразу вызывают его конструктор:
+
+```kotlin
+open class Shape(val name: String) {
+    open fun area(): Double = 0.0
+    fun describe() = "$name: ${area()}"
+}
+
+class Square(val side: Double) : Shape("квадрат") {
+    override fun area() = side * side
+}
+```
+
+`Square(2.0).describe()` вернёт «квадрат: 4.0». Забудешь `override` — компилятор напишет «'area' hides member of supertype 'Shape' and needs an 'override' modifier». Попытку переопределить `describe` он остановит сообщением «'describe' in 'Shape' is final and cannot be overridden».
+
+**Абстрактный класс** (`abstract class`) нельзя создать напрямую, а его абстрактные члены реализуют наследники; `open` не нужен ни классу, ни таким членам. **Интерфейс** тоже может содержать методы с реализацией по умолчанию, но состояния не хранит. Конструктора у интерфейса нет, поэтому скобок после его имени не пишут:
+
+```kotlin
+interface Notifier {
+    fun send(text: String)
+    fun greet() = send("Привет")
+}
+
+class ConsoleNotifier : Notifier {
+    override fun send(text: String) = println(text)
+}
+```
+
+<Callout type="blue" title="Если знаешь Java — наследование здесь по приглашению">
+Обычные классы в Java, как пишет Джошуа Блох, по традиции не делают ни `final`, ни пригодными для наследования. В Effective Java (3-е издание, совет 19) он советует обратное: проектируй и документируй класс для наследования или запрещай его. Иначе правка базового класса может сломать наследников, о которых автор ничего не знает. В Kotlin запрет стал умолчанием, а `open` ставят там, где наследование продумано.
+</Callout>
+
+**`data class`** — класс для хранения данных. По свойствам первичного конструктора компилятор генерирует `equals` и `hashCode`, `toString` вида `User(name=Аня, age=30)`, `copy` и функции `component1()`, `component2()` и дальше по числу свойств. `copy` создаёт новый объект и меняет только названные свойства: `anya.copy(age = 31)`. Функции `componentN` дают **деструктуризацию** (destructuring): `val (name, age) = anya`.
+
+В первичном конструкторе data class нужен хотя бы один параметр, все с `val` или `var`, а сам класс не бывает `open` или `abstract`. Свойства из тела класса в `equals`, `hashCode`, `toString` и `copy` не попадают. `copy` поверхностная: изменяемый список внутри будет общим у копии и оригинала.
+
+В Java 16 и новее `data class` напомнит `record`: тот тоже получает `equals`, `hashCode` и `toString` по компонентам. Но поля record всегда `final`, расширять классы он не может, аксессоры называются `name()`, и готового `copy` у него нет. Data class бывает с `var`-свойствами и может наследовать классы. Нужен Java-коду настоящий record — над data class ставят `@JvmRecord`.
+
+Сначала предскажи, что напечатает программа, потом запусти:
+
+<KotlinPlayground>
+
+```kotlin
+class Point(val x: Int, val y: Int)
+data class DataPoint(val x: Int, val y: Int)
+
+fun main() {
+    println(Point(1, 2) == Point(1, 2))
+    println(DataPoint(1, 2) == DataPoint(1, 2))
+    println(DataPoint(1, 2))
+    val moved = DataPoint(1, 2).copy(y = 5)
+    val (x, y) = moved
+    println("$x $y")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Что напечатают первые три строки main?">
+`false`, `true` и `DataPoint(x=1, y=2)`. Оператор `==` вызывает `equals`. У `Point` он унаследован от `Any` и сравнивает ссылки, а объектов два. Для `DataPoint` компилятор сгенерировал `equals` по свойствам первичного конструктора и `toString` с именами полей. Правило: нужно равенство по содержимому — объявляй `data class`.
+</Reveal>
+
+Потом допиши `data` перед `class Point` и запусти ещё раз: первая строка тоже станет `true`.
+
+## Никакого static: object и companion object
+
+Для того, что в Java помечено `static`, в Kotlin три места. Функцию или константу, которая ни к какому объекту не привязана, объявляют на **верхнем уровне** файла, как в уроке про функции, и класс-обёртка ей не нужен. Если нужен ровно один экземпляр, объяви **`object`**: это класс и его единственный объект за один шаг. Фабрики и константы, которые принадлежат классу, кладут в **`companion object`** и вызывают через имя класса.
+
+Члены companion object только выглядят статическими: это члены объекта-компаньона. Java вызывает его функцию как `User.Companion.guest()`, а настоящим static-методом её делает аннотация `@JvmStatic`. **`const val`** — константа времени компиляции: строка или примитив на верхнем уровне, в `object` или в companion object. Ниже конструктор `User` сделан приватным, и тогда модификатор пишут вместе со словом `constructor`:
+
+<KotlinPlayground>
+
+```kotlin
+object Counter {
+    init {
+        println("Counter создан")
+    }
+    var count = 0
+}
+
+class User private constructor(val name: String) {
+    companion object {
+        const val MAX_NAME = 20
+        fun guest() = User("Гость")
+    }
+}
+
+fun main() {
+    println("старт")
+    Counter.count++
+    Counter.count++
+    println(Counter.count)
+    println(User.guest().name)
+    println(User.MAX_NAME)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Какая строка появится раньше: «старт» или «Counter создан»?">
+«старт». `object` создаётся при первом обращении к нему, здесь это `Counter.count++`, и инициализация потокобезопасна: `init` выполнится один раз. Правило: код из `init` у `object` запускается, когда объект впервые понадобился, и если к объекту никто не обратится, он не выполнится вовсе.
+</Reveal>
+
+Запусти, потом добавь в `main` строку `User("Аня")`. Компилятор ответит «Cannot access 'constructor(name: String): User': it is private in 'User'»: создать пользователя можно только через фабрику.
+
+## Как на практике
+
+- **Начинай с `val` в первичном конструкторе.** `var` нужен только тому, что меняется. Если менять должен лишь сам класс, пиши `var` с `private set`.
+- **Данные клади в `data class`, объект с поведением и изменяемым состоянием — в обычный класс.** Заказ как значение сравнивают по содержимому, банковский счёт с меняющимся балансом так сравнивать нельзя.
+- **Не открывай класс заранее.** `open` ставь, когда наследование спроектировано и описано.
+- **`lateinit` оставь для внешней инициализации.** Если значение известно при создании объекта, передай его параметром конструктора.
+
+<Callout type="teal" title="Как принято">
+Соглашения Kotlin задают порядок внутри класса: сначала свойства и блоки `init`, потом вторичные конструкторы, потом методы, а `companion object` — в самом конце. Имена классов и объектов пишут в UpperCamelCase: `OrderService`, `EmptyCart`. Лишние модификаторы вроде `public` опускают, если ты пишешь не библиотеку.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Spring и закрытые классы.**
+Команда переносит на Kotlin сервис на Spring с `@Transactional`. Spring AOP нужны открытые классы, а в Kotlin классы и их члены закрыты. Открывать руками все классы незачем: фреймворку нужны только классы с определёнными аннотациями. Ход: подключить плагин компилятора `kotlin-spring`. Он сам открывает классы с `@Component`, `@Transactional` и аннотациями на их основе вроде `@Service`, а в проекте со start.spring.io уже включён. Вывод: умолчание остаётся, открытыми становятся только классы, нужные фреймворку.
+
+**Разбор 2. Null там, где его не может быть.**
+Базовый класс в блоке `init` печатает результат `describe()`, а наследник переопределяет `describe()` и читает в нём своё свойство `label: String`:
+
+```kotlin
+open class Base {
+    init {
+        println(describe())
+    }
+    open fun describe() = "база"
+}
+
+class Derived(val label: String) : Base() {
+    override fun describe() = "длина: ${label.length}"
+}
+```
+
+Код компилируется, но `Derived("x")` падает с `NullPointerException`: `Cannot invoke "String.length()" because "this.label" is null`. Базовый класс инициализируется первым, и `label` в этот момент ещё не присвоен, хотя тип у него ненулевой. Ход: не вызывать `open`-члены из конструктора, `init` и начальных значений свойств. Об этом предупреждают и документация Kotlin, и Блох в том же совете 19. Вывод: проектируя базовый класс, проверь, что вызывается при его создании.
+
+**Разбор 3. Где data class лишний.**
+Корзина объявлена как `data class Cart(val owner: String, var total: Int)` и лежит в `HashSet`. После `cart.total = 200` проверка `cart in carts` возвращает `false`: `hashCode` зависит от `total`, и множество ищет корзину не там. Документация Java предупреждает: если изменить элемент так, что меняется результат `equals`, поведение множества не определено. Ход: сущность, которую отличают по идентичности, сделать обычным классом, а у data class оставить только `val` и менять значения через `copy`. Вывод: data class хорош для значений, а изменяемый data class не клади в множество и не делай ключом словаря.
+
+## Какой класс объявить
+
+<DecisionTree nodes={[
+  { q: "Нужна функция или константа, которой не нужен объект?", yes: "Верхний уровень файла, а если она принадлежит классу — companion object", no: "к следующему вопросу" },
+  { q: "Нужен ровно один экземпляр на всю программу?", yes: "object", no: "к следующему вопросу" },
+  { q: "Класс хранит данные, и объекты сравнивают по содержимому?", yes: "data class с val-свойствами", no: "к следующему вопросу" },
+  { q: "Наследование от класса задумано?", yes: "open или abstract class либо интерфейс", no: "Обычный class, он и так final" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `open` на всех классах «на всякий случай» | Любая правка базового класса может сломать чужих наследников | `open` только там, где наследование продумано |
+| Обычный класс в `Set` или ключом `Map` | Сравнение по ссылке, равный объект не находится | `data class` или свои `equals` и `hashCode` вместе |
+| Свойство для `equals` в теле data class | Равенство, `toString` и `copy` его не видят | Перенести в первичный конструктор |
+| `var` у data class, который лежит в `HashSet` | После изменения элемент не находится | `val` и `copy` |
+| Вызов `open`-метода из `init` | Наследник ещё не готов, возможен NPE | Вызывать после создания объекта |
+
+## Практикум
+
+<Practice title="Переведи класс товара с Java на Kotlin" checklist={["Product — data class, свойства объявлены в первичном конструкторе", "Все свойства — val: товар после создания не меняется", "Вместо withPrice используется copy(price = 150)", "free и MAX_DISCOUNT лежат в companion object, MAX_DISCOUNT — const val", "Нет ручных геттеров, equals, hashCode и toString", "Программа печатает Product(sku=T-1, name=Чай, price=150), true, Product(sku=G-1, name=Подарок, price=0) и 50"]}>
+Вот класс на Java:
+
+```java
+public final class Product {
+    public static final int MAX_DISCOUNT = 50;
+
+    private final String sku;
+    private final String name;
+    private final int price;
+
+    public Product(String sku, String name, int price) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+    }
+
+    public static Product free(String sku, String name) {
+        return new Product(sku, name, 0);
+    }
+
+    public String getSku() { return sku; }
+    public String getName() { return name; }
+    public int getPrice() { return price; }
+
+    public Product withPrice(int newPrice) {
+        return new Product(sku, name, newPrice);
+    }
+
+    // equals, hashCode и toString по трём полям
+}
+```
+
+Объяви `Product` на Kotlin в редакторе ниже и раскомментируй строки в `main`. На месте комментария про скидку напечатай тот же чай с ценой 150 и запусти.
+
+<KotlinPlayground>
+
+```kotlin
+// объяви здесь класс Product
+
+fun main() {
+    // val tea = Product("T-1", "Чай", 300)
+    // напечатай чай со скидкой до 150
+    // println(tea == Product("T-1", "Чай", 300))
+    // println(Product.free("G-1", "Подарок"))
+    // println(Product.MAX_DISCOUNT)
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+data class Product(
+    val sku: String,
+    val name: String,
+    val price: Int
+) {
+    companion object {
+        const val MAX_DISCOUNT = 50
+
+        fun free(sku: String, name: String) =
+            Product(sku, name, 0)
+    }
+}
+
+fun main() {
+    val tea = Product("T-1", "Чай", 300)
+    println(tea.copy(price = 150))
+    println(tea == Product("T-1", "Чай", 300))
+    println(Product.free("G-1", "Подарок"))
+    println(Product.MAX_DISCOUNT)
+}
+```
+
+Программа печатает `Product(sku=T-1, name=Чай, price=150)`, `true`, `Product(sku=G-1, name=Подарок, price=0)` и `50`. `withPrice` был ручной копией с одним изменённым полем, `copy` делает то же для любого свойства. Фабрика и константа переехали в `companion object` и вызываются, как и раньше, через имя класса. `final` писать не нужно: data class открыть нельзя.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Открой в своём Java-проекте любой класс с данными: DTO, событие, ответ API. Сколько строк в нём занимают геттеры, `equals`, `hashCode` и `toString`? Прикинь, как он выглядел бы в виде `data class`, и отметь, какие поля меняются после создания. Через неделю, когда будешь писать на Kotlin сам, найди в своём коде все `open` и про каждое ответь, кто от этого класса наследуется.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Класс со свойствами | `class User(val name: String, var age: Int)` |
+| Создать объект | `User("Аня", 30)`, без `new` |
+| Геттер и сеттер | пишет компилятор; свои — `get()` и `set(value)` с `field` |
+| Запись только изнутри | `var x = 0` и строкой ниже `private set` |
+| Код при создании | блок `init` |
+| Разрешить наследование | `open class`, `open fun`, в наследнике `override` |
+| Равенство по содержимому | `data class`: `equals`, `hashCode`, `toString`, `copy` |
+| Вместо `static` | функция верхнего уровня, `object`, `companion object` |
+| Константа | `const val MAX = 10` на верхнем уровне, в `object` или компаньоне |
+| Присвоить позже | `lateinit var x: String` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Класс (class)", meaning: "Шаблон для объектов: свойства и функции под одним именем." },
+  { term: "Первичный конструктор (primary constructor)", meaning: "Конструктор в заголовке класса; его параметры с val или var становятся свойствами." },
+  { term: "Блок init", meaning: "Код в теле класса, который выполняется при создании объекта вместе с начальными значениями свойств." },
+  { term: "Свойство (property)", meaning: "Объявление через val или var, за которым стоят геттер, при необходимости сеттер и поле-хранилище." },
+  { term: "Геттер и сеттер (accessors)", meaning: "Функции чтения и записи свойства; компилятор создаёт их сам, свои пишут, когда нужна логика." },
+  { term: "Поле-хранилище (backing field)", meaning: "Место, где свойство хранит значение; в своём геттере или сеттере к нему обращаются через field." },
+  { term: "Модуль (module)", meaning: "Набор файлов Kotlin, которые компилируются вместе; в его пределах видны объявления с internal." },
+  { term: "open", meaning: "Модификатор, который разрешает наследоваться от класса или переопределять его член." },
+  { term: "override", meaning: "Обязательная пометка члена, который переопределяет открытый член родителя." },
+  { term: "Абстрактный класс (abstract class)", meaning: "Класс, объект которого создать нельзя; он открыт для наследования, а его абстрактные члены реализуют наследники." },
+  { term: "Интерфейс (interface)", meaning: "Набор функций и свойств, в том числе с реализацией по умолчанию, но без хранимого состояния и без конструктора." },
+  { term: "data class", meaning: "Класс для данных, которому компилятор генерирует equals, hashCode, toString, copy и componentN." },
+  { term: "Деструктуризация (destructuring)", meaning: "Разбор объекта на отдельные переменные: val (name, age) = user." },
+  { term: "Объявление object (object declaration)", meaning: "Класс и его единственный экземпляр в одном объявлении; так в Kotlin пишут синглтон." },
+  { term: "companion object", meaning: "Объект внутри класса, члены которого вызывают через имя класса; замена статическим фабрикам и константам." },
+  { term: "lateinit", meaning: "Модификатор var-свойства, которое получит значение позже; чтение до присваивания бросает исключение." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-classes-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Классы: понятия</span>
+    <span class="kc-trainer-hint">open, data class, object</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-classes-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Какой класс и почему</span>
+    <span class="kc-trainer-hint">Сценарии из работы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-classes-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши объявление класса</span>
+    <span class="kc-trainer-hint">Ключевые слова классов</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-classes-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери класс</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Classes, Properties, Visibility modifiers** ([kotlinlang.org/docs](https://kotlinlang.org/docs/classes.html), сверено 2026-09-26) — конструкторы, свойства, `lateinit`, видимость.
+- **Kotlin — Inheritance, Interfaces, Equality, Type checks and casts** ([kotlinlang.org/docs](https://kotlinlang.org/docs/inheritance.html), сверено 2026-09-26) — наследование, интерфейсы, `equals`, smart cast у свойств.
+- **Kotlin — Data classes, Object declarations** ([kotlinlang.org/docs](https://kotlinlang.org/docs/data-classes.html), сверено 2026-09-26) — `data class`, `copy`, `object`, `companion object`.
+- **Kotlin — Calling Kotlin from Java, Java records, All-open plugin** ([kotlinlang.org/docs](https://kotlinlang.org/docs/java-to-kotlin-interop.html), сверено 2026-09-26) — как Java видит Kotlin, `@JvmRecord`, `kotlin-spring`.
+- **Kotlin — Coding conventions** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-09-26) — порядок членов класса и имена.
+- **Joshua Bloch — Effective Java, 3rd ed. (Addison-Wesley, 2017), Item 19** — наследование по замыслу или запрет, вызовы из конструктора.
+- **OpenJDK — JEP 395: Records; Oracle — Java SE 21 API, Set** ([openjdk.org](https://openjdk.org/jeps/395), сверено 2026-09-26) — record в Java 16, изменяемые элементы множества.

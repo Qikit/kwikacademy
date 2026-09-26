@@ -1,0 +1,85 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-classes",
+  "title": "Допиши объявление класса",
+  "description": "Впиши ключевое слово или имя функции. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "___ class Shape(val name: String)   // создают и наследуют",
+        "answers": [
+          "open"
+        ],
+        "explain": "Обычный класс final по умолчанию, наследоваться от него можно, только если он open. abstract тоже открыл бы Shape, но тогда создать сам Shape было бы нельзя."
+      },
+      {
+        "text": "    ___ fun area() = side * side   // замена родительской",
+        "answers": [
+          "override"
+        ],
+        "explain": "Переопределение помечают словом override. Без него компилятор сообщит, что функция прячет член родителя."
+      },
+      {
+        "text": "___ class Point(val x: Int, val y: Int)   // == по полям",
+        "answers": [
+          "data"
+        ],
+        "explain": "data class получает equals и hashCode по свойствам первичного конструктора, поэтому == сравнивает координаты."
+      },
+      {
+        "text": "___ Counter { var count = 0 }   // ровно один экземпляр",
+        "answers": [
+          [
+            "object",
+            "data object"
+          ]
+        ],
+        "explain": "Объявление object создаёт класс и его единственный экземпляр сразу. Так в Kotlin пишут синглтон; data object ещё и печатается по имени."
+      },
+      {
+        "text": "    ___ object {   // фабрики и константы класса",
+        "answers": [
+          "companion"
+        ],
+        "explain": "Члены companion object вызывают через имя класса, как статические в Java."
+      },
+      {
+        "text": "        ___ val MAX_NAME = 20   // известна при компиляции",
+        "answers": [
+          "const"
+        ],
+        "explain": "const val — константа из строки или примитива; для Java она становится статическим полем."
+      },
+      {
+        "text": "        private ___   // менять баланс может только класс",
+        "answers": [
+          "set"
+        ],
+        "explain": "private set закрывает сеттер: читать свойство могут все, записывать — только сам класс."
+      },
+      {
+        "text": "            ___ = value.trim()   // запись в поле-хранилище",
+        "answers": [
+          "field"
+        ],
+        "explain": "Внутри своего сеттера к хранилищу свойства обращаются словом field."
+      },
+      {
+        "text": "    ___ var template: String   // присвоит фреймворк",
+        "answers": [
+          "lateinit"
+        ],
+        "explain": "lateinit var обещает компилятору присвоить значение до первого чтения. Иначе будет UninitializedPropertyAccessException."
+      },
+      {
+        "text": "val older = anya.___(age = 31)   // новый объект",
+        "answers": [
+          "copy"
+        ],
+        "explain": "copy у data class создаёт новый объект и меняет только названные свойства."
+      }
+    ]
+  }
+}

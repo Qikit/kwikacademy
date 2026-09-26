@@ -44,6 +44,7 @@ export default function LessonComplete({ slug, nextHref }: { slug: string; nextH
             display: 'inline-flex',
             alignItems: 'center',
             gap: 6,
+            minHeight: 44,
             fontSize: 13,
             fontWeight: 600,
             color: 'var(--c-purple)',

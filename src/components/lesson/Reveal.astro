@@ -16,9 +16,10 @@ const { q } = Astro.props;
     border: 1px solid var(--glass-border);
     border-radius: var(--r-md);
     background: var(--glass-bg);
-    padding: 12px 16px;
+    padding: 0 16px;
   }
   .kc-reveal summary {
+    padding: 12px 0;
     cursor: pointer;
     font-size: 14px;
     color: var(--text);
@@ -44,7 +45,7 @@ const { q } = Astro.props;
     content: ' ▾';
   }
   .kc-reveal-body {
-    margin-top: 10px;
+    padding-bottom: 12px;
     font-size: 14px;
     color: var(--text-2);
     line-height: 1.7;

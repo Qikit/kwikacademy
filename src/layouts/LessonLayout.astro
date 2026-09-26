@@ -114,6 +114,9 @@ const { title, eyebrow, readingMinutes, slug, courseHref, prevHref, prevTitle, n
     color: var(--text-3);
     padding: 10px 12px;
     border-bottom: 1px solid var(--glass-border);
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    -webkit-hyphens: auto;
   }
   .prose :global(td) {
     padding: 10px 12px;
@@ -121,10 +124,19 @@ const { title, eyebrow, readingMinutes, slug, courseHref, prevHref, prevTitle, n
     color: var(--text-2);
     vertical-align: top;
     line-height: 1.5;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    -webkit-hyphens: auto;
   }
   .prose :global(td:first-child) {
     color: var(--text);
     font-weight: 500;
+  }
+  .prose :global(a:not(.kc-trainer-card)) {
+    color: var(--c-purple);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
   }
   .prose :global(blockquote) {
     border-left: 3px solid var(--c-purple);

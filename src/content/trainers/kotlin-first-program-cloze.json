@@ -1,0 +1,20 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-first-program",
+  "title": "Допиши объявление",
+  "description": "Впиши ключевое слово, тип или функцию. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "___ maxPlayers = 100   // значение не меняется", "answers": ["val"], "explain": "Значение не переприсваивается, значит val." },
+      { "text": "___ attempts = 0   // счётчик будет расти", "answers": ["var"], "explain": "Счётчик переприсваивают, поэтому нужен var." },
+      { "text": "val limit: ___   // целое число, значение позже", "answers": ["Int"], "explain": "Без значения тип пишут явно. Целое число — Int, с заглавной буквы." },
+      { "text": "___ main() {", "answers": ["fun"], "explain": "Функции, включая точку входа main, объявляют словом fun." },
+      { "text": "val big: ___ = 5   // нужно длинное целое", "answers": ["Long"], "explain": "Явный тип Long нужен, когда выведенный Int не подходит." },
+      { "text": "___(\"Привет\")   // с переводом строки", "answers": ["println"], "explain": "println печатает аргумент и переводит строку, print — без перевода." },
+      { "text": "val names = mutableListOf<___>()   // список строк", "answers": ["String"], "explain": "Из пустого списка тип элементов не вывести, его пишут в угловых скобках." },
+      { "text": "java ___ hello.jar   // запуск собранного jar", "answers": ["-jar"], "explain": "kotlinc собирает jar, а запускает его java с флагом -jar." }
+    ]
+  }
+}

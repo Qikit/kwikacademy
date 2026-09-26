@@ -4,10 +4,326 @@ order: 1
 phase: "Основы"
 title: "Первая программа: Kotlin для тех, кто уже программирует"
 eyebrow: "Kotlin · Основы"
-readingMinutes: 15
+readingMinutes: 16
 summary: "Создать проект, запустить программу и понять, чем val отличается от var и когда Kotlin сам выводит тип."
 tags: [kotlin, basics]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Первая программа: Kotlin для тех, кто уже программирует» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+Ты открываешь чужой проект на Kotlin и видишь строку `val user = repository.findById(id)`. Типа нет, точки с запятой нет, вместо привычного `final` или `const` какое-то `val`. Если ты пришёл из JavaScript, напрашивается вывод, что язык динамический. Если из Java, кажется, что `var` — тот же `var` из Java 10, способ не писать тип.
+
+Обе догадки неверны. Исследователи разобрали вопросы на Stack Overflow от разработчиков, которые осваивали новый язык. Среди изученных пар языков у Kotlin и Java оказалось больше всего вопросов, где человек перенёс в новый язык неверное допущение из знакомого (Shrestha и соавторы, 2020). Этот урок разбирает ловушки, которые встречаются уже в первой программе.
+
+После урока ты сможешь создать проект на Kotlin, запустить программу и объяснить, когда писать `val`, когда `var` и когда Kotlin выводит тип сам.
+
+## Ядро: val по умолчанию, тип выводит компилятор
+
+<Callout type="purple" title="Суть">
+Kotlin — **статически типизированный** язык: тип каждой переменной известен при компиляции, даже если ты его не написал. Компилятор выводит тип из значения и больше его не меняет. **`val`** объявляет переменную, которой значение присваивают один раз, **`var`** — переменную, которую можно переприсвоить. По умолчанию пишут `val`.
+</Callout>
+
+Отсюда правило: пиши `val`, а `var` оставляй для мест, где значение меняется. Так советуют и официальный тур по Kotlin, и соглашения о коде.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Объявили var count = 5, а строкой ниже присвоили count строку «пять». Что ответит Kotlin?">
+Ошибкой компиляции: «Assignment type mismatch: actual type is 'String', but 'Int' was expected». Из значения `5` компилятор вывел тип `Int` и зафиксировал его. `var` разрешает менять значение, но не тип, и программа с такой строкой даже не запустится.
+</Reveal>
+
+## Как устроено: программа и её запуск
+
+Программа на Kotlin начинается с функции `main`. Класс вокруг неё не нужен, `public static void` тоже:
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val language = "Kotlin"
+    var lessons = 0
+    lessons += 1
+    println("Изучаю $language, урок $lessons")
+}
+```
+
+</KotlinPlayground>
+
+Нажми кнопку запуска: код выполнится на сервере JetBrains на Kotlin 2.4.20, результат появится под редактором. Потом замени `lessons += 1` на `lessons += 2` и запусти ещё раз. `$language` внутри строки подставляет значение переменной, подробно о строках — в следующем уроке.
+
+Что здесь иначе, чем в Java:
+
+- точек с запятой нет, соглашения Kotlin советуют их не ставить;
+- `println` вместо `System.out.println`;
+- тип, если его пишут, стоит после имени через двоеточие: `val lessons: Int = 0`.
+
+<Callout type="blue" title="Если знаешь Java — здесь иначе">
+Ставить тип первым — привычка, от которой придётся отучать руки. В интервью Shrestha и соавторов один разработчик описал её так: «I still type the type first before the variable». Строку `Int x = 5` Kotlin не поймёт и выдаст синтаксическую ошибку. Правильно `val x: Int = 5` или просто `val x = 5`.
+</Callout>
+
+Теперь предскажи, что напечатает эта программа:
+
+```kotlin
+fun main() {
+    print("Привет, ")
+    print("мир")
+    println("!")
+    println(42)
+}
+```
+
+<Reveal q="Сколько строк напечатает эта программа и какие?">
+Две: «Привет, мир!» и «42». `print` печатает без перевода строки, `println` добавляет перевод строки после аргумента. Первые три вызова собирают одну строку, четвёртый начинается уже с новой.
+</Reveal>
+
+Запускать Kotlin можно не только в браузере. Создай проект в IntelliJ IDEA: File → New → Project → Kotlin. Программа окажется в `src/main/kotlin/Main.kt`, а запускается зелёной стрелкой рядом с `fun main`. Из командной строки компилятор `kotlinc` собирает jar-файл с байт-кодом JVM, а запускает его обычная `java`:
+
+```bash
+kotlinc hello.kt -include-runtime -d hello.jar
+java -jar hello.jar
+```
+
+## Как устроено: val, var и вывод типов
+
+В коде это выглядит так: настройку объявляют через `val`, счётчик — через `var`.
+
+```kotlin
+val maxPlayers = 100   // настройка, не меняется
+var attempts = 0       // счётчик, растёт
+attempts += 1
+```
+
+А вот чего `val` не делает. Посмотри на код и реши, скомпилируется ли он:
+
+<Reveal q="val names = mutableListOf(«Аня», «Борис»), а строкой ниже names.add(«Вика»). Это скомпилируется?">
+Да, и программа напечатает `[Аня, Борис, Вика]`. `val` запрещает присвоить переменной `names` другой список, но сам список изменяемый, и добавлять в него можно. Проверь запуском ниже.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val names = mutableListOf("Аня", "Борис")
+    names.add("Вика")
+    println(names)
+}
+```
+
+</KotlinPlayground>
+
+`val` защищает ссылку, а не объект, на который она указывает. Так же устроен `final` в Java: по спецификации языка состояние объекта по final-ссылке менять можно. И `const` в JavaScript: MDN называет его неизменяемой ссылкой на значение, которое само может меняться. Списки только для чтения появятся в уроке про коллекции.
+
+**Вывод типов.** Тип можно не писать, если переменная сразу получает значение: из `5` компилятор выводит `Int`, из `9.99` — `Double`, из `"Kotlin"` — `String`, из `5L` — `Long`. Явный тип обязателен, когда значения при объявлении ещё нет:
+
+```kotlin
+val limit: Int
+limit = 3
+```
+
+Без `: Int` компилятор остановится с ошибкой «This variable must either have an explicit type or be initialized».
+
+Из JavaScript сюда легко принести неверную модель. Там переменная не привязана к типу, и `let foo = 42; foo = "bar"` — законный код. В Kotlin тип выводится один раз, при объявлении, и дальше не меняется: это ты видел в первом вопросе урока.
+
+<Callout type="blue" title="Если знаешь Java — var здесь про другое">
+В Java с версии 10 тоже есть `var` для локальных переменных (JEP 286). Он отвечает только за вывод типа, а переприсваивать такую переменную можно. В Kotlin тип выводят оба слова, и `val`, и `var`. Выбирают между ними по другому признаку: можно ли потом присвоить переменной новое значение. Привычка «пишу `var`, чтобы не писать тип» в Kotlin превращается в «все переменные изменяемые». Ближайший аналог `val` в Java — переменная с `final`.
+</Callout>
+
+## Как на практике
+
+- **Начинай с `val`.** Меняй на `var`, только когда компилятор скажет «'val' cannot be reassigned» и ты убедишься, что значение правда должно меняться.
+- **Тип пиши, когда он нужен.** `val title = "Kotlin"` читается проще, чем `val title: String = "Kotlin"`. Явный тип пиши, когда объявляешь переменную без значения или тебе нужен тип, отличный от выведенного: `val big: Long = 5`.
+- **Проверяй догадки запуском.** Не уверен, что сделает строка, — запусти её в редакторе урока, это быстрее, чем гадать.
+- **Читай ошибку компилятора целиком.** В ней указаны строка и причина, с них и начинай исправление.
+
+<Callout type="teal" title="Как принято">
+Имена переменных и функций по официальным соглашениям Kotlin пишут с маленькой буквы в camelCase, например `maxPlayers` или `userName`. Отступ — четыре пробела, без табов, точки с запятой не ставят. IntelliJ IDEA по умолчанию форматирует код по этому стилю, а подробно о нём будет урок про соглашения.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. `var` по привычке из Java 10.**
+Java-разработчик пишет `var total = 0`, `var name = user.name`, `var items = loadItems()`: везде `var`, потому что в Java это короткое объявление без типа. Код работает, но читатель не видит, какие значения меняются, и компилятор не остановит случайное переприсваивание через сорок строк. Ход: объявить всё через `val` и вернуть `var` там, где компилятор возразит. Вывод: в Kotlin между `val` и `var` выбирают по тому, меняется ли значение, а тип выводится в обоих случаях.
+
+**Разбор 2. «Раз тип не пишу, положу что угодно».**
+Разработчик с опытом JavaScript пишет на Kotlin `var result = 0`, а при ошибке — `result = "ошибка"`. В JavaScript так можно, Kotlin откажется компилировать: тип `Int` выведен из нуля и зафиксирован. Ход: число и сообщение об ошибке — два разных значения. Для них нужны две переменные или отдельный тип результата, и как его построить, покажет урок про моделирование данных. Вывод: тип можно не писать, но проверку типов это не отменяет.
+
+**Разбор 3. Где `val` не спасает.**
+Корзина объявлена как `val cart = mutableListOf<String>()` и передаётся в три функции. Одна из них по ошибке вызывает `cart.clear()`, и корзина пустеет. `val` здесь не помог: он запрещает присвоить переменной другой список, а очистить этот список можно. Ход: для данных, которые не должны меняться, нужен список только для чтения, `List` вместо `MutableList`. Вывод: `val` защищает ссылку, за содержимое отвечает тип объекта.
+
+## Java, JavaScript и Kotlin
+
+| Было | В Kotlin | Что важно |
+| --- | --- | --- |
+| `final int x = 5;` в Java | `val x = 5` | тип выведен, переприсвоить нельзя |
+| `int x = 5;` в Java | `var x = 5` | переприсвоить можно |
+| `var x = 5;` в Java 10+ | `val x = 5` или `var x = 5` | зависит от того, переприсваиваешь ли |
+| `const x = 5` в JS | `val x = 5` | тип известен при компиляции |
+| `let x = 5` в JS | `var x = 5` | значение меняется, тип — нет |
+| `System.out.println(x);` | `println(x)` | без точки с запятой |
+| `public static void main(...)` | `fun main()` | класс вокруг не нужен |
+
+<Compare leftLabel="Кажется" rightLabel="Есть" verdict="right">
+  <div slot="left">
+  • Тип не написан — значит, язык динамический<br/>
+  • `val` делает объект неизменяемым<br/>
+  • `var` нужен, чтобы не писать тип<br/>
+  • Тип пишут перед именем
+  </div>
+  <div slot="right">
+  • Тип выведен при компиляции и зафиксирован<br/>
+  • `val` запрещает переприсвоить ссылку<br/>
+  • Тип выводят и `val`, и `var`<br/>
+  • Тип пишут после имени: `x: Int`
+  </div>
+</Compare>
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `var` по умолчанию | Не видно, что значение не меняется; случайное переприсваивание пройдёт | `val`, пока не понадобится переприсвоить |
+| Считать, что `val` делает объект неизменяемым | Изменяемый список под `val` всё равно меняется | Помнить: `val` защищает ссылку |
+| Писать тип перед именем: `Int x = 5` | Синтаксическая ошибка | `val x: Int = 5` или `val x = 5` |
+| Путать вывод типов с динамической типизацией | Попытка положить строку в `Int`-переменную | Тип выводится один раз и навсегда |
+| Объявить `val x` без значения и без типа | Ошибка компиляции | Указать тип: `val x: Int` |
+| Ставить точки с запятой | Лишний шум, соглашения советуют их опускать | Не ставить |
+
+## Практикум
+
+<Practice title="Переведи программу с Java на Kotlin" checklist={["Есть fun main() без класса вокруг", "var только у visitors, остальное — val", "tags объявлен через val, хотя список растёт", "Типы не написаны там, где их выводит компилятор", "Нет точек с запятой", "Программа печатает «Казань: 150 [музей]»"]}>
+Вот программа на Java:
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        final String city = "Казань";
+        int visitors = 120;
+        visitors = visitors + 30;
+        final List<String> tags = new ArrayList<>();
+        tags.add("музей");
+        System.out.println(
+            city + ": " + visitors + " " + tags);
+    }
+}
+```
+
+Перепиши её на Kotlin в редакторе ниже и запусти. Для печати можно оставить сложение строк, как в Java, или подставить значения прямо в строку: `"$city: $visitors $tags"`.
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    // перепиши программу здесь
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+fun main() {
+    val city = "Казань"
+    var visitors = 120
+    visitors += 30
+    val tags = mutableListOf<String>()
+    tags.add("музей")
+    println("$city: $visitors $tags")
+}
+```
+
+Программа печатает «Казань: 150 [музей]». `visitors` — единственная переменная, которую переприсваивают, поэтому `var` только у неё. `tags` — `val`: список растёт, но переменная всё время указывает на один и тот же список, как `final` в исходном коде. Тип элементов у `mutableListOf<String>()` указан в угловых скобках, потому что из пустого списка компилятор его не выведет: без него будет ошибка «Cannot infer type for type parameter 'T'».
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Открой любой свой файл на Java или JavaScript и найди в нём пять переменных. Сколько из них после объявления ни разу не меняется? Те, что не меняются, в Kotlin были бы `val`. Через неделю, когда будешь писать на Kotlin сам, посчитай, сколько `var` осталось в твоём коде.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Точка входа | `fun main() { … }` |
+| Вывод | `println(x)` — с переводом строки, `print(x)` — без |
+| Неизменяемая ссылка | `val x = 5` |
+| Изменяемая переменная | `var x = 5` |
+| Явный тип | `val x: Long = 5` |
+| Без значения | `val x: Int` — тип обязателен |
+| По умолчанию | `val`; `var` — только если переприсваиваешь |
+| `val` и изменяемый объект | Ссылка постоянна, объект меняется |
+| Имена | camelCase: `maxPlayers` |
+| Запуск из консоли | `kotlinc hello.kt -include-runtime -d hello.jar`, затем `java -jar hello.jar` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Kotlin", meaning: "Статически типизированный язык от JetBrains, который работает на JVM, Android, в браузере и нативно." },
+  { term: "JVM (Java Virtual Machine)", meaning: "Виртуальная машина, которая исполняет байт-код; на ней работают и Java, и Kotlin." },
+  { term: "Байт-код", meaning: "Результат компиляции, который исполняет JVM; в Kotlin его делает компилятор kotlinc." },
+  { term: "kotlinc", meaning: "Компилятор Kotlin для командной строки." },
+  { term: "Точка входа (main)", meaning: "Функция fun main(), с которой начинается выполнение программы." },
+  { term: "val", meaning: "Объявление переменной, которой значение присваивают один раз." },
+  { term: "var", meaning: "Объявление переменной, которую можно переприсвоить." },
+  { term: "Переприсваивание", meaning: "Запись в переменную нового значения после инициализации." },
+  { term: "Вывод типов (type inference)", meaning: "Компилятор сам определяет тип переменной по её значению." },
+  { term: "Статическая типизация", meaning: "Тип каждой переменной известен при компиляции и не меняется во время работы программы." },
+  { term: "Динамическая типизация", meaning: "Переменная не привязана к типу и может хранить значения разных типов, как в JavaScript." },
+  { term: "Ссылка", meaning: "То, через что переменная указывает на объект; val фиксирует ссылку, но не состояние объекта." },
+  { term: "Изменяемый объект", meaning: "Объект, содержимое которого можно менять, например список из mutableListOf." },
+  { term: "Kotlin Playground", meaning: "Редактор JetBrains, который запускает код Kotlin на сервере; встроен в уроки курса." },
+  { term: "Соглашения о коде (coding conventions)", meaning: "Официальные правила стиля Kotlin: имена, отступы, выбор между val и var." },
+  { term: "camelCase", meaning: "Стиль имён без подчёркиваний, где каждое слово, кроме первого, начинается с заглавной буквы: maxPlayers." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что действительно запомнилось.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-first-program-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Первая программа: понятия</span>
+    <span class="kc-trainer-hint">val, var, вывод типов</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-first-program-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">val или var</span>
+    <span class="kc-trainer-hint">Что скомпилируется и почему</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-first-program-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши объявление</span>
+    <span class="kc-trainer-hint">Ключевые слова и типы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-first-program-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери программу</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Basic syntax, Kotlin tour: Hello world, Collections overview** ([kotlinlang.org/docs](https://kotlinlang.org/docs/basic-syntax.html), сверено 2026-09-26) — `main`, `print` и `println`, `val` и `var`, вывод типов, совет объявлять переменные через `val` по умолчанию, `val` с изменяемой коллекцией.
+- **Kotlin — Coding conventions, Code style migration guide** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-09-26) — `val` вместо `var`, camelCase, четыре пробела, точки с запятой, стиль по умолчанию в IntelliJ IDEA.
+- **Kotlin — FAQ, Kotlin releases, Command-line compiler, Create a console app** ([kotlinlang.org/docs](https://kotlinlang.org/docs/faq.html), сверено 2026-09-26) — статическая типизация, совместимость с Java, байт-код JVM, версия 2.4.20 как последний стабильный выпуск, запуск через `kotlinc` и IntelliJ IDEA.
+- **OpenJDK — JEP 286: Local-Variable Type Inference** ([openjdk.org](https://openjdk.org/jeps/286), сверено 2026-09-26) — `var` в Java 10: вывод типа без запрета на переприсваивание.
+- **Oracle — Java Language Specification SE 21, §4.12.4** ([docs.oracle.com](https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html), сверено 2026-09-26) — `final` фиксирует ссылку, состояние объекта менять можно.
+- **MDN — const, JavaScript data types and data structures** ([developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const), сверено 2026-09-26) — `const` как неизменяемая ссылка, динамическая типизация JavaScript.
+- **Shrestha, Botta, Barik, Parnin — Here We Go Again: Why Is It Difficult for Developers to Learn Another Programming Language? (ICSE 2020)** ([microsoft.com](https://www.microsoft.com/en-us/research/publication/here-we-go-again/)) — неверные допущения при переходе на новый язык, пара Kotlin и Java, привычка писать тип первым.

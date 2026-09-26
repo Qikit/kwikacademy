@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-first-program",
+  "title": "Собери программу",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери программу, которая печатает «Привет».",
+        "words": ["}", "    println(\"Привет\")", "fun main() {"],
+        "answer": ["fun main() {", "    println(\"Привет\")", "}"],
+        "explain": "Программа начинается с fun main(), тело функции — между фигурными скобками."
+      },
+      {
+        "task": "Заведи счётчик, увеличь его на 1 и напечатай.",
+        "words": ["    count += 1", "fun main() {", "    println(count)", "}", "    var count = 0"],
+        "answer": ["fun main() {", "    var count = 0", "    count += 1", "    println(count)", "}"],
+        "explain": "Счётчик переприсваивают, поэтому var. Объявить, изменить, напечатать — в таком порядке программа выведет 1."
+      },
+      {
+        "task": "Объяви переменную без значения, присвой ей 3 и напечатай.",
+        "words": ["    limit = 3", "    println(limit)", "}", "    val limit: Int", "fun main() {"],
+        "answer": ["fun main() {", "    val limit: Int", "    limit = 3", "    println(limit)", "}"],
+        "explain": "Без значения тип пишут явно. val можно присвоить позже, но только один раз."
+      },
+      {
+        "task": "Создай изменяемый список под val, добавь в него элемент и напечатай.",
+        "words": ["    names.add(\"Вика\")", "fun main() {", "}", "    println(names)", "    val names = mutableListOf(\"Аня\")"],
+        "answer": ["fun main() {", "    val names = mutableListOf(\"Аня\")", "    names.add(\"Вика\")", "    println(names)", "}"],
+        "explain": "val фиксирует ссылку на список, а добавлять элементы можно. Программа напечатает [Аня, Вика]."
+      },
+      {
+        "task": "Напечатай «Привет, мир!» одной строкой, используя три вызова.",
+        "words": ["    println(\"!\")", "    print(\"мир\")", "fun main() {", "}", "    print(\"Привет, \")"],
+        "answer": ["fun main() {", "    print(\"Привет, \")", "    print(\"мир\")", "    println(\"!\")", "}"],
+        "explain": "print не переводит строку, поэтому части склеиваются. println в конце завершает строку."
+      },
+      {
+        "task": "Объяви язык и напечатай строку «Учу Kotlin» с подстановкой значения.",
+        "words": ["    println(\"Учу $language\")", "}", "fun main() {", "    val language = \"Kotlin\""],
+        "answer": ["fun main() {", "    val language = \"Kotlin\"", "    println(\"Учу $language\")", "}"],
+        "explain": "Переменную объявляют до того, как её используют. $language подставляет значение в строку."
+      }
+    ]
+  }
+}

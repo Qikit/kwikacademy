@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-modeling",
+  "title": "Каким типом описать",
+  "description": "Сценарии: какой тип выбрать и что скажет компилятор.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "В приложении такси статус поездки — enum TripStatus. В when, который выбирает текст уведомления, последняя ветка — else -> «Статус обновлён». Добавили константу DRIVER_ARRIVED. Что будет при сборке?",
+        "options": [
+          "Соберётся, прибытие водителя уйдёт в ветку else",
+          "Ошибка: when не покрывает константу DRIVER_ARRIVED",
+          "Предупреждение о лишнем else, но всё соберётся"
+        ],
+        "correctIndex": 0,
+        "explain": "else покрывает любое значение, поэтому when остаётся полным и сборка проходит молча: о прибытии водителя пассажир узнает из «Статус обновлён». Ошибку дал бы только when без else. Предупреждение о лишнем else компилятор выдаёт, когда все константы уже перечислены в ветках, а DRIVER_ARRIVED там нет."
+      },
+      {
+        "prompt": "Сервис шлёт уведомления письмом, SMS или push. Письму нужен адрес, SMS — номер телефона, push — токен устройства. Как описать канал доставки?",
+        "options": [
+          "enum class Channel и общее поле target: String",
+          "sealed interface Channel: Email, Sms и Push со своими полями",
+          "data class Channel(val type: String, val target: String)"
+        ],
+        "correctIndex": 1,
+        "explain": "У каналов разные данные, значит, sealed interface: Email с адресом, Sms с телефоном, Push с токеном, и when по каналу компилятор проверит на полноту. Enum с общим полем target разрешит письмо с номером телефона вместо адреса. data class с типом-строкой разрешит то же самое и вдобавок пропустит опечатку в типе."
+      },
+      {
+        "prompt": "Права на документ: чтение, комментарии, правка. Своих данных у уровней нет, но их сравнивают: правка включает всё, что ниже. Что подойдёт лучше?",
+        "options": [
+          "sealed interface Access с тремя data object",
+          "value class Access(val level: Int)",
+          "enum class Access { READ, COMMENT, EDIT }"
+        ],
+        "correctIndex": 2,
+        "explain": "Данных у уровней нет, набор закрыт, а константы enum сравниваются по порядку объявления: READ < EDIT. Sealed-интерфейс с data object тоже сработает, но сравнения по порядку, entries и valueOf у него нет. value class над Int разрешит любой уровень, например 42."
+      },
+      {
+        "prompt": "Функция логирования: when (level) { Level.ERROR -> logError(msg); Level.WARN -> logWarn(msg) }, результат никуда не присваивается. В enum Level есть ещё INFO. Что скажет компилятор?",
+        "options": [
+          "Ошибка: when должен покрывать и INFO",
+          "Ничего: инструкция when может пропускать значения",
+          "Соберёт, а на INFO бросит исключение при запуске"
+        ],
+        "correctIndex": 0,
+        "explain": "Для enum, sealed-типов и Boolean полноту проверяют и у when-инструкции: без ветки INFO или else будет ошибка «'when' expression must be exhaustive». Инструкция без else допустима, когда аргумент, например, строка или число. До запуска дело не дойдёт, так что и исключения не будет."
+      },
+      {
+        "prompt": "Функция transfer(from: AccountId, to: AccountId, amount: Long), AccountId — value class. Коллега вызвал transfer(to, from, 100): переменные называются как параметры, но стоят не на своих местах. Что поймает компилятор?",
+        "options": [
+          "Ошибку несовпадения типов у аргументов from и to",
+          "Ничего: оба параметра одного типа",
+          "Ошибку: имена переменных не совпадают с параметрами"
+        ],
+        "correctIndex": 1,
+        "explain": "value class отличает AccountId от других типов, но from и to оба AccountId, и перестановка компилируется. Имена переменных компилятор с именами параметров не сверяет: при позиционной передаче важны только порядок и тип. От такой путаницы защищают именованные аргументы: transfer(from = from, to = to, amount = 100)."
+      },
+      {
+        "prompt": "В проекте объявлены typealias Minutes = Int и typealias Seconds = Int. Функция ждёт timeout: Seconds, а ей передают значение типа Minutes. Что будет?",
+        "options": [
+          "Ошибка компиляции: Minutes и Seconds — разные типы",
+          "Скомпилируется с предупреждением о единицах",
+          "Скомпилируется молча: для компилятора оба — просто Int"
+        ],
+        "correctIndex": 2,
+        "explain": "typealias не создаёт новый тип: Minutes и Seconds — два имени для Int, и компилятор их не различает. Ни ошибки, ни предупреждения не будет. Чтобы единицы не путались, нужны value class Minutes и value class Seconds."
+      },
+      {
+        "prompt": "Приложение присылает платформу строкой «ios» или «android», а константы enum — IOS и ANDROID. Что вернёт Platform.entries.firstOrNull { it.name == raw } для «ios»?",
+        "options": [
+          "null: имена сравниваются с учётом регистра",
+          "IOS: firstOrNull сравнивает имена без регистра",
+          "Бросит IllegalArgumentException: константы «ios» нет"
+        ],
+        "correctIndex": 0,
+        "explain": "name у константы IOS равен «IOS», а == сравнивает строки с учётом регистра, поэтому совпадения нет и firstOrNull вернёт null. Исключение на неизвестном имени бросает valueOf, а firstOrNull в этом случае возвращает null. Чтобы принять «ios», сравнивай с raw.uppercase() или заведи свойство с кодом из API."
+      }
+    ]
+  }
+}

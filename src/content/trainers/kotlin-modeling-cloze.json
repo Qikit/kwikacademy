@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-modeling",
+  "title": "Допиши объявление типа",
+  "description": "Впиши ключевое слово, аннотацию или свойство. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "___ class Level { LOW, HIGH }   // набор из двух констант", "answers": ["enum"], "explain": "Фиксированный набор значений, перечисленных через запятую в теле класса, объявляют как enum class." },
+      { "text": "___ interface Payment   // when по нему обходится без else", "answers": ["sealed"], "explain": "У sealed-интерфейса все наследники известны при компиляции, поэтому when, где перечислены все они, полон и без else." },
+      { "text": "data ___ Pending : Payment   // вариант без данных", "answers": ["object"], "explain": "Вариант без данных — data object: один экземпляр, toString печатает имя. data class без параметров в конструкторе не скомпилируется." },
+      { "text": "when (p) { ___ Paid -> p.amount; Pending -> 0 }", "answers": ["is"], "explain": "is проверяет тип, и внутри ветки срабатывает smart cast: p.amount читается без приведения." },
+      { "text": "val all: List<Level> = Level.___   // без копирования", "answers": ["entries"], "explain": "entries — неизменяемый список констант. values() возвращает массив: в List<Level> его без копирования через toList() не присвоить." },
+      { "text": "Level.entries.firstOrNull { it.___ == raw }   // raw из API", "answers": [["name", "toString()"]], "explain": "name — имя константы, как оно написано в коде. toString() у enum по умолчанию возвращает то же имя, но name читается яснее." },
+      { "text": "val pos: Int = Level.HIGH.___   // позиция, с нуля", "answers": ["ordinal"], "explain": "ordinal — номер константы в порядке объявления. Он меняется при перестановке констант, поэтому в базу его не пишут." },
+      { "text": "@___ value class UserId(val value: Long)", "answers": ["JvmInline"], "explain": "На JVM value-класс объявляют с аннотацией @JvmInline, без неё будет ошибка компиляции." },
+      { "text": "@JvmInline ___ class OrderId(val value: Long)", "answers": ["value"], "explain": "value class создаёт новый тип над одним значением. С data class или устаревшим inline class аннотация @JvmInline не компилируется." },
+      { "text": "___ Handler = (String) -> Unit   // второе имя типа", "answers": ["typealias"], "explain": "typealias даёт существующему типу второе имя. Удобно для типов функций, но от путаницы значений не защищает." },
+      { "text": "sealed ___ AppError(val message: String)  // конструктор", "answers": ["class"], "explain": "Свойство в конструкторе бывает только у класса, поэтому здесь sealed class. У sealed interface конструктора нет." }
+    ]
+  }
+}

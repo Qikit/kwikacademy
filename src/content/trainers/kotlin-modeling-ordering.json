@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-modeling",
+  "title": "Собери модель",
+  "description": "Расставь строки кода так, чтобы получилось то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Объяви enum уровней с подписью у каждой константы и функцией label, которая помечает высокий уровень как срочный.",
+        "words": ["        if (this == HIGH) \"срочно: $title\" else title", "    HIGH(\"высокий\");", "}", "    fun label() =", "enum class Level(val title: String) {", "    LOW(\"низкий\"),"],
+        "answer": ["enum class Level(val title: String) {", "    LOW(\"низкий\"),", "    HIGH(\"высокий\");", "    fun label() =", "        if (this == HIGH) \"срочно: $title\" else title", "}"],
+        "explain": "Сначала константы через запятую, после последней — точка с запятой, и только потом члены класса. label() у LOW вернёт «низкий», у HIGH — «срочно: высокий»."
+      },
+      {
+        "task": "Объяви value-класс Cents над Long для JVM с функцией format, которая возвращает строку с рублями и копейками.",
+        "words": ["        \"${amount / 100} ₽ ${amount % 100} коп.\"", "}", "value class Cents(val amount: Long) {", "    fun format() =", "@JvmInline"],
+        "answer": ["@JvmInline", "value class Cents(val amount: Long) {", "    fun format() =", "        \"${amount / 100} ₽ ${amount % 100} коп.\"", "}"],
+        "explain": "На JVM value-класс объявляют с аннотацией @JvmInline над ним. На функции она не работает: «This annotation is not applicable to target 'member function'», а без неё value class не скомпилируется."
+      },
+      {
+        "task": "Cents из прошлого задания уже объявлен. Возьми цену 123 ₽ 45 коп., удвой её и напечатай.",
+        "words": ["    println(total.format())", "}", "    val total = Cents(price.amount * 2)", "fun main() {", "    val price = Cents(12_345)"],
+        "answer": ["fun main() {", "    val price = Cents(12_345)", "    val total = Cents(price.amount * 2)", "    println(total.format())", "}"],
+        "explain": "Значение внутри value class читают через свойство: price.amount. Новое значение — новый объект Cents. Программа напечатает «246 ₽ 90 коп.»."
+      },
+      {
+        "task": "Типы ParseResult, Parsed(val value: Int) и Failed(val input: String) уже объявлены. Собери функцию: число — Parsed, не число — Failed.",
+        "words": ["    return Parsed(age)", "fun parseAge(text: String): ParseResult {", "}", "    if (age == null) return Failed(text)", "    val age = text.toIntOrNull()"],
+        "answer": ["fun parseAge(text: String): ParseResult {", "    val age = text.toIntOrNull()", "    if (age == null) return Failed(text)", "    return Parsed(age)", "}"],
+        "explain": "toIntOrNull возвращает Int?, поэтому сначала отсекают null. После раннего return срабатывает smart cast, и age уже Int. Если поставить return Parsed(age) раньше проверки, компилятор ответит «Argument type mismatch: actual type is 'Int?', but 'Int' was expected»."
+      },
+      {
+        "task": "Enum Status с подписью title уже объявлен. Найди константу по строке из API и напечатай её подпись или «неизвестный статус».",
+        "words": ["    println(s?.title ?: \"неизвестный статус\")", "    val raw = \"PAID\"", "}", "fun main() {", "    val s = Status.entries.firstOrNull { it.name == raw }"],
+        "answer": ["fun main() {", "    val raw = \"PAID\"", "    val s = Status.entries.firstOrNull { it.name == raw }", "    println(s?.title ?: \"неизвестный статус\")", "}"],
+        "explain": "firstOrNull вернёт константу или null, без исключения, как у valueOf. Дальше работают ?. и ?: из урока про null. Для «PAID» программа напечатает «оплачен»."
+      },
+      {
+        "task": "Sealed-интерфейс OrderState и наследник Shipped(val tracking: String) уже объявлены. Верни «трек …» для отправленного заказа и «трека нет» для остальных.",
+        "words": ["    val code = state.tracking", "}", "    if (state !is Shipped) return \"трека нет\"", "fun trackingOf(state: OrderState): String {", "    return \"трек $code\""],
+        "answer": ["fun trackingOf(state: OrderState): String {", "    if (state !is Shipped) return \"трека нет\"", "    val code = state.tracking", "    return \"трек $code\"", "}"],
+        "explain": "После if (state !is Shipped) return компилятор знает, что дальше state — Shipped, и пускает к tracking. До проверки у OrderState свойства tracking нет: «Unresolved reference 'tracking'»."
+      }
+    ]
+  }
+}

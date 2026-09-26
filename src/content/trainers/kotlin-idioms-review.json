@@ -1,0 +1,91 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-modeling",
+  "title": "Сводный: идиоматичный Kotlin",
+  "description": "Отличи похожие приёмы из разных уроков фазы: предскажи вывод и ответ компилятора, выбери объявление.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "prices = listOf(120, 80, 300), var checked = 0. Затем объявлена val big = prices.asSequence().filter { checked++; it > 100 }. Что напечатает println(checked) сразу после этого? (коллекции)",
+        "options": [
+          "3: лямбда прибавила единицу на каждой цене",
+          "0: цепочку ещё никто не запустил",
+          "Ошибку компиляции: захваченный var менять нельзя"
+        ],
+        "correctIndex": 1,
+        "explain": "Последовательность считает, только когда её просит терминальная операция, а у big такой нет: ни toList(), ни first(). Лямбда в filter ни разу не вызвалась, и checked остался нулём. Тройку напечатала бы та же цепочка над списком без asSequence(), потому что жадный filter сразу проходит все цены. Ошибки компиляции тоже не будет: запрет менять захваченную переменную — правило Java, а в Kotlin лямбда меняет var напрямую. Урок про коллекции."
+      },
+      {
+        "prompt": "Paid — наследник sealed interface OrderState. Объявлены fun OrderState.label() = \"заказ\" и fun Paid.label() = \"оплачен\". В show(state: OrderState) сначала стоит println(state.label()), потом if (state is Paid) println(state.label()). Что напечатает show(Paid(\"P-7\"))? (расширения)",
+        "options": [
+          "«заказ», затем «оплачен»: после is тип уже Paid",
+          "«оплачен» оба раза: в state лежит Paid",
+          "«заказ» оба раза: у state тип OrderState"
+        ],
+        "correctIndex": 0,
+        "explain": "Расширение компилятор выбирает по типу, который знает о переменной в этом месте кода. В первой строке это объявленный тип OrderState, поэтому вызывается OrderState.label(), хотя в state лежит Paid. После проверки is Paid срабатывает smart cast: внутри if компилятор уже считает state типом Paid и берёт Paid.label(). Ответ «оплачен» оба раза дал бы open-метод с override, ведь его выбирают во время работы по настоящему объекту. А «заказ» оба раза вышло бы, если бы smart cast не влиял на выбор расширения. Урок про расширения и scope-функции."
+      },
+      {
+        "prompt": "В функции save(user: User?) написано user?.let { if (it.name.isBlank()) return; println(\"сохранён ${it.name}\") }, а после блока — println(\"готово\"). Что напечатает save(User(\"\"))? (лямбды)",
+        "options": [
+          "«готово»: return вышел только из let",
+          "Ошибку компиляции: голый return в лямбде запрещён",
+          "Ничего: return вышел из всей функции save"
+        ],
+        "correctIndex": 2,
+        "explain": "let, как forEach и apply, объявлена inline, поэтому голый return в её лямбде — нелокальный возврат. Он завершает всю save, и до println(\"готово\") дело не доходит. Закончить только блок можно через return@let, тогда «готово» напечатается. Ошибку «'return' is prohibited here» компилятор выдаёт, когда лямбду передают в обычную, не inline-функцию. Урок про лямбды."
+      },
+      {
+        "prompt": "Тип (Order) -> Boolean повторяется в десятке сигнатур. Его хотят назвать OrderCheck, но так, чтобы вызовы вида report(orders) { it.paid } остались как есть. Что объявить? (моделирование данных)",
+        "options": [
+          "@JvmInline value class OrderCheck(val test: (Order) -> Boolean)",
+          "typealias OrderCheck = (Order) -> Boolean",
+          "interface OrderCheck { fun test(o: Order): Boolean }"
+        ],
+        "correctIndex": 1,
+        "explain": "typealias даёт типу функции второе имя и нового типа не создаёт, поэтому лямбда подходит в параметр OrderCheck как раньше. Value-класс — отдельный тип: каждую лямбду пришлось бы заворачивать в OrderCheck { … }, а вызов report(orders) { it.paid } перестал бы компилироваться. Обычный Kotlin-интерфейс лямбду тоже не примет: SAM-преобразование для интерфейсов из Kotlin работает только с fun interface. Урок про моделирование данных."
+      },
+      {
+        "prompt": "names = mutableListOf(\"Оля\", \"Аня\", \"Борис\"). Коллега пишет val result = names.also { it.sorted() }. Что напечатает println(result)? (коллекции)",
+        "options": [
+          "[Аня, Борис, Оля]: also отдал результат лямбды",
+          "kotlin.Unit: лямбда у also ничего не возвращает",
+          "[Оля, Аня, Борис]: копию из sorted() никто не сохранил"
+        ],
+        "correctIndex": 2,
+        "explain": "sorted() не трогает список и возвращает новую, отсортированную копию, но её никто не сохранил. Сама also отдаёт объект, на котором её вызвали, так что в result лежит names в прежнем порядке. Отсортированный список получился бы с let { it.sorted() }, ведь let выдаёт результат лямбды. Или с also { it.sort() }, потому что sort сортирует изменяемый список на месте. Unit здесь ни при чём: лямбда у also объявлена с результатом Unit, но наружу also его не передаёт. Урок про коллекции."
+      },
+      {
+        "prompt": "buildString объявлена как buildString(builderAction: StringBuilder.() -> Unit). Коллега по привычке из also пишет buildString { it.append(\"Kotlin\") }. Что скажет компилятор? (DSL)",
+        "options": [
+          "Ошибку: it здесь нет, StringBuilder — это this",
+          "Ничего: it — единственный параметр, то есть StringBuilder",
+          "Ничего: блок даёт объект и как this, и как it"
+        ],
+        "correctIndex": 0,
+        "explain": "Тип StringBuilder.() -> Unit — лямбда с получателем. Параметров у неё нет, значит, нет и it: StringBuilder внутри блока доступен как this, и append пишут без префикса. Компилятор ответит «Unresolved reference 'it'». it есть у лямбды с одним параметром, как в also и let, а в блоках apply, run и buildString объект приходит получателем. Двух имён для одного объекта сразу такой блок не даёт. Урок про DSL."
+      },
+      {
+        "prompt": "Объявлено fun String?.orDash(): String = if (isNullOrBlank()) \"—\" else this. У nickname тип String? и значение null. Что напечатает println(nickname?.orDash())? (расширения)",
+        "options": [
+          "«—»: orDash объявлена для String? и ловит null",
+          "null: из-за ?. функция orDash не вызывалась",
+          "NullPointerException: this внутри orDash равен null"
+        ],
+        "correctIndex": 1,
+        "explain": "Безопасный вызов ?. сначала смотрит на получатель: nickname равен null, поэтому всё выражение сразу даёт null, и orDash так и не запускается. Прочерк напечатала бы запись без ?.: nickname.orDash(). Расширение с nullable-получателем для того и объявляют, чтобы звать его прямо на null. NullPointerException не будет и в этом случае: this внутри может оказаться null, но его проверяет isNullOrBlank(). Урок про расширения и scope-функции."
+      },
+      {
+        "prompt": "Статус заказа — enum class Status(val code: Int), в базе лежит code. Какой вызов вернёт константу по коду raw: Int, а на неизвестный код — null? (моделирование данных)",
+        "options": [
+          "Status.entries.first { it.code == raw }",
+          "Status.entries.getOrNull(raw)",
+          "Status.entries.associateBy { it.code }[raw]"
+        ],
+        "correctIndex": 2,
+        "explain": "associateBy строит словарь «код — константа», а обращение по ключу возвращает null, если такого кода нет. first { it.code == raw } найдёт известный код, но на неизвестном бросит NoSuchElementException: безопасная версия — firstOrNull. getOrNull ищет по позиции в entries, то есть по ordinal, а не по коду. Такой вызов попадёт в нужную константу, только если коды совпали с номерами, и начнёт промахиваться, когда между константами вставят новую. Урок про моделирование данных."
+      }
+    ]
+  }
+}

@@ -4,10 +4,384 @@ order: 11
 phase: "Идиоматичный Kotlin"
 title: "Моделирование данных: sealed, enum и value-классы"
 eyebrow: "Kotlin · Идиоматичный Kotlin"
-readingMinutes: 15
-summary: "Описывать состояния типами так, чтобы компилятор проверял, что when учёл все случаи."
+readingMinutes: 19
+summary: "Описывать состояния через enum и sealed-типы так, чтобы компилятор проверял, что when учёл все случаи, и не путать идентификаторы благодаря value-классам."
 tags: [kotlin, idioms]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Моделирование данных: sealed, enum и value-классы» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты собирал типобезопасные строители на лямбдах с получателем, и ошибку в структуре находил компилятор ещё до запуска. Теперь та же идея для данных. Ты открываешь сервис заказов и видишь `data class Order(val id: Long, val status: String, val tracking: String?)` и несколько `when (order.status)`, где последняя ветка — `else -> "неизвестно"`. Коллега добавил статус `"RETURNED"`, код собрался, а через неделю поддержка спрашивает, почему у возвратов в личном кабинете статус «неизвестно».
+
+Компилятор тут помочь не мог: для него статус — любая строка, и `else` покрывает всё, чего автор не предусмотрел. Та же модель пропускает статус с опечаткой `"SHIPED"`, новый заказ с трек-номером и номер пользователя на месте номера заказа, ведь оба номера — `Long`. Привычное «поставлю `else` на всякий случай» выглядит страховкой, хотя выключает проверку компилятора, которая нашла бы забытый статус.
+
+После урока ты сможешь описывать состояния через `enum class` и `sealed interface`, писать `when`, полноту которого проверяет компилятор, и заводить `value class` для идентификаторов, чтобы их нельзя было перепутать.
+
+## Ядро: закрытый набор случаев проверяет компилятор
+
+<Callout type="purple" title="Суть">
+Если значение бывает только одним из заранее известных вариантов, **опиши варианты типом**: `enum class`, когда варианты устроены одинаково, и `sealed interface`, когда у каждого свои данные. `when` по такому типу без `else` компилятор проверяет на **полноту** (exhaustiveness): появится новый вариант, и каждое место, где его забыли, станет ошибкой компиляции. Одиночное значение вроде идентификатора оборачивают в **`value class`**, и тогда `UserId` нельзя передать вместо `OrderId`.
+</Callout>
+
+Отсюда правило для ревью: строка, число или nullable-поле, которое «бывает одним из…», — повод завести тип. Ярон Мински из Jane Street сформулировал эту идею так: «make illegal states unrepresentable», сделай **недопустимые состояния** непредставимыми. Сочетание, которое тип не может хранить, не нужно проверять в коде.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="На ревью модель подписки: status: String, trialEndsAt: String? и cancelledAt: String? Какие недопустимые состояния она разрешает?">
+Многие. Активную подписку с датой отмены, пробный период без даты окончания, отменённую подписку без даты отмены, статус с опечаткой «ACTVE». Осмысленных состояний три, а тип разрешает десятки сочетаний, и каждая функция заново проверяет поля на null. Поле, заполненное «только в статусе X», принадлежит варианту X.
+</Reveal>
+
+## Как устроено: enum-классы
+
+**Enum-класс** (enum class, перечисление) задаёт фиксированный набор значений. Каждое значение — **константа enum** (enum constant), и каждая константа существует в одном экземпляре, как `object`. Так описывают статусы заказа или уровни логирования. Как у обычного класса, у enum бывают свойства из конструктора и функции, а от списка констант их отделяет точка с запятой:
+
+<KotlinPlayground>
+
+```kotlin
+enum class Status(val title: String) {
+    NEW("новый"),
+    PAID("оплачен"),
+    SHIPPED("отправлен");
+
+    fun canCancel() = this == NEW || this == PAID
+}
+
+fun nextStep(status: Status): String = when (status) {
+    Status.NEW -> "ждём оплату"
+    Status.PAID -> "собираем заказ"
+    Status.SHIPPED -> "ждём курьера"
+}
+
+fun main() {
+    for (s in Status.entries) {
+        println("${s.title}: ${nextStep(s)}")
+    }
+    println(Status.SHIPPED.canCancel())
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом добавь после `SHIPPED` константу `RETURNED("возврат")`: после `SHIPPED("отправлен")` встанет запятая, а точка с запятой переедет к новой константе. `nextStep` не трогай и до запуска ответь на вопрос.
+
+<Reveal q="Константу RETURNED добавили, а nextStep не тронули. Где остановится сборка и какие два выхода предложит компилятор?">
+На `when` в `nextStep`, с ошибкой (Kotlin 2.4.20): «'when' expression must be exhaustive. Add the 'RETURNED' branch or an 'else' branch». Выходов два: ветка для новой константы или `else`. У enum столько значений, сколько констант, и компилятор знает их все. Выбирай ветку: `else` выключил бы эту проверку.
+</Reveal>
+
+Допиши ветку `Status.RETURNED -> "оформляем возврат"` и запусти ещё раз.
+
+У каждой константы есть `name` и `ordinal`: имя и номер в порядке объявления, с нуля. Все константы по порядку даёт свойство **`entries`**. В старом коде встретишь `values()`: функция работает, но с Kotlin 1.9 документация советует `entries`, заранее созданный неизменяемый список, вместо массива.
+
+`Status.valueOf("PAID")` находит константу по имени, а на неизвестном имени бросает `IllegalArgumentException`. По тому же порядку константы сравнивают операторами `<` и `>`.
+
+Enum не годится для набора, который меняется без релиза: города доставки, которые менеджер заводит в админке, в код не попадут. Не подходит он и тогда, когда вариантам нужны разные данные: у всех констант одни и те же свойства.
+
+## Как устроено: sealed-типы и when
+
+Распиши состояния заказа подробнее: у нового заказа данных нет, у оплаченного есть номер платежа, у отправленного — трек-номер. В enum это не уложить, пришлось бы дать каждой константе все свойства сразу. Здесь нужен **sealed-интерфейс** (sealed interface), интерфейс с закрытым списком наследников. Все его прямые наследники известны при компиляции: объявить их можно только в том же пакете и модуле. У каждого наследника свои данные:
+
+<KotlinPlayground>
+
+```kotlin
+sealed interface OrderState
+
+data object New : OrderState
+data class Paid(val paymentId: String) : OrderState
+data class Shipped(val tracking: String) : OrderState
+object Cancelled : OrderState
+
+fun describe(state: OrderState): String = when (state) {
+    New -> "новый"
+    is Paid -> "оплачен, платёж ${state.paymentId}"
+    is Shipped -> "в пути, трек ${state.tracking}"
+    Cancelled -> "отменён"
+}
+
+fun main() {
+    val states = listOf(
+        New, Paid("P-7"), Shipped("RU123"), Cancelled
+    )
+    for (s in states) println(describe(s))
+    println(Shipped("RU123"))
+    println(New)
+    println(Cancelled)
+}
+```
+
+</KotlinPlayground>
+
+Ветка `is Paid` — **проверка типа** оператором `is`, а `!is` проверяет обратное. После неё срабатывает smart cast, знакомый по уроку про null: внутри ветки `state` уже имеет тип `Paid`, и `state.paymentId` читается без приведения. Для наследника-объекта `is` не нужен: ветка `New ->` сравнивает значение через `==`, хотя и `is New` компилятор примет.
+
+<Reveal q="Сначала предскажи, что напечатают три последних println в main, и только потом запускай.">
+`Shipped(tracking=RU123)`, `New` и что-то вроде `Cancelled@4e50df2e`. Data class печатает имя и свойства. `New` объявлен как `data object`, и его `toString` возвращает одно имя. У обычного `object Cancelled` `toString` унаследован от `Any`: имя класса и хеш, который меняется от запуска к запуску.
+</Reveal>
+
+Допиши `data` перед `object Cancelled`, запусти и сравни последнюю строку. **`data object`** — объект, которому компилятор генерирует `toString` с именем, `equals` и `hashCode`, как у data class. `copy` и `componentN` у него нет: копировать и разбирать нечего. Варианты без данных в sealed-иерархии объявляют как `data object`.
+
+Так же решается задача из урока про первую программу: хранить в одной переменной то число, то сообщение об ошибке. Для этого заводят свой тип результата:
+
+```kotlin
+sealed interface ParseResult
+data class Parsed(val value: Int) : ParseResult
+data class Failed(val input: String) : ParseResult
+
+fun parseAge(text: String): ParseResult {
+    val age = text.toIntOrNull() ?: return Failed(text)
+    return Parsed(age)
+}
+```
+
+Вызывающий код разбирает результат через `when` и не может забыть про `Failed`. Обобщённый вариант и готовый `Result` — в уроках про обобщения и ошибки.
+
+Бывает и **sealed-класс** (sealed class). Он абстрактный, зато в конструкторе может держать свойство, общее для всех наследников: `sealed class AppError(val message: String)`. Если общего свойства нет, обычно берут sealed interface: sealed-интерфейсов у класса может быть несколько, а класс-родитель только один. К тому же enum может стать наследником sealed interface, но не sealed class.
+
+<Reveal q="Коллега добавил наследника data class Returned(val reason: String) : OrderState. В describe when — выражение, а в функции log when по тому же состоянию стоит инструкцией, без присваивания. Где остановится сборка?">
+В обеих функциях: «'when' expression must be exhaustive. Add the 'is Returned' branch or an 'else' branch». В уроке про типы инструкция по строке обходилась без `else`, а по `Boolean` уже требовала обе ветки. Для enum и sealed-типов правило то же: в Kotlin 1.6 это было предупреждение, с 1.7 — ошибка. Правило: `when` с аргументом enum, sealed-типа или `Boolean` покрывает все случаи, даже если его результат никуда не присваивают.
+</Reveal>
+
+<Callout type="blue" title="Если знаешь Java — sealed и record там тоже есть">
+В Java 17 sealed-классы и интерфейсы стали стабильными (JEP 409), в Java 21 — pattern matching в `switch` (JEP 441): `case Paid p ->`, и `switch` по sealed-интерфейсу без `default` компилятор тоже проверяет на полноту. Отличий три, и одно в пользу Java. Ветка `is Paid` в Kotlin не заводит новую переменную: smart cast работает на той же `state`. Инструкцию `switch` по enum Java ради совместимости на полноту не проверяет, и забытая константа молча пропускается. Зато в Java 21 есть record patterns (JEP 440): `case Shipped(String t) ->` разбирает запись прямо в метке, а в Kotlin данные после `is` читают через свойства.
+</Callout>
+
+## Value-классы вместо голых Long
+
+Функция `fun cancel(userId: Long, orderId: Long)` примет любые два числа, и перепутанный вызов `cancel(order.id, user.id)` скомпилируется. **Value-класс** (value class, в документации его ещё называют inline class) оборачивает одно значение в отдельный тип. На JVM его объявляют с аннотацией **`@JvmInline`**:
+
+<KotlinPlayground>
+
+```kotlin
+@JvmInline
+value class UserId(val value: Long)
+
+@JvmInline
+value class OrderId(val value: Long)
+
+fun cancel(user: UserId, order: OrderId) {
+    println("${user.value} отменил заказ ${order.value}")
+}
+
+fun main() {
+    val user = UserId(42)
+    val order = OrderId(1001)
+    cancel(user, order)
+    println(user)
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом поменяй аргументы местами: `cancel(order, user)`. Сборка остановится: на первом аргументе с ошибкой «Argument type mismatch: actual type is 'OrderId', but 'UserId' was expected», на втором — с зеркальной. Кроме идентификаторов, так же оборачивают строки со смыслом: `Email(val value: String)` не передашь вместо имени пользователя.
+
+Value-класс компилятор старается хранить как само значение: в памяти лежит `Long`, объекта-обёртки нет, а проверка типов при компиляции остаётся. Объект всё же создаётся, когда значение используют как другой тип: nullable `UserId?`, элемент списка, интерфейс. Это называют **упаковкой** (boxing), как `int` в Java упаковывают в `Integer`. Из ограничений чаще всего встретишь три: ровно одно свойство в первичном конструкторе, никакого наследования от классов и запрет на сравнение через `===`.
+
+<Reveal q="Коллега предлагает заменить оба value-класса на typealias UserId = Long и typealias OrderId = Long: «короче, и обёрток нет». Что станет с вызовом cancel(order, user)?">
+Сам вызов скомпилируется: `typealias` даёт существующему типу второе имя и нового типа не создаёт, поэтому для компилятора оба параметра имеют тип `Long`. Чтобы запустить программу, придётся заменить `UserId(42)` на `val user: UserId = 42` и `user.value` на `user`, то же для `order`. Она молча перепутает числа и напечатает «1001 отменил заказ 42». Чтобы компилятор ловил такую путаницу, нужен отдельный тип, то есть value-класс.
+</Reveal>
+
+**`typealias`** полезен там, где длинный тип мешает читать: `typealias OrderIndex = Map<OrderId, Order>` или тип функции. Соглашения Kotlin советуют его для часто повторяющихся типов функций и типов с параметрами, как этот.
+
+## Как на практике
+
+- **Сначала выпиши варианты и данные каждого.** Одинаковые данные — enum, разные — sealed, а поле, которое есть «иногда», переезжает в свой вариант.
+- **Подписи и признаки статуса клади в сам enum.** `title` и `canCancel()` рядом с константами не придётся искать по `when` в разных файлах.
+- **Строку извне превращай в enum на входе.** `valueOf` на неизвестном имени бросит `IllegalArgumentException`, а `Status.entries.firstOrNull { it.name == raw }` вернёт null, и дальше работают инструменты из урока про null.
+- **Идентификаторы оборачивай в value class.** `UserId`, `OrderId` и `Email` в памяти обычно лежат как `Long` и `String`, а перепутать их компилятор не даст.
+
+<Callout type="teal" title="Как принято">
+Правило «одинаковые данные — enum, разные — sealed» взято из документации Kotlin, а среди официальных идиом есть пример с value-классами `EmployeeId` и `CustomerId`. Авторы pattern matching в Java отмечают в JEP 441, что ветка «на всё остальное» может спрятать забытый случай и полный `switch` без неё лучше. С `when` то же самое, а если все варианты уже перечислены, на `else` компилятор предупредит: «'when' is exhaustive so 'else' is redundant here».
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Возвраты, которые стали «неизвестными».**
+`when (order.status)` из начала урока встречается в пяти местах, и в каждом есть `else`. Ветку для `"RETURNED"` коллега добавил в одном месте, а остальные четыре отправили возвраты в `else`. Ход: завести `enum class Status`, превращать строку из базы в константу при чтении и убрать `else` из `when`. Все четыре забытых места станут ошибками компиляции, и список правок составит компилятор без поиска по проекту. Вывод: `else` в `when` по своему типу превращает ошибку компиляции в тихую ошибку в проде.
+
+**Разбор 2. Номер константы в базе.**
+Статус заказа сохраняют в базу числом, и этим числом служит `ordinal`: `NEW` — 0, `PAID` — 1, `SHIPPED` — 2. Коллега вставил `PACKED` между `PAID` и `SHIPPED`, и все отправленные заказы из базы стали читаться как упакованные. Для числа, которое должно пережить перестановку констант, документация Kotlin советует явное свойство. Ход: `enum class Status(val code: Int)`, в базу пишут `code`, а обратно ищут через `Status.entries.firstOrNull { it.code == raw }`. Вывод: `ordinal` — порядок в исходнике, для хранения нужен свой код.
+
+**Разбор 3. Где sealed лишний.**
+Первый случай — варианты без данных. `sealed interface Level` с пятью `data object` работает, но это enum без `entries`, `valueOf` и сравнения по порядку, которым отбирают для лога всё от `WARN` и выше. Второй случай — набор, который расширяют снаружи. Библиотека уведомлений, куда пользователи подключают свои каналы, не может сделать интерфейс канала sealed: за пределами её модуля его не сможет реализовать никто. Там нужен обычный интерфейс и `when` с `else`. Вывод: sealed подходит для набора, который целиком лежит в твоём коде.
+
+## Каким типом описать значение
+
+<DecisionTree nodes={[
+  { q: "Это одно значение-обёртка: идентификатор, email, сумма?", yes: "value class с @JvmInline", no: "к следующему вопросу" },
+  { q: "Варианты добавляют снаружи, в чужом коде?", yes: "Обычный интерфейс, when по нему с else", no: "к следующему вопросу" },
+  { q: "У всех вариантов одинаковые данные или их нет совсем?", yes: "enum class", no: "к следующему вопросу" },
+  { q: "У всех вариантов есть общее свойство?", yes: "sealed class с этим свойством в конструкторе", no: "sealed interface, наследники — data class и data object" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `else` в `when` по своему enum или sealed-типу | Новый вариант уходит в `else` без ошибки | Перечислить все ветки |
+| Статус строкой | Опечатки доходят до логики | `enum class`, строку разбирать на входе |
+| Поля, заполненные «только в статусе X» | Недопустимые сочетания и проверки на null повсюду | Sealed-тип, данные — в наследнике X |
+| `object` без `data` в sealed-иерархии | В логах `Cancelled@4e50df2e` | `data object` |
+| `ordinal` в базе или API | Перестановка констант меняет смысл данных | Явное свойство `code` |
+| `typealias UserId = Long` ради защиты | Псевдоним совместим с `Long`, путаница компилируется | `@JvmInline value class` |
+
+## Практикум
+
+<Practice title="Перепиши модель платежа на sealed-тип" checklist={["PaymentState — sealed interface с тремя наследниками", "Pending — data object, у Paid и Failed только свои данные", "В when нет else и нет проверок на null", "Номер заказа — value class OrderId вместо Long", "Программа печатает те же три строки, что и исходная"]}>
+Модель платежа ниже разрешает невозможное: оплату без номера карты, отказ с номером карты, статус с опечаткой. Перепиши её так, чтобы такие сочетания не компилировались, а номер заказа был value-классом `OrderId`. Вывод программы должен остаться прежним: «Заказ 7: ждём оплату», «Заказ 8: оплачено картой *4242», «Заказ 9: отказ: нет средств».
+
+<KotlinPlayground>
+
+```kotlin
+class Payment(
+    val orderId: Long,
+    val status: String,
+    val cardLast4: String?,
+    val error: String?
+)
+
+fun describe(p: Payment): String = when (p.status) {
+    "PAID" -> "оплачено картой *${p.cardLast4}"
+    "FAILED" -> "отказ: ${p.error}"
+    else -> "ждём оплату"
+}
+
+fun main() {
+    val payments = listOf(
+        Payment(7, "NEW", null, null),
+        Payment(8, "PAID", "4242", null),
+        Payment(9, "FAILED", null, "нет средств")
+    )
+    for (p in payments) {
+        println("Заказ ${p.orderId}: ${describe(p)}")
+    }
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+@JvmInline
+value class OrderId(val value: Long)
+
+sealed interface PaymentState
+data object Pending : PaymentState
+data class Paid(val cardLast4: String) : PaymentState
+data class Failed(val reason: String) : PaymentState
+
+data class Payment(
+    val orderId: OrderId,
+    val state: PaymentState
+)
+
+fun describe(state: PaymentState): String = when (state) {
+    Pending -> "ждём оплату"
+    is Paid -> "оплачено картой *${state.cardLast4}"
+    is Failed -> "отказ: ${state.reason}"
+}
+
+fun main() {
+    val payments = listOf(
+        Payment(OrderId(7), Pending),
+        Payment(OrderId(8), Paid("4242")),
+        Payment(OrderId(9), Failed("нет средств"))
+    )
+    for (p in payments) {
+        val id = p.orderId.value
+        println("Заказ $id: ${describe(p.state)}")
+    }
+}
+```
+
+`Paid` без номера карты не создать, а `Failed` карту не хранит. Опечатка в статусе стала бы обращением к несуществующему типу. Проверок на null не осталось: каждое поле живёт только в своём состоянии. Появится `Refunded`, и компилятор укажет на `describe`, а `OrderId` не даст передать в платёж номер пользователя.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в своём проекте поле `status` или `type`, которое хранится строкой или числом, и все `switch` или `when` по нему. Сколько из них заканчиваются `default` или `else`? Что из вариантов стало бы enum, а что — sealed-типом? Через неделю-две проверь, что в твоих новых `when` по своим типам нет `else`.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Фиксированный набор | `enum class Status { NEW, PAID }` |
+| Все константы | `Status.entries` вместо `values()` |
+| Закрытая иерархия | `sealed interface State`, наследники в том же пакете и модуле |
+| Вариант с данными и без | `data class Paid(val id: String)`, `data object New` |
+| Разбор вариантов | `when (s) { is Paid -> s.id; New -> … }` без `else` |
+| Типобезопасный ID | `@JvmInline value class UserId(val value: Long)` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Enum-класс (enum class)", meaning: "Тип с фиксированным набором значений-констант, объявленных в самом классе." },
+  { term: "Константа enum (enum constant)", meaning: "Одно из значений enum-класса; существует в единственном экземпляре." },
+  { term: "entries", meaning: "Свойство enum-класса: неизменяемый список всех констант в порядке объявления." },
+  { term: "ordinal", meaning: "Номер константы в порядке объявления, с нуля; меняется, если переставить константы." },
+  { term: "Sealed-интерфейс (sealed interface)", meaning: "Интерфейс, все прямые наследники которого известны при компиляции и объявлены в том же пакете и модуле." },
+  { term: "Sealed-класс (sealed class)", meaning: "Абстрактный класс с закрытым списком наследников, который может хранить общее для них свойство." },
+  { term: "Полнота (exhaustiveness)", meaning: "Свойство when, ветки которого покрывают все возможные значения; с enum, sealed-типом или Boolean when бывает полным и без else." },
+  { term: "Проверка типа (is)", meaning: "Оператор, который проверяет, принадлежит ли значение типу; !is проверяет обратное." },
+  { term: "Smart cast (умное приведение)", meaning: "Компилятор сам считает значение нужным типом после проверки is или != null." },
+  { term: "data object", meaning: "Объект, которому компилятор генерирует toString с именем, equals и hashCode; вариант без данных в sealed-иерархии." },
+  { term: "Value-класс (value class)", meaning: "Обёртка ровно над одним значением, которая создаёт новый тип и обычно не создаёт объекта в памяти." },
+  { term: "@JvmInline", meaning: "Аннотация, с которой value-класс объявляют для JVM." },
+  { term: "Упаковка (boxing)", meaning: "Создание объекта-обёртки, когда value-класс используют как nullable, элемент коллекции или интерфейс." },
+  { term: "typealias", meaning: "Второе имя существующего типа; псевдоним и исходный тип взаимозаменяемы." },
+  { term: "Недопустимое состояние", meaning: "Сочетание данных, которое не имеет смысла в предметной области, например активная подписка с датой отмены." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-modeling-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Моделирование: понятия</span>
+    <span class="kc-trainer-hint">enum, sealed, value class</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-modeling-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Каким типом описать</span>
+    <span class="kc-trainer-hint">Сценарии из работы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-modeling-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши объявление типа</span>
+    <span class="kc-trainer-hint">Ключевые слова моделей</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-modeling-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери модель</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-idioms-review')}>
+    <span class="kc-trainer-kind">Сводный</span>
+    <span class="kc-trainer-title">Сводный: идиоматичный Kotlin</span>
+    <span class="kc-trainer-hint">Похожие приёмы вперемешку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Enum classes, Sealed classes and interfaces** ([kotlinlang.org/docs](https://kotlinlang.org/docs/sealed-classes.html), сверено 2026-09-26) — enum со свойствами, `entries`, `ordinal`; закрытые иерархии, выбор между enum и sealed.
+- **Kotlin — Conditions and loops, Type checks and casts, Compatibility guide for Kotlin 1.7** ([kotlinlang.org/docs](https://kotlinlang.org/docs/control-flow.html), сверено 2026-09-26) — полнота `when`, `is` и smart cast, неполные инструкции `when` в 1.6 и 1.7.
+- **Kotlin — Object declarations, What's new in Kotlin 1.8.20 и 1.9** ([kotlinlang.org/docs](https://kotlinlang.org/docs/object-declarations.html), сверено 2026-09-26) — `data object`; `entries` вместо `values()`.
+- **Kotlin — Inline value classes, Type aliases, Idioms, Coding conventions** ([kotlinlang.org/docs](https://kotlinlang.org/docs/inline-classes.html), сверено 2026-09-26) — value-классы, `typealias`, идиома с `EmployeeId`.
+- **OpenJDK — JEP 409, JEP 440, JEP 441** ([openjdk.org](https://openjdk.org/jeps/441), сверено 2026-09-26) — sealed в Java 17, pattern matching и record patterns в Java 21.
+- **Yaron Minsky — Effective ML Revisited, 2011** ([blog.janestreet.com](https://blog.janestreet.com/effective-ml-revisited/), сверено 2026-09-26) — принцип «make illegal states unrepresentable».

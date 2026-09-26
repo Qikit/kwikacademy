@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import CourseCard from '../course/CourseCard.tsx';
 import { withBase } from '../../lib/url';
+import { getLessons, getTrainers } from '../../lib/content';
 
 interface Props {
   header?: boolean;
@@ -11,8 +12,8 @@ const { header = true } = Astro.props;
 const courses = (await getCollection('courses'))
   .filter((c) => !c.data.hidden)
   .sort((a, b) => a.data.order - b.data.order);
-const lessons = await getCollection('lessons');
-const trainers = await getCollection('trainers');
+const lessons = await getLessons();
+const trainers = await getTrainers();
 const lessonsFor = (slug: string) => lessons.filter((l) => l.data.course === slug);
 const trainersFor = (slug: string) => trainers.filter((t) => t.data.course === slug);
 

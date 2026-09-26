@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Roadmap from '../../components/course/Roadmap.astro';
 import { withBase } from '../../lib/url';
+import { getLessons, getTrainers } from '../../lib/content';
 
 export async function getStaticPaths() {
   const courses = await getCollection('courses');
@@ -11,7 +12,7 @@ export async function getStaticPaths() {
 
 const { course } = Astro.props;
 
-const lessons = (await getCollection('lessons'))
+const lessons = (await getLessons())
   .filter((l) => l.data.course === course.id)
   .sort((a, b) => a.data.order - b.data.order);
 const nodes = lessons.map((l) => ({
@@ -23,7 +24,7 @@ const nodes = lessons.map((l) => ({
   placeholder: l.data.placeholder,
 }));
 
-const trainers = (await getCollection('trainers')).filter((t) => t.data.course === course.id);
+const trainers = (await getTrainers()).filter((t) => t.data.course === course.id);
 
 const trainersByLesson = new Map<string, typeof trainers>();
 for (const t of trainers) {
@@ -140,6 +141,9 @@ const KIND_LABEL: Record<string, string> = {
     font-size: clamp(32px, 6vw, 52px);
     font-weight: 800;
     margin: 12px 0;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
   }
   .desc {
     color: var(--text-2);

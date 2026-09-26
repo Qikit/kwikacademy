@@ -1,8 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
+import { getLessons } from '../../lib/content';
 
 const courses = (await getCollection('courses')).filter((c) => !c.data.hidden);
-const lessons = (await getCollection('lessons')).filter((l) => l.data.course !== 'demo');
+const lessons = (await getLessons()).filter((l) => l.data.course !== 'demo');
 
 const stats = [
   { value: String(courses.length), label: 'направлений', tilt: '-2deg' },

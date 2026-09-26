@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import TrainerLoader from '../../../components/trainers/TrainerLoader.tsx';
 import { withBase } from '../../../lib/url';
+import { getLessons, getTrainers } from '../../../lib/content';
 
 export async function getStaticPaths() {
-  const trainers = await getCollection('trainers');
+  const trainers = await getTrainers();
   return trainers.map((t) => ({
     params: { topic: t.data.course, trainer: t.id },
     props: { trainer: t },
@@ -14,9 +14,22 @@ export async function getStaticPaths() {
 
 const { trainer } = Astro.props;
 
-const courseTrainers = (await getCollection('trainers'))
+const lessonOrder = new Map(
+  (await getLessons())
+    .filter((l) => l.data.course === trainer.data.course)
+    .map((l) => [l.id, l.data.order]),
+);
+const kindRank: Record<string, number> = { flashcards: 0, match: 1, categorize: 1, quiz: 2, ordering: 3, cloze: 3 };
+const orderOf = (t: typeof trainer) => (t.data.lesson ? lessonOrder.get(t.data.lesson) ?? Infinity : Infinity);
+const courseTrainers = (await getTrainers())
   .filter((t) => t.data.course === trainer.data.course)
-  .sort((a, b) => a.id.localeCompare(b.id));
+  .sort(
+    (a, b) =>
+      orderOf(a) - orderOf(b) ||
+      Number(a.id.endsWith('-review')) - Number(b.id.endsWith('-review')) ||
+      (kindRank[a.data.data.type] ?? 9) - (kindRank[b.data.data.type] ?? 9) ||
+      a.id.localeCompare(b.id),
+  );
 const idx = courseTrainers.findIndex((t) => t.id === trainer.id);
 const next = courseTrainers[idx + 1];
 
@@ -30,7 +43,7 @@ const nav = {
 <BaseLayout title={`${trainer.data.title} — KwikAcademy`}>
   <section style="max-width:600px;margin:0 auto;padding:48px 24px 96px;">
     <p class="eyebrow">Тренажёр</p>
-    <h1 style="font-size:clamp(28px,5vw,42px);font-weight:800;margin:12px 0 32px;">{trainer.data.title}</h1>
-    <TrainerLoader client:load slug={trainer.id} data={trainer.data.data} nav={nav} />
+    <h1 style="font-size:clamp(28px,5vw,42px);font-weight:800;margin:12px 0 32px;overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;">{trainer.data.title}</h1>
+    <TrainerLoader client:only="react" slug={trainer.id} data={trainer.data.data} nav={nav} />
   </section>
 </BaseLayout>

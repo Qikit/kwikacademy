@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-json",
+  "title": "Что ответит сервис",
+  "description": "Разберись, что станет с телом запроса, какая проверка сработает и какой статус получит клиент.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "DTO: @Serializable data class Review(val text: String, val stars: Int = 5). Клиент прислал {\"text\":\"ok\",\"stars\":null}. Что сделает разбор?",
+        "options": [
+          "Бросит исключение: null в Int — ошибка разбора",
+          "Подставит значение по умолчанию, и stars станет 5",
+          "Подставит 0, как для примитива int"
+        ],
+        "correctIndex": 0,
+        "explain": "У stars тип Int без знака вопроса, и явный null для такого поля — ошибка разбора, даже если у поля есть значение по умолчанию. Значение по умолчанию подставляется, только когда поля в JSON нет совсем. Ноль вместо null — привычка из Jackson 2.x, где для примитивов так было по умолчанию; kotlinx.serialization так не делает. В Ktor плагин ContentNegotiation обернёт это исключение в BadRequestException, как любую ошибку разбора тела."
+      },
+      {
+        "prompt": "В маршрут добавили throw RateLimitException(), где class RateLimitException : RuntimeException(\"Too many requests\"). В StatusPages есть обработчики только для ShortenerException и BadRequestException. Что получит клиент?",
+        "options": [
+          "400 bad_request: сработает обработчик BadRequestException",
+          "500: подходящего обработчика нет, ответит сам Ktor",
+          "Ничего: сервис не соберётся из-за when в toHttpError"
+        ],
+        "correctIndex": 1,
+        "explain": "exception<T> ловит T и его наследников. RateLimitException не наследует ни ShortenerException, ни BadRequestException, поэтому Ktor 3.6.0 запишет ошибку в лог и ответит 500, а текст исключения уйдёт клиенту в теле ответа. when в toHttpError перебирает наследников ShortenerException, а новый класс к ним не относится, так что сборка пройдёт. Чтобы клиент получил осмысленный статус, сделай исключение наследником ShortenerException и добавь ему ветку."
+      },
+      {
+        "prompt": "Какой адрес пройдёт requireWebUrl из урока: URI без ошибок разбора, схема http или https, непустой хост, длина до 2048 символов?",
+        "options": [
+          "//ktor.io/docs",
+          "mailto:me@ktor.io",
+          "http://localhost:8080/x"
+        ],
+        "correctIndex": 2,
+        "explain": "У http://localhost:8080/x есть схема http и хост localhost, порт и путь проверке не мешают. У //ktor.io/docs хост ktor.io есть, но схемы нет, и проверка схемы его отсекает. У mailto:me@ktor.io схема есть, но URI не выделяет в нём хост, и host равен null."
+      },
+      {
+        "prompt": "Маршрут отвечает call.respond(Profile(\"Аня\")), где @Serializable data class Profile(val name: String, val bio: String? = null). ContentNegotiation настроен через json() без аргументов. Что получит клиент?",
+        "options": [
+          "{\"name\":\"Аня\"}",
+          "{\"name\":\"Аня\",\"bio\":\"\"}",
+          "{\"name\":\"Аня\",\"bio\":null}"
+        ],
+        "correctIndex": 2,
+        "explain": "json() без аргументов берёт DefaultJson, а в нём encodeDefaults = true: поле со значением по умолчанию попадает в ответ, и null пишется как null. Вариант без bio выдал бы Json с настройками по умолчанию, который пропускает поля, равные значению по умолчанию. Пустую строку вместо null сериализация не подставляет."
+      },
+      {
+        "prompt": "Сервис бронирования: клиент бронирует место, которое минуту назад занял другой. JSON корректный, поля на месте. Какой статус точнее описывает ситуацию по RFC 9110?",
+        "options": [
+          "400 Bad Request",
+          "409 Conflict",
+          "422 Unprocessable Content"
+        ],
+        "correctIndex": 1,
+        "explain": "409 значит, что запрос конфликтует с текущим состоянием ресурса, а клиент может устранить конфликт и повторить запрос, например выбрать другое место. 400 — для ошибки клиента вроде неверного синтаксиса, а запрос здесь составлен правильно. 422 — когда содержимое понятно, но инструкции в нём невыполнимы по смыслу; здесь бронь была бы верной, если бы место не заняли."
+      },
+      {
+        "prompt": "Json { ignoreUnknownKeys = true } разбирает {\"item\":\"book\",\"qnty\":3} в @Serializable data class Order(val item: String, val qty: Int = 1). Что получится?",
+        "options": [
+          "Order(item=book, qty=1): опечатку молча пропустили",
+          "Order(item=book, qty=3): поле нашлось по похожему имени",
+          "Исключение: незнакомый ключ qnty"
+        ],
+        "correctIndex": 0,
+        "explain": "ignoreUnknownKeys велит пропускать незнакомые ключи, и qnty пропал вместе с числом 3. Поля qty в JSON нет, поэтому подставилось значение по умолчанию 1. Похожие имена сериализация не угадывает. Исключение «unknown key» было бы без этой настройки: строгий режим как раз ловит такие опечатки."
+      },
+      {
+        "prompt": "На POST http://localhost:8080/links сервис ответил 201 и Location: /links/ktor. Как клиенту понять этот заголовок по RFC 9110?",
+        "options": [
+          "Как ошибку: в Location допустим только полный адрес",
+          "Как http://localhost:8080/links/ktor",
+          "Как http://localhost:8080/links/links/ktor"
+        ],
+        "correctIndex": 1,
+        "explain": "RFC 9110 разрешает в Location относительную ссылку и велит разрешать её относительно адреса запроса. Путь /links/ktor начинается с косой черты, поэтому он заменяет путь целиком, а схема, хост и порт берутся из адреса запроса. К старому пути он не дописывается, и полного адреса RFC не требует."
+      }
+    ]
+  }
+}

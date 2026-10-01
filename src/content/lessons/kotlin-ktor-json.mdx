@@ -4,10 +4,646 @@ order: 21
 phase: "Бэкенд на Ktor"
 title: "JSON и ошибки: сериализация и статусы ответов"
 eyebrow: "Kotlin · Бэкенд на Ktor"
-readingMinutes: 15
-summary: "Принимать и отдавать JSON через kotlinx.serialization и превращать ошибки в понятные HTTP-ответы."
+readingMinutes: 18
+summary: "Принимать и отдавать JSON через kotlinx.serialization и превращать ошибки в понятные HTTP-ответы из одного места — плагина StatusPages."
 tags: [kotlin, backend]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «JSON и ошибки: сериализация и статусы ответов» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты поднял первый сервис на Ktor: маршруты в `routing { }`, ответы через `respondText`, ссылки в памяти на `ConcurrentHashMap`. `POST /links` принимает адрес голым текстом, alias — в строке запроса, и даже об ошибке сообщает строкой: «Alias 'kotlin' is already taken». Фронтенд-разработчица из соседней команды подключает сервис к форме и приходит с вопросами. Занятый alias она отличит по статусу 409, но как показать причину под нужным полем, не разбирая английскую фразу? И почему строка `not a url` получила короткий код?
+
+Рука тянется склеить JSON вручную в `respondText` и дописать по `if` в каждый маршрут. Тогда формат ошибок разойдётся уже на третьем маршруте. В Kotlin формат тела описывают классом, код разбора генерирует компилятор, а исключения превращаются в ответы в одном месте на весь сервис.
+
+После урока ты сможешь описать тела запросов и ответов `@Serializable`-классами, проверять входные данные и превращать ошибки в ответы 400, 404 и 409 с одинаковым JSON-телом.
+
+## Ядро: формат задают классы, ошибки — одно место
+
+<Callout type="purple" title="Суть">
+Тело запроса и ответа описывают **DTO** (data transfer object): data-классы с аннотацией `@Serializable`, для которых плагин компилятора генерирует перевод в JSON и обратно. Плагин Ktor **ContentNegotiation** вызывает этот код в `call.receive<T>()` и `call.respond(obj)`. Статус ошибки маршрут сам не выбирает: он бросает **доменное исключение**, а плагин **StatusPages** превращает его в код ответа и JSON-тело.
+</Callout>
+
+Отсюда правило: маршрут описывает удачный путь, а всё, что может пойти не так, уходит в исключения с говорящими именами. Обработчик `POST /links` в нашем проекте занимает семь строк, и `if` в нём нет.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="В проекте появится доменный класс Link(code, url). Почему бы не пометить его @Serializable и не отдавать клиенту как есть?">
+Можно, но тогда формат API привязан к внутренней модели. Клиенту нужен ещё `shortUrl`, а он зависит от настройки `shortener.baseUrl`, которой в `Link` нет. И любое переименование поля в `Link` ради логики или базы молча сломает клиентов. Поэтому формат API меняют в DTO, модель — в `Link`, а связывает их функция `toResponse`.
+</Reveal>
+
+## Как устроено: JSON и DTO
+
+**Сериализация** (serialization) — перевод объекта в формат для передачи по сети или хранения, **десериализация** — обратный путь. В Kotlin этим занимается **kotlinx.serialization** из двух частей. Плагин компилятора генерирует код для каждого класса с `@Serializable`, и версия у него та же, что у Kotlin, 2.4.20. Библиотека `kotlinx-serialization-json` даёт сам формат, нумерация версий у неё своя: 1.11.0, последний стабильный выпуск на 2026-09-28. От Ktor 3.6.0 нужны ContentNegotiation, мост к kotlinx.serialization и StatusPages. В каталоге версий прибавилось шесть строк:
+
+```toml
+[versions]
+# …
+kotlinx-serialization = "1.11.0"
+# …
+
+[libraries]
+# …
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+# …
+
+[plugins]
+# …
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+```
+
+А в `build.gradle.kts` — плагин и четыре зависимости:
+
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
+    application
+}
+// …
+dependencies {
+    // …
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.server.status.pages)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.kotlinx.serialization.json)
+    // …
+}
+// …
+```
+
+В `Dto.kt` три DTO: запрос, ответ и `ErrorResponse` для любой ошибки. Доменный `Link(code, url)` превращает в ответ функция `toResponse`:
+
+```kotlin
+@Serializable
+data class CreateLinkRequest(
+    val url: String,
+    val alias: String? = null,
+)
+
+@Serializable
+data class LinkResponse(
+    val code: String,
+    val shortUrl: String,
+    val url: String,
+)
+
+@Serializable
+data class ErrorResponse(
+    val error: String,
+    val message: String,
+)
+
+fun Link.toResponse(baseUrl: String): LinkResponse =
+    LinkResponse(code = code, shortUrl = "$baseUrl/$code", url = url)
+```
+
+ContentNegotiation ставится одним вызовом `install`, и дальше маршрут получает и отдаёт объекты. Сериализатор для тела запроса Ktor выбирает по заголовку `Content-Type`, для ответа — по `Accept`:
+
+```kotlin
+install(ContentNegotiation) {
+    json()
+}
+// …
+post {
+    val request = call.receive<CreateLinkRequest>()
+    val url = requireWebUrl(request.url)
+    val alias = request.alias?.let(::requireValidAlias)
+    val link = links.create(url, alias)
+    val location = "/links/${link.code}"
+    call.response.header(HttpHeaders.Location, location)
+    call.respond(HttpStatusCode.Created, link.toResponse(baseUrl))
+}
+```
+
+`baseUrl` модуль `configureRouting` читает из `application.yaml` при старте, строка есть в разборе практикума.
+
+У `alias` две пометки, и отвечают они на разные вопросы. `String?` из урока про null говорит, что значение бывает null. `= null` делает поле **необязательным** (optional property): его можно не присылать, подставится значение по умолчанию. Поле `language: String = "Kotlin"` тоже необязательное, но явный `null` в нём — ошибка разбора. А `alias: String?` без значения по умолчанию, наоборот, принимает null, но в JSON обязано быть.
+
+<Reveal q="Сначала предскажи обе строки, которые напечатает программа ниже: что станет с alias, которого нет в JSON, и попадёт ли он обратно в JSON?">
+`CreateLinkRequest(url=https://ktor.io, alias=null)` и `{"url":"https://ktor.io","alias":null}`. Поля в теле нет, поэтому подставилось значение по умолчанию. Обратно оно попало из-за `encodeDefaults = true`: `Json` без этой настройки пропустил бы поле, равное значению по умолчанию, и напечатал бы `{"url":"https://ktor.io"}`.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+
+@Serializable
+data class CreateLinkRequest(
+    val url: String,
+    val alias: String? = null,
+)
+
+val json = Json { encodeDefaults = true }
+
+fun main() {
+    val body = """{"url":"https://ktor.io"}"""
+    val request =
+        json.decodeFromString<CreateLinkRequest>(body)
+    println(request)
+    println(json.encodeToString(request))
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверь с ответом. `json()` в Ktor без аргументов берёт настройки из `DefaultJson`, где тоже стоит `encodeDefaults = true`, но у ответов нашего сервиса полей со значением по умолчанию нет. Теперь убери `= null` у `alias`, и разбор упадёт с `MissingFieldException` «Field 'alias' is required…». Не возвращая `= null`, добавь в `Json { … }` строку `explicitNulls = false`: отсутствующее nullable-поле снова станет null, а из вывода пропадёт.
+
+<Callout type="blue" title="Если знаешь Java — здесь иначе">
+Jackson превращает в JSON даже класс без единой аннотации, если у того есть публичные поля или геттеры. kotlinx.serialization обходится без рефлексии: сериализатор генерирует плагин компилятора, и только для классов с `@Serializable`. Забудешь аннотацию — код соберётся, а `Json.encodeToString` при запуске бросит «Serializer for class 'LinkResponse' is not found». Лишние поля Jackson 3 по умолчанию молча пропускает (в 2.x падал), а kotlinx.serialization считает незнакомый ключ ошибкой.
+</Callout>
+
+## Проверка смысла: валидация
+
+Сериализация проверяет форму: разбирается ли JSON и есть ли в нём поле `url`. Смысл, то есть адрес http или https с хостом и длиной до 2048 символов, проверяешь ты сам. Такую проверку называют **валидацией** (validation). В проекте она лежит в `Validation.kt`:
+
+```kotlin
+fun requireWebUrl(raw: String): String {
+    val uri = toUriOrNull(raw.trim())
+    if (uri == null || !uri.isWebUrl()) throw InvalidUrlException(raw)
+    return uri.toString()
+}
+// …
+private fun URI.isWebUrl(): Boolean =
+    scheme?.lowercase() in WEB_SCHEMES &&
+        !host.isNullOrEmpty() &&
+        toString().length <= MAX_URL_LENGTH
+```
+
+`java.net.URI` разбирает строку и бросает `URISyntaxException`, если в ней недопустимый символ, например пробел, а `toUriOrNull` превращает это исключение в null. Имя `require…` взято у `require` из урока про ошибки: функция возвращает проверенное значение или бросает исключение. Но исключение своё, `InvalidUrlException`, и StatusPages отличит его от `IllegalArgumentException`, который может бросить любая библиотека.
+
+<Reveal q="Какие из трёх строк пройдут requireWebUrl: ktor.io, HTTPS://KTOR.IO и https://пример.рф?">
+Только `HTTPS://KTOR.IO`: схему функция сравнивает в нижнем регистре. У `ktor.io` схемы нет, и `URI` считает всю строку путём. По документации `java.net.URI` имя хоста состоит из латинских букв, цифр и дефисов, поэтому у `https://пример.рф` хост равен null, и проверка `host` его отсекает.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+import java.net.URI
+import java.net.URISyntaxException
+
+const val MAX_URL_LENGTH = 2048
+private val WEB_SCHEMES = setOf("http", "https")
+
+class InvalidUrlException(url: String) :
+    RuntimeException("Not a valid http(s) URL: $url")
+
+fun requireWebUrl(raw: String): String {
+    val uri = toUriOrNull(raw.trim())
+    if (uri == null || !uri.isWebUrl()) {
+        throw InvalidUrlException(raw)
+    }
+    return uri.toString()
+}
+
+private fun toUriOrNull(value: String): URI? =
+    try {
+        URI(value)
+    } catch (_: URISyntaxException) {
+        null
+    }
+
+private fun URI.isWebUrl(): Boolean =
+    scheme?.lowercase() in WEB_SCHEMES &&
+        !host.isNullOrEmpty() &&
+        toString().length <= MAX_URL_LENGTH
+
+fun main() {
+    val inputs = listOf(
+        "  https://ktor.io/docs  ",
+        "ftp://example.com/file",
+        "ktor.io",
+        "HTTPS://KTOR.IO",
+        "https://пример.рф",
+    )
+    for (raw in inputs) {
+        println(runCatching { requireWebUrl(raw) })
+    }
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверь с ответом. Потом добавь в список `"https://"` и `"mailto:me@ktor.io"`: первую строку `URI` не разберёт вовсе, а у второй есть схема, но нет хоста. Обе дадут `Failure` с `InvalidUrlException`.
+
+## Как устроено: ошибки и StatusPages
+
+**Доменное исключение** называет неудачу на языке задачи: `AliasTakenException` — alias занят, `LinkNotFoundException` — такого кода нет. `IllegalStateException` из `error()` — контрпример: это баг, и о нём с клиентом не договариваются. В проекте все доменные исключения наследуют один sealed-класс:
+
+```kotlin
+sealed class ShortenerException(
+    override val message: String,
+) : RuntimeException(message)
+
+class AliasTakenException(
+    alias: String,
+) : ShortenerException("Alias '$alias' is already taken")
+// … InvalidUrlException, InvalidAliasException,
+// LinkNotFoundException
+```
+
+sealed class здесь по той же причине, что в уроке про моделирование: у вариантов есть общее свойство. А общим предком стал `RuntimeException`, потому что обработчик StatusPages принимает только наследников `Throwable`. `override val message: String` сужает тип: у `Throwable` сообщение имеет тип `String?`, а полю `ErrorResponse.message` нужен `String`.
+
+Маршрут бросает такое исключение, например, через Elvis:
+
+```kotlin
+private fun LinkStore.require(code: String): Link =
+    find(code) ?: throw LinkNotFoundException(code)
+```
+
+А ответы на них собраны в `StatusPages.kt`:
+
+```kotlin
+fun Application.configureStatusPages() {
+    install(StatusPages) {
+        exception<ShortenerException> { call, cause ->
+            val (status, error) = cause.toHttpError()
+            call.respond(status, ErrorResponse(error, cause.message))
+        }
+        exception<BadRequestException> { call, _ ->
+            val body = ErrorResponse("bad_request", "Malformed request")
+            call.respond(HttpStatusCode.BadRequest, body)
+        }
+    }
+}
+
+private fun ShortenerException.toHttpError(): Pair<HttpStatusCode, String> =
+    when (this) {
+        is InvalidUrlException -> HttpStatusCode.BadRequest to "invalid_url"
+        is InvalidAliasException -> HttpStatusCode.BadRequest to "invalid_alias"
+        is LinkNotFoundException -> HttpStatusCode.NotFound to "not_found"
+        is AliasTakenException -> HttpStatusCode.Conflict to "alias_taken"
+    }
+```
+
+`exception<ShortenerException>` ловит сам класс и всех его наследников. `BadRequestException` бросает ContentNegotiation, когда тело не удалось разобрать: JSON обрезан или вместо `url` пришло поле `link`. На непредвиденное исключение Ktor 3.6.0 ответит сам: запишет ошибку в лог и вернёт 500 с `text/plain`, а в теле окажется `message` исключения. Маршрут с `error("secret detail 42")` отдал клиенту ровно эту строку (проверено 2026-09-28). Если ты писал на Spring, StatusPages ближе всего к `@RestControllerAdvice` с методами `@ExceptionHandler`.
+
+<Reveal q="В сервис добавили LinkBlockedException, ещё одного наследника ShortenerException, а toHttpError не тронули. Что скажет компилятор? И что увидит клиент, если «починить» сборку веткой else с кодом 500?">
+Сборка остановится на `when`: «'when' expression must be exhaustive. Add the 'is LinkBlockedException' branch or an 'else' branch.» (Kotlin 2.4.20). Компилятор знает всех наследников sealed-класса. С `else` всё соберётся, но заблокированная ссылка вернёт 500, будто упал сервер, и следующий новый наследник тоже молча уйдёт в `else`. Нужна своя ветка, например 410 Gone.
+</Reveal>
+
+Проверь это без Ktor. Функция `handle` ниже работает как StatusPages: ловит доменные ошибки и превращает их в статус и код.
+
+<KotlinPlayground>
+
+```kotlin
+sealed class ShortenerException(
+    override val message: String,
+) : RuntimeException(message)
+
+class InvalidUrlException(url: String) :
+    ShortenerException("Not a valid http(s) URL: $url")
+
+class LinkNotFoundException(code: String) :
+    ShortenerException("No link with code '$code'")
+
+class AliasTakenException(alias: String) :
+    ShortenerException("Alias '$alias' is already taken")
+
+fun ShortenerException.toHttpError(): Pair<Int, String> =
+    when (this) {
+        is InvalidUrlException -> 400 to "invalid_url"
+        is LinkNotFoundException -> 404 to "not_found"
+        is AliasTakenException -> 409 to "alias_taken"
+    }
+
+fun handle(route: () -> String): String =
+    try {
+        "201 " + route()
+    } catch (e: ShortenerException) {
+        val (status, error) = e.toHttpError()
+        "$status $error: ${e.message}"
+    }
+
+fun main() {
+    val taken = setOf("ktor")
+    println(handle { "kotlin" })
+    println(handle {
+        if ("ktor" in taken) {
+            throw AliasTakenException("ktor")
+        }
+        "ktor"
+    })
+    println(handle { throw LinkNotFoundException("nope42") })
+}
+```
+
+</KotlinPlayground>
+
+Запусти. Потом объяви ещё одного наследника, и сборка упадёт на `when`, пока не допишешь ветку `is LinkBlockedException -> 410 to "blocked"`:
+
+```kotlin
+class LinkBlockedException(code: String) :
+    ShortenerException("Link '$code' is blocked")
+```
+
+Напоследок добавь в `main` строку `println(handle { error("disk is full") })`. Программа упадёт с `IllegalStateException`, потому что `handle` ловит только доменные ошибки. Ktor ответил бы на такой сбой 500 и показал бы клиенту текст `disk is full`.
+
+## Как на практике
+
+- **Заводи DTO на каждое тело.** Запрос, ответ и ошибка — отдельные `@Serializable`-классы, доменная модель остаётся внутри.
+- **Проверяй смысл сразу после `receive`.** Сериализация не знает, что `ftp://` сокращать нельзя.
+- **Ответ на ошибку собирай в StatusPages.** Новый маршрут получит тот же формат ошибок без лишнего кода.
+- **Давай ошибке машинный код.** Клиент ветвится по `"error":"alias_taken"`, а `message` читает человек, и текст можно менять, не ломая клиентов.
+
+<Callout type="teal" title="Как принято">
+Документация kotlinx.serialization советует создавать `Json` один раз: экземпляры неизменяемы и потокобезопасны, их можно хранить в свойстве верхнего уровня, а повторное использование ускоряет работу за счёт кэша. Ktor так и хранит `DefaultJson`. А по RFC 9110 на ресурс, созданный через POST, следует (SHOULD) отвечать статусом 201 с заголовком `Location`, а в ответе 409 объяснять, в чём конфликт.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Обработчик поймал не то исключение.**
+Хочется, чтобы и ответ 415 приходил с JSON-телом, и в StatusPages появляется `exception<UnsupportedMediaTypeException>`. Но запрос с `Content-Type: text/plain` по-прежнему получает текст «Cannot transform this request's content to shortener.CreateLinkRequest». Для `text/plain` у ContentNegotiation нет конвертера, и `receive` бросает `CannotTransformContentToTypeException`. У двух классов общий родитель `ContentTransformationException`, но друг друга они не ловят. В проекте этот обработчик убрали, и 415 отвечает сам Ktor. Нет там и общего `exception<Throwable>`: он закрыл бы утечку текста в ответе 500, но поймал бы и это исключение, и на проверке запрос с `text/plain` получил 500 вместо 415. Вывод: сначала выясни, какое исключение летит. Текст ответа — его `message`, по нему класс находится в исходниках Ktor.
+
+**Разбор 2. Незнакомое поле ломает запрос.**
+Клиент перепутал имя поля, прислал `{"link":"https://example.com"}` и получил 400 `bad_request`: kotlinx.serialization по умолчанию считает незнакомый ключ ошибкой, и `DefaultJson` это не меняет. Настройка **ignoreUnknownKeys** пропускает лишнее, а заодно и опечатки. С ней тело `{"url":"https://ktor.io","alais":"ktor"}` разберётся с `alias = null`, сервис выдаст случайный код, и клиент не узнает, что его alias потерялся. А свой `Json { … }` в `json(…)` заменит `DefaultJson` целиком, вместе с `encodeDefaults = true`. Вывод: строгий режим ловит опечатки в необязательных полях, ослабляют его осознанно.
+
+**Разбор 3. Где исключение лишнее.**
+В уроке про ошибки `findUser`, бросавший `UserNotFoundException`, разбирали как ошибку: ожидаемый исход возвращают значением. А здесь ненайденная ссылка бросает исключение. Посмотри на границы. `LinkStore.find` возвращает `Link?`: для хранилища отсутствие ссылки — нормальный исход, а исключение из null делает `require`, на границе с HTTP. Коллизию случайного кода хранилище тоже решает без исключений: `tryAdd` поверх `putIfAbsent` возвращает `Boolean`, и генератор пробует следующий код. Только занятый alias хранилищу решить нечем: другой за клиента не выберешь, и `createWithAlias` бросает `AliasTakenException`. Вывод: исключение уместно там, где вызывающему остаётся только ответить клиенту.
+
+## Какой статус вернуть
+
+<DecisionTree nodes={[
+  { q: "Тело пришло не как JSON, например с Content-Type: text/plain?", yes: "415, ответит сам Ktor", no: "к следующему вопросу" },
+  { q: "Тело не разобрать в CreateLinkRequest: JSON обрезан или имя поля перепутано?", yes: "400 bad_request из обработчика BadRequestException", no: "к следующему вопросу" },
+  { q: "JSON разобран, но данные не проходят проверку?", yes: "400 invalid_url или invalid_alias", no: "к следующему вопросу" },
+  { q: "Ссылки с таким кодом нет?", yes: "404 not_found", no: "к следующему вопросу" },
+  { q: "Запрос спорит с текущим состоянием, например alias уже занят?", yes: "409 alias_taken", no: "201 и Location для новой ссылки, 200 для чтения, 302 для перехода" }
+]} />
+
+**Коды состояния** (status codes) задаёт RFC 9110. 409 — запрос конфликтует с текущим состоянием ресурса, и клиент может исправить это и повторить. 415 — тело в формате, который метод не поддерживает. Для тела, разобранного, но невыполнимого по смыслу, есть ещё 422 (Unprocessable Content), а наш сервис отвечает на ошибки проверки общим 400. `Location: /links/ktor` относительный: RFC это допускает, клиент достраивает ссылку по адресу запроса.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `alias: String?` без `= null` | Тело без этого поля не разбирается: `MissingFieldException` | `String? = null` |
+| `try`/`catch` и `respond` в каждом маршруте | Форматы ошибок расходятся, новый маршрут забудет обработку | Доменное исключение и StatusPages |
+| `else` в `when` по ошибкам | Новая ошибка молча уходит в `else` | `when` без `else` по sealed-классу |
+| Детали в `message` исключения | Без обработчика Ktor отдаёт текст клиенту в ответе 500 | В `message` только то, что можно показать |
+
+## Практикум
+
+<Practice title="Переведи свой сервис на JSON и StatusPages" checklist={["201 и Location: /links/ktor на POST с alias ktor, в теле shortUrl", "409 alias_taken на повтор того же alias", "400 с тремя разными кодами: invalid_url, invalid_alias и bad_request", "404 not_found с JSON-телом на GET /links/nope42 и GET /nope42, 415 на text/plain", "GET /links/ktor — 200 и JSON, GET /ktor — 302 и Location: https://ktor.io", "В маршрутах не осталось if с ответами об ошибках"]}>
+Возьми проект из прошлого урока и собери в IntelliJ IDEA следующий этап:
+
+1. Добавь в каталог версий и `build.gradle.kts` строки из начала урока.
+2. Заведи `Dto.kt`, `Errors.kt`, `Validation.kt`, `StatusPages.kt`, `Serialization.kt` и `Link.kt` с data-классом `Link(code, url)`. `LinkStore` перепиши, как в разборе.
+3. Новые модули вызови в `module()` перед `configureRouting()`, а в `application.yaml` добавь `shortener.baseUrl`.
+4. В `POST /links` принимай `CreateLinkRequest` и отвечай 201 с `Location`.
+5. В GET-маршрутах бери ссылку через `links.require(…)`, а `/links/{code}` пусть отвечает `LinkResponse`.
+
+Проверку alias сначала допиши в редакторе ниже, потом перенеси в `Validation.kt`.
+
+<KotlinPlayground>
+
+```kotlin
+const val ALIAS_RULE = "[A-Za-z0-9_-]{3,32}"
+
+class InvalidAliasException(alias: String) :
+    RuntimeException("Alias must match $ALIAS_RULE: $alias")
+
+fun requireValidAlias(alias: String): String {
+    // проверь alias по ALIAS_RULE
+    return alias
+}
+
+fun main() {
+    val aliases = listOf("ktor", "a b", "ab", "my_link-1")
+    for (alias in aliases) {
+        println(runCatching { requireValidAlias(alias) })
+    }
+}
+```
+
+</KotlinPlayground>
+
+Запусти сервис и пройди команды в Git Bash, под каждой — ожидаемый ответ:
+
+```bash
+post() {
+  curl -i -X POST http://localhost:8080/links \
+    -H 'Content-Type: application/json' -d "$1"
+}
+
+post '{"url":"https://ktor.io","alias":"ktor"}'
+# 201, Location: /links/ktor
+# {"code":"ktor","shortUrl":"http://localhost:8080/ktor",
+#  "url":"https://ktor.io"}
+post '{"url":"https://example.com","alias":"ktor"}'
+# 409 {"error":"alias_taken",
+#      "message":"Alias 'ktor' is already taken"}
+post '{"url":"ftp://example.com/file"}'
+# 400, "error":"invalid_url"
+post '{"url":"https://example.com","alias":"a b"}'
+# 400, "error":"invalid_alias"
+post '{"link":"https://example.com"}'
+post '{"url":'
+# оба раза 400
+# {"error":"bad_request","message":"Malformed request"}
+curl -i -X POST http://localhost:8080/links \
+  -H 'Content-Type: text/plain' -d https://example.com
+# 415, тело текстом
+curl -i http://localhost:8080/links/ktor
+# 200 и то же JSON-тело, что при создании
+curl -i http://localhost:8080/ktor
+# 302, Location: https://ktor.io
+curl -i http://localhost:8080/links/nope42
+curl -i http://localhost:8080/nope42
+# оба раза 404
+# {"error":"not_found",
+#  "message":"No link with code 'nope42'"}
+```
+
+<div slot="solution">
+Проверка alias:
+
+```kotlin
+private val ALIAS_PATTERN = Regex(ALIAS_RULE)
+
+fun requireValidAlias(alias: String): String {
+    if (!ALIAS_PATTERN.matches(alias)) throw InvalidAliasException(alias)
+    return alias
+}
+```
+
+`Regex` создаётся один раз, а `matches` требует совпадения со всей строкой. Проходят `ktor` и `my_link-1`, а `a b` и `ab` дают `Failure` с `InvalidAliasException`. Хранилище:
+
+```kotlin
+class LinkStore {
+    private val links = ConcurrentHashMap<String, Link>()
+
+    fun create(
+        url: String,
+        alias: String? = null,
+    ): Link =
+        if (alias == null) {
+            createWithRandomCode(url)
+        } else {
+            createWithAlias(alias, url)
+        }
+
+    fun find(code: String): Link? = links[code]
+
+    private fun createWithRandomCode(url: String): Link =
+        generateSequence { Link(CodeGenerator.generate(), url) }
+            .first(::tryAdd)
+
+    private fun createWithAlias(
+        alias: String,
+        url: String,
+    ): Link {
+        val link = Link(alias, url)
+        if (!tryAdd(link)) throw AliasTakenException(alias)
+        return link
+    }
+
+    private fun tryAdd(link: Link): Boolean =
+        links.putIfAbsent(link.code, link) == null
+}
+```
+
+`Serialization.kt` целиком и новая секция `application.yaml`:
+
+```kotlin
+package shortener
+
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+
+fun Application.configureSerialization() {
+    install(ContentNegotiation) {
+        json()
+    }
+}
+```
+
+```yaml
+shortener:
+  baseUrl: "http://localhost:8080"
+```
+
+Маршруты:
+
+```kotlin
+import io.ktor.server.config.property
+// …
+
+fun Application.configureRouting() {
+    val baseUrl: String = property("shortener.baseUrl")
+    val links = LinkStore()
+    routing {
+        get("/") {
+            call.respondText("URL shortener: POST JSON to /links")
+        }
+        route("/links") {
+            post {
+                // … как в разделе про JSON и DTO
+            }
+            get("/{code}") {
+                val link = links.require(call.requirePathParameter("code"))
+                call.respond(link.toResponse(baseUrl))
+            }
+        }
+        get("/{code}") {
+            val link = links.require(call.requirePathParameter("code"))
+            call.respondRedirect(link.url)
+        }
+    }
+}
+```
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Открой API, с которым работаешь на этой неделе, свой или чужой, и вызови его с ошибкой: пустое поле, несуществующий id. Есть ли в ответе машинный код, по которому клиент поймёт причину, не разбирая текст? Через неделю, когда сервис переедет в базу, прогони чек-лист практикума ещё раз: ответы не должны измениться.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Плагин компилятора | `alias(libs.plugins.kotlin.serialization)`, версия как у Kotlin |
+| DTO | `@Serializable data class …` |
+| JSON в Ktor | `install(ContentNegotiation) { json() }` |
+| Принять и отдать | `call.receive<T>()`, `call.respond(status, obj)` |
+| Необязательное поле | `val alias: String? = null` |
+| Лишние поля | Ошибка; `ignoreUnknownKeys = true` пропустит и опечатки |
+| Ошибка в ответ | `install(StatusPages) { exception<E> { call, cause -> … } }` |
+| Статусы | 400 данные, 404 нет ресурса, 409 конфликт, 415 не тот формат |
+| Создание | 201 и `Location` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Сериализация (serialization)", meaning: "Перевод объекта в формат для передачи или хранения, например в JSON." },
+  { term: "Десериализация (deserialization)", meaning: "Обратный перевод: из JSON в объект программы." },
+  { term: "kotlinx.serialization", meaning: "Библиотеки сериализации Kotlin со своей нумерацией версий; работают вместе с плагином компилятора." },
+  { term: "Плагин сериализации", meaning: "Плагин компилятора, который генерирует сериализатор для каждого класса с @Serializable; его версия совпадает с версией Kotlin." },
+  { term: "@Serializable", meaning: "Аннотация, без которой kotlinx.serialization не умеет переводить класс в JSON." },
+  { term: "DTO (data transfer object)", meaning: "Класс, который описывает тело запроса или ответа отдельно от доменной модели." },
+  { term: "Доменная модель", meaning: "Классы, с которыми работает логика сервиса, например Link; наружу их отдают через DTO." },
+  { term: "Необязательное поле (optional property)", meaning: "Свойство со значением по умолчанию: его можно не присылать в JSON." },
+  { term: "explicitNulls", meaning: "Настройка Json: пишутся ли null в JSON и обязательны ли nullable-поля без значения по умолчанию." },
+  { term: "ignoreUnknownKeys", meaning: "Настройка Json, которая пропускает незнакомые поля вместо ошибки разбора." },
+  { term: "ContentNegotiation", meaning: "Плагин Ktor, который по заголовкам выбирает формат и переводит тела запросов и ответов в объекты и обратно." },
+  { term: "Валидация (validation)", meaning: "Проверка смысла входных данных после разбора: схема, хост, длина, формат alias." },
+  { term: "Доменное исключение", meaning: "Исключение, которое называет неудачу на языке задачи, например AliasTakenException." },
+  { term: "StatusPages", meaning: "Плагин Ktor, который превращает исключения и коды состояния в ответы в одном месте." },
+  { term: "Код состояния (status code)", meaning: "Трёхзначное число в ответе HTTP: 201 создано, 400 ошибка клиента, 404 нет ресурса, 409 конфликт, 415 не тот формат." },
+  { term: "Location", meaning: "Заголовок ответа с адресом созданного ресурса или цели перенаправления." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что действительно запомнилось.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-json-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">JSON и ошибки: понятия</span>
+    <span class="kc-trainer-hint">DTO, поля, статусы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-json-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что ответит сервис</span>
+    <span class="kc-trainer-hint">Разбор, проверка, статус</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-json-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери разбор и ответ</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-json-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши сервис</span>
+    <span class="kc-trainer-hint">Аннотации, плагины, статусы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **IETF — RFC 9110 HTTP Semantics** ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110.html), сверено 2026-09-28) — коды состояния и заголовок `Location`.
+- **Kotlin — Serialization, Customization options, JSON configuration** ([kotlinlang.org/docs](https://kotlinlang.org/docs/serialization-json-configuration.html), сверено 2026-10-01) — плагин, версии, необязательные поля, настройки `Json`.
+- **Ktor 3.6.0 — Content negotiation, Status pages, Requests, Responses** ([ktor.io/docs](https://ktor.io/docs/server-serialization.html), сверено 2026-09-28) — `json()`, `receive`, `respond`, `exception<T>`.
+- **Ktor 3.6.0 — исходный код** ([github.com/ktorio/ktor](https://github.com/ktorio/ktor/tree/3.6.0), сверено 2026-09-28) — `DefaultJson`, иерархия исключений, ответы на ошибки по умолчанию.
+- **Oracle — java.net.URI, JDK 25** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URI.html), сверено 2026-09-28) — разбор адреса и имени хоста.
+- **Jackson databind 3.x, Spring — Controller Advice** ([github.com/FasterXML](https://github.com/FasterXML/jackson-databind), [docs.spring.io](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-advice.html), сверено 2026-09-28) — сравнение с Java.

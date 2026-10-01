@@ -1,0 +1,144 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-json",
+  "title": "Собери разбор и ответ",
+  "description": "Расставь строки так, чтобы код разбирал тело, проверял данные и отвечал на ошибки.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери main: разбери тело запроса, проверь адрес и напечатай его.",
+        "words": [
+          "    println(url)",
+          "    val request = json.decodeFromString<CreateLinkRequest>(body)",
+          "}",
+          "fun main() {",
+          "    val url = requireWebUrl(request.url)",
+          "    val body = \"\"\"{\"url\":\" https://ktor.io \"}\"\"\""
+        ],
+        "answer": [
+          "fun main() {",
+          "    val body = \"\"\"{\"url\":\" https://ktor.io \"}\"\"\"",
+          "    val request = json.decodeFromString<CreateLinkRequest>(body)",
+          "    val url = requireWebUrl(request.url)",
+          "    println(url)",
+          "}"
+        ],
+        "explain": "Каждая строка использует результат предыдущей: сначала тело, потом разобранный запрос, потом проверенный адрес. requireWebUrl обрезает пробелы, и программа напечатает https://ktor.io."
+      },
+      {
+        "task": "Собери настройку StatusPages: доменное исключение превращается в статус и тело ErrorResponse.",
+        "words": [
+          "            val (status, error) = cause.toHttpError()",
+          "    }",
+          "fun Application.configureStatusPages() {",
+          "        }",
+          "        exception<ShortenerException> { call, cause ->",
+          "}",
+          "            call.respond(status, ErrorResponse(error, cause.message))",
+          "    install(StatusPages) {"
+        ],
+        "answer": [
+          "fun Application.configureStatusPages() {",
+          "    install(StatusPages) {",
+          "        exception<ShortenerException> { call, cause ->",
+          "            val (status, error) = cause.toHttpError()",
+          "            call.respond(status, ErrorResponse(error, cause.message))",
+          "        }",
+          "    }",
+          "}"
+        ],
+        "explain": "Плагин ставится внутри модуля, обработчик — внутри install. В обработчике сначала выбирают статус и код ошибки, потом отвечают. Закрывающие скобки идут от самой глубокой к внешней: отступ подсказывает, какая чья."
+      },
+      {
+        "task": "Собери requireWebUrl: вернуть проверенный адрес или бросить InvalidUrlException.",
+        "words": [
+          "    return uri.toString()",
+          "        throw InvalidUrlException(raw)",
+          "fun requireWebUrl(raw: String): String {",
+          "}",
+          "    if (uri == null || !uri.isWebUrl()) {",
+          "    }",
+          "    val uri = toUriOrNull(raw.trim())"
+        ],
+        "answer": [
+          "fun requireWebUrl(raw: String): String {",
+          "    val uri = toUriOrNull(raw.trim())",
+          "    if (uri == null || !uri.isWebUrl()) {",
+          "        throw InvalidUrlException(raw)",
+          "    }",
+          "    return uri.toString()",
+          "}"
+        ],
+        "explain": "Сначала разбираем строку, потом проверяем результат и бросаем исключение, если адрес не годится. return стоит после проверки: до него доходит только правильный адрес."
+      },
+      {
+        "task": "Собери handle: удачный маршрут даёт «201 …», доменная ошибка — статус, код и сообщение.",
+        "words": [
+          "        val (status, error) = e.toHttpError()",
+          "fun handle(route: () -> String): String =",
+          "    }",
+          "        \"201 \" + route()",
+          "        \"$status $error: ${e.message}\"",
+          "    try {",
+          "    } catch (e: ShortenerException) {"
+        ],
+        "answer": [
+          "fun handle(route: () -> String): String =",
+          "    try {",
+          "        \"201 \" + route()",
+          "    } catch (e: ShortenerException) {",
+          "        val (status, error) = e.toHttpError()",
+          "        \"$status $error: ${e.message}\"",
+          "    }"
+        ],
+        "explain": "try — выражение: его значение — последняя строка отработавшего блока. Поэтому строка с ответом об ошибке стоит в конце catch, после разбора пары статус и код."
+      },
+      {
+        "task": "Собери main: преврати доменную ссылку в ответ и напечатай JSON.",
+        "words": [
+          "    val body = json.encodeToString(response)",
+          "}",
+          "    val link = Link(\"ktor\", \"https://ktor.io\")",
+          "    println(body)",
+          "fun main() {",
+          "    val response = link.toResponse(\"http://localhost:8080\")"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val link = Link(\"ktor\", \"https://ktor.io\")",
+          "    val response = link.toResponse(\"http://localhost:8080\")",
+          "    val body = json.encodeToString(response)",
+          "    println(body)",
+          "}"
+        ],
+        "explain": "Доменный Link наружу не отдают: toResponse собирает LinkResponse с shortUrl, и только его сериализуют. Программа напечатает {\"code\":\"ktor\",\"shortUrl\":\"http://localhost:8080/ktor\",\"url\":\"https://ktor.io\"} — то же тело, что вернул сервис."
+      },
+      {
+        "task": "Собери main: займи alias ktor, попробуй занять его второй раз и напечатай код первой ссылки и исход второй попытки.",
+        "words": [
+          "    println(\"${first.code}: $second\")",
+          "    val second = runCatching {",
+          "}",
+          "    val links = LinkStore()",
+          "        links.create(\"https://example.com\", first.code)",
+          "fun main() {",
+          "    }",
+          "    val first = links.create(\"https://ktor.io\", \"ktor\")"
+        ],
+        "answer": [
+          "fun main() {",
+          "    val links = LinkStore()",
+          "    val first = links.create(\"https://ktor.io\", \"ktor\")",
+          "    val second = runCatching {",
+          "        links.create(\"https://example.com\", first.code)",
+          "    }",
+          "    println(\"${first.code}: $second\")",
+          "}"
+        ],
+        "explain": "Хранилище одно на обе попытки, поэтому создаётся первым. Вторая попытка берёт код первой ссылки и стоит внутри runCatching: на занятый alias LinkStore бросает AliasTakenException. Программа напечатает ktor: Failure(AliasTakenException: Alias 'ktor' is already taken)."
+      }
+    ]
+  }
+}

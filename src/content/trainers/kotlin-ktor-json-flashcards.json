@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-json",
+  "title": "JSON и ошибки: понятия",
+  "description": "Вспомни, как DTO превращаются в JSON и как исключения становятся ответами с нужным статусом.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Что делает плагин компилятора из строки alias(libs.plugins.kotlin.serialization)?", "back": "Генерирует сериализатор для каждого класса с @Serializable. Версия плагина совпадает с версией Kotlin." },
+      { "front": "Почему у kotlinx-serialization-json версия не такая, как у Kotlin?", "back": "Библиотеки kotlinx.serialization нумеруют версии сами: в проекте Kotlin 2.4.20, а библиотека 1.11.0.", "hint": "Плагин и библиотека — разные части" },
+      { "front": "Чем alias: String? отличается от alias: String? = null в DTO?", "back": "Первое поле принимает null, но в JSON обязано быть. Второе необязательное: если его нет, подставится null." },
+      { "front": "Что будет, если забыть @Serializable на DTO?", "back": "Код соберётся, а при запуске сериализация бросит «Serializer for class … is not found».", "hint": "Сериализатор генерирует плагин" },
+      { "front": "По какому заголовку Ktor выбирает конвертер для тела запроса, а по какому — для ответа?", "back": "Для запроса — по Content-Type, для ответа — по Accept." },
+      { "front": "Что меняет encodeDefaults = true в DefaultJson Ktor?", "back": "Поля со значением по умолчанию попадают в JSON ответа: Profile(\"Аня\") с полем bio: String? = null уйдёт как {\"name\":\"Аня\",\"bio\":null}. Json без этой настройки такие поля пропускает." },
+      { "front": "Что kotlinx.serialization по умолчанию делает с незнакомым ключом в JSON?", "back": "Бросает исключение. Настройка ignoreUnknownKeys = true пропускает лишние поля, но заодно и опечатки." },
+      { "front": "Что ловит exception<ShortenerException> в StatusPages?", "back": "Сам класс ShortenerException и всех его наследников." },
+      { "front": "Какое исключение бросает ContentNegotiation, если тело не удалось разобрать?", "back": "BadRequestException. В сервисе урока его ловит обработчик в StatusPages и отвечает 400 с кодом bad_request.", "hint": "Обрезанный JSON, link вместо url" },
+      { "front": "Маршрут бросил IllegalStateException из error(), обработчика для него в StatusPages нет. Что получит клиент от Ktor 3.6.0?", "back": "Ответ 500 с типом text/plain, а в теле — message исключения. Поэтому в message не пишут того, что нельзя показать клиенту." },
+      { "front": "Когда по RFC 9110 уместен 409 Conflict?", "back": "Когда запрос конфликтует с текущим состоянием ресурса и клиент может устранить конфликт и повторить запрос. Пример — занятый alias." },
+      { "front": "Что по RFC 9110 должен содержать ответ на POST, который создал ресурс?", "back": "Статус 201 и заголовок Location с адресом созданного ресурса. Относительный адрес допустим." }
+    ]
+  }
+}

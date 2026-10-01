@@ -1,0 +1,22 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-json",
+  "title": "Допиши сервис",
+  "description": "Впиши аннотацию, плагин, функцию или статус. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "@___ data class ErrorResponse(val error: String)", "answers": ["Serializable"], "explain": "Без аннотации @Serializable плагин не сгенерирует сериализатор, и ответ упадёт при запуске." },
+      { "text": "val alias: String? = ___   // не прислали — alias нет", "answers": ["null"], "explain": "Значение по умолчанию делает поле необязательным, а null означает, что своего кода клиент не просил." },
+      { "text": "alias(libs.plugins.kotlin.___)   // плагин для @Serializable", "answers": ["serialization"], "explain": "Плагин компилятора kotlin.serialization генерирует сериализаторы; его версия в каталоге ссылается на версию Kotlin." },
+      { "text": "install(___) { json() }", "answers": ["ContentNegotiation"], "explain": "json() регистрирует конвертер JSON в плагине ContentNegotiation." },
+      { "text": "val request: CreateLinkRequest = call.___()", "answers": [["receive", "receive<CreateLinkRequest>"]], "explain": "receive разбирает тело запроса в объект ожидаемого типа и не возвращает null. Тип здесь выводится из объявления переменной, а форма receive<CreateLinkRequest>() из урока тоже верна." },
+      { "text": "call.response.header(HttpHeaders.___, \"/links/ktor\")", "answers": ["Location"], "explain": "По RFC 9110 ответ 201 на POST указывает созданный ресурс в заголовке Location." },
+      { "text": "HttpStatusCode.___ to \"alias_taken\"", "answers": ["Conflict"], "explain": "Занятый alias — конфликт с текущим состоянием ресурса, это 409 Conflict." },
+      { "text": "exception<___> { call, _ ->   // сюда попадает битое тело", "answers": ["BadRequestException"], "explain": "ContentNegotiation оборачивает ошибку разбора тела в BadRequestException. От него наследует и MissingRequestParameterException из requirePathParameter, так что обработчик ловит не только ошибки тела." },
+      { "text": "Json { ___ = true }   // пропускать лишние поля", "answers": ["ignoreUnknownKeys"], "explain": "По умолчанию незнакомый ключ — ошибка разбора; ignoreUnknownKeys = true его пропускает, но заодно и опечатки." },
+      { "text": "find(code) ___ throw LinkNotFoundException(code)", "answers": ["?:"], "explain": "Elvis возвращает найденную ссылку или бросает исключение, если find вернул null: throw — выражение типа Nothing." }
+    ]
+  }
+}

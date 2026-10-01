@@ -31,7 +31,7 @@ Java-разработчик, привыкший к Spring, ждёт анноти
 Ktor — асинхронный фреймворк JetBrains для веб-сервисов на Kotlin. Сервис на нём — обычная программа: `main` запускает **движок** (engine) Netty, движок слушает порт и на каждый запрос вызывает **обработчик** (route handler). Маршруты описывают в `routing { }`: `get("/{code}") { … }` связывает метод и путь с обработчиком. Обработчик — suspend-лямбда, в которой `call` читает запрос и отправляет ответ. Запросы обрабатываются **одновременно**, поэтому общие для обработчиков данные должны выдерживать параллельный доступ.
 </Callout>
 
-Код модуля выполняется один раз при старте: создаёт хранилище и объявляет маршруты. Код обработчиков выполняется на каждый запрос, часто на нескольких потоках сразу, и всё, что он берёт из модуля, общее.
+Код модуля выполняется один раз при старте: создаёт хранилище и объявляет маршруты. Обработчики выполняются на каждый запрос, часто на нескольких потоках выполнения (threads) сразу, и всё, что они берут из модуля, общее.
 
 Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
 
@@ -129,7 +129,7 @@ fun Application.configureRouting() {
 }
 ```
 
-Внутри `routing { }` функции `get` и `post` принимают **шаблон пути** и обработчик с типом из урока про DSL: `RoutingHandler = suspend RoutingContext.() -> Unit`. Получатель даёт `call`, а `suspend` разрешает ждать: `call.receiveText()` приостанавливает обработчик, пока читается тело запроса, и поток тем временем работает на другие запросы.
+Внутри `routing { }` функции `get` и `post` принимают **шаблон пути** и обработчик с типом из урока про DSL: `RoutingHandler = suspend RoutingContext.() -> Unit`. Получатель даёт `call`, а `suspend` разрешает ждать: `call.receiveText()` приостанавливает обработчик, пока читается тело запроса, а поток выполнения тем временем обслуживает другие.
 
 Создание ссылки:
 
@@ -195,8 +195,8 @@ Location: https://kotlinlang.org
 Content-Length: 0
 ```
 
-<Callout type="blue" title="Если знаешь Java — потоков здесь мало">
-Обработчик в Spring MVC работает на потоке сервлетного контейнера и вправе его блокировать, поэтому, по документации Spring, контейнеры держат большой пул потоков. Netty в Ktor выполняет вызовы на пуле, где по умолчанию столько потоков, сколько процессоров (`callGroupSize`). `Thread.sleep`, JDBC-запрос или блокирующий HTTP-клиент держат поток целиком, и запросы на нём стоят. Ждать нужно через suspend-функции, а блокирующий код выносить в `withContext(Dispatchers.IO)` из урока про контекст корутин.
+<Callout type="blue" title="Если знаешь Java — потоков выполнения здесь мало">
+Обработчик в Spring MVC работает на потоке выполнения сервлетного контейнера и вправе его блокировать, поэтому, по документации Spring, контейнеры держат большой пул. Netty в Ktor выполняет вызовы на пуле, где потоков выполнения по умолчанию столько, сколько процессоров (`callGroupSize`). `Thread.sleep`, JDBC-запрос или блокирующий HTTP-клиент занимают один из них, и запросы на нём стоят. Ждать нужно через suspend-функции, а блокирующий код выносить в `withContext(Dispatchers.IO)` из урока про контекст корутин.
 </Callout>
 
 ## Как устроено: общее хранилище при параллельных запросах
@@ -257,9 +257,9 @@ fun main() {
 
 Запусти, потом замени `pow(6)` на `pow(7)` и посмотри, насколько отодвинется совпадение.
 
-`mutableMapOf()` на JVM создаёт `LinkedHashMap`, и Javadoc требует синхронизировать его снаружи, если с ним одновременно работают несколько потоков и хоть один меняет состав. А в Ktor разные запросы идут на разных потоках. Документация Kotlin показывает цену на счётчике: 100 корутин на `Dispatchers.Default` прибавляют по 1000, и 100 000 почти никогда не выходит. Со словарём так же: то все записи на месте, то сотен нет, и обычно без исключения.
+`mutableMapOf()` на JVM создаёт `LinkedHashMap`, и Javadoc требует синхронизировать его снаружи, если с ним работают несколько потоков выполнения и хоть один меняет состав. А в Ktor запросы идут на разных. Документация Kotlin показывает цену на счётчике: 100 корутин на `Dispatchers.Default` прибавляют по 1000, и 100 000 почти никогда не выходит. Со словарём так же: то все записи на месте, то сотен нет, и обычно без исключения.
 
-Даже на одном потоке обработчики чередуются. Ниже два запроса. Первый отдаёт список ссылок и после каждой строки уступает поток: `yield()` из урока про отмену корутин изображает ожидание сети. Второй в это время создаёт ссылку.
+Даже на одном потоке выполнения обработчики чередуются. Ниже два запроса. Первый отдаёт список ссылок и после каждой строки уступает место: `yield()` из урока про отмену изображает ожидание сети. Второй тем временем создаёт ссылку.
 
 <KotlinPlayground>
 
@@ -357,7 +357,7 @@ route("/api/links") {
 | «Проверить, потом положить» двумя вызовами | Два запроса займут один код | `putIfAbsent` |
 | `respondText(code, HttpStatusCode.Created)` | Второй параметр — тип содержимого, не скомпилируется | `status = HttpStatusCode.Created` |
 | `permanent = true` у короткой ссылки | Браузер может закэшировать 301 и ходить мимо сервиса | `respondRedirect(url)`, это 302 |
-| `Thread.sleep` или JDBC прямо в обработчике | Держит поток из небольшого пула | suspend-функции, `withContext(Dispatchers.IO)` |
+| `Thread.sleep` или JDBC прямо в обработчике | Держит поток выполнения из небольшого пула | suspend-функции, `withContext(Dispatchers.IO)` |
 | `curl` в Windows PowerShell 5.1 | Это `Invoke-WebRequest`, флаги не те | `curl.exe` или Git Bash |
 
 ## Практикум
@@ -528,7 +528,7 @@ import io.ktor.server.routing.routing
   { term: "Тело запроса (request body)", meaning: "Данные, которые клиент отправляет после заголовков, например адрес для сокращения." },
   { term: "Статус (status code)", meaning: "Трёхзначный код состояния в ответе HTTP, по которому клиент понимает исход: 200, 201, 302, 400, 404, 409." },
   { term: "Редирект (redirect)", meaning: "Ответ 3xx с заголовком Location, который отправляет клиента на другой адрес." },
-  { term: "ConcurrentHashMap", meaning: "Словарь из JDK для одновременной работы нескольких потоков; его итераторы не бросают ConcurrentModificationException." },
+  { term: "ConcurrentHashMap", meaning: "Словарь из JDK для одновременной работы нескольких потоков выполнения; его итераторы не бросают ConcurrentModificationException." },
   { term: "Атомарная операция (atomic operation)", meaning: "Операция, которая выполняется одним неделимым шагом, например putIfAbsent у ConcurrentHashMap." }
 ]} />
 
@@ -546,7 +546,7 @@ import io.ktor.server.routing.routing
   <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-basics-quiz')}>
     <span class="kc-trainer-kind">Тест</span>
     <span class="kc-trainer-title">Что ответит сервис</span>
-    <span class="kc-trainer-hint">Маршруты, статусы, потоки</span>
+    <span class="kc-trainer-hint">Маршруты, статусы, гонки</span>
     <span class="kc-trainer-arrow" aria-hidden="true">→</span>
   </a>
   <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-basics-ordering')}>
@@ -570,4 +570,4 @@ import io.ktor.server.routing.routing
 - **Oracle — Java SE 25 API: ConcurrentHashMap, LinkedHashMap** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html), сверено 2026-09-28) — атомарный `putIfAbsent`, синхронизация и итераторы.
 - **Kotlin — Shared mutable state and concurrency** ([kotlinlang.org/docs](https://kotlinlang.org/docs/shared-mutable-state-and-concurrency.html), сверено 2026-09-28) — гонки параллельных корутин.
 - **IETF — RFC 9110: HTTP Semantics** ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110.html), сверено 2026-09-28) — значения статусов.
-- **Spring Framework 7.0 — Concurrency Model** ([docs.spring.io](https://docs.spring.io/spring-framework/reference/web/webflux/new-framework.html), сверено 2026-09-28) — пулы потоков у сервлетов и неблокирующих серверов.
+- **Spring Framework 7.0 — Concurrency Model** ([docs.spring.io](https://docs.spring.io/spring-framework/reference/web/webflux/new-framework.html), сверено 2026-09-28) — пулы потоков выполнения у сервлетов и неблокирующих серверов.

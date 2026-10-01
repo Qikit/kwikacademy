@@ -15,9 +15,9 @@
       { "front": "Что делает call.requirePathParameter(\"code\"), если параметра нет?", "back": "Бросает MissingRequestParameterException, и Ktor отвечает 400. Если параметр есть, возвращает String без null." },
       { "front": "Какой статус отправит call.respondRedirect(url)?", "back": "302 Found и заголовок Location; с permanent = true — 301.", "hint": "По умолчанию временный" },
       { "front": "Завершает ли call.respondText(…) обработчик?", "back": "Нет, это обычная suspend-функция. После ответа с ошибкой пиши return@post, иначе код пойдёт дальше." },
-      { "front": "Почему общее хранилище сервиса — ConcurrentHashMap?", "back": "Запросы выполняются на нескольких потоках, а LinkedHashMap из mutableMapOf без внешней синхронизации к этому не готов." },
+      { "front": "Почему общее хранилище сервиса — ConcurrentHashMap?", "back": "Запросы идут на нескольких потоках выполнения, а LinkedHashMap из mutableMapOf без внешней синхронизации к этому не готов." },
       { "front": "Что делает putIfAbsent у ConcurrentHashMap?", "back": "Кладёт значение, только если ключа ещё нет, одним атомарным шагом, и тогда возвращает null." },
-      { "front": "Сколько потоков по умолчанию выполняют вызовы в Ktor на Netty?", "back": "Столько, сколько у машины процессоров (callGroupSize), поэтому Thread.sleep или JDBC в обработчике занимают заметную долю пула." }
+      { "front": "Сколько потоков выполнения по умолчанию обрабатывают вызовы в Ktor на Netty?", "back": "Столько, сколько у машины процессоров (callGroupSize), поэтому Thread.sleep или JDBC в обработчике занимают заметную долю пула." }
     ]
   }
 }

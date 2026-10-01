@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-teamwork",
+  "title": "Расставь версии и собери код",
+  "description": "Расставь версии по старшинству SemVer и собери из строк функции, которые работают с версиями и коммитами.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Расставь версии от младшей к старшей по правилам SemVer.",
+        "words": ["1.0.1", "0.10.0", "1.0.0", "0.9.0", "1.1.0", "1.0.0-rc.1"],
+        "answer": ["0.9.0", "0.10.0", "1.0.0-rc.1", "1.0.0", "1.0.1", "1.1.0"],
+        "explain": "Части номера сравнивают как числа, поэтому 0.10.0 старше 0.9.0. Пре-релиз 1.0.0-rc.1 младше обычной 1.0.0 (п. 9 и 11 SemVer)."
+      },
+      {
+        "task": "Расставь версии от младшей к старшей по правилам SemVer.",
+        "words": ["2.0.0", "1.9.0", "1.11.0-rc.1", "1.10.1", "1.11.0", "1.10.0"],
+        "answer": ["1.9.0", "1.10.0", "1.10.1", "1.11.0-rc.1", "1.11.0", "2.0.0"],
+        "explain": "Сначала сравнивают MAJOR, потом MINOR, потом PATCH, и всё как числа: 9 < 10 < 11. Пре-релиз 1.11.0-rc.1 стоит перед 1.11.0, но после 1.10.1."
+      },
+      {
+        "task": "Собери функцию: она сравнивает версии по частям как числа, и isNewer(\"1.10.0\", \"1.9.0\") возвращает true.",
+        "words": ["            return x.toInt() > y.toInt()", "    return false", "fun isNewer(a: String, b: String): Boolean {", "        }", "    for ((x, y) in pairs) {", "}", "        if (x.toInt() != y.toInt()) {", "    val pairs = a.split(\".\").zip(b.split(\".\"))", "    }"],
+        "answer": ["fun isNewer(a: String, b: String): Boolean {", "    val pairs = a.split(\".\").zip(b.split(\".\"))", "    for ((x, y) in pairs) {", "        if (x.toInt() != y.toInt()) {", "            return x.toInt() > y.toInt()", "        }", "    }", "    return false", "}"],
+        "explain": "zip составляет пары из MAJOR, MINOR и PATCH двух версий. Первая несовпавшая пара решает исход, а если все части равны, новее версия не стала. return false внутри цикла не скомпилируется: компилятор сообщит «Missing return statement»."
+      },
+      {
+        "task": "Собери функцию, которая выбирает следующую версию по видам изменений. Для 1.3.2 и setOf(\"feat\", \"breaking\") она должна вернуть 2.0.0, а для setOf(\"fix\", \"feat\") — 1.4.0.",
+        "words": ["        else -> v", "    return when {", "        \"fix\" in kinds -> \"$major.$minor.${patch + 1}\"", "fun nextVersion(v: String, kinds: Set<String>): String {", "    }", "        \"breaking\" in kinds -> \"${major + 1}.0.0\"", "    val (major, minor, patch) =", "}", "        v.split(\".\").map { it.toInt() }", "        \"feat\" in kinds -> \"$major.${minor + 1}.0\""],
+        "answer": ["fun nextVersion(v: String, kinds: Set<String>): String {", "    val (major, minor, patch) =", "        v.split(\".\").map { it.toInt() }", "    return when {", "        \"breaking\" in kinds -> \"${major + 1}.0.0\"", "        \"feat\" in kinds -> \"$major.${minor + 1}.0\"", "        \"fix\" in kinds -> \"$major.$minor.${patch + 1}\"", "        else -> v", "    }", "}"],
+        "explain": "when выбирает первую подходящую ветку, поэтому старшее изменение проверяют первым: иначе релиз с breaking и feat получит только MINOR. MINOR и MAJOR обнуляют младшие части. else обязан стоять последним и возвращает прежний номер: релиз не нужен."
+      },
+      {
+        "task": "Собери функцию, которая по заголовкам коммитов называет часть версии для релиза. Для «fix: round fee» и «feat(api)!: drop RUB» она должна вернуть MAJOR, для «fix: …» и «feat: …» — MINOR, для одного «docs: …» — NONE.",
+        "words": ["        else -> \"NONE\"", "}", "    return when {", "        prefixes.any { it.startsWith(\"feat\") } -> \"MINOR\"", "fun bump(headers: List<String>): String {", "    }", "        prefixes.any { it.startsWith(\"fix\") } -> \"PATCH\"", "    val prefixes = headers.map { it.substringBefore(\":\") }", "        prefixes.any { it.endsWith(\"!\") } -> \"MAJOR\""],
+        "answer": ["fun bump(headers: List<String>): String {", "    val prefixes = headers.map { it.substringBefore(\":\") }", "    return when {", "        prefixes.any { it.endsWith(\"!\") } -> \"MAJOR\"", "        prefixes.any { it.startsWith(\"feat\") } -> \"MINOR\"", "        prefixes.any { it.startsWith(\"fix\") } -> \"PATCH\"", "        else -> \"NONE\"", "    }", "}"],
+        "explain": "Тип и знак ! стоят до двоеточия, поэтому сначала отрезают эту часть. Ветки идут от старшей части к младшей. Заголовок feat(api)!: начинается с feat, и без первой ветки функция вернула бы MINOR. А если проверить fix раньше feat, релиз с новой возможностью получит только PATCH. docs и refactor версию не двигают, поэтому else возвращает NONE, а не PATCH."
+      },
+      {
+        "task": "Собери программу, которая печатает следующую минорную версию после 1.9.0, то есть 1.10.0.",
+        "words": ["    val next = \"${parts[0]}.${minor + 1}.0\"", "fun main() {", "    println(next)", "    val parts = installed.split(\".\")", "}", "    val installed = \"1.9.0\"", "    val minor = parts[1].toInt()"],
+        "answer": ["fun main() {", "    val installed = \"1.9.0\"", "    val parts = installed.split(\".\")", "    val minor = parts[1].toInt()", "    val next = \"${parts[0]}.${minor + 1}.0\"", "    println(next)", "}"],
+        "explain": "Каждая строка опирается на предыдущую: версию делят на части, MINOR превращают в число и прибавляют 1, PATCH обнуляют. Без toInt() выражение «9» + 1 склеило бы строку «91»."
+      }
+    ]
+  }
+}

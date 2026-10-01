@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-teamwork",
+  "title": "Допиши тип и версию",
+  "description": "Впиши тип коммита, недостающую часть заголовка или следующий номер версии. Регистр важен.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "___(export): add CSV download", "hint": "новая возможность", "answers": [["feat", "Feat", "FEAT"]], "explain": "Новая возможность — тип feat (п. 2 Conventional Commits). Регистр типа может быть любым (п. 15), но в примерах спецификации он строчный, а FAQ советует писать его единообразно." },
+      { "text": "___(billing): round fee down", "hint": "исправление ошибки", "answers": [["fix", "Fix", "FIX"]], "explain": "Исправление ошибки — тип fix (п. 3). Он поднимает PATCH." },
+      { "text": "feat(api)___: drop RUB support", "hint": "ломает код пользователей", "answers": ["!"], "explain": "Знак ! сразу перед двоеточием отмечает ломающее изменение (п. 13). Такой коммит поднимает MAJOR." },
+      { "text": "BREAKING ___: fee(amount) is removed", "answers": ["CHANGE"], "explain": "Футер BREAKING CHANGE пишут только заглавными буквами: по п. 15 это единственное исключение из правила, что регистр в Conventional Commits не важен." },
+      { "text": "___ EUR fees down", "hint": "переделай Rounded по правилам git", "answers": [["Round", "round"]], "explain": "Заголовок пишут в повелительном наклонении: Round, а не Rounded или Rounds. Так же звучат сообщения, которые создают git merge и git revert." },
+      { "text": "1.4.2 + fix → ___", "answers": ["1.4.3"], "explain": "Исправление ошибки без изменения API поднимает PATCH." },
+      { "text": "1.4.2 + feat → ___", "answers": ["1.5.0"], "explain": "Новая возможность поднимает MINOR, а PATCH при этом сбрасывается в 0 (п. 7 SemVer)." },
+      { "text": "1.4.2 + fix + feat! → ___", "answers": ["2.0.0"], "explain": "Побеждает старшее изменение: ! означает ломающее изменение и MAJOR, а MINOR и PATCH обнуляются (п. 8)." },
+      { "text": "3.1.4 + docs + refactor! → ___", "answers": ["4.0.0"], "explain": "Сами по себе docs и refactor номер не двигают, но ! перед двоеточием делает ломающим коммит любого типа (п. 13). Ломающее изменение поднимает MAJOR, а MINOR и PATCH обнуляются." },
+      { "text": "0.9.0 + feat → ___", "answers": ["0.10.0"], "explain": "Части номера растут как числа: после 9 идёт 10. Версия 1.0.0 не наступает сама, её выпускают, когда API стал стабильным." },
+      { "text": "@___(\"Use fee(amount, currency)\")   // устаревшая функция", "answers": ["Deprecated"], "explain": "Аннотация @Deprecated помечает объявление устаревшим. По SemVer такой релиз поднимает MINOR, а удаляют объявление только в мажорной версии." }
+    ]
+  }
+}

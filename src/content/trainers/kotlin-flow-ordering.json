@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-flow",
+  "title": "Собери поток",
+  "description": "Расставь строки кода так, чтобы программа напечатала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери программу, которая печатает 30 и 40, каждое на своей строке.",
+        "words": ["        .take(2)", "}", "        .filter { it > 20 }", "    (1..5).asFlow()", "        .collect { println(it) }", "fun main() = runBlocking {", "        .map { it * 10 }"],
+        "answer": ["fun main() = runBlocking {", "    (1..5).asFlow()", "        .map { it * 10 }", "        .filter { it > 20 }", "        .take(2)", "        .collect { println(it) }", "}"],
+        "explain": "Сначала числа превращаются в 10…50, потом filter оставляет 30, 40 и 50, а take(2) берёт первые два и отменяет источник. В другом порядке получится пустой вывод: если отбирать больше 20 до умножения, не пройдёт ни одно число, а take раньше filter оставит только 10 и 20. collect стоит последним: это терминальный оператор."
+      },
+      {
+        "task": "Собери поток, который перед выдачей каждой страницы печатает «загружаю N».",
+        "words": ["        emit(\"страница $n\")", "}", "    for (n in 1..3) {", "fun pages(): Flow<String> = flow {", "    }", "        println(\"загружаю $n\")"],
+        "answer": ["fun pages(): Flow<String> = flow {", "    for (n in 1..3) {", "        println(\"загружаю $n\")", "        emit(\"страница $n\")", "    }", "}"],
+        "explain": "Внутри построителя flow обычный код: цикл, печать, вызов emit. println стоит до emit, поэтому сообщение появляется перед тем, как страница уходит сборщику. Код выполнится, только когда поток соберут."
+      },
+      {
+        "task": "Функция load() выдаёт строку «данные», а потом падает. Собери программу, которая напечатает «данные», «нет данных» и последней строкой «конец».",
+        "words": ["        .onCompletion { println(\"конец\") }", "fun main() = runBlocking {", "        .collect { println(it) }", "    load()", "}", "        .catch { emit(\"нет данных\") }"],
+        "answer": ["fun main() = runBlocking {", "    load()", "        .catch { emit(\"нет данных\") }", "        .onCompletion { println(\"конец\") }", "        .collect { println(it) }", "}"],
+        "explain": "catch ловит ошибку load() и выдаёт запасную строку. onCompletion стоит ниже catch и видит поток, который уже завершился успешно, поэтому «конец» печатается последним. Если поставить onCompletion выше catch, «конец» напечатается раньше строки «нет данных»."
+      },
+      {
+        "task": "Собери программу, которая печатает «1 10 2 20 3 30».",
+        "words": ["            emit(it * 10)", "        .collect { print(\"$it \") }", "fun main() = runBlocking {", "        }", "        .transform {", "}", "    flowOf(1, 2, 3)", "            emit(it)"],
+        "answer": ["fun main() = runBlocking {", "    flowOf(1, 2, 3)", "        .transform {", "            emit(it)", "            emit(it * 10)", "        }", "        .collect { print(\"$it \") }", "}"],
+        "explain": "transform может выдать на одно входное значение сколько угодно своих. Здесь два emit: само число и число, умноженное на 10. Поменяешь их местами — получится «10 1 20 2 30 3»."
+      },
+      {
+        "task": "Собери программу, которая складывает числа больше 3 из потока и печатает 9.",
+        "words": ["    println(sum)", "        .reduce { acc, x -> acc + x }", "}", "        .filter { it > 3 }", "fun main() = runBlocking {", "    val sum = flowOf(3, 4, 5)"],
+        "answer": ["fun main() = runBlocking {", "    val sum = flowOf(3, 4, 5)", "        .filter { it > 3 }", "        .reduce { acc, x -> acc + x }", "    println(sum)", "}"],
+        "explain": "filter оставляет 4 и 5, reduce сворачивает их в 9. reduce — терминальный оператор: он возвращает число, а не поток, поэтому стоит в конце цепочки, и печатать можно только после него."
+      },
+      {
+        "task": "Собери программу, которая печатает по строке: «старт», 1, «старт», 1.",
+        "words": ["    numbers.collect { println(it) }", "        emit(1)", "fun main() = runBlocking {", "    }", "        println(\"старт\")", "}", "    val numbers = flow {", "    numbers.collect { println(it) }"],
+        "answer": ["fun main() = runBlocking {", "    val numbers = flow {", "        println(\"старт\")", "        emit(1)", "    }", "    numbers.collect { println(it) }", "    numbers.collect { println(it) }", "}"],
+        "explain": "Поток холодный: каждый collect запускает блок flow с начала, поэтому «старт» печатается дважды. println стоит до emit, иначе единица появится раньше «старт»."
+      }
+    ]
+  }
+}

@@ -4,10 +4,437 @@ order: 17
 phase: "Асинхронность"
 title: "Корутины под контролем: отмена, контекст и ошибки"
 eyebrow: "Kotlin · Асинхронность"
-readingMinutes: 15
+readingMinutes: 18
 summary: "Отменять корутины, выбирать диспетчер и обрабатывать ошибки так, чтобы ничего не зависало и не терялось."
 tags: [kotlin, async]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Корутины под контролем: отмена, контекст и ошибки» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты запускал корутины через `launch` и `async`, собирал их в `coroutineScope` и видел, что родитель дожидается всех своих детей. В бою этого мало. Сервис собирает отчёт из трёх источников, а пользователь уже закрыл вкладку, и корутины ещё минуту грузят данные, которые никто не увидит. Один источник не отвечает вовсе, и запрос висит. Другой падает, и его ошибка отменяет загрузки, которые шли нормально.
+
+С этим справляются отмена и обработка ошибок, а контекст решает, на каком потоке выполнения (thread) идёт работа. Из Java сюда тянутся привычки: поставить `catch (e: Exception)` на всякий случай, усыпить поток выполнения через `Thread.sleep`, разбудить его через `interrupt()`. Перенесёшь их как есть — получишь сервис, который не может остановиться, и ошибки, о которых узнаёшь от пользователей.
+
+После урока ты сможешь отменять корутины и ставить им таймауты, уводить блокирующий код на подходящий диспетчер и обрабатывать ошибки так, чтобы они не терялись и не роняли соседние задачи.
+
+## Ядро: отмена идёт вниз по дереву, ошибка — вверх
+
+<Callout type="purple" title="Суть">
+Корутины образуют дерево. У каждой есть **Job** — объект, который описывает её жизненный цикл и связь с родителем. **Отмена** идёт сверху вниз: отменённый родитель отменяет всех потомков. **Ошибка** идёт снизу вверх: упавший ребёнок отменяет родителя, а тот — остальных детей, если родитель не супервизор (о нём — в разделе про ошибки). Сама отмена приходит в корутину исключением `CancellationException`, и глотать его нельзя.
+</Callout>
+
+Поэтому думать приходится о дереве целиком. Чтобы остановить работу экрана или запроса, отменяют их область видимости (`CoroutineScope`), и вместе с ней отменяются все корутины внутри.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Ты обернул в try/catch вызов launch, а внутри корутины loadAvatar() бросила IOException. Поймает ли catch эту ошибку?">
+Нет. `launch` только запускает корутину и сразу возвращает `Job`, поэтому блок `try` заканчивается раньше, чем корутина успевает упасть. Исключение пойдёт по дереву вверх, к родителю: в обычной области видимости он отменит соседей и сам завершится с этой ошибкой. Лови ошибку внутри корутины или вокруг `coroutineScope`, который её перебросит.
+</Reveal>
+
+## Как устроено: отмена
+
+`launch` возвращает `Job` корутины. `job.cancel()` отменяет её вместе с детьми, `job.join()` ждёт, пока она завершится, а `job.cancelAndJoin()` делает и то и другое.
+
+Примеры урока запускаются в Playground на Kotlin 2.4.20 с kotlinx.coroutines 1.7.3. На актуальной (на 2026-09) версии 1.11.0 вывод такой же.
+
+Программа ниже сжимает четыре файла в фоне и через полсекунды передумывает. `Thread.sleep(200)` изображает тяжёлый расчёт: поток выполнения занят, приостановки нет. `Dispatchers.Default` отправляет корутину в фоновый пул потоков выполнения, чтобы `main` мог её отменить (подробнее о диспетчерах ниже). Сначала предскажи, что напечатает программа.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val job = launch(Dispatchers.Default) {
+        repeat(4) { i ->
+            Thread.sleep(200)
+            println("файл $i сжат")
+        }
+    }
+    delay(500)
+    job.cancel()
+    println("отменил")
+    job.join()
+    println("дождался")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Сколько файлов успеет сжаться и где в выводе окажется строка «отменил»?">
+Все четыре, а «отменил» встанет между вторым и третьим: файлы готовы на 200-й и 400-й мс, отмена приходит на 500-й, а третий файл сожмётся на 600-й. `cancel()` только помечает корутину отменённой. Корутина узнаёт об этом в **точке приостановки** — вызове suspend-функции вроде `delay` — или когда сама проверяет флаг. В цикле с `Thread.sleep` нет ни того ни другого. Отмена в корутинах **кооперативная**: без участия самой корутины она не сработает.
+</Reveal>
+
+Запусти, потом добавь перед `println` строку `ensureActive()` и посмотри, что изменится. `ensureActive()` бросает `CancellationException`, если корутину отменили. Свойство `isActive` вместо исключения возвращает `false`. Его ставят в условие цикла: `while (isActive)`. Третий способ, `yield()`, проверяет отмену и заодно уступает поток выполнения другим корутинам. Все suspend-функции kotlinx.coroutines, например `delay` и `withContext`, замечают отмену сами, и ручные проверки рядом с ними не нужны.
+
+<Callout type="blue" title="Если знаешь Java — cancel() не будит спящий поток выполнения">
+Отмена похожа на `interrupt()`: это тоже просьба, и долгий цикл должен сам проверять флаг — `isActive` вместо `Thread.interrupted()`. Разница в блокирующих вызовах. `interrupt()` будит поток выполнения, уснувший в `Thread.sleep` или `wait`, и тот получает `InterruptedException`. Отмена корутины поток выполнения не прерывает, поэтому `Thread.sleep` внутри неё доспит до конца. В корутине пиши `delay`, а блокирующий Java-вызов, который понимает прерывание, оборачивай в `runInterruptible`: тогда отмена его прервёт.
+</Callout>
+
+**Таймаут** — отмена по часам. `withTimeout(500) { … }` отменяет блок через 500 мс и бросает `TimeoutCancellationException`, а `withTimeoutOrNull` в этом случае возвращает `null`:
+
+```kotlin
+val rate = withTimeoutOrNull(500) { loadRate() }
+    ?: cachedRate
+```
+
+Таймаут остаётся отменой: `TimeoutCancellationException` — подкласс `CancellationException`, и непойманный таймаут внутри `launch` завершит корутину молча, как обычная отмена. Кооперативен он так же: `Thread.sleep(10_000)` внутри `withTimeout(1000)` проспит все десять секунд.
+
+`finally` выполняется и у отменённой корутины, но первая же приостановка в нём бросит `CancellationException`: корутина-то отменена. Если очистка сама вызывает suspend-функцию, например закрывает соединение, оберни этот вызов в `withContext(NonCancellable)`:
+
+```kotlin
+try {
+    upload(report)
+} finally {
+    withContext(NonCancellable) {
+        connection.close()
+    }
+}
+```
+
+`CancellationException` летит из точки приостановки вверх, как любое исключение. Вот типичный код с повторными попытками: при сбое он печатает имя класса исключения, `e::class.simpleName`. Что он напечатает?
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+suspend fun fetchRate(): Int {
+    delay(300)
+    return 92
+}
+
+fun main() = runBlocking {
+    val job = launch {
+        repeat(3) { i ->
+            try {
+                println("курс: ${fetchRate()}")
+            } catch (e: Exception) {
+                println("сбой $i: ${e::class.simpleName}")
+            }
+        }
+        println("цикл закончен")
+    }
+    delay(500)
+    job.cancel()
+    job.join()
+    println("готово")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Корутину отменили во время второй попытки. Что программа напечатает после строки «курс: 92»?">
+«сбой 1: JobCancellationException», «сбой 2: JobCancellationException», «цикл закончен» и «готово». `catch (e: Exception)` поймал отмену (`JobCancellationException` — внутренний подкласс `CancellationException`), и корутина пошла дальше. Третья попытка упала сразу: `delay` в отменённой корутине бросает исключение без ожидания. Отмену проглотили, и корутина доделала всё, что осталось.
+</Reveal>
+
+Исправь код: лови вместо `Exception` конкретный `IOException`, который бросает сеть (понадобится `import java.io.IOException`). Если широкий `catch` нужен, поставь перед ним ветку `catch (e: CancellationException) { throw e }`. В обоих вариантах останутся только «курс: 92» и «готово».
+
+Та же ловушка у `runCatching` из урока про ошибки: он ловит любой `Throwable`, значит, и отмену. `runCatching { fetchRate() }.getOrDefault(0)` в отменённой корутине тихо вернёт 0, и код после него продолжит работу. В suspend-коде пиши `try`/`catch` с конкретным типом, а если `runCatching` всё же нужен, перебрось отмену сам:
+
+```kotlin
+val rate = runCatching { fetchRate() }
+    .onFailure { if (it is CancellationException) throw it }
+    .getOrDefault(0)
+```
+
+Хитрее всего `catch (e: IllegalStateException)`: на JVM `CancellationException` — это `java.util.concurrent.CancellationException`, наследник `IllegalStateException`, и такой `catch` тоже её проглотит.
+
+## Контекст и диспетчеры: где работает корутина
+
+У каждой корутины есть **контекст** (`CoroutineContext`) — набор элементов, которые задают, как она работает: `Job`, диспетчер, имя, обработчик ошибок. Элементы складывают плюсом: `launch(Dispatchers.IO + CoroutineName("export"))`. **CoroutineName** даёт корутине имя: в режиме отладки kotlinx.coroutines дописывает его к имени потока выполнения, и в логах видно, какая корутина что делает. Режим отладки включают JVM-флагом `-ea` или `-Dkotlinx.coroutines.debug`, в редакторе урока он уже работает. Если ничего не указать, `launch` унаследует контекст родителя.
+
+**Диспетчер** решает, на каких потоках выполнения работает корутина:
+
+| Диспетчер | Для чего |
+| --- | --- |
+| `Dispatchers.Default` | Расчёты. Потоков выполнения по числу ядер, минимум два |
+| `Dispatchers.IO` | Блокирующий ввод-вывод: файлы, JDBC, блокирующие HTTP-клиенты. По умолчанию до 64 потоков выполнения или по числу ядер, если их больше |
+| `Dispatchers.Main` | Главный поток выполнения, где работает интерфейс: Android, JavaFX, Swing. Без такой библиотеки в зависимостях попытка запустить на нём корутину бросит `IllegalStateException` |
+| `Dispatchers.Unconfined` | Не привязан к потоку выполнения: корутина стартует в текущем, а после приостановки продолжает там, где её возобновила suspend-функция. В обычном коде не нужен |
+
+Переключает диспетчер `withContext`: выполняет блок в другом контексте, ждёт результата и возвращает корутину на прежний диспетчер.
+
+```kotlin
+suspend fun readReport(path: String): String =
+    withContext(Dispatchers.IO) {
+        File(path).readText()
+    }
+```
+
+`File.readText()` держит поток выполнения, пока диск не ответит. На `Dispatchers.Default` он занял бы один из немногих потоков выполнения для расчётов, а на главном заставил бы интерфейс ждать диск. `Dispatchers.IO` рассчитан на такое ожидание.
+
+<Reveal q="Коллега на всякий случай оборачивает каждый вызов readReport в withContext(Dispatchers.IO). Что это даёт? И можно ли вызывать readReport с главного потока выполнения?">
+Обёртка ничего не даёт: `readReport` сама уводит блокирующее чтение в пул `IO`. Вызывать её с главного потока выполнения можно. Пока идёт чтение, корутина приостановлена внутри `withContext` и главный поток выполнения не держит, а после чтения вернётся на него.
+</Reveal>
+
+<Callout type="teal" title="Как принято">
+Руководство Android по корутинам советует делать suspend-функции **main-safe**, то есть безопасными для вызова с главного потока выполнения: класс с блокирующей работой сам переносит её через `withContext`. Второе правило — не зашивать диспетчеры в код, а передавать их, например, через конструктор со значением по умолчанию. Тогда тест подставит свой диспетчер и станет предсказуемым. Примеры урока, как и примеры самого руководства, для краткости указывают диспетчер прямо.
+
+```kotlin
+class ReportRepository(
+    private val io: CoroutineDispatcher = Dispatchers.IO,
+) {
+    suspend fun read(path: String): String =
+        withContext(io) { File(path).readText() }
+}
+```
+</Callout>
+
+## Как устроено: ошибки
+
+Ошибку, пойманную `try`/`catch` внутри корутины, механизм корутин даже не увидит. В обычной области видимости (`coroutineScope`, `runBlocking`) правило из «Сути» одно для всех: и `launch`, и `async` при сбое отменяют родителя и соседей, а `coroutineScope` перебрасывает исключение вызывающему коду.
+
+**Супервизор** меняет правило: в `supervisorScope` или в области видимости с `SupervisorJob()` сбой ребёнка не трогает ни родителя, ни соседей. Тогда ошибку каждого ребёнка приходится обрабатывать в другом месте. Для этого есть **CoroutineExceptionHandler** — элемент контекста, который получает исключение, если его больше некуда передать. Предскажи вывод, прежде чем запускать.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+import java.io.IOException
+
+fun main() = runBlocking {
+    val handler = CoroutineExceptionHandler { _, e ->
+        println("обработчик: ${e.message}")
+    }
+    supervisorScope {
+        launch(handler) {
+            throw IOException("отчёт не отправлен")
+        }
+        val price = async {
+            throw IOException("цена не пришла")
+        }
+        delay(100)
+        println("прошло 100 мс")
+        try {
+            price.await()
+        } catch (e: IOException) {
+            println("await: ${e.message}")
+        }
+    }
+    println("конец")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="В каком порядке появятся строки и куда попадёт каждая из двух ошибок?">
+«обработчик: отчёт не отправлен», «прошло 100 мс», «await: цена не пришла», «конец». Ошибку `launch` вернуть некуда: `Job` не хранит результат, поэтому она сразу уходит в обработчик из контекста. `async` держит ошибку в своём результате, `Deferred`, и бросает её из `await()`. Без `await` ошибка `async` в супервизоре пропала бы молча.
+</Reveal>
+
+Если заменить `supervisorScope` на `coroutineScope`, обработчик промолчит, а программа упадёт с первой ошибкой. Проверь запуском. У ребёнка обычного `Job` ошибку забирает родитель, поэтому обработчик, переданный ребёнку, не срабатывает. Спасти корутину обработчик не может: когда его вызывают, она уже завершилась, поэтому в нём пишут лог и сообщают об ошибке.
+
+Корутины, которые живут дольше одного вызова, например опрос API, запускают в области видимости, которой владеет класс. Документация kotlinx.coroutines советует создавать такую область с `SupervisorJob` и обработчиком:
+
+```kotlin
+class RatePoller(handler: CoroutineExceptionHandler) {
+    private val scope =
+        CoroutineScope(SupervisorJob() + handler)
+
+    fun start() {
+        scope.launch { pollRates() }
+    }
+
+    fun stop() = scope.cancel()
+}
+```
+
+`stop()` разом отменяет все корутины области. `SupervisorJob()` передают только области: в `launch(SupervisorJob())` он оторвёт корутину от родителя, и её никто не дождётся. В kotlinx.coroutines 1.11.0 такой вызов помечен устаревшим.
+
+## Как на практике
+
+- **Ставь таймаут на каждый внешний вызов.** Сервер может не ответить вовсе, а `withTimeoutOrNull` превратит зависание в `null`, который легко обработать.
+- **Дожидайся отменённой корутины.** `cancel()` возвращается сразу, и корутина ещё может дописывать файл, который ты собрался удалить. Пиши `cancelAndJoin()`.
+- **Проверяй отмену в долгих циклах без suspend-вызовов.** Одна строка `ensureActive()` в начале шага.
+
+## Три разбора
+
+**Разбор 1. Сервис, который не может остановиться.**
+Фоновая корутина опрашивает API в цикле `while (true)`: внутри `try` вызов `poll()` и `delay(1000)`, в `catch (e: Exception)` запись в лог. При остановке сервиса вызывают `scope.cancel()`, `delay` бросает `CancellationException`, `catch` её ловит, и цикл идёт на новый круг. Теперь каждый suspend-вызов падает мгновенно, и лог забивается одинаковыми `JobCancellationException`. Ход: ловить `IOException`, тогда отмена выйдет из цикла сама. Вывод: широкий `catch` в цикле делает корутину неотменяемой.
+
+**Разбор 2. Расчёты, которые ждут диск.**
+Сервис строит отчёты на `Dispatchers.Default`, а шаблон читается через `File(path).readText()` прямо в той же корутине. Под нагрузкой несколько запросов одновременно ждут диск, а потоков выполнения у `Default` столько же, сколько ядер, и расчёты встают в очередь. Ход: чтение шаблона переносим в функцию с `withContext(Dispatchers.IO)`, как `readReport` выше. Вывод: ожидание диска на `Default` отнимает потоки выполнения у расчётов.
+
+**Разбор 3. Где супервизор лишний.**
+Страница заказа собирается из товаров, цены и доставки, и кто-то на всякий случай обернул загрузку в `supervisorScope`. Цена не загрузилась, но ошибка всплывёт только на её `await`, а до тех пор товары и доставка грузятся впустую: без цены страницу не показать. Ход: `coroutineScope`, где первый сбой отменит остальные загрузки и придёт одним исключением. Вывод: супервизор нужен независимым задачам, например рассылке уведомлений ста пользователям, а частям одного результата нужен `coroutineScope`.
+
+## Где ловить ошибку корутины
+
+<DecisionTree nodes={[
+  { q: "Ошибку можно обработать на месте: повторить запрос, подставить запасное значение?", yes: "try/catch внутри корутины вокруг вызова, с конкретным типом исключения", no: "к следующему вопросу" },
+  { q: "Без этой задачи общий результат не имеет смысла?", yes: "coroutineScope: сбой отменит остальные задачи, try/catch ставь вокруг него", no: "к следующему вопросу" },
+  { q: "Нужен результат задачи?", yes: "async в supervisorScope и try/catch вокруг await()", no: "launch в супервизоре и CoroutineExceptionHandler для лога" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `catch (e: Exception)` в корутине | Ловит отмену, корутина работает дальше | Конкретный тип или `catch (e: CancellationException) { throw e }` первой веткой |
+| `runCatching` вокруг suspend-вызова | Отмена превращается в `Result.failure` | `try`/`catch` с конкретным типом |
+| `try`/`catch` вокруг `launch` | `launch` возвращается сразу, ошибка уходит родителю | `try` внутри корутины или вокруг `coroutineScope` |
+| `Thread.sleep` в корутине | Держит поток выполнения и не замечает отмену | `delay` |
+| `async` в супервизоре без `await` | Ошибка пропадает молча | `await()` внутри `try` |
+| `CoroutineExceptionHandler` у дочерней корутины | Не сработает: ошибку забирает родитель | Обработчик у `launch` в супервизоре или в области видимости с `SupervisorJob()` |
+
+## Практикум
+
+<Practice title="Почини загрузку курсов валют" checklist={["Курсы грузятся параллельно: у каждой валюты свой async", "Каждая загрузка обёрнута в withTimeoutOrNull(500), при null печатается «нет данных»", "catch ловит IOException и стоит внутри async или вокруг await в supervisorScope", "Сбой GBP не отменяет остальные загрузки", "Программа печатает USD: 92.5, EUR: 99.1, JPY: нет данных, GBP: ошибка сети и завершается примерно за полсекунды"]}>
+Программа грузит курсы четырёх валют по очереди. JPY отвечает три секунды, а GBP падает с `IOException` и роняет всю программу. Исправь её:
+
+1. Грузи курсы параллельно, каждый не дольше 500 мс. Не успел — печатай «нет данных».
+2. Сетевая ошибка одной валюты не должна мешать остальным. Вместо её курса печатай «ошибка сети».
+3. Не лови `Exception` целиком: отмена должна проходить.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+import java.io.IOException
+
+suspend fun loadRate(code: String): Double {
+    delay(if (code == "JPY") 3000 else 100)
+    if (code == "GBP") throw IOException("нет связи")
+    return when (code) {
+        "USD" -> 92.5
+        "EUR" -> 99.1
+        else -> 0.6
+    }
+}
+
+fun main() = runBlocking {
+    for (code in listOf("USD", "EUR", "JPY", "GBP")) {
+        println("$code: ${loadRate(code)}")
+    }
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Пример решения:
+
+```kotlin
+import kotlinx.coroutines.*
+import java.io.IOException
+
+suspend fun loadRate(code: String): Double {
+    delay(if (code == "JPY") 3000 else 100)
+    if (code == "GBP") throw IOException("нет связи")
+    return when (code) {
+        "USD" -> 92.5
+        "EUR" -> 99.1
+        else -> 0.6
+    }
+}
+
+suspend fun rateText(code: String): String =
+    try {
+        withTimeoutOrNull(500) { loadRate(code) }
+            ?.toString() ?: "нет данных"
+    } catch (e: IOException) {
+        "ошибка сети"
+    }
+
+fun main() = runBlocking {
+    val codes = listOf("USD", "EUR", "JPY", "GBP")
+    val rates = codes.map { code ->
+        code to async { rateText(code) }
+    }
+    for ((code, rate) in rates) {
+        println("$code: ${rate.await()}")
+    }
+}
+```
+
+Таймаут и сетевую ошибку `rateText` обрабатывает на месте, внутри `async`, поэтому ни одна загрузка не падает. С `catch` снаружи первая же ошибка GBP отменила бы остальные загрузки, и выручил бы только `supervisorScope` с `catch` вокруг `await`. `catch` ловит только `IOException`, так что отмена всей загрузки пройдёт сквозь него. Порядок вывода не зависит от того, кто ответил первым: `await` идут в порядке списка.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Сколько `catch (e: Exception)` и `runCatching` найдётся в suspend-функциях твоего кода? Найди их до пятницы и проверь, пропускает ли каждый отмену. Через неделю вернись к урокам про корутины и пройди тренажёры ещё раз.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Отменить и дождаться | `job.cancelAndJoin()` |
+| Проверить отмену в цикле | `ensureActive()`, `while (isActive)`, `yield()` |
+| Таймаут | `withTimeout` бросает исключение, `withTimeoutOrNull` возвращает `null` |
+| Очистка после отмены | `finally` и `withContext(NonCancellable) { … }` |
+| Широкий `catch` | Первой веткой `catch (e: CancellationException) { throw e }` |
+| Блокирующий вызов | `withContext(Dispatchers.IO) { … }` внутри функции |
+| Расчёты | `Dispatchers.Default` |
+| Независимые задачи | `supervisorScope` или `SupervisorJob()` |
+| Ошибка `launch` в супервизоре | `CoroutineExceptionHandler` в контексте |
+| Ошибка `async` | `try`/`catch` вокруг `await()` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Job", meaning: "Объект, который описывает жизненный цикл корутины и её связь с родителем; через него корутину отменяют и ждут." },
+  { term: "Отмена (cancellation)", meaning: "Просьба остановить корутину вместе с потомками; корутина выполняет её в точке приостановки или при проверке." },
+  { term: "Кооперативная отмена", meaning: "Отмена, которая срабатывает, только если сама корутина приостанавливается или проверяет флаг." },
+  { term: "Точка приостановки (suspension point)", meaning: "Вызов suspend-функции, в котором корутина может приостановиться и заметить отмену." },
+  { term: "CancellationException", meaning: "Исключение, которым отмена приходит в корутину; его нельзя проглатывать." },
+  { term: "Таймаут (timeout)", meaning: "Отмена блока по истечении времени: withTimeout бросает исключение, withTimeoutOrNull возвращает null." },
+  { term: "NonCancellable", meaning: "Элемент контекста для withContext, внутри которого suspend-очистка работает и после отмены." },
+  { term: "Контекст корутины (CoroutineContext)", meaning: "Набор элементов, которые задают работу корутины: Job, диспетчер, имя, обработчик ошибок." },
+  { term: "Диспетчер (dispatcher)", meaning: "Элемент контекста, который решает, на каких потоках выполнения работает корутина." },
+  { term: "Dispatchers.Default", meaning: "Пул потоков выполнения для расчётов: по числу ядер процессора, но не меньше двух." },
+  { term: "Dispatchers.IO", meaning: "Пул потоков выполнения для блокирующего ввода-вывода: файлов, баз данных, блокирующих сетевых клиентов." },
+  { term: "Dispatchers.Main", meaning: "Диспетчер главного потока выполнения, где работает интерфейс Android, JavaFX и Swing." },
+  { term: "CoroutineName", meaning: "Имя корутины, которое в режиме отладки дописывается к имени потока выполнения." },
+  { term: "Супервизор (supervisor)", meaning: "Job или область видимости, где сбой ребёнка не отменяет родителя и соседей: SupervisorJob, supervisorScope." },
+  { term: "CoroutineExceptionHandler", meaning: "Элемент контекста, который получает исключение, если его больше некуда передать, например от launch в супервизоре." },
+  { term: "Main-safe функция", meaning: "Suspend-функция, которую безопасно вызывать с главного потока выполнения, потому что блокирующую работу она сама уводит на другой диспетчер." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-control-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Корутины под контролем: понятия</span>
+    <span class="kc-trainer-hint">Отмена, диспетчеры, ошибки</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-control-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что остановится и где всплывёт ошибка</span>
+    <span class="kc-trainer-hint">Сценарии с отменой и сбоями</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-control-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши управление корутиной</span>
+    <span class="kc-trainer-hint">Функции, диспетчеры, типы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-control-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери корутину под контролем</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Cancellation and timeouts** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coroutines-cancellation.html), обновлено 2026-07-27, сверено 2026-09-26) — как корутина замечает отмену, таймауты, `NonCancellable`, `runInterruptible`.
+- **Kotlin — Coroutine exceptions handling** ([kotlinlang.org/docs](https://kotlinlang.org/docs/exception-handling.html), обновлено 2026-07-20, сверено 2026-09-26) — ошибки `launch` и `async`, обработчик, супервизоры.
+- **Kotlin — Coroutine context and dispatchers** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coroutine-context-and-dispatchers.html), сверено 2026-09-28) — контекст, диспетчеры, `CoroutineName` и режим отладки.
+- **kotlinx.coroutines 1.11.0 и Kotlin stdlib — API reference** ([kotlinlang.org/api](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-dispatchers/-i-o.html), сверено 2026-09-28) — размеры пулов, `withTimeout`, `CoroutineScope`, `SupervisorJob`, `CancellationException`, `runCatching`.
+- **Android Developers — Best practices for coroutines in Android** ([developer.android.com](https://developer.android.com/kotlin/coroutines/coroutines-best-practices), обновлено 2026-09-24, сверено 2026-09-26) — main-safe функции, внедрение диспетчеров, отмену не глотать.
+- **Oracle — Java SE 25 API и The Java Tutorials: Interrupts** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Thread.html), сверено 2026-09-26) — как `interrupt()` будит `Thread.sleep`, наследование `CancellationException`.

@@ -4,10 +4,430 @@ order: 16
 phase: "Асинхронность"
 title: "Корутины: асинхронный код без колбэков"
 eyebrow: "Kotlin · Асинхронность"
-readingMinutes: 15
-summary: "Запускать корутины, писать suspend-функции и понимать структурную конкурентность."
+readingMinutes: 18
+summary: "Писать suspend-функции, запускать корутины через launch и async и держать их в области видимости, чтобы ни одна не потерялась."
 tags: [kotlin, async]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Корутины: асинхронный код без колбэков» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты учился ревьюить чужой код. Теперь ревьюят тебя. Ты перенёс в Kotlin-сервис Java-код, который собирает страницу профиля из запросов к пользователю и его заказам: цепочку `CompletableFuture` с `thenApply` внутри `thenCompose` и `exceptionally` в конце. Ревьюер пишет: «Перепиши на корутинах, тут будет несколько строк подряд».
+
+Он не преувеличивает. С корутинами асинхронный код читается сверху вниз, с обычными переменными, циклами и `try`, а пока корутина ждёт сеть через suspend-функцию, поток выполнения (thread) свободен для другой работы. Но привычки из других языков подсказывают две неверные мысли: что слово `suspend` отправляет функцию «в фон» и что корутину можно запустить где угодно и забыть. С первой код остаётся последовательным там, где ждали одновременной работы. Вторая порождает работу, которую никто не ждёт и не может отменить.
+
+После урока ты сможешь написать suspend-функцию, запустить несколько задач одновременно через `launch` и `async`, предсказать, в каком порядке напечатают строки несколько корутин, и собрать их в одной области видимости вместо `GlobalScope`.
+
+## Ядро: корутина ждёт, а поток выполнения работает
+
+<Callout type="purple" title="Суть">
+**Корутина** (coroutine) — вычисление, которое умеет приостанавливаться. На вызове **suspend-функции** она может остановиться и продолжить позже, а поток выполнения тем временем занят другими корутинами. Новые корутины запускают **построители** (coroutine builders) `launch` и `async`, всегда внутри **области видимости** (coroutine scope), которая отвечает за жизнь своих корутин.
+</Callout>
+
+Поэтому ожидание сети или базы через suspend-функцию не занимает поток выполнения: пока одна корутина ждёт, он выполняет другую. Так корутины работают **одновременно** (concurrently). Параллельно (in parallel) код идёт, только когда потоков выполнения несколько.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="В suspend-функции closeDay() три вызова подряд: saveOrders(), sendReport(), notifyTeam(). Коллега пометил sendReport словом suspend, чтобы отчёт уходил в фоне. Начнётся ли notifyTeam(), не дожидаясь отчёта?">
+Нет. Код внутри корутины выполняется по порядку, как обычный: `notifyTeam()` начнётся, когда `sendReport()` вернёт управление. `suspend` разрешает функции приостанавливаться и вызывать другие suspend-функции, но ничего не запускает. Чтобы отчёт уходил одновременно, нужна отдельная корутина, запущенная через `launch` в области видимости (как её получить в suspend-функции — ниже). По документации одновременная работа в корутинах всегда явная.
+</Reveal>
+
+## Как устроено: suspend-функции
+
+Модификатор `suspend` превращает функцию в **suspend-функцию** (suspending function), которая может приостановить корутину, из которой её вызвали. Самая простая из готовых, `delay(1000)`, приостанавливает корутину на секунду и не блокирует поток выполнения. Из ключевых слов язык добавил для корутин только `suspend`. `delay`, `launch` и `async` — обычные функции библиотеки kotlinx.coroutines (в проекте это зависимость `org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0`).
+
+Примеры урока запускаются в Playground на Kotlin 2.4.20 с kotlinx.coroutines 1.7.3. На актуальной 1.11.0 вывод такой же, отличаются только тексты некоторых ошибок.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+suspend fun loadPrice(): Int {
+    delay(1000)
+    return 900
+}
+
+suspend fun loadStock(): Int {
+    delay(1000)
+    return 3
+}
+
+fun main() = runBlocking {
+    val start = System.currentTimeMillis()
+    val price = loadPrice()
+    val stock = loadStock()
+    println("на складе: ${price * stock} ₽")
+    val sec = (System.currentTimeMillis() - start) / 1000
+    println("заняло $sec с")
+}
+```
+
+</KotlinPlayground>
+
+Запусти. Две загрузки по секунде идут одна за другой, поэтому выходит две секунды. Потом замени `fun main() = runBlocking {` на `fun main() {`. Компилятор (Kotlin 2.4.20) ответит ошибкой на каждый вызов, например: «Suspend function 'suspend fun loadPrice(): Int' can only be called from a coroutine or another suspend function.»
+
+Вызывают suspend-функцию из корутины или из другой suspend-функции. **`runBlocking`** — мост из обычного кода: запускает корутину и блокирует текущий поток выполнения, пока не закончатся она и все корутины, запущенные внутри. Её объявление в справочнике, без JVM-аннотации:
+
+```kotlin
+fun <T> runBlocking(
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend CoroutineScope.() -> T
+): T
+```
+
+Блок — лямбда с получателем `CoroutineScope`, как в уроке про DSL, только с пометкой `suspend`. В такой **suspend-лямбде** можно вызывать suspend-функции, а без префикса доступны `launch` и `async`: это функции-расширения `CoroutineScope`.
+
+В обычной лямбде suspend-функцию не вызвать, компилятор откажет: «Suspension functions can only be called within coroutine body.» Исключение объясняет inline из урока про лямбды: в лямбде inline-функции вроде `repeat` вызов разрешён, потому что тело лямбды подставляется в саму suspend-функцию.
+
+Точку входа можно объявить и как `suspend fun main()`, так её пишет документация Kotlin. В уроке `main` обёрнут в `runBlocking`: блок получает область видимости, а корутины идут на одном потоке выполнения, поэтому порядок строк предсказуем. Когда потоков выполнения несколько, он может меняться от запуска к запуску.
+
+Само слово `suspend` ничего не приостанавливает. Спецификация Kotlin говорит, что функция приостанавливается только в **точках приостановки** (suspension points), и почти всегда это вызов другой suspend-функции. Если внутри suspend-функции стоит `Thread.sleep(1000)`, она держит поток выполнения всю секунду.
+
+Приостановка и делает корутины дешёвыми. Эта программа запускает 50 000 корутин, и каждая ждёт секунду:
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() {
+    var done = 0
+    val start = System.currentTimeMillis()
+    runBlocking {
+        repeat(50_000) {
+            launch {
+                delay(1000)
+                done++
+            }
+        }
+    }
+    val sec = (System.currentTimeMillis() - start) / 1000
+    println("готово: $done за $sec с")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="50 000 корутин, каждая ждёт секунду. Сколько секунд проработает программа?">
+Одну-две. Все 50 000 корутин идут на одном потоке выполнения `runBlocking` и ждут одновременно: приостановленная корутина его не занимает, поэтому время задаёт самая долгая пауза. Для 50 000 потоков выполнения документация Kotlin называет до 100 ГБ памяти против примерно 500 МБ у корутин.
+</Reveal>
+
+Проверь, потом замени `50_000` на `5`: время останется в пределах 1–2 с, хотя корутин в 10 000 раз меньше. Больше не ставь: на 100 000 корутин сервер Playground падает с `OutOfMemoryError`.
+
+## Как устроено: launch, async и порядок строк
+
+**`launch`** запускает новую корутину и возвращает **`Job`** — ручку, через которую корутину можно дождаться (`job.join()`) или отменить. Результата у `launch` нет, он для работы вроде «отправь письмо». Сначала предскажи, что и в каком порядке напечатает программа:
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    launch {
+        delay(200)
+        println("отчёт отправлен")
+    }
+    launch {
+        delay(100)
+        println("кэш прогрет")
+    }
+    println("сервис запущен")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="В каком порядке появятся три строки? А если заменить оба delay на Thread.sleep?">
+«сервис запущен», «кэш прогрет», «отчёт отправлен». У `runBlocking` один поток выполнения и очередь корутин: `launch` ставит новую корутину в эту очередь, и блок сначала допечатывает своё. Потом обе корутины засыпают на `delay`, и первой просыпается та, у которой пауза короче. С `Thread.sleep` две последние строки поменяются местами: первая корутина спит, не отпуская поток выполнения, и вторая ждёт её. Порядок задают точки приостановки.
+</Reveal>
+
+Проверь оба варианта запуском.
+
+<Callout type="blue" title="Если знаешь Java — delay не Thread.sleep">
+Рука тянется подождать через `Thread.sleep`. В корутине это ошибка: `Thread.sleep` блокирует поток выполнения, и все корутины на нём стоят, а `delay` приостанавливает только свою корутину. Так же опасен любой блокирующий вызов, например `Future.get()` или чтение файла через `java.io`. Такие вызовы выносят на отдельный пул потоков выполнения, об этом — в уроке про отмену, контекст и ошибки.
+</Callout>
+
+**`async`** работает как `launch`, но с результатом: возвращает **`Deferred`**, по документации — неблокирующий future, то есть `Job` с результатом. Результат забирают через **`await()`**, который приостанавливает корутину, пока значение не готово. Вернись к первому примеру и замени три строки в `main`:
+
+```kotlin
+val price = async { loadPrice() }
+val stock = async { loadStock() }
+println("на складе: ${price.await() * stock.await()} ₽")
+```
+
+<Reveal q="Сколько секунд напечатает программа теперь? А если написать val price = async { loadPrice() }.await()?">
+Одну. Обе корутины стартуют до первого `await`, ждут одновременно, и `await` забирает готовые результаты. С `.await()` сразу после `async` снова выйдет две секунды: текущая корутина ждёт цену и только потом запускает загрузку остатков. Поэтому сначала запускают все `async`, а ждут потом.
+</Reveal>
+
+## Как устроено: структурная конкурентность
+
+Корутины образуют дерево. `launch` и `async` внутри блока корутины создают её **дочерние корутины** (child coroutines). Документация называет этот принцип **структурной конкурентностью** (structured concurrency): родитель не завершается, пока не завершатся дети, а если родителя отменили или он упал, отменяются и все дети. Ошибка в дочерней корутине по умолчанию отменяет родителя и остальных детей. Подробно об отмене и ошибках — в следующем уроке.
+
+Внутри suspend-функции область для дочерних корутин создаёт **`coroutineScope`**. Он вернёт результат, только когда закончатся все корутины блока:
+
+```kotlin
+suspend fun stockValue(): Int = coroutineScope {
+    val price = async { loadPrice() }
+    val stock = async { loadStock() }
+    price.await() * stock.await()
+}
+```
+
+Если одна загрузка упадёт, вторую отменят, а исключение выйдет из `stockValue` наружу.
+
+Функция, которая только запускает корутины и сразу возвращается, объявляет получатель `CoroutineScope`, иначе `launch` не на чем вызвать: `fun CoroutineScope.warmUp() = launch { fillCache() }`. Её корутина станет дочерней для области, на которой `warmUp()` вызвали.
+
+В библиотеке есть и готовая глобальная область, **`GlobalScope`**. Предскажи вывод:
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    launch {
+        delay(100)
+        println("кэш прогрет")
+    }
+    GlobalScope.launch {
+        delay(500)
+        println("отчёт отправлен")
+    }
+    println("сервис запущен")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Сколько строк напечатает программа?">
+Две: «сервис запущен» и «кэш прогрет». Корутина из `GlobalScope.launch` не дочерняя для `runBlocking`: у `GlobalScope` нет `Job`, и ждать её некому. `runBlocking` дожидается только своих детей, программа завершается, и отчёт молча теряется. Компилятор только предупреждает: «This is a delicate API and its use requires care…».
+</Reveal>
+
+Документация пишет, что `GlobalScope` берут новички, не видя другого способа запустить корутину, и называет это антипаттерном. Корутины в ней нельзя разом ни отменить, ни дождаться. Вместо неё берут `coroutineScope` внутри suspend-функции или область, которую даёт фреймворк: обработчик маршрута в Ktor сам suspend-лямбда (урок про DSL).
+
+## Корутины, CompletableFuture и виртуальные потоки выполнения
+
+Страница профиля из начала урока на Java:
+
+```java
+CompletableFuture<String> page(int id) {
+    return loadUser(id)
+        .thenCompose(user -> loadOrders(user)
+            .thenApply(orders -> render(user, orders)))
+        .exceptionally(e -> "Профиль недоступен");
+}
+```
+
+И на корутинах:
+
+```kotlin
+suspend fun page(id: Int): String =
+    try {
+        val user = loadUser(id)
+        render(user, loadOrders(user))
+    } catch (e: IOException) {
+        "Профиль недоступен"
+    }
+```
+
+В Java каждый шаг — лямбда, и `user` приходится тянуть во вложенную цепочку. Авторы JEP 444 так описывают цену этого стиля: разработчики отказываются от циклов и `try/catch`, а стек-трейсы теряют полезный контекст. У suspend-функции результат сразу `String`, промежуточные значения — локальные переменные, ошибку ловит обычный `try`.
+
+В Java 21 появились **виртуальные потоки выполнения** (virtual threads, JEP 444), и они решают похожую задачу: стоят дёшево, поэтому блокирующий код, где у каждого запроса свой поток выполнения, масштабируется без колбэков. Разница в устройстве:
+
+<Compare leftLabel="Виртуальные потоки выполнения, Java 21" rightLabel="Корутины Kotlin">
+  <div slot="left">
+  • Это `java.lang.Thread`, реализованный в JDK<br/>
+  • Старый блокирующий код работает без переписывания<br/>
+  • Большинство блокирующих вызовов JDK сами отпускают поток выполнения ОС<br/>
+  • Структурная конкурентность — отдельный API, в превью с JDK 21 по JDK 27 (JEP 453, JEP 533)<br/>
+  • Только JVM
+  </div>
+  <div slot="right">
+  • Приостановку реализует компилятор, особая поддержка JVM не нужна<br/>
+  • Код, который ждёт, помечают `suspend`<br/>
+  • Блокирующий вызов держит поток выполнения, ждать надо через suspend-функцию<br/>
+  • Дерево встроено в `launch`, `async` и `coroutineScope`<br/>
+  • Любая платформа Kotlin, не только JVM
+  </div>
+</Compare>
+
+## Как на практике
+
+- **Вызывай suspend-функции подряд, как обычные.** Корутина и так дождётся каждого вызова.
+- **Независимые запросы запускай через `async`, а `await` зови после запуска всех.** Иначе запросы пойдут по очереди.
+- **Корутины внутри suspend-функции запускай в `coroutineScope`.** Функция вернётся, только когда закончатся все её корутины.
+
+<Callout type="teal" title="Как принято">
+Имя suspend-функции пишут как у обычной: `loadProfile`, а не `loadProfileAsync`. В документации Kotlin суффикс Async отмечает функции, которые только запускают вычисление и возвращают `Deferred`, и такой стиль настоятельно не рекомендуют. Модификатор `suspend` ставят, только если функции есть чего ждать до возврата. `runBlocking` берут, только когда suspend-код больше неоткуда вызвать: в `main`, который нельзя сделать `suspend`, в тестах, в обычных (не suspend) колбэках. Руководство Android по корутинам советует не зашивать `GlobalScope` в класс, а передавать область видимости снаружи.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Чек «в фоне».**
+Обработчик заказа отвечает клиенту, а чек отправляет через `GlobalScope.launch`, чтобы не задерживать ответ. В тестах чеки то уходят, то нет: тест заканчивается раньше корутины, которую никто не ждёт, а при остановке сервиса отменить её нечем. Ход: если ответ должен уйти после чека, вызвать `sendReceipt(order)` напрямую, а если чек уходит в фоне, запускать его в области, которую класс получает снаружи и сервис отменяет при остановке. Вывод: у фоновой корутины должен быть владелец.
+
+**Разбор 2. `runBlocking` внутри suspend-функции.**
+Разработчик переносит код из `main` в репозиторий: `suspend fun loadConfig() = runBlocking { fetchConfig() }`. Под нагрузкой каждый вызов держит поток выполнения, пока ждёт ответа, и справочник `runBlocking` предупреждает: так свободных может не остаться (thread starvation). Ход: убрать обёртку, ведь `loadConfig` и так может звать `fetchConfig()` сама. Вывод: внутри suspend-функции мост из обычного кода только вредит.
+
+**Разбор 3. Где новая корутина не нужна.**
+В коде появляется `launch { saveOrder() }.join()`, а следом `launch { notifyTeam() }.join()`. Каждую корутину тут же дожидаются, так что работа идёт по очереди, как и без них, только кода больше. Ход: вызвать `saveOrder()` и `notifyTeam()` подряд. Вывод: новая корутина нужна, только когда работа должна идти одновременно с другой.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `suspend`, чтобы функция «ушла в фон» | Вызов остаётся последовательным | `launch` или `async` в области видимости |
+| `Thread.sleep` в корутине | Блокирует поток выполнения, другие корутины на нём стоят | `delay` |
+| `async { … }.await()` сразу | Загрузки идут по очереди | Запустить все `async`, потом ждать |
+| `GlobalScope.launch` | Корутину никто не ждёт и не отменит | `coroutineScope` или область владельца |
+| `runBlocking` в suspend-функции | Держит поток выполнения, под нагрузкой их не хватит | Прямой вызов suspend-функции |
+| Суффикс `Async` у suspend-функции | Читается как функция, которая возвращает `Deferred` | Имя без суффикса: `loadProfile()` |
+
+## Практикум
+
+<Practice title="Собери профиль за одну секунду" checklist={["loadProfile — suspend-функция без суффикса Async", "Три загрузки запущены через async внутри coroutineScope", "await вызывается после запуска всех трёх загрузок", "Внутри loadProfile нет GlobalScope и runBlocking", "Программа печатает «Аня: заказов 3, бонусов 150» и «заняло 1 с»"]}>
+Профиль грузится три секунды: три независимых запроса идут друг за другом. Ускорь его до одной секунды, не трогая функции загрузки, и заодно дай функции профиля принятое в Kotlin имя.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+
+suspend fun loadUser(): String {
+    delay(1000)
+    return "Аня"
+}
+
+suspend fun loadOrders(): Int {
+    delay(1000)
+    return 3
+}
+
+suspend fun loadBonus(): Int {
+    delay(1000)
+    return 150
+}
+
+suspend fun loadProfileAsync(): String {
+    val user = loadUser()
+    val orders = loadOrders()
+    val bonus = loadBonus()
+    return "$user: заказов $orders, бонусов $bonus"
+}
+
+fun main() = runBlocking {
+    val start = System.currentTimeMillis()
+    println(loadProfileAsync())
+    val sec = (System.currentTimeMillis() - start) / 1000
+    println("заняло $sec с")
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+suspend fun loadProfile(): String = coroutineScope {
+    val user = async { loadUser() }
+    val orders = async { loadOrders() }
+    val bonus = async { loadBonus() }
+    "${user.await()}: заказов ${orders.await()}, " +
+        "бонусов ${bonus.await()}"
+}
+```
+
+В `main` вызов меняется на `loadProfile()`, и программа печатает «заняло 1 с». Все три `async` стартуют до первого `await`, поэтому ожидания идут одновременно. `coroutineScope` не отпустит `loadProfile`, пока не закончатся все три загрузки, а при падении одной отменит остальные. Без него код не скомпилируется: `async` — расширение `CoroutineScope`, а в теле suspend-функции получателя нет. На kotlinx.coroutines 1.11.0 компилятор напишет «'async' can not be called without the corresponding coroutine scope», а в Playground на 1.7.3 — «Unresolved reference 'async'».
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Где ты применишь это до пятницы? Найди в своём коде место, где независимые запросы идут друг за другом или склеены цепочкой `thenCompose`. Прикинь, как оно выглядело бы на `async` внутри `coroutineScope` и сколько времени это сэкономит. Через неделю проверь по шпаргалке, помнишь ли, чем опасен `GlobalScope`.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Функция, которая ждёт | `suspend fun load(): User` |
+| Подождать, не блокируя | `delay(1000)` |
+| Мост из обычного кода | `fun main() = runBlocking { … }` |
+| Запуск без результата | `val job = launch { … }`, ждать — `job.join()` |
+| Запуск с результатом | `val d = async { … }`, забрать — `d.await()` |
+| Корутины внутри suspend-функции | `coroutineScope { … }` вернётся после всех детей |
+| Функция, которая запускает корутины | `fun CoroutineScope.warmUp() = launch { … }` |
+| Тип блока `launch` | `suspend CoroutineScope.() -> Unit` |
+| Не писать | `GlobalScope`, `Thread.sleep`, `runBlocking` в suspend-функции |
+| Зависимость | `org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Корутина (coroutine)", meaning: "Вычисление, которое может приостановиться, отпустить поток выполнения и продолжить позже." },
+  { term: "suspend-функция (suspending function)", meaning: "Функция с модификатором suspend: может приостановить корутину, вызывается из корутины или другой suspend-функции." },
+  { term: "Точка приостановки (suspension point)", meaning: "Место, где корутина может приостановиться; обычно это вызов другой suspend-функции." },
+  { term: "suspend-лямбда", meaning: "Лямбда с типом, помеченным suspend; внутри неё можно вызывать suspend-функции." },
+  { term: "delay", meaning: "Suspend-функция, которая приостанавливает корутину на заданное время, не блокируя поток выполнения." },
+  { term: "Построитель корутин (coroutine builder)", meaning: "Функция, которая запускает корутину из переданной suspend-лямбды: launch, async, runBlocking." },
+  { term: "runBlocking", meaning: "Построитель, который блокирует текущий поток выполнения, пока не закончатся корутины внутри; мост из обычного кода." },
+  { term: "launch", meaning: "Построитель, который запускает дочернюю корутину без результата и возвращает Job." },
+  { term: "Job", meaning: "Ручка корутины: через неё корутину дожидаются методом join или отменяют." },
+  { term: "async", meaning: "Построитель, который запускает дочернюю корутину с результатом и возвращает Deferred." },
+  { term: "Deferred и await", meaning: "Deferred — Job с результатом; await приостанавливает корутину, пока результат не готов." },
+  { term: "Область видимости корутин (coroutine scope)", meaning: "Объект CoroutineScope, в котором запускают корутины и который отвечает за их жизнь." },
+  { term: "coroutineScope", meaning: "Suspend-функция, которая создаёт область для дочерних корутин и возвращается, когда все они закончатся." },
+  { term: "Структурная конкурентность (structured concurrency)", meaning: "Принцип, по которому корутины образуют дерево: родитель ждёт детей, отмена и ошибки идут по дереву." },
+  { term: "GlobalScope", meaning: "Глобальная область без Job: её корутины никто не ждёт и не отменяет; документация называет её использование антипаттерном." },
+  { term: "Виртуальный поток выполнения (virtual thread)", meaning: "Лёгкий java.lang.Thread из Java 21: на время большинства блокирующих вызовов JDK снимает его с потока выполнения ОС." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Корутины: понятия</span>
+    <span class="kc-trainer-hint">suspend, launch, async, области</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Кто кого ждёт</span>
+    <span class="kc-trainer-hint">Порядок, время, области</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши корутину</span>
+    <span class="kc-trainer-hint">Построители и типы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-coroutines-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери корутины</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Coroutines basics** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coroutines-basics.html), сверено 2026-09-28) — основы корутин, `suspend fun main()`, сравнение с потоками выполнения.
+- **Kotlin — Composing suspending functions, Asynchronous programming techniques** ([kotlinlang.org/docs](https://kotlinlang.org/docs/composing-suspending-functions.html), сверено 2026-09-26) — `async` и `await`, суффикс Async, колбэки и future.
+- **Спецификация Kotlin — Asynchronous programming with coroutines** ([kotlinlang.org/spec](https://kotlinlang.org/spec/asynchronous-programming-with-coroutines.html), сверено 2026-09-26) — точки приостановки и исключение для inline-лямбд.
+- **kotlinx.coroutines 1.11.0 — API reference** ([kotlinlang.org/api](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/), сверено 2026-09-26) — объявления построителей, `GlobalScope`.
+- **kotlinx.coroutines — GitHub releases** ([github.com](https://github.com/Kotlin/kotlinx.coroutines/releases), сверено 2026-10-01) — 1.11.0 от 2026-05-08, последняя версия.
+- **OpenJDK — JEP 444: Virtual Threads, JEP 453 и 533: Structured Concurrency** ([openjdk.org](https://openjdk.org/jeps/444), сверено 2026-09-28) — виртуальные потоки выполнения и статус структурной конкурентности.
+- **Android Developers — Best practices for coroutines in Android** ([developer.android.com](https://developer.android.com/kotlin/coroutines/coroutines-best-practices), сверено 2026-09-26) — область видимости снаружи вместо `GlobalScope`.

@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-coroutines-control",
+  "title": "Что остановится и где всплывёт ошибка",
+  "description": "Разбери сценарии с отменой, таймаутами, диспетчерами и сбоями корутин.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Внутри launch стоит try { api.load() } catch (e: IllegalStateException) { log(e) }. Корутину отменили, пока шла suspend-функция api.load(). Что сделает catch?",
+        "options": [
+          "Поймает отмену: CancellationException — наследник IllegalStateException",
+          "Пропустит отмену: она не относится к IllegalStateException",
+          "Поймает, но корутина остановится сразу после catch"
+        ],
+        "correctIndex": 0,
+        "explain": "На JVM CancellationException — это java.util.concurrent.CancellationException, а она наследует IllegalStateException, поэтому catch её поймает. Остановиться после catch корутине нечем: отмена проглочена, и код идёт дальше, пока следующая suspend-функция снова не бросит исключение. Пропустил бы отмену только catch конкретного типа вроде IOException."
+      },
+      {
+        "prompt": "Корутина вызывает withTimeoutOrNull(100), а внутри блока — Thread.sleep(1000). Сколько времени займёт этот вызов?",
+        "options": [
+          "100 мс: таймаут прервёт Thread.sleep",
+          "Около секунды: Thread.sleep не заметит таймаут",
+          "100 мс, а Thread.sleep доспит в фоне"
+        ],
+        "correctIndex": 1,
+        "explain": "Таймаут — та же кооперативная отмена, а Thread.sleep не приостанавливает корутину и отмену не проверяет. Прервать спящий поток выполнения при отмене умеет runInterruptible, а его здесь нет. Вернуть управление раньше блока withTimeoutOrNull тоже не может: он ждёт, пока блок закончится, поэтому никакого сна «в фоне» не будет."
+      },
+      {
+        "prompt": "В supervisorScope запустили async { sendReport() }. Результат не нужен, await никто не вызывает. sendReport() бросает IOException. Что будет?",
+        "options": [
+          "Сбой отменит supervisorScope, и ошибка всплывёт у вызывающего",
+          "Ошибка попадёт в CoroutineExceptionHandler из контекста",
+          "Ничего не видно: ошибка лежит в Deferred и теряется"
+        ],
+        "correctIndex": 2,
+        "explain": "async держит ошибку в своём Deferred и бросает её только из await(). В супервизоре сбой ребёнка не трогает область видимости, поэтому наверх ничего не уйдёт. CoroutineExceptionHandler получает ошибки launch, а ошибку async забирает Deferred. Если результат не нужен, запускай launch с обработчиком, иначе вызывай await внутри try."
+      },
+      {
+        "prompt": "Suspend-функция resize() уменьшает большую картинку в памяти: чистый расчёт, без файлов и сети. На какой диспетчер её увести?",
+        "options": [
+          "Dispatchers.Default",
+          "Dispatchers.IO",
+          "Никакой: suspend-функция и так не блокирует поток выполнения"
+        ],
+        "correctIndex": 0,
+        "explain": "Расчёт занимает процессор, для этого есть пул Default, потоков выполнения в нём по числу ядер. IO рассчитан на ожидание диска и сети, а здесь ждать нечего. Слово suspend само ничего не переносит: без withContext расчёт займёт тот поток выполнения, на котором идёт корутина, например главный."
+      },
+      {
+        "prompt": "Корутина пишет во временный файл. Ты вызываешь job.cancel() и следующей строкой удаляешь файл. Что здесь не так?",
+        "options": [
+          "Ничего: cancel() возвращается, когда корутина уже остановилась",
+          "Корутина ещё может писать в файл, нужен cancelAndJoin()",
+          "cancel() бросит исключение, пока корутина пишет в файл"
+        ],
+        "correctIndex": 1,
+        "explain": "cancel() только помечает корутину отменённой и сразу возвращается. До ближайшей точки приостановки, а потом ещё в своём finally корутина может писать в файл. cancelAndJoin() отменяет и ждёт, пока корутина завершится. Вызывающему коду cancel() ничего не бросает."
+      },
+      {
+        "prompt": "try { coroutineScope { launch { loadA() }; launch { loadB() } } } catch (e: IOException) { … }. loadB() бросила IOException, пока loadA() ещё грузит. Чем кончится?",
+        "options": [
+          "catch не сработает: ошибка launch уходит к родителю",
+          "catch поймает ошибку, а loadA() доработает до конца",
+          "loadA() отменится, а catch поймает IOException"
+        ],
+        "correctIndex": 2,
+        "explain": "Упавший ребёнок отменяет родителя, а тот — остальных детей, поэтому loadA() отменяется. coroutineScope дожидается, пока дети завершатся, и перебрасывает IOException вызывающему коду, где её ловит catch. Бесполезен try вокруг самого launch, а вокруг coroutineScope он работает."
+      },
+      {
+        "prompt": "В finally отменённой корутины вызывается suspend-функция connection.close(), а в ней перед закрытием стоит delay(50). Что произойдёт?",
+        "options": [
+          "close() прервётся на delay, нужен withContext(NonCancellable)",
+          "finally при отмене не выполняется, и close() не вызовется",
+          "close() выполнится полностью: finally всегда доходит до самого конца"
+        ],
+        "correctIndex": 0,
+        "explain": "finally у отменённой корутины выполняется, но первая же приостановка, delay, бросает CancellationException: корутина-то отменена. withContext(NonCancellable) даёт очистке доработать. Обычные вызовы в finally выполняются, прерывается только suspend-вызов."
+      }
+    ]
+  }
+}

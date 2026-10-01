@@ -1,0 +1,21 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-coroutines",
+  "title": "Допиши корутину",
+  "description": "Впиши модификатор, построитель, тип или функцию. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "___ fun ping() = delay(100)", "answers": ["suspend"], "explain": "delay — suspend-функция, и вызвать её можно только из корутины или другой suspend-функции. Поэтому ping помечают suspend.", "hint": "Модификатор функции" },
+      { "text": "fun main() = ___ {   // мост из обычного main", "answers": ["runBlocking"], "explain": "runBlocking запускает корутину из обычного кода и блокирует поток выполнения, пока она и её дочерние корутины не закончатся. coroutineScope здесь не подойдёт: он сам suspend-функция." },
+      { "text": "val job: ___ = launch { sync() }", "answers": ["Job"], "explain": "launch возвращает Job — ручку корутины без результата: её можно дождаться через join или отменить." },
+      { "text": "val page: ___<String> = async { load() }", "answers": ["Deferred"], "explain": "async возвращает Deferred — Job с результатом. Тип результата стоит в угловых скобках." },
+      { "text": "val total = price.___() * 3   // price: Deferred<Int>", "answers": ["await"], "explain": "await приостанавливает корутину, пока результат async не готов, и возвращает его. Поток выполнения при этом не блокируется. join здесь не подойдёт: он только ждёт и возвращает Unit." },
+      { "text": "___(1000)   // пауза, которая отпускает поток выполнения", "answers": ["delay"], "explain": "delay приостанавливает только текущую корутину. Thread.sleep держал бы поток выполнения, и остальные корутины на нём стояли бы." },
+      { "text": "suspend fun both() = ___ { launch { a() } }", "answers": [["coroutineScope", "supervisorScope"]], "explain": "coroutineScope создаёт область для дочерних корутин внутри suspend-функции и возвращается, когда все они закончатся. runBlocking тоже скомпилируется, но заблокирует поток выполнения.", "hint": "Ждёт детей, не блокируя" },
+      { "text": "job.___()   // дождаться, пока корутина закончится", "answers": ["join"], "explain": "join приостанавливает текущую корутину до завершения той, чей это Job." },
+      { "text": "val block: ___ CoroutineScope.() -> Unit = { delay(10) }", "answers": ["suspend"], "explain": "Такой тип у блоков launch и runBlocking: suspend-лямбда с получателем CoroutineScope. Без suspend вызвать delay внутри лямбды нельзя." }
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-coroutines-control",
+  "title": "Собери корутину под контролем",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Запусти сжатие файлов в фоне и проверяй отмену перед каждым файлом. Через полсекунды после запуска отмени сжатие и дождись, пока оно завершится.",
+        "words": [
+          "        ensureActive()",
+          "}",
+          "delay(500)",
+          "    }",
+          "    for (file in files) {",
+          "val job = launch(Dispatchers.Default) {",
+          "job.cancelAndJoin()",
+          "        compress(file)"
+        ],
+        "answer": [
+          "val job = launch(Dispatchers.Default) {",
+          "    for (file in files) {",
+          "        ensureActive()",
+          "        compress(file)",
+          "    }",
+          "}",
+          "delay(500)",
+          "job.cancelAndJoin()"
+        ],
+        "explain": "compress не приостанавливает корутину, поэтому отмену проверяет ensureActive() в начале каждого шага. cancelAndJoin() отменяет корутину и ждёт, пока она завершится: файл, который уже сжимается, досожмётся, следующий не начнётся."
+      },
+      {
+        "task": "Напиши функцию, которая ждёт курс не дольше 500 мс, а если не дождалась, возвращает сохранённое значение cachedRate.",
+        "words": [
+          "    return rate ?: cachedRate",
+          "    }",
+          "}",
+          "    val rate = withTimeoutOrNull(500) {",
+          "        loadRate()",
+          "suspend fun rateOrCached(): Double {"
+        ],
+        "answer": [
+          "suspend fun rateOrCached(): Double {",
+          "    val rate = withTimeoutOrNull(500) {",
+          "        loadRate()",
+          "    }",
+          "    return rate ?: cachedRate",
+          "}"
+        ],
+        "explain": "withTimeoutOrNull отменяет блок через 500 мс и возвращает null, а оператор ?: подставляет запасное значение. withTimeout здесь бросил бы TimeoutCancellationException."
+      },
+      {
+        "task": "В супервизоре запусти загрузку цены через async и напечатай цену, а при сетевой ошибке напечатай «цена недоступна».",
+        "words": [
+          "    }",
+          "    val price = async { loadPrice() }",
+          "        println(price.await())",
+          "supervisorScope {",
+          "        println(\"цена недоступна\")",
+          "}",
+          "    try {",
+          "    } catch (e: IOException) {"
+        ],
+        "answer": [
+          "supervisorScope {",
+          "    val price = async { loadPrice() }",
+          "    try {",
+          "        println(price.await())",
+          "    } catch (e: IOException) {",
+          "        println(\"цена недоступна\")",
+          "    }",
+          "}"
+        ],
+        "explain": "async хранит ошибку в Deferred и бросает её из await(), поэтому try стоит вокруг await. В супервизоре сбой загрузки не отменяет область видимости."
+      },
+      {
+        "task": "Запусти загрузку отчёта так, чтобы соединение закрылось, даже если загрузку отменят. connection.close() — suspend-функция.",
+        "words": [
+          "        }",
+          "        withContext(NonCancellable) {",
+          "        upload(report)",
+          "            connection.close()",
+          "    }",
+          "    } finally {",
+          "}",
+          "    try {",
+          "val job = launch {"
+        ],
+        "answer": [
+          "val job = launch {",
+          "    try {",
+          "        upload(report)",
+          "    } finally {",
+          "        withContext(NonCancellable) {",
+          "            connection.close()",
+          "        }",
+          "    }",
+          "}"
+        ],
+        "explain": "finally выполняется и у отменённой корутины, но первая же приостановка в нём бросила бы CancellationException. withContext(NonCancellable) даёт закрытию доработать."
+      },
+      {
+        "task": "Собери репозиторий, которому диспетчер для чтения файла передают через конструктор, по умолчанию Dispatchers.IO.",
+        "words": [
+          "        }",
+          "    private val io: CoroutineDispatcher = Dispatchers.IO,",
+          "    suspend fun read(path: String): String =",
+          "}",
+          "            File(path).readText()",
+          ") {",
+          "class ReportRepository(",
+          "        withContext(io) {"
+        ],
+        "answer": [
+          "class ReportRepository(",
+          "    private val io: CoroutineDispatcher = Dispatchers.IO,",
+          ") {",
+          "    suspend fun read(path: String): String =",
+          "        withContext(io) {",
+          "            File(path).readText()",
+          "        }",
+          "}"
+        ],
+        "explain": "Диспетчер приходит параметром, поэтому в тестах его подменяют тестовым. read сама уводит блокирующее чтение через withContext, и её можно вызывать с любого потока выполнения."
+      },
+      {
+        "task": "Напиши загрузку с тремя попытками: после каждой сетевой ошибки пауза растёт, а после трёх неудач функция бросает ошибку «сервер недоступен».",
+        "words": [
+          "}",
+          "        } catch (e: IOException) {",
+          "        try {",
+          "    }",
+          "            return load()",
+          "            delay(100L * (attempt + 1))",
+          "    repeat(3) { attempt ->",
+          "        }",
+          "    error(\"сервер недоступен\")",
+          "suspend fun loadWithRetry(): String {"
+        ],
+        "answer": [
+          "suspend fun loadWithRetry(): String {",
+          "    repeat(3) { attempt ->",
+          "        try {",
+          "            return load()",
+          "        } catch (e: IOException) {",
+          "            delay(100L * (attempt + 1))",
+          "        }",
+          "    }",
+          "    error(\"сервер недоступен\")",
+          "}"
+        ],
+        "explain": "catch ловит только IOException, поэтому отмена проходит сквозь него, а delay между попытками — точка приостановки, где корутина её заметит. return выходит из функции при первой удаче, error срабатывает, только когда попытки кончились."
+      }
+    ]
+  }
+}

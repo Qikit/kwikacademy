@@ -1,0 +1,70 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-coroutines-control",
+  "title": "Допиши управление корутиной",
+  "description": "Впиши функцию, диспетчер или тип так, чтобы корутина отменялась и сообщала об ошибках. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "withContext(Dispatchers.___) { File(path).readText() }",
+        "answers": ["IO"],
+        "hint": "Поток выполнения ждёт диск",
+        "explain": "readText() блокирует поток выполнения, пока диск не ответит. Такое ожидание уводят в пул Dispatchers.IO, а не в Default, где потоков выполнения столько же, сколько ядер."
+      },
+      {
+        "text": "withContext(Dispatchers.___) { resize(image) }  // расчёт",
+        "answers": ["Default"],
+        "explain": "Уменьшение картинки в памяти — чистый расчёт, для него пул Dispatchers.Default. IO нужен, когда поток выполнения ждёт диск или сеть."
+      },
+      {
+        "text": "val rate = ___(500) { loadRate() } ?: cachedRate",
+        "answers": ["withTimeoutOrNull"],
+        "explain": "withTimeoutOrNull возвращает null, если блок не успел, и оператор ?: подставляет запасное значение. withTimeout в этом месте бросил бы TimeoutCancellationException."
+      },
+      {
+        "text": "catch (e: ___) { throw e }  // первой веткой",
+        "answers": ["CancellationException"],
+        "hint": "Исключение, которым приходит отмена",
+        "explain": "Если после этой ветки стоит широкий catch, отмену нужно сначала перебросить, иначе корутина продолжит работу после отмены."
+      },
+      {
+        "text": "withContext(___) { connection.close() }  // в finally",
+        "answers": ["NonCancellable"],
+        "explain": "В finally отменённой корутины suspend-вызов сразу бросит CancellationException. NonCancellable даёт очистке доработать."
+      },
+      {
+        "text": "for (file in files) { ___(); compress(file) }",
+        "answers": [["ensureActive", "yield"]],
+        "hint": "Проверка отмены перед каждым файлом",
+        "explain": "compress не приостанавливает корутину, поэтому отмену проверяют сами: ensureActive() бросит CancellationException, yield() проверит отмену и уступит поток выполнения."
+      },
+      {
+        "text": "while (___) { crunch() }  // пока корутину не отменили",
+        "answers": ["isActive"],
+        "explain": "Свойство isActive становится false, когда корутину отменили, и цикл завершается без исключения."
+      },
+      {
+        "text": "job.___()  // отменить и дождаться",
+        "answers": ["cancelAndJoin"],
+        "explain": "cancel() возвращается сразу, а cancelAndJoin() ещё и ждёт, пока корутина завершится."
+      },
+      {
+        "text": "___ {  // сбой ребёнка не трогает соседей",
+        "answers": ["supervisorScope"],
+        "explain": "В supervisorScope упавший ребёнок не отменяет ни область видимости, ни соседей. coroutineScope отменил бы всех."
+      },
+      {
+        "text": "val handler = ___ { _, e -> log(e) }",
+        "answers": ["CoroutineExceptionHandler"],
+        "explain": "CoroutineExceptionHandler получает исключение, которому больше некуда идти, например от launch внутри супервизора."
+      },
+      {
+        "text": "launch(Dispatchers.IO + ___(\"export\")) { export() }",
+        "answers": ["CoroutineName"],
+        "explain": "Элементы контекста складывают плюсом. CoroutineName задаёт имя корутины, которое в режиме отладки попадает в имя потока выполнения."
+      }
+    ]
+  }
+}

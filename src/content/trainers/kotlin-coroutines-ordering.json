@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-coroutines",
+  "title": "Собери корутины",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери suspend-функцию: загрузи пользователя, по нему — его заказы, посчитай сумму и верни строку «имя: сумма ₽».",
+        "words": ["    val total = orders.sumOf { it.price }", "}", "    return \"${user.name}: $total ₽\"", "    val user = loadUser(id)", "suspend fun summary(id: Int): String {", "    val orders = loadOrders(user)"],
+        "answer": ["suspend fun summary(id: Int): String {", "    val user = loadUser(id)", "    val orders = loadOrders(user)", "    val total = orders.sumOf { it.price }", "    return \"${user.name}: $total ₽\"", "}"],
+        "explain": "Каждый шаг нужен следующему, поэтому вызовы идут подряд, как в обычном коде: пользователь, потом его заказы, потом сумма. Внутри suspend-функции код последовательный, и результат каждой загрузки — обычная локальная переменная."
+      },
+      {
+        "task": "Загрузи пользователя, затем запусти загрузку его заказов в отдельной корутине и, пока она идёт, загрузи его бонусы в текущей. Верни число заказов и бонусов.",
+        "words": ["    val bonus = loadBonus(user)", "suspend fun cabinet(id: Int): String = coroutineScope {", "    \"заказов ${orders.await().size}, бонусов $bonus\"", "}", "    val orders = async { loadOrders(user) }", "    val user = loadUser(id)"],
+        "answer": ["suspend fun cabinet(id: Int): String = coroutineScope {", "    val user = loadUser(id)", "    val orders = async { loadOrders(user) }", "    val bonus = loadBonus(user)", "    \"заказов ${orders.await().size}, бонусов $bonus\"", "}"],
+        "explain": "Заказам и бонусам нужен пользователь, поэтому он грузится первым. async стоит раньше loadBonus: пока текущая корутина ждёт бонусы, загрузка заказов тоже идёт. Если поменять эти строки местами, заказы начнут грузиться только после бонусов. await — в последней строке, когда всё остальное уже сделано. coroutineScope даёт получатель для async и не вернётся, пока загрузка не закончится."
+      },
+      {
+        "task": "Прогрей кэш в дочерней корутине: через 100 мс она печатает «кэш готов». «принимаю заказы» печатай только после прогрева.",
+        "words": ["            println(\"кэш готов\")", "    println(\"принимаю заказы\")", "        launch {", "}", "            delay(100)", "    }", "fun main() = runBlocking {", "        }", "    coroutineScope {"],
+        "answer": ["fun main() = runBlocking {", "    coroutineScope {", "        launch {", "            delay(100)", "            println(\"кэш готов\")", "        }", "    }", "    println(\"принимаю заказы\")", "}"],
+        "explain": "coroutineScope не вернётся, пока не закончится запущенная в нём корутина, поэтому строка после него выполнится только после прогрева. Если поставить println внутрь coroutineScope, «принимаю заказы» напечатается первым: launch лишь ставит корутину в очередь runBlocking."
+      },
+      {
+        "task": "Напечатай 3, 2, 1 с секундной паузой после каждого числа, затем «старт».",
+        "words": ["        delay(1000)", "    println(\"старт\")", "}", "suspend fun countdown() {", "        println(3 - i)", "    }", "    repeat(3) { i ->"],
+        "answer": ["suspend fun countdown() {", "    repeat(3) { i ->", "        println(3 - i)", "        delay(1000)", "    }", "    println(\"старт\")", "}"],
+        "explain": "Внутри repeat сначала число, потом пауза: так пауза идёт после каждого числа. delay можно вызвать в лямбде repeat, потому что repeat — inline-функция и её лямбда подставляется в саму suspend-функцию. «старт» — после цикла."
+      },
+      {
+        "task": "Сохрани файл в дочерней корутине (через 100 мс она печатает «файл сохранён»), дождись её через Job и напечатай «можно закрывать».",
+        "words": ["    job.join()", "        println(\"файл сохранён\")", "fun main() = runBlocking {", "    println(\"можно закрывать\")", "    }", "        delay(100)", "}", "    val job = launch {"],
+        "answer": ["fun main() = runBlocking {", "    val job = launch {", "        delay(100)", "        println(\"файл сохранён\")", "    }", "    job.join()", "    println(\"можно закрывать\")", "}"],
+        "explain": "launch возвращает Job, а join приостанавливает текущую корутину, пока та не закончится. Поэтому join стоит перед последним println: иначе «можно закрывать» напечаталось бы раньше, чем файл сохранится."
+      },
+      {
+        "task": "Запусти три корутины: задача i ждёт 100 × (3 − i) мс и печатает «задача i». После запуска всех напечатай «все запущены».",
+        "words": ["        }", "            println(\"задача $i\")", "    println(\"все запущены\")", "fun main() = runBlocking {", "        launch {", "}", "    }", "            delay(100L * (3 - i))", "    repeat(3) { i ->"],
+        "answer": ["fun main() = runBlocking {", "    repeat(3) { i ->", "        launch {", "            delay(100L * (3 - i))", "            println(\"задача $i\")", "        }", "    }", "    println(\"все запущены\")", "}"],
+        "explain": "repeat запускает три корутины, и каждая сначала ждёт, потом печатает. «все запущены» стоит после цикла и выходит первым: в runBlocking launch только ставит корутины в очередь потока выполнения. Затем они просыпаются по длине паузы: задача 2, задача 1, задача 0."
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-generics",
+  "title": "Допиши обобщение",
+  "description": "Впиши модификатор, границу или ключевое слово. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "class Box<___ T>(val value: T)", "hint": "Box<String> должен подходить туда, где ждут Box<Any>", "answers": ["out"], "explain": "T только отдаётся через val, поэтому out: тогда Box<String> подходит туда, где ждут Box<Any>." },
+      { "text": "fun interface Sink<___ T> { fun put(x: T) }", "hint": "Sink<Any> должен подходить туда, где ждут Sink<Int>", "answers": ["in"], "explain": "Sink только принимает T, поэтому in. Кто принимает любое значение, примет и Int, и Sink<Any> подходит вместо Sink<Int>." },
+      { "text": "fun <T : ___<T>> largest(items: List<T>): T?", "hint": "Внутри нужен оператор >", "answers": ["Comparable"], "explain": "Граница Comparable<T> пропускает только типы, которые сравниваются сами с собой, и даёт > и compareTo." },
+      { "text": "fun <T> f(x: T) ___ T : CharSequence, T : Comparable<T>", "hint": "Две границы у одного параметра", "answers": ["where"], "explain": "Одну границу пишут в угловых скобках, несколько — в конструкции where после сигнатуры." },
+      { "text": "fun addNames(dest: MutableList<___ String>)", "hint": "Функция только кладёт строки, и должен пройти MutableList<Any>", "answers": ["in"], "explain": "Проекция in String пропускает любой список, куда можно положить строку. Без проекции MutableList<Any> не пройдёт, а с out не сработает add." },
+      { "text": "fun size(x: Any) = if (x is List<___>) x.size else 0", "hint": "Подойдёт список с любыми элементами", "answers": [["*", "Any?"]], "explain": "x объявлен как Any, а аргументы типа во время работы стёрты, поэтому проверить можно только, что это список чего-то: List<*>. List<Any?> тоже скомпилируется: List ковариантен, и такая проверка означает то же самое." },
+      { "text": "___ fun <reified T> nameOf() = T::class.simpleName", "answers": ["inline"], "explain": "reified бывает только у inline-функций: их тело вместе с настоящим типом подставляется в место вызова." },
+      { "text": "inline fun <___ T> List<Any>.countOf() = count { it is T }", "answers": ["reified"], "explain": "Без reified тип T во время работы стёрт, и is T не скомпилируется: «Cannot check for instance of erased type»." },
+      { "text": "val paid = events.___<Paid>()", "hint": "Нужны только оплаты, результат — List<Paid>", "answers": ["filterIsInstance"], "explain": "filterIsInstance — inline-функция с reified-параметром: оставляет элементы нужного типа и возвращает список этого типа." }
+    ]
+  }
+}

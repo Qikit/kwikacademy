@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-errors",
+  "title": "Исключение, null или sealed-тип",
+  "description": "Реши, что скомпилируется, что упадёт и каким способом сообщить о неудаче.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Что напечатает код: val x = try { 1 } finally { 2 }, а потом println(x)?",
+        "options": [
+          "1: значение даёт блок try",
+          "2: последним выполнился finally",
+          "Ошибка компиляции: у try нет catch"
+        ],
+        "correctIndex": 0,
+        "explain": "Значение try-выражения даёт последнее выражение блока try, а если исключение поймали, то блока catch. finally выполняется всегда, но на значение не влияет: компилятор даже предупредит, что 2 никуда не идёт. try без catch законен, если есть finally."
+      },
+      {
+        "prompt": "Функция priority(code: String): Int состоит из when с ветками «high» -> 1, «low» -> 3 и else -> error(«Неизвестный код: $code»). Что будет?",
+        "options": [
+          "Не скомпилируется: ветка else не возвращает Int",
+          "Скомпилируется; на «mid» вернёт null",
+          "Скомпилируется; на «mid» бросит исключение"
+        ],
+        "correctIndex": 2,
+        "explain": "У error тип Nothing, а Nothing — подтип всех типов, поэтому ветка подходит к Int. На коде «mid» error бросит IllegalStateException с сообщением. Вернуть null функция не может: тип результата Int, без знака вопроса."
+      },
+      {
+        "prompt": "Плеер: play() вызвали, когда плейлист пуст, а setVolume(150) — при допустимой громкости от 0 до 100. Какие проверки поставить?",
+        "options": [
+          "require в обоих: оба вызова неправильные",
+          "check в play(), require в setVolume()",
+          "require в play(), check в setVolume(): громкость — настройка плеера"
+        ],
+        "correctIndex": 1,
+        "explain": "Пустой плейлист — состояние объекта, для него check и IllegalStateException. Громкость 150 пришла аргументом, для неё require и IllegalArgumentException: настройкой плеера она станет, только если пройдёт проверку. С require в обоих лог отправит искать плохой аргумент у play(), хотя ей ничего не передали."
+      },
+      {
+        "prompt": "В логе строка java.lang.IllegalArgumentException: Failed requirement. Что случилось и как сделать лог полезнее?",
+        "options": [
+          "Не прошёл require без сообщения; добавь лямбду с текстом",
+          "Не прошёл check без сообщения; замени его на require",
+          "Бросил error(); передай в него текст ошибки"
+        ],
+        "correctIndex": 0,
+        "explain": "«Failed requirement.» — стандартный текст require, когда лямбды с сообщением нет, и тип IllegalArgumentException это подтверждает. Не прошедший check бросил бы IllegalStateException с текстом «Check failed.». А error без сообщения не вызвать: текст — обязательный параметр."
+      },
+      {
+        "prompt": "Бронь столика может не выйти по двум причинам: нет мест или ресторан закрыт на мероприятие. Для них приложение показывает разные экраны. Что вернуть из book()?",
+        "options": [
+          "Table?: null при любой неудаче",
+          "Sealed-интерфейс: Booked, NoTables, Closed",
+          "Result<Table> через runCatching"
+        ],
+        "correctIndex": 1,
+        "explain": "Причин две, и обрабатывают их по-разному, поэтому нужен sealed-тип с вариантом на каждую: when без else не даст забыть экран. null сказал бы только «не вышло», без причины. В Result неудача — просто Throwable, компилятор не проверит, что разобраны обе причины, а сам Result не задуман для бизнес-ошибок."
+      },
+      {
+        "prompt": "val discount = runCatching { loadDiscount(user) }.getOrElse { 0 }. После релиза в loadDiscount появился баг: NPE на каждом вызове. Что будет?",
+        "options": [
+          "Запрос упадёт, и NPE попадёт в лог",
+          "Компилятор предупредит о необработанном NPE",
+          "У всех скидка 0, а в логе ни следа ошибки"
+        ],
+        "correctIndex": 2,
+        "explain": "runCatching ловит любой Throwable, включая NPE от бага, а getOrElse подставляет 0. Запрос не упадёт, и стектрейс никуда не попадёт, если его не залогировать явно. Компилятор про NPE не предупреждает: исключения в Kotlin непроверяемые."
+      },
+      {
+        "prompt": "Java-код вызывает Kotlin-функцию exportCsv(), которая бросает IOException, и оборачивает вызов в try с catch (IOException e). Аннотации @Throws у функции нет. Что будет?",
+        "options": [
+          "Скомпилируется, и catch поймает IOException",
+          "javac не примет catch: IOException якобы не бросается",
+          "Kotlin-компилятор потребует добавить @Throws"
+        ],
+        "correctIndex": 1,
+        "explain": "Без @Throws в Java-сигнатуре нет throws IOException, и javac считает, что этот checked-тип из try не вылетает: такой catch — ошибка компиляции. Kotlin ничего не требует, для него все исключения непроверяемые. Решение — @Throws(IOException::class) у функции."
+      }
+    ]
+  }
+}

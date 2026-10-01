@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-errors",
+  "title": "Допиши проверку",
+  "description": "Впиши ключевое слово или функцию. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "val n = s.toIntOrNull() ?: ___ IllegalArgumentException(s)", "answers": ["throw"], "explain": "throw — выражение типа Nothing, поэтому стоит справа от ?:. После строки у n тип Int. Строка, которая не разобралась, — плохой аргумент, отсюда IllegalArgumentException." },
+      { "text": "___(amount > 0) { \"Сумма: $amount\" }  // аргумент", "answers": ["require"], "explain": "Аргументы проверяет require: при неудаче он бросит IllegalArgumentException с сообщением из лямбды." },
+      { "text": "___(!closed) { \"Счёт закрыт\" }  // состояние объекта", "answers": ["check"], "explain": "Состояние объекта проверяет check, он бросает IllegalStateException." },
+      { "text": "val email = ___(user.email)  // аргумент, не null", "answers": ["requireNotNull"], "explain": "requireNotNull проверяет аргумент на null и возвращает значение уже без ?. Для состояния объекта есть checkNotNull." },
+      { "text": "else -> ___(\"Код: $code\")  // бросит IllegalStateException", "answers": ["error"], "explain": "error всегда бросает IllegalStateException, а её тип Nothing подходит к любой ветке when." },
+      { "text": "val cfg = ___ { f.readText() } catch (e: IOException) { \"\" }", "answers": ["try"], "explain": "try — выражение: cfg получит текст файла из try или пустую строку из catch, если файл не прочитался." },
+      { "text": "} ___ {  // выполнится в любом случае", "answers": ["finally"], "explain": "finally выполняется всегда, но на значение try-выражения не влияет." },
+      { "text": "raws.map { ___ { it.toInt() } }  // список Result", "answers": ["runCatching"], "explain": "runCatching выполняет блок и возвращает Result: успех со значением или неудачу с исключением." },
+      { "text": "val port: Int = res.___ { 8080 }  // значение или запасное", "answers": ["getOrElse"], "explain": "getOrElse возвращает значение успеха, а при неудаче — результат лямбды, поэтому port получает обычный Int." },
+      { "text": "val line = reader.___ { it.readLine() }  // и закрыть", "answers": ["use"], "explain": "use выполняет блок и закрывает ресурс, даже если блок бросил исключение. Это замена try-with-resources." },
+      { "text": "@___(IOException::class)  // чтобы Java видела throws", "answers": ["Throws"], "explain": "@Throws добавляет throws IOException в Java-сигнатуру Kotlin-функции. Пишется с заглавной буквы, как класс." }
+    ]
+  }
+}

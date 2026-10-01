@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-errors",
+  "title": "Собери обработку ошибок",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери функцию: разбери дату рождения через LocalDate.parse; если формат неверный, брось IllegalArgumentException с исходным исключением внутри; потом проверь, что год не раньше 1900, и верни дату.",
+        "words": ["    require(date.year >= 1900) { \"Год: ${date.year}\" }", "        throw IllegalArgumentException(\"Не дата: $raw\", e)", "fun parseBirthday(raw: String): LocalDate {", "    }", "    return date", "        LocalDate.parse(raw)", "    } catch (e: DateTimeParseException) {", "}", "    val date = try {"],
+        "answer": ["fun parseBirthday(raw: String): LocalDate {", "    val date = try {", "        LocalDate.parse(raw)", "    } catch (e: DateTimeParseException) {", "        throw IllegalArgumentException(\"Не дата: $raw\", e)", "    }", "    require(date.year >= 1900) { \"Год: ${date.year}\" }", "    return date", "}"],
+        "explain": "try — выражение, его значение попадает в date. У LocalDate.parse нет варианта с OrNull, поэтому try здесь к месту. Исходное исключение передают вторым аргументом, чтобы стектрейс не потерялся. require стоит после разбора, но до return, иначе проверка не сработает."
+      },
+      {
+        "task": "Собери функцию: без значения raw верни 8080; нечисловое значение — IllegalArgumentException; порт вне диапазона 1..65535 — тоже, через require.",
+        "words": ["    return port", "        ?: throw IllegalArgumentException(\"Не число: $text\")", "}", "    val text = raw ?: return 8080", "    require(port in 1..65535) { \"Вне диапазона: $port\" }", "fun portFrom(raw: String?): Int {", "    val port = text.toIntOrNull()"],
+        "answer": ["fun portFrom(raw: String?): Int {", "    val text = raw ?: return 8080", "    val port = text.toIntOrNull()", "        ?: throw IllegalArgumentException(\"Не число: $text\")", "    require(port in 1..65535) { \"Вне диапазона: $port\" }", "    return port", "}"],
+        "explain": "?: return выходит из функции со значением по умолчанию. throw — выражение типа Nothing, поэтому стоит справа от ?:, и после этой строки port уже Int. Диапазон проверяет require до return."
+      },
+      {
+        "task": "Разбери цену из строки через runCatching, удвой её и возьми 0, если строка не число. Программа печатает 500.",
+        "words": ["        .getOrElse { 0 }", "    println(price)", "fun main() {", "        .map { it * 2 }", "}", "    val price = runCatching { \"250\".toInt() }"],
+        "answer": ["fun main() {", "    val price = runCatching { \"250\".toInt() }", "        .map { it * 2 }", "        .getOrElse { 0 }", "    println(price)", "}"],
+        "explain": "map меняет значение успеха и пропускает неудачу, поэтому стоит до getOrElse. getOrElse достаёт из Result обычное число: после него map уже не вызвать."
+      },
+      {
+        "task": "Разбери каждую строку списка в число через runCatching и сложи то, что разобралось, считая неудачи нулями. Программа печатает «Сумма: 17».",
+        "words": ["    println(\"Сумма: $sum\")", "    val results = raws.map { runCatching { it.toInt() } }", "}", "fun main() {", "    val sum = results.sumOf { it.getOrElse { 0 } }", "    val raws = listOf(\"10\", \"x\", \"7\")"],
+        "answer": ["fun main() {", "    val raws = listOf(\"10\", \"x\", \"7\")", "    val results = raws.map { runCatching { it.toInt() } }", "    val sum = results.sumOf { it.getOrElse { 0 } }", "    println(\"Сумма: $sum\")", "}"],
+        "explain": "runCatching на каждый элемент даёт список Result: одна неудача не обрывает остальные. getOrElse превращает неудачу в 0, и сумма выходит 10 + 0 + 7."
+      },
+      {
+        "task": "Прочитай первую строку текста через Scanner и закрой его, даже если чтение бросит исключение. Программа печатает «первая».",
+        "words": ["    println(first)", "fun main() {", "import java.util.Scanner", "    val first = scanner.use { it.nextLine() }", "}", "    val scanner = Scanner(\"первая\\nвторая\")"],
+        "answer": ["import java.util.Scanner", "fun main() {", "    val scanner = Scanner(\"первая\\nвторая\")", "    val first = scanner.use { it.nextLine() }", "    println(first)", "}"],
+        "explain": "Импорт стоит в начале файла. Scanner реализует Closeable, так что у него есть use: блок выполнится, ресурс закроется в любом случае, а результат блока станет значением first."
+      },
+      {
+        "task": "Прочитай переменную окружения API_TOKEN; если её нет, останови программу с IllegalStateException; иначе напечатай заголовок «Bearer …».",
+        "words": ["    println(header)", "        ?: error(\"API_TOKEN не задан\")", "fun main() {", "}", "    val header = \"Bearer $token\"", "    val token = System.getenv(\"API_TOKEN\")"],
+        "answer": ["fun main() {", "    val token = System.getenv(\"API_TOKEN\")", "        ?: error(\"API_TOKEN не задан\")", "    val header = \"Bearer $token\"", "    println(header)", "}"],
+        "explain": "error бросает IllegalStateException и имеет тип Nothing, поэтому подходит справа от ?:. Проверка стоит прямо при чтении: после неё token — String без null, и в заголовок не попадёт слово null."
+      }
+    ]
+  }
+}

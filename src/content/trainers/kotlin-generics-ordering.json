@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-generics",
+  "title": "Собери обобщённый код",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Функция largest с границей T : Comparable<T> уже объявлена. Найди с её помощью наибольшую, то есть последнюю по алфавиту, строку из «груша», «яблоко», «апельсин» и напечатай её длину. Программа печатает 6.",
+        "words": ["    val size = best?.length ?: 0", "fun main() {", "    println(size)", "    val fruits = listOf(\"груша\", \"яблоко\", \"апельсин\")", "}", "    val best = largest(fruits)"],
+        "answer": ["fun main() {", "    val fruits = listOf(\"груша\", \"яблоко\", \"апельсин\")", "    val best = largest(fruits)", "    val size = best?.length ?: 0", "    println(size)", "}"],
+        "explain": "Вместо T подставлен String, и largest вернёт String?: список мог оказаться пустым. Поэтому длину читают через ?. и ?:. Наибольшая строка в алфавитном порядке — «яблоко», шесть букв."
+      },
+      {
+        "task": "Интерфейс Handler<in T> с методом handle(event: T) и классы Event(val id: Int) и Paid(id: Int) уже объявлены. Заведи обработчик любых событий, используй его как обработчик оплат и обработай оплату номер 7.",
+        "words": ["    onPaid.handle(Paid(7))", "}", "    val onPaid: Handler<Paid> = logAll", "fun main() {", "    val logAll = Handler<Event> { println(it.id) }"],
+        "answer": ["fun main() {", "    val logAll = Handler<Event> { println(it.id) }", "    val onPaid: Handler<Paid> = logAll", "    onPaid.handle(Paid(7))", "}"],
+        "explain": "Handler объявлен с in T и событие только принимает, поэтому Handler<Event> подходит туда, где ждут Handler<Paid>: кто обработает любое событие, обработает и оплату. Программа напечатает 7."
+      },
+      {
+        "task": "Функция addNames(dest: MutableList<in String>) уже объявлена: она кладёт в список «Аня» и «Борис». Заведи список Any с числом 42, добавь в него имена и напечатай размер списка: 3.",
+        "words": ["    println(size)", "    addNames(all)", "fun main() {", "    val size = all.size", "}", "    val all = mutableListOf<Any>(42)"],
+        "answer": ["fun main() {", "    val all = mutableListOf<Any>(42)", "    addNames(all)", "    val size = all.size", "    println(size)", "}"],
+        "explain": "Проекция in String пропускает MutableList<Any>: строку в него положить можно. Размер читают после addNames, иначе программа напечатает 1."
+      },
+      {
+        "task": "Список raw: List<Any> из JSON уже объявлен: listOf(listOf(\"a\", 1), \"x\", listOf(2)). Оставь от вложенных списков только строки, а списки, где строк не нашлось, выброси. Программа печатает [[a]].",
+        "words": ["        .map { it.filterIsInstance<String>() }", "    println(strings)", "fun main() {", "        .filter { it.isNotEmpty() }", "}", "        .filterIsInstance<List<*>>()", "    val strings = raw"],
+        "answer": ["fun main() {", "    val strings = raw", "        .filterIsInstance<List<*>>()", "        .map { it.filterIsInstance<String>() }", "        .filter { it.isNotEmpty() }", "    println(strings)", "}"],
+        "explain": "Первым идёт filterIsInstance<List<*>>(): у элементов raw тип Any, а у Any нет ни filterIsInstance, ни isNotEmpty, так что map и filter раньше него не скомпилируются. Проверить можно только List<*>, аргумент типа стёрт, поэтому строки внутри отбирает второй filterIsInstance. Пустые списки убирают после map: до него список [2] ещё не пустой, и программа напечатала бы [[a], []]."
+      },
+      {
+        "task": "Собери функцию: для любого списка она возвращает «список из N», для всего остального — «не список».",
+        "words": ["    return \"список из $size\"", "    val size = value.size", "}", "fun describe(value: Any): String {", "    if (value !is List<*>) return \"не список\""],
+        "answer": ["fun describe(value: Any): String {", "    if (value !is List<*>) return \"не список\"", "    val size = value.size", "    return \"список из $size\"", "}"],
+        "explain": "Проверить можно только List<*>: аргумент типа во время работы стёрт. После if с ранним return срабатывает smart cast, и value.size доступен без приведения."
+      },
+      {
+        "task": "Класс AdminStore : Reader<Admin>, Writer<Admin> уже написан. Объяви интерфейсы: сначала Reader<out T>, потом Writer<in T>. Методы all(): List<T> и save(item: T) поставь туда, где их пропустит компилятор.",
+        "words": ["    fun save(item: T)", "}", "interface Writer<in T> {", "    fun all(): List<T>", "interface Reader<out T> {", "}"],
+        "answer": ["interface Reader<out T> {", "    fun all(): List<T>", "}", "interface Writer<in T> {", "    fun save(item: T)", "}"],
+        "explain": "out разрешает T только там, где значение отдают, поэтому all(): List<T> живёт в Reader. in разрешает T только в параметрах, и save(item: T) уходит в Writer. Поменяешь методы местами, и компилятор ответит «Type parameter 'T' is declared as 'out' but occurs in 'in' position…». А в правильной сборке хранилище админов подходит везде, где ждут Reader<User>."
+      }
+    ]
+  }
+}

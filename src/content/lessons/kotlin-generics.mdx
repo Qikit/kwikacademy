@@ -4,10 +4,390 @@ order: 12
 phase: "Надёжный код"
 title: "Обобщения: out и in вместо wildcard-типов"
 eyebrow: "Kotlin · Надёжный код"
-readingMinutes: 15
-summary: "Писать обобщённые функции и классы и понимать вариантность out/in и reified."
+readingMinutes: 18
+summary: "Писать обобщённые функции и классы, объявлять у своих типов out и in вместо wildcard-типов Java и проверять тип во время работы через reified."
 tags: [kotlin, reliable]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Обобщения: out и in вместо wildcard-типов» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке результат разбора возраста описывал sealed-интерфейс `ParseResult`: `Parsed` с числом или `Failed` с исходной строкой. Через неделю такой же результат понадобился для цены, даты и списка тегов. Копировать иерархию под каждый тип значения не хочется, а с `Any` вместо `Int` тип потеряется, и вызывающий код снова будет приводить значение через `as`.
+
+Эту задачу решают **обобщения** (generics): одно объявление `Outcome<T>` работает с любым типом значения, а компилятор помнит, с каким именно. В Java ты пользуешься ими каждый день и привык к **wildcard-типам** `? extends` и `? super` в сигнатурах. В Kotlin их нет. Правило, можно ли передать `Outcome<Int>` туда, где ждут `Outcome<Any>`, записывают в объявлении класса, а не в каждом методе. Кто этого не знает, копирует Java-пометки в каждую сигнатуру, а на ошибку компиляции отвечает типом `Any`.
+
+После урока ты сможешь написать обобщённую функцию и класс с ограничением на тип, решить, нужен ли твоему типу `out` или `in`, и проверить тип во время работы программы через `reified`.
+
+## Ядро: вариантность объявляют у класса
+
+<Callout type="purple" title="Суть">
+**Параметр типа** `T` делает класс или функцию обобщёнными: код один, а конкретный тип подставляют при использовании. По умолчанию `Box<String>` не подходит туда, где ждут `Box<Any>`, хотя `String` — подтип `Any`. Это правило задаёт **вариантность** (variance) типа, и меняют его модификатором у параметра: `out T` обещает, что класс только отдаёт значения `T`, `in T` — что только принимает их. Обещание дают один раз, в объявлении, и компилятор следит, чтобы класс его не нарушил.
+</Callout>
+
+Отсюда вопрос к каждому своему обобщённому типу: где в нём встречается `T`? Если только возвращается, подойдёт `out`, если только принимается — `in`, а если и то и другое, модификатор не поставить.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Коллега объявил class Box<out T>(var value: T): коробка вроде бы только хранит и отдаёт значение. Что ответит компилятор?">
+Ошибкой (Kotlin 2.4.20): `Type parameter 'T' is declared as 'out' but occurs in 'invariant' position in type 'T (of class Box<out T>)'.` У `var` есть сеттер, а он принимает `T`. Будь такой код разрешён, через ссылку `Box<Any>` в коробку со строкой можно было бы положить число. `out` годится для `val`-свойств и результатов функций, а `var` с ним не объявить. Исключение — `private`-члены: компилятор не проверяет их на вариантность.
+</Reveal>
+
+## Как устроено: параметр типа
+
+**Обобщённый класс** (generic class) объявляет параметр типа (type parameter) в угловых скобках после имени. При использовании вместо него подставляют **аргумент типа** (type argument): `Outcome<Int>`, `Outcome<List<String>>`. У **обобщённой функции** (generic function) параметр стоит перед именем: `fun <T> valueOr(…)`. Аргументы типа компилятор обычно выводит сам: из `Success(42)` получится `Success<Int>`, как из `listOf("a")` — `List<String>`.
+
+Вот `ParseResult` из прошлого урока, обобщённый по типу значения и с общими именами: `Outcome`, `Success`, `Failure`.
+
+<KotlinPlayground>
+
+```kotlin
+sealed interface Outcome<T>
+data class Success<T>(val value: T) : Outcome<T>
+data class Failure<T>(val input: String) : Outcome<T>
+
+fun parseAge(text: String): Outcome<Int> {
+    val age = text.toIntOrNull() ?: return Failure(text)
+    return Success(age)
+}
+
+fun parseTags(text: String): Outcome<List<String>> =
+    if (text.isBlank()) Failure(text)
+    else Success(text.split(","))
+
+fun <T> valueOr(outcome: Outcome<T>, default: T): T =
+    when (outcome) {
+        is Success -> outcome.value
+        is Failure -> default
+    }
+
+fun main() {
+    println(parseAge("42"))
+    println(valueOr(parseAge("сорок"), 0))
+    val tags = valueOr(parseTags("kotlin,jvm"), listOf())
+    println(tags.size)
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом добавь функцию `parsePrice(text: String): Outcome<Double>` на `toDoubleOrNull()` и напечатай `valueOr(parsePrice("9.99"), 0.0)`. Ни `Outcome`, ни `valueOr` менять не придётся.
+
+`T` в `valueOr` связывает значение внутри `outcome`, запасное значение и результат, поэтому `tags.size` компилируется без приведения: компилятор знает, что `tags` — это `List<String>`. Контрпример — параметр с типом `Any`. Функция `fun firstAny(items: List<Any>): Any` тоже примет список чего угодно, но тип потеряет: `firstAny(names).length` не скомпилируется: «Unresolved reference 'length' on receiver of type 'Any'.» Вызывающему придётся писать `as String`.
+
+Иногда от `T` нужно больше, чем умеет любой тип. Функция, которая ищет наибольший элемент, должна сравнивать элементы, и **верхняя граница** (upper bound) `T : Comparable<T>` пропускает только типы, которые умеют сравниваться сами с собой:
+
+```kotlin
+fun <T : Comparable<T>> largest(items: List<T>): T? {
+    var best: T? = null
+    for (item in items) {
+        if (best == null || item > best) best = item
+    }
+    return best
+}
+```
+
+`largest(listOf(3, 7, 5))` вернёт `7`, а `largest(listOf("груша", "яблоко"))` — `"яблоко"`: `Int` и `String` реализуют `Comparable`. Сравнение `item > best` компилятор превращает в вызов `item.compareTo(best) > 0`, поэтому `>` работает у любого `Comparable`. Если границу не написать, действует граница по умолчанию `Any?`: `compareTo` у неё нет, и строка с `>` не скомпилируется. Когда границ несколько, их выносят после сигнатуры в конструкцию **`where`**: `where T : CharSequence, T : Comparable<T>` требует от `T` обоих интерфейсов сразу.
+
+<Reveal q="В проекте есть class Point(val x: Int). Скомпилируется ли largest(listOf(Point(1), Point(2)))?">
+Нет. `Point` не реализует `Comparable<Point>`, и граница `T : Comparable<T>` его не пропустит. Чтобы вызов прошёл, объяви `class Point(val x: Int) : Comparable<Point>` и переопредели в нём `compareTo(other: Point) = x.compareTo(other.x)`. Правило: граница — часть сигнатуры, и её проверяют на месте вызова.
+</Reveal>
+
+## Как устроено: out, in и проекции
+
+Обе функции ждут список `Any`, а `main` передаёт им список строк. Сначала предскажи, потом запускай.
+
+<KotlinPlayground>
+
+```kotlin
+fun printAll(items: List<Any>) {
+    println(items)
+}
+
+fun addDefault(items: MutableList<Any>) {
+    items.add(0)
+}
+
+fun main() {
+    val names = mutableListOf("Аня", "Борис")
+    printAll(names)
+    addDefault(names)
+    println(names)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Какие из двух вызовов в main скомпилируются?">
+Только `printAll(names)`. На `addDefault(names)` компилятор ответит `Argument type mismatch: actual type is 'MutableList<String>', but 'MutableList<Any>' was expected.` Если бы вызов прошёл, `add(0)` положил бы число в список строк, и `names[2].length` упал бы уже во время работы. `List` элементы только отдаёт, поэтому список строк можно читать как список `Any`.
+</Reveal>
+
+Запусти, потом допиши в `main` аргумент типа: `mutableListOf<Any>(…)`. Пройдут оба вызова, и последний `println` покажет `[Аня, Борис, 0]`.
+
+Всё решают объявления. В стандартной библиотеке список только для чтения объявлен как `List<out E>`, а у `MutableList<E>` модификатора нет: у него есть `add(element: E)`. `List` **ковариантный** (covariant): `List<String>` — подтип `List<Any>`. `MutableList` **инвариантный** (invariant): `MutableList<String>` и `MutableList<Any>` не подходят друг вместо друга ни в одну сторону.
+
+Свой `Outcome` значения тоже только отдаёт, и ему можно пообещать то же, что `List`:
+
+```kotlin
+sealed interface Outcome<out T>
+data class Success<out T>(val value: T) : Outcome<T>
+data class Failure<out T>(val input: String) : Outcome<T>
+```
+
+Теперь `Outcome<Int>` из `parseAge` подходит в функцию `log(outcome: Outcome<Any>)`, а без `out` такой вызов не скомпилировался бы. Так объявлены стандартные `Pair<out A, out B>` и `Result<out T>` (о нём — в уроке про ошибки). Модификатор стоит у объявления, поэтому это называют **вариантностью на месте объявления** (declaration-site variance).
+
+Модификатор `in` — зеркальный случай. Тип с `in T` значения только принимает, и подтипы переносятся на него наоборот: такой тип **контравариантный** (contravariant).
+
+```kotlin
+fun interface Handler<in T> {
+    fun handle(event: T)
+}
+```
+
+Обработчик `Handler<Event>`, который пишет в журнал любое событие, подойдёт туда, где ждут обработчик оплат `Handler<Paid>` (`Paid` наследует `Event`): кто справится с любым событием, справится и с оплатой. Так же объявлен `Comparable<in T>`.
+
+Бывает, что класс инвариантный, как `MutableList`, а конкретной функции хватает части его методов. Тогда пометку ставят прямо в её параметре, и это называют **проекцией типа** (type projection):
+
+```kotlin
+fun addNames(dest: MutableList<in String>) {
+    dest.add("Аня")
+    dest.add("Борис")
+}
+```
+
+Функция только кладёт в `dest` строки, поэтому в неё пройдут и `MutableList<Any>`, и `MutableList<CharSequence>`. Без `in` оба вызова не скомпилировались бы. Проекция `out` работает наоборот: из `MutableList<out Any>` читать можно, а `add` компилятор запретит. Если тип элементов неизвестен вовсе, пишут **звёздную проекцию** (star projection): из `MutableList<*>` элементы читаются как `Any?`, а добавить в него нельзя ничего.
+
+<Callout type="blue" title="Если знаешь Java — wildcard пишут у объявления">
+В Java обобщённые типы инвариантны: строку `List<Object> objs = strs` javac не примет. Гибкость добавляют в каждом месте использования, и документация Kotlin напоминает правило Джошуа Блоха из Effective Java, PECS: «Producer-Extends, Consumer-Super». Источник данных помечают `? extends`, приёмник — `? super`, как в `Collections.copy(List<? super T> dest, List<? extends T> src)`. В Kotlin `? extends T` записывают как `out T`, `? super T` — как `in T`, но для `List` не пишут вовсе: его вариантность уже объявлена, и на привычное `List<out Number>` компилятор выдаст предупреждение «Projection is redundant…».
+</Callout>
+
+<Reveal q="Парсер принимает строку, поэтому коллега объявил interface Parser<in T> { fun parse(text: String): T }. Что ответит компилятор?">
+Ошибкой: `Type parameter 'T' is declared as 'in' but occurs in 'out' position in type 'T (of interface Parser<in T>)'.` Строку парсер и правда принимает, но у неё свой тип, `String`. Сам `T` парсер только возвращает, и подходит ему `out`. Модификатор выбирают по тому, где в сигнатурах стоит `T`.
+</Reveal>
+
+## Как устроено: тип во время работы программы
+
+Нужна функция, которая считает в списке события одного вида: `events.countOf<Paid>()`. Коллега пишет её так:
+
+```kotlin
+fun <T> List<Any>.countOf(): Int = count { it is T }
+```
+
+<Reveal q="Что ответит компилятор на эту функцию?">
+Ошибкой: `Cannot check for instance of erased type 'T (of fun <T> List<Any>.countOf)'.` Код обычной функции один на все `T`, и во время работы он не знает, какой тип подставили при вызове: сверять `it` не с чем.
+</Reveal>
+
+Причина — **стирание типов** (type erasure). Проверки обобщений компилятор делает при сборке, а во время работы объект не хранит аргументы типа: `List<String>` и `List<Int>` для JVM — один и тот же класс. Поэтому при `value: Any` не скомпилируется и `value is List<String>`, проверить можно только, что это список чего-то: `value is List<*>`. А при `value: Collection<String>` проверку `is List<String>` компилятор пропустит: аргумент он уже знает.
+
+Обойти стирание помогает `inline` из урока про лямбды. Тело inline-функции компилятор подставляет в место вызова, а с модификатором **`reified`** у параметра типа подставляет и сам тип. Внутри такой функции с `T` работают почти как с обычным классом: доступны `is`, `as` и ссылка на класс `T::class` с коротким именем класса в `simpleName`. Функция `filterIsInstance` из стандартной библиотеки оставляет в списке элементы нужного типа.
+
+<KotlinPlayground>
+
+```kotlin
+open class Event(val id: Int)
+class Paid(id: Int) : Event(id)
+class Refund(id: Int) : Event(id)
+
+inline fun <reified T> nameOf(): String =
+    T::class.simpleName ?: "?"
+
+inline fun <reified T : Event> List<Event>.printCount() {
+    val found = filterIsInstance<T>()
+    println("${nameOf<T>()}: ${found.size}")
+}
+
+fun main() {
+    val events = listOf(Paid(1), Refund(2), Paid(3))
+    events.printCount<Paid>()
+    events.printCount<Refund>()
+}
+```
+
+</KotlinPlayground>
+
+Запусти, потом убери `reified` у `printCount`. На обе строки с `T` внутри компилятор ответит «Cannot use 'T' as reified type parameter. Use a class instead.»: `filterIsInstance` и `nameOf` требуют настоящий тип, и обычный `T` его не донесёт. `reified` бывает только у inline-функций, у обычной будет «Only type parameters of inline functions can be reified.».
+
+<Callout type="blue" title="Если знаешь Java — Class<T> не нужен">
+В Java `T.class` не компилируется: «cannot select from a type variable». Поэтому Java-библиотеки просят класс отдельным аргументом, как `fromJson(json, Class<T> classOfT)` в Gson. Среди официальных идиом Kotlin есть обёртка над этим методом: `inline fun <reified T : Any> Gson.fromJson(json: JsonElement): T`. Тип при вызове пишут в угловых скобках, а класс больше не передают.
+</Callout>
+
+## Как на практике
+
+- **Возвращаешь то, что получил, — пиши `T` вместо `Any`.** Ошибку типа тогда поймает компилятор.
+- **Границу ставь, только когда нужны методы `T`.** Лишняя граница сужает круг подходящих типов.
+- **Проекцию ставь на инвариантный тип в одной функции:** `MutableList<in T>` там, где только добавляют.
+- **Нужен `T` во время работы — `inline` и `reified`.** Параметр с классом, как в Java, лишний.
+
+<Callout type="teal" title="Как принято">
+Параметры типа называют одной заглавной буквой: `T` — любой тип, `E` — элемент коллекции, `K` и `V` — ключ и значение. Эти буквы перечисляет учебник Oracle по обобщениям в Java, и стандартная библиотека Kotlin пишет так же: `List<out E>`, `Map<K, out V>`. Вариантность своего типа объявляй сразу, когда пишешь класс: если он только отдаёт `T`, одно `out` в объявлении снимет проблемы с подтипами во всех местах, где тип используют. Java-код к тому же обычно увидит в параметрах таких типов готовые `? extends` и `? super`.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Рассылка, которая не принимает админов.**
+Функция `fun emails(users: MutableList<User>): List<String>` собирает адреса для рассылки, а вызов со списком `MutableList<Admin>` не компилируется, хотя `Admin` наследует `User`. Коллега предлагает объявить список админов как `MutableList<User>`: вызов пройдёт, но в список админов можно будет положить обычного пользователя. Ход: функция список только читает, поэтому её параметр — `List<User>`, и `List<out E>` пропустит список админов. Вывод: параметр только для чтения даёт ковариантность без единой пометки.
+
+**Разбор 2. Репозиторий, который и отдаёт, и принимает.**
+Отчёту нужен источник пользователей, а у тебя хранилище админов `Repository<Admin>`. Объявить `interface Repository<out T>` не выйдет: у репозитория есть `save(item: T)`. Ход: одному отчёту хватит проекции `report(repo: Repository<out User>)`, а вызвать через неё `save` компилятор не даст. Когда читателей много и интерфейс твой, его делят на `Reader<out T>` с `all(): List<T>` и `Writer<in T>` с `save(item: T)`: хранилище админов реализует оба и подходит везде, где ждут `Reader<User>`. Вывод: одной функции хватает проекции, а для многих читателей тип делят.
+
+**Разбор 3. Где reified не видит.**
+Из JSON пришёл `List<Any>`, и коллега отбирает из него списки строк: `raw.filterIsInstance<List<String>>()`. Код компилируется, но список `listOf(1, 2)` пройдёт фильтр, и программа упадёт позже, когда элемент прочитают как строку: `ClassCastException`. `reified` доносит до функции класс `List`, а аргумент `String` стёрт. Ход: отобрать `filterIsInstance<List<*>>()`, а строки в каждом списке — отдельным `filterIsInstance<String>()`. Вывод: `reified` проверяет класс, но не аргументы типа внутри него.
+
+## Какую вариантность объявить
+
+<DecisionTree nodes={[
+  { q: "Во всех членах, кроме private, T встречается только в результатах функций и val-свойствах?", yes: "out T: тип отдаёт значения, как List", no: "к следующему вопросу" },
+  { q: "Во всех членах, кроме private, T встречается только в параметрах функций?", yes: "in T: тип принимает значения, как Comparable", no: "к следующему вопросу" },
+  { q: "Тип твой, и многим местам нужна только часть методов, например только чтение?", yes: "Раздели тип на читателя Reader<out T> и писателя Writer<in T>", no: "к следующему вопросу" },
+  { q: "Только часть методов нужна одной функции, например только add?", yes: "Проекция в её параметре: MutableList<in T> или MutableList<out T>", no: "Без модификатора: тип инвариантный, как MutableList" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `Any` вместо параметра типа | Тип теряется, вызывающий пишет `as` | `fun <T> …` |
+| `MutableList` в параметре функции, которая только читает | Список подтипа не пройдёт | `List` |
+| `out` у типа с `var` или методом, который принимает `T` | Ошибка компиляции | Разделить тип или обойтись без `out` |
+| `x is List<String>` при `x: Any` или `x is T` | Аргументы типа стёрты, ошибка компиляции | `is List<*>`, `inline` и `reified` |
+| Ждать от `filterIsInstance<List<String>>()` проверки элементов | `ClassCastException` при чтении | Проверить элементы отдельно |
+
+## Практикум
+
+<Practice title="Обобщи страницу выдачи" checklist={["Page объявлен как Page<out T>, у items тип List<T>", "В names нет as, её параметр — Page<User>", "Вызов names(admins) в main компилируется без изменений", "У largestItem граница T : Comparable<T>", "Ни в одной сигнатуре не осталось Any", "Программа печатает [Аня, Борис] и 7"]}>
+Класс `Page` хранит страницу выдачи API. Сейчас в нём лежит `List<Any>`, и `names` приводит каждый элемент через `as`. Сделай `Page` обобщённым, объяви параметр функции `names` как `Page<User>`, убери `as` и добейся, чтобы в неё проходила страница админов. Потом допиши функцию `largestItem`: она возвращает наибольший элемент страницы с любыми сравнимыми элементами. Подсказка: пригодится `maxOrNull()` у списка. Программа должна напечатать `[Аня, Борис]` и `7`.
+
+<KotlinPlayground>
+
+```kotlin
+open class User(val name: String)
+class Admin(name: String) : User(name)
+
+class Page(val items: List<Any>, val total: Int)
+
+fun names(page: Page): List<String> =
+    page.items.map { (it as User).name }
+
+fun main() {
+    val team = listOf(Admin("Аня"), Admin("Борис"))
+    val admins = Page(team, team.size)
+    println(names(admins))
+    val scores = Page(listOf(3, 7, 5), 3)
+    // напечатай наибольший элемент scores
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+open class User(val name: String)
+class Admin(name: String) : User(name)
+
+class Page<out T>(val items: List<T>, val total: Int)
+
+fun names(page: Page<User>): List<String> =
+    page.items.map { it.name }
+
+fun <T : Comparable<T>> largestItem(page: Page<T>): T? =
+    page.items.maxOrNull()
+
+fun main() {
+    val team = listOf(Admin("Аня"), Admin("Борис"))
+    val admins = Page(team, team.size)
+    println(names(admins))
+    val scores = Page(listOf(3, 7, 5), 3)
+    println(largestItem(scores))
+}
+```
+
+`admins` имеет тип `Page<Admin>`, и в `names` он проходит только благодаря `out`, а `out` законен, потому что `T` в `Page` встречается только в `val items`. Граница у `largestItem` нужна `maxOrNull`: она сама объявлена с `T : Comparable<T>`, и без границы компилятор ответит «None of the following candidates is applicable».
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в своём проекте сигнатуру с `? extends`, `? super` или параметром `Object` там, где тип можно было бы сохранить. Как она выглядела бы на Kotlin и где хватило бы `out` у самого класса? Через неделю-две пройдись по своим новым обобщённым классам: какие из них только отдают `T`?
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Обобщённая функция | `fun <T> valueOr(o: Outcome<T>, d: T): T` |
+| Обобщённый класс | `class Page<T>(val items: List<T>)` |
+| Граница | `fun <T : Comparable<T>> largest(…)` |
+| Несколько границ | `where T : CharSequence, T : Comparable<T>` |
+| Только отдаёт `T` | `out T`, в Java `? extends T` |
+| Только принимает `T` | `in T`, в Java `? super T` |
+| Проекция в параметре | `dest: MutableList<in T>` |
+| Тип элементов неизвестен | `List<*>`, проверка `x is List<*>` |
+| Тип во время работы | `inline fun <reified T>`, внутри `x is T` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Обобщения (generics)", meaning: "Классы и функции, которые пишут один раз для любых типов, а типы при этом проверяет компилятор." },
+  { term: "Параметр типа (type parameter)", meaning: "Имя-заготовка вроде T в угловых скобках объявления, вместо которого подставляют конкретный тип." },
+  { term: "Аргумент типа (type argument)", meaning: "Конкретный тип, подставленный вместо параметра, например Int в Outcome<Int>." },
+  { term: "Обобщённая функция (generic function)", meaning: "Функция со своим параметром типа, который стоит перед её именем: fun <T> valueOr(…)." },
+  { term: "Верхняя граница (upper bound)", meaning: "Ограничение T : Тип, которое пропускает только подтипы указанного типа; по умолчанию Any?." },
+  { term: "where", meaning: "Конструкция после сигнатуры, в которой перечисляют несколько границ одного параметра типа." },
+  { term: "Вариантность (variance)", meaning: "Правило, по которому отношение подтипов между аргументами переносится на обобщённый тип." },
+  { term: "Ковариантность (covariance)", meaning: "Box<String> подходит туда, где ждут Box<Any>; в Kotlin её объявляют модификатором out." },
+  { term: "Контравариантность (contravariance)", meaning: "Handler<Event> подходит туда, где ждут Handler<Paid>; в Kotlin её объявляют модификатором in." },
+  { term: "Инвариантность (invariance)", meaning: "Обобщённые типы с разными аргументами не подходят друг вместо друга, как MutableList<String> и MutableList<Any>." },
+  { term: "Вариантность на месте объявления (declaration-site variance)", meaning: "Модификатор out или in у параметра в объявлении класса, который действует во всех местах использования." },
+  { term: "Проекция типа (type projection)", meaning: "Модификатор out или in у аргумента в конкретном месте использования, например MutableList<in T> в параметре функции." },
+  { term: "Звёздная проекция (star projection)", meaning: "Запись List<*> для обобщённого типа с неизвестным аргументом: читать можно как Any?, записывать нельзя." },
+  { term: "Wildcard-тип (wildcard type)", meaning: "Тип с ? extends или ? super в Java, который задаёт вариантность в каждом месте использования." },
+  { term: "Стирание типов (type erasure)", meaning: "Во время работы объекты не хранят аргументы типа, поэтому List<String> и List<Int> неотличимы." },
+  { term: "reified", meaning: "Модификатор параметра типа inline-функции, с которым тип доступен во время работы для is, as и T::class." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-generics-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Обобщения: понятия</span>
+    <span class="kc-trainer-hint">out, in, reified</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-generics-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Подойдёт ли этот тип</span>
+    <span class="kc-trainer-hint">Что скажет компилятор</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-generics-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши обобщение</span>
+    <span class="kc-trainer-hint">Модификаторы и границы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-generics-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери обобщённый код</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Generics: in, out, where** ([kotlinlang.org/docs](https://kotlinlang.org/docs/generics.html), сверено 2026-09-26) — вариантность, проекции, границы, стирание; пересказ PECS из Effective Java.
+- **Kotlin — Inline functions, Idioms** ([kotlinlang.org/docs](https://kotlinlang.org/docs/inline-functions.html), сверено 2026-09-26) — `reified` и идиома с Gson.
+- **Kotlin — Operator overloading** ([kotlinlang.org/docs](https://kotlinlang.org/docs/operator-overloading.html), сверено 2026-09-28) — как `>` превращается в `compareTo`.
+- **Kotlin — Collections overview и API reference** ([kotlinlang.org](https://kotlinlang.org/docs/collections-overview.html), сверено 2026-09-26) — ковариантность коллекций, объявления типов стандартной библиотеки.
+- **Kotlin — Calling Kotlin from Java, Calling Java from Kotlin** ([kotlinlang.org/docs](https://kotlinlang.org/docs/java-to-kotlin-interop.html), сверено 2026-09-26) — wildcard-типы для Java-кода, стирание.
+- **Oracle — The Java Tutorials: Generic Types** ([docs.oracle.com](https://docs.oracle.com/javase/tutorial/java/generics/types.html), сверено 2026-09-26) — имена параметров типа.

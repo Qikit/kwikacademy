@@ -4,10 +4,410 @@ order: 13
 phase: "Надёжный код"
 title: "Ошибки: жизнь без checked exceptions"
 eyebrow: "Kotlin · Надёжный код"
-readingMinutes: 15
-summary: "Сообщать об ошибках через исключения, require, check и Result и выбирать подходящий способ."
+readingMinutes: 18
+summary: "Проверять аргументы и состояние через require и check, писать try и throw как выражения и выбирать между исключением, null, sealed-типом и Result."
 tags: [kotlin, reliable]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Ошибки: жизнь без checked exceptions» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты обобщил результат разбора до `Outcome<T>`: в `Success` лежит значение, в `Failure` — строка, которую не удалось разобрать. В стандартной библиотеке есть похожий `Result<T>`, только в его неудаче лежит исключение. Чтобы выбирать между ними, надо понять, как Kotlin обходится с исключениями. На ревью твоя функция `loadConfig(path)`, которая читает файл. В Java у неё стояло бы `throws IOException`, и компилятор заставил бы обработать его при каждом вызове. В Kotlin вызов `loadConfig("app.conf")` компилируется без `try`, и коллега спрашивает: «А кто теперь заставит обработать IOException?»
+
+Никто. И рука тянется к одной из двух вредных привычек. Первая — обернуть всё в `try { … } catch (e: Exception)`, который вместе с ошибкой ввода-вывода глотает и баги. Вторая — бросать исключения на любой исход, даже на «пользователь не найден», и ловить их, чтобы выбрать экран. В Kotlin у исключений другая работа, а для ожидаемых исходов есть инструменты удобнее.
+
+После урока ты сможешь проверять аргументы и состояние через `require` и `check`, писать `try` и `throw` как выражения, закрывать ресурсы через `use` и выбирать для каждой неудачи способ: исключение, `null`, sealed-тип или `Result`.
+
+## Ядро: баг — исключение, ожидаемая неудача — значение
+
+<Callout type="purple" title="Суть">
+В Kotlin все исключения **непроверяемые** (unchecked): компилятор не требует ни ловить их, ни объявлять. Поэтому неудачу, которую вызывающий код должен обработать на месте, возвращают **значением**: `null`, если причина одна, или sealed-тип, если причин несколько. **Исключения** остаются для ошибок в логике программы и сбоев окружения вроде упавшей сети. Их ловят в одном месте наверху, а не вокруг каждого вызова.
+</Callout>
+
+Сигнатура снова говорит правду: `fun findUser(email: String): User?` предупреждает, что пользователя может не оказаться, а `fun loadOrder(id: OrderId): Order` обещает заказ и бросит исключение, только если сломался код или база. Так советует Роман Елизаров, позже руководитель проекта Kotlin, в статье «Kotlin and Exceptions» и в KEEP-0127 — предложении по развитию языка, где описан `Result`.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Три неудачи в сервисе заказов: покупатель ввёл в поле количества «пять»; из-за ошибки в формуле код вызвал applyDiscount(-20); база не ответила. Что из этого вернуть значением, а что бросить исключением?">
+Значением — только первую: неверный ввод ожидаем, и форма должна показать подсказку. Вызов `applyDiscount(-20)` — баг в вызывающем коде, функция должна громко упасть на проверке аргумента. Недоступная база — сбой окружения: исключение долетит до обработчика запросов, и тот ответит ошибкой. Правило: значением возвращают то, что вызывающий обработает на месте.
+</Reveal>
+
+## Как устроено: исключения, try и throw
+
+Исключения в Kotlin те же, что в JVM: в корне `Throwable`, под ним `Exception` для того, что можно обработать, и `Error` для тяжёлых сбоев вроде `OutOfMemoryError`. Бросают и ловят их через `throw` и `try`/`catch`/`finally`, как в Java, только `try` и `throw` здесь выражения: у них есть тип, и их ставят туда, где ждут значение.
+
+**Try-выражение** возвращает последнее выражение того блока, который отработал: `try`, если исключения не было, или `catch`, если его поймали. Функция `toInt()` бросает `NumberFormatException`, если в строке не число. В рабочем коде берут `toIntOrNull`, а здесь исключение нужно для примера. Сначала предскажи, что напечатает программа ниже.
+
+<Reveal q="Что и в каком порядке напечатает эта программа?">
+Пять строк: «Проверили 443», «443», «Не число: 80a», «Проверили 80a», «8080». `finally` выполняется до того, как значение вернётся в `main`, поэтому его строка идёт раньше числа. На сам результат он не влияет: значение даёт `try` или `catch`. Так что в `finally` убирают за собой, а результат считают в `try` и `catch`.
+</Reveal>
+
+<KotlinPlayground>
+
+```kotlin
+fun parsePort(raw: String): Int = try {
+    raw.toInt()
+} catch (e: NumberFormatException) {
+    println("Не число: $raw")
+    8080
+} finally {
+    println("Проверили $raw")
+}
+
+fun main() {
+    println(parsePort("443"))
+    println(parsePort("80a"))
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверься. Потом замени `8080` на `throw IllegalArgumentException("Порт: $raw")`. Функция по-прежнему возвращает `Int`, а программа упадёт после строки «Проверили 80a»: `finally` отработал и здесь.
+
+Почему `throw` можно поставить туда, где ждут `Int`? У выражения `throw` тип **`Nothing`**. Значений у него нет, и документация называет его подтипом всех типов: выражение, которое никогда не завершается нормально, подходит на место любого. Отсюда приём, обещанный в уроке про null:
+
+```kotlin
+val url = System.getenv("DB_URL")
+    ?: throw IllegalStateException("DB_URL не задан")
+```
+
+После этой строки у `url` тип `String`: если переменной нет, до присваивания дело не дойдёт. Второй пример — `TODO()`: он тоже возвращает `Nothing`, поэтому `fun tax(): Long = TODO("Ждём бухгалтерию")` компилируется, а при вызове бросает `NotImplementedError`. Свою функцию, которая всегда бросает, объявляют так: `fun fail(msg: String): Nothing`. Не путай `Nothing` с `Unit`: функция с `Unit` возвращает управление, просто без полезного значения, а с `Nothing` не возвращает его вовсе.
+
+<Callout type="blue" title="Если знаешь Java — throws здесь нет">
+В Java компилятор требует у checked-исключения `catch` или `throws`: по спецификации так меньше исключений остаётся необработанными. В Kotlin исключения непроверяемые, и `throws` в языке нет. Прежняя редакция документации объясняла это примером: `Appendable.append` объявлен с `throws IOException`, и Java заставляет ловить его, даже когда за `Appendable` стоит `StringBuilder`, так что код обрастает пустыми `catch`. Там же цитировали Брюса Эккеля: на больших проектах обязательные спецификации исключений снижают продуктивность, почти не повышая качество. Поэтому не оборачивай вызовы «на всякий случай»: где ловить, решаешь ты.
+</Callout>
+
+## Как устроено: require, check и error
+
+Часть неудач — ошибки в вызывающем коде: отрицательная сумма, пустой список вместо непустого. Для них в стандартной библиотеке есть **функции-предусловия** (precondition functions):
+
+- **`require(условие) { сообщение }`** проверяет аргументы и бросает `IllegalArgumentException`;
+- **`check(условие) { сообщение }`** проверяет состояние объекта и бросает `IllegalStateException`;
+- **`error(сообщение)`** бросает `IllegalStateException` всегда, а её тип — `Nothing`, поэтому она годится для ветки `else`, которая не должна сработать.
+
+Сообщение пишут в лямбде, и строку соберут, только если проверка не прошла. Без лямбды текст будет безликим: «Failed requirement.» у `require` и «Check failed.» у `check`. Для null есть `requireNotNull(x)` и `checkNotNull(x)`: они возвращают значение non-null типа, и `val email = requireNotNull(user.email)` сразу даёт `String`.
+
+<KotlinPlayground>
+
+```kotlin
+class Order(val id: Int) {
+    var paid = false
+        private set
+
+    fun pay(amount: Int) {
+        require(amount > 0) { "Неверная сумма: $amount" }
+        check(!paid) { "Заказ $id уже оплачен" }
+        paid = true
+    }
+}
+
+fun main() {
+    val order = Order(7)
+    try {
+        order.pay(0)
+    } catch (e: IllegalArgumentException) {
+        println("Отказ: ${e.message}")
+    }
+    order.pay(500)
+    println("Оплачен: ${order.paid}")
+    order.pay(500)
+}
+```
+
+</KotlinPlayground>
+
+Запусти и найди строку, на которой упала программа. Потом замени последний вызов на `order.pay(-1)`. Заказ по-прежнему оплачен, но исключение будет другим. Каким и почему, подскажет порядок строк в `pay`.
+
+<Reveal q="Коллега заменил check(!paid) на require(!paid): «всё равно же исключение». Что потеряется?">
+Точность диагноза. `IllegalArgumentException` говорит «тебе передали плохой аргумент», и тот, кто разбирает лог, пойдёт проверять сумму, хотя 500 — законная сумма. Сломалось состояние заказа, и об этом говорит `IllegalStateException`. Правило: `require` — про то, что передали, `check` — про то, в каком состоянии объект.
+</Reveal>
+
+## Неудача как значение: Result и runCatching
+
+Иногда неудачу нужно сохранить и разобрать потом: прочитать сто файлов и отчитаться, какие не прочитались. Для этого есть **`Result<T>`** (с Kotlin 1.3): внутри либо значение типа `T`, либо исключение. Получают его функцией **`runCatching { … }`**. Она выполняет блок и ловит любой `Throwable`, который из него вылетит.
+
+<KotlinPlayground>
+
+```kotlin
+fun main() {
+    val raws = listOf("443", "80a")
+    val results = raws.map { runCatching { it.toInt() } }
+    println(results)
+    println(results.map { it.getOrElse { 8080 } })
+    println(results[0].map { it + 1 })
+}
+```
+
+</KotlinPlayground>
+
+Запусти и посмотри, как печатается `Result`: имена `Success` и `Failure` даёт его `toString`, твои классы из прошлого урока тут ни при чём. `getOrElse` возвращает значение или запасное, посчитанное из исключения, `map` меняет значение успеха и пропускает неудачу как есть. Потом замени `getOrElse { 8080 }` на `getOrNull()` и сравни вторую строку.
+
+У `runCatching` есть ловушка. Он ловит и `CancellationException`, которым корутины сообщают об отмене, а документация корутин требует его пробрасывать. Подробно — в <a href={withBase('/learn/kotlin/kotlin-coroutines-control')}>уроке про корутины под контролем</a>.
+
+<Reveal q="В обработчике запроса написано val user = runCatching { repo.load(id) }.getOrNull() ?: return notFound(). Что станет с багом, который появится внутри load?">
+Он превратится в «не найдено». `runCatching` ловит любой `Throwable`: NPE, `IllegalArgumentException` от `require`, даже `StackOverflowError`. В логе не будет стектрейса, и о баге никто не узнает. Пусть «не найдено» возвращает сам `load` через `User?`, а `runCatching` оборачивает только код, любую неудачу которого ты готов обработать.
+</Reveal>
+
+## Рядом с Java: @Throws и use
+
+Kotlin-функцию, которая бросает `IOException`, Java видит без `throws` в сигнатуре, и `catch (IOException e)` вокруг её вызова javac отвергает: «exception IOException is never thrown in body of corresponding try statement» (JDK 24). Если функцию вызывают из Java, добавь аннотацию **`@Throws`**:
+
+```kotlin
+import java.io.IOException
+
+@Throws(IOException::class)
+fun saveReport(name: String) {
+    if (name.isBlank()) throw IOException("Нет имени файла")
+    println("Сохранил $name")
+}
+```
+
+Теперь Java видит у метода `throws java.io.IOException` и требует обработать исключение.
+
+Вместо try-with-resources в Kotlin есть функция **`use`**. Её вызывают у любого `AutoCloseable` — Java-интерфейса с методом `close()`, который реализуют потоки ввода-вывода и соединения с базой. `use` выполняет блок и закрывает ресурс, даже если блок бросил исключение, поэтому особый синтаксис языку не нужен. Предскажи, в каком порядке выйдут три строки этой программы:
+
+<KotlinPlayground>
+
+```kotlin
+class Connection(val name: String) : AutoCloseable {
+    override fun close() = println("$name закрыто")
+}
+
+fun main() {
+    try {
+        Connection("db").use { c ->
+            println("Работаю с ${c.name}")
+            error("Сбой запроса")
+        }
+    } catch (e: IllegalStateException) {
+        println("Поймали: ${e.message}")
+    }
+}
+```
+
+</KotlinPlayground>
+
+Запусти и сверься: «db закрыто» выходит до «Поймали», потому что `use` закрывает ресурс раньше, чем исключение доберётся до `catch`. Потом удали строку с `error` и проверь, закроется ли ресурс без сбоя.
+
+## Как сообщить о неудаче
+
+<DecisionTree nodes={[
+  { q: "Неудача означает ошибку в коде: неверный аргумент, недопустимое состояние?", yes: "require, check или error: пусть падает громко", no: "к следующему вопросу" },
+  { q: "Нужно выполнить много операций и разобрать неудачи потом, не обрываясь на первой?", yes: "Result: runCatching вокруг каждой операции", no: "к следующему вопросу" },
+  { q: "Неудачу разумно обработать в одном месте наверху, как сбой сети или файла?", yes: "Исключение, которое ловят на границе: в обработчике запросов или в main", no: "к следующему вопросу" },
+  { q: "Причина неудачи одна, и подробности вызывающему не нужны?", yes: "Nullable-тип: User? для поиска", no: "Sealed-интерфейс с вариантом на каждую причину и её данными" }
+]} />
+
+Первые три вопроса отсеивают баги, неудачи, которые копят, и сбои окружения. Последний решает, сколько сведений вернуть об ожидаемой неудаче.
+
+## Как на практике
+
+- **Проверяй входы первой строкой.** `require` в начале функции остановит её раньше, чем она что-то изменит.
+- **Для ввода бери функции с `OrNull`.** `raw.toIntOrNull() ?: 0` вместо `try { raw.toInt() } catch …`: Елизаров называет такой `try` плохим стилем для Kotlin.
+- **Лови конкретный тип там, где знаешь, что делать.** `catch (e: IOException)` вокруг чтения необязательного файла настроек уместен, `catch (e: Exception)` вокруг целого метода прячет баги.
+- **Чужой API с исключениями оборачивай один раз.** `LocalDate.parse` из Java бросает `DateTimeParseException`, а варианта с `OrNull` у него нет. Обёртка `parseDate(raw): LocalDate?` вернёт `null`, и остальной код обойдётся без `try`.
+- **Перебрасывая, передавай причину.** `throw IllegalArgumentException("Не дата: $raw", e)` сохранит исходное исключение в стектрейсе.
+
+<Callout type="teal" title="Как принято">
+Соглашения Kotlin советуют форму-выражение: `return try { … } catch …` вместо `return` в каждой ветке. Марцин Москала в «Effective Kotlin» описывает через `require` ожидания от аргументов, через `check` — от состояния, а `error` называет сигналом, что программа попала в неожиданное состояние. detekt по умолчанию помечает `catch` со слишком общими типами вроде `Exception` и `Throwable` (правило TooGenericExceptionCaught).
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Импорт, который «прошёл успешно».**
+Ночная задача импортирует заказы из CSV, каждая строка обёрнута в `try { importRow(row) } catch (e: Exception) { log.warn(…) }`. После рефакторинга `importRow` стал передавать в `require(qty > 0)` не то поле, и исключение полетело на каждой строке. Задача отработала без падений: в логе тысячи одинаковых предупреждений, в базе ни одного нового заказа. Ход: битую строку вернуть значением, `parseRow(row): Order?`, а всё остальное пусть роняет задачу со стектрейсом. Вывод: широкий `catch` превращает баг в тихую потерю данных.
+
+**Разбор 2. «Не найден» через исключение.**
+`findUser(email)` бросает `UserNotFoundException`, и форма входа ловит его, чтобы показать «неверный email». Потом добавили заблокированных пользователей: ещё одно исключение, ещё один `catch`, а в мобильном API его забыли, и блокировка обернулась ошибкой 500. Ход по KEEP-0127: пока причина одна, `findUser` возвращает `User?`. Когда причин стало несколько, нужен sealed-тип `LoginResult` с вариантами `Found`, `NotFound` и `Blocked`, и `when` без `else`, как в уроке про моделирование, не даст забыть новый вариант. Вывод: ожидаемый исход — значение, и компилятор проверит, что его разобрали.
+
+**Разбор 3. Result везде «для надёжности».**
+Команда перевела все функции сервиса на `Result<T>`: `loadOrder`, `saveOrder`, `sendEmail`. Каждый вызов теперь кончается `getOrThrow()` или `getOrElse { return … }`, а «не хватает денег» от упавшей базы отличают по типу исключения: неудача внутри `Result` — просто `Throwable`, и `when` не проверит, все ли причины разобраны. В KEEP-0127 сказано, что `Result` «not designed to represent domain-specific error conditions» («не предназначен для ошибок предметной области»).
+
+<Reveal q="Где в этом сервисе Result всё-таки на месте?">
+Там, где неудачи копят. Например, рассылка ста писем: `recipients.map { runCatching { sendEmail(it) } }` отправит все письма и даст список, по которому видно, какие не ушли. Для такого разбора «потом» KEEP-0127 и предлагает `runCatching`.
+</Reveal>
+
+Вывод: бизнес-исходы описывают sealed-типом, а `Result` берут, чтобы копить неудачи.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `catch (e: Exception)` вокруг всего | Баги становятся тихими пропусками | Конкретный тип или не ловить вовсе |
+| `!!` там, где значение обязано быть | NPE без сообщения | `requireNotNull(x) { "…" }` или `?: error("…")` |
+| `require` для состояния объекта | Лог отправит искать плохой аргумент | `check` |
+| `runCatching` вокруг бизнес-логики | Ловит любой `Throwable`, включая баги и отмену корутины | `try`/`catch` с конкретным типом |
+| Kotlin-функция с `IOException` для Java без `@Throws` | Java-код не может поймать исключение по типу | `@Throws(IOException::class)` |
+
+## Практикум
+
+<Practice title="Переведи снятие денег с исключений на значения" checklist={["parseAmount возвращает Long? и отсекает «сто», ноль и отрицательные числа", "withdraw начинается с require(amount > 0)", "Нехватка денег — вариант sealed-интерфейса с суммой, которой не хватает", "В коде нет catch (e: Exception) и числа -1 как признака ошибки", "when по результату без else", "Программа печатает «Остаток 700», «Не сумма: сто», «Не хватает 200»"]}>
+Код ниже работает на исключениях и прячет баг. Запусти его и найди, откуда взялся «Остаток 701». Потом перепиши:
+
+1. `parseAmount` возвращает `Long?`: null для нечисла и для суммы меньше единицы.
+2. `withdraw` проверяет сумму через `require` и возвращает sealed-интерфейс `WithdrawResult` с вариантами `Done(balance)` и `NotEnough(missing)`.
+3. В `main` нет `try` и `catch`; программа печатает «Остаток 700», «Не сумма: сто» и «Не хватает 200».
+
+<KotlinPlayground>
+
+```kotlin
+class Account(var balance: Long)
+
+fun parseAmount(raw: String): Long {
+    try {
+        return raw.toLong()
+    } catch (e: Exception) {
+        return -1
+    }
+}
+
+fun withdraw(acc: Account, amount: Long): String {
+    val missing = amount - acc.balance
+    if (missing > 0) throw Exception("Не хватает $missing")
+    acc.balance -= amount
+    return "Остаток ${acc.balance}"
+}
+
+fun main() {
+    val acc = Account(1000)
+    for (raw in listOf("300", "сто", "900")) {
+        try {
+            println(withdraw(acc, parseAmount(raw)))
+        } catch (e: Exception) {
+            println("Ошибка: ${e.message}")
+        }
+    }
+}
+```
+
+</KotlinPlayground>
+
+<div slot="solution">
+Рабочий вариант:
+
+```kotlin
+class Account(var balance: Long)
+
+sealed interface WithdrawResult
+data class Done(val balance: Long) : WithdrawResult
+data class NotEnough(val missing: Long) : WithdrawResult
+
+fun parseAmount(raw: String): Long? =
+    raw.toLongOrNull()?.takeIf { it > 0 }
+
+fun withdraw(acc: Account, amount: Long): WithdrawResult {
+    require(amount > 0) { "Сумма: $amount" }
+    if (acc.balance < amount) {
+        return NotEnough(amount - acc.balance)
+    }
+    acc.balance -= amount
+    return Done(acc.balance)
+}
+
+fun main() {
+    val acc = Account(1000)
+    for (raw in listOf("300", "сто", "900")) {
+        val amount = parseAmount(raw)
+        if (amount == null) {
+            println("Не сумма: $raw")
+            continue
+        }
+        val result = withdraw(acc, amount)
+        when (result) {
+            is Done -> println("Остаток ${result.balance}")
+            is NotEnough ->
+                println("Не хватает ${result.missing}")
+        }
+    }
+}
+```
+
+В исходном коде «сто» превращалось в -1, и `withdraw(acc, -1)` пополнял счёт: широкий `catch` и число-признак спрятали баг. Теперь неверный ввод возвращается как null, и `main` решает, что сказать пользователю. Нехватка денег — нормальный исход со своими данными, поэтому она стала вариантом sealed-типа. `require` в `withdraw` страхует от ошибки в коде: ноль после `parseAmount` попадёт сюда только из-за бага, и тогда падать надо громко.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в проекте `catch (e: Exception)` и `catch (e: Throwable)`. Для каждого ответь: какое исключение здесь ждут и что станет с багом, который пролетит через этот `catch`? Какие два ты до пятницы заменишь конкретным типом или функцией, которая возвращает null? Через неделю-две, проектируя новую функцию, пройди по дереву выбора.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Ожидаемая неудача | `User?` при одной причине, sealed-интерфейс при нескольких |
+| Разбор строки | `s.toIntOrNull() ?: 0`, без `try` |
+| Try-выражение | `val t = try { f.readText() } catch (e: IOException) { "" }` |
+| Бросить | `x ?: throw …` или `x ?: error("…")`, тип выражения — `Nothing` |
+| Аргумент | `require(n > 0) { "n: $n" }`, иначе `IllegalArgumentException` |
+| Состояние | `check(isOpen) { "…" }`, иначе `IllegalStateException` |
+| Проверка на null | `requireNotNull(x)`, `checkNotNull(x)` вернут значение без `?` |
+| Собрать неудачи | `runCatching { … }`, затем `getOrElse`, `getOrNull`, `map` |
+| Ресурс | `resource.use { … }` вместо try-with-resources |
+| Вызов из Java | `@Throws(IOException::class)` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Исключение (exception)", meaning: "Объект-сигнал о сбое: его бросают через throw, и он летит вверх по вызовам, пока его не поймают." },
+  { term: "Непроверяемое исключение (unchecked exception)", meaning: "Исключение, которое компилятор не требует ловить или объявлять; в Kotlin такие все." },
+  { term: "Проверяемое исключение (checked exception)", meaning: "Исключение Java, которое метод обязан поймать или объявить в throws." },
+  { term: "Try-выражение", meaning: "try с catch, который возвращает последнее выражение отработавшего блока; finally на значение не влияет." },
+  { term: "Nothing", meaning: "Тип без значений у выражений, которые никогда не завершаются нормально, например throw." },
+  { term: "Функция-предусловие (precondition function)", meaning: "require, check и их варианты: проверяют условие и бросают исключение, если оно не выполнено." },
+  { term: "require", meaning: "Проверка аргумента; при неудаче бросает IllegalArgumentException." },
+  { term: "check", meaning: "Проверка состояния объекта; при неудаче бросает IllegalStateException." },
+  { term: "error", meaning: "Функция, которая всегда бросает IllegalStateException с переданным сообщением." },
+  { term: "Result", meaning: "Тип из стандартной библиотеки: либо успех со значением, либо неудача с исключением." },
+  { term: "runCatching", meaning: "Выполняет блок и возвращает Result, поймав любой Throwable." },
+  { term: "CancellationException", meaning: "Исключение, которым корутины сообщают об отмене; его нельзя проглатывать." },
+  { term: "use", meaning: "Функция для AutoCloseable: выполняет блок и закрывает ресурс, даже если блок бросил исключение." },
+  { term: "@Throws", meaning: "Аннотация, которая добавляет throws в Java-сигнатуру Kotlin-функции." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-errors-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Ошибки: понятия</span>
+    <span class="kc-trainer-hint">require, check, Result, use</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-errors-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Исключение, null или sealed-тип</span>
+    <span class="kc-trainer-hint">Что выбрать и что упадёт</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-errors-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери обработку ошибок</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-errors-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши проверку</span>
+    <span class="kc-trainer-hint">Ключевые слова и функции</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Exceptions, Idioms, Java interop, Coding conventions, Cancellation, API reference** ([kotlinlang.org](https://kotlinlang.org/docs/exceptions.html), сверено 2026-09-26) — исключения, `Nothing`, `TODO()`, предусловия, `use`, `@Throws`, `Result`, отмена корутин.
+- **Kotlin — Exceptions, редакция до июля 2024** ([github.com](https://github.com/JetBrains/kotlin-web-site/blob/aebf4e24d5d7/docs/topics/exceptions.md), сверено 2026-09-26) — почему нет checked exceptions.
+- **Roman Elizarov — KEEP-0127: Result** ([github.com](https://github.com/Kotlin/KEEP/blob/main/proposals/stdlib/KEEP-0127-result.md), сверено 2026-09-26) — назначение `Result` и выбор способа.
+- **Roman Elizarov — Kotlin and Exceptions (2020)** ([elizarov.medium.com](https://elizarov.medium.com/kotlin-and-exceptions-8062f589d07), сверено 2026-09-26) — исключения для ошибок в логике.
+- **Marcin Moskała — Effective Kotlin, Item 5** ([kt.academy](https://kt.academy/article/ek-expectations), сверено 2026-09-26) — `require`, `check` и `error`.
+- **Oracle — Java Language Specification SE 25, §11.2** ([docs.oracle.com](https://docs.oracle.com/javase/specs/jls/se25/html/jls-11.html), сверено 2026-09-26) — checked-исключения в Java.
+- **detekt 1.23.8 — Exceptions** ([detekt.dev](https://detekt.dev/docs/1.23.8/rules/exceptions/), сверено 2026-09-28) — правило TooGenericExceptionCaught.

@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-generics",
+  "title": "Подойдёт ли этот тип",
+  "description": "Разберись, где нужен out или in, что пропустит граница и что увидит программа во время работы.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Интерфейс Feed<T> объявлен с единственным методом fun latest(): T. Функция show(feed: Feed<Any>) не принимает переменную news типа Feed<String>. Какое изменение в объявлении Feed это исправит?",
+        "options": [
+          "interface Feed<out T>",
+          "interface Feed<in T>",
+          "interface Feed<T : Any>"
+        ],
+        "correctIndex": 0,
+        "explain": "latest только отдаёт T, значит out: тогда Feed<String> — подтип Feed<Any>. С in компилятор откажет в самом объявлении: T стоит в возвращаемом значении, а in разрешает его только в параметрах. Граница T : Any запрещает nullable-аргументы, но вариантность не меняет: без out тип остаётся инвариантным."
+      },
+      {
+        "prompt": "Функция fun <T : Comparable<T>> top3(items: List<T>) сортирует список и берёт три первых элемента. Её вызывают со списком data class Order(val sum: Int). Что будет?",
+        "options": [
+          "Соберётся: data class сравнивается по первому свойству",
+          "Ошибка компиляции: Order не реализует Comparable",
+          "Соберётся, но упадёт при первом сравнении"
+        ],
+        "correctIndex": 1,
+        "explain": "Граница пропускает только типы, которые реализуют Comparable, а data class генерирует equals, hashCode, toString, componentN и copy, но не compareTo. Границу проверяют при компиляции, на месте вызова, так что до запуска дело не дойдёт. Чтобы вызов прошёл, Order должен реализовать Comparable<Order>."
+      },
+      {
+        "prompt": "Обработчик запроса получает body: Any и проверяет if (body is Map<String, Int>). Что скажет компилятор?",
+        "options": [
+          "Соберёт и проверит каждый ключ и каждое значение",
+          "Соберёт, но проверит только, что body — это Map",
+          "Ошибка: аргументы типа во время работы стёрты"
+        ],
+        "correctIndex": 2,
+        "explain": "Во время работы объект Map не помнит, с какими аргументами типа его создали, поэтому проверить String и Int нечем. Компилятор такую проверку не соберёт: «Cannot check for instance of erased type 'Map<String, Int>'». Проверить только класс можно явно, через body is Map<*, *>, а ключи и значения — отдельно."
+      },
+      {
+        "prompt": "Функция fun fillZeros(list: MutableList<in Int>, n: Int) добавляет в список n нулей. Какой из списков можно в неё передать?",
+        "options": [
+          "MutableList<Number>",
+          "MutableList<Long>",
+          "List<Any>"
+        ],
+        "correctIndex": 0,
+        "explain": "in Int пропускает список, в который можно положить Int: MutableList<Int>, MutableList<Number> или MutableList<Any>. В MutableList<Long> значение Int не положить: Int не подтип Long, числовые типы в Kotlin друг от друга не наследуются. List<Any> только для чтения, у него нет add."
+      },
+      {
+        "prompt": "class Holder<out T>(val value: T) компилируется. Коллега добавляет в него метод fun replace(newValue: T): Holder<T> = Holder(newValue). Что ответит компилятор?",
+        "options": [
+          "Ничего: replace не меняет старый Holder, а создаёт новый",
+          "Ошибку: out-параметр T стоит в параметре метода",
+          "Предупреждение, но код соберётся"
+        ],
+        "correctIndex": 1,
+        "explain": "out запрещает T в параметрах всех методов, кроме private, и неважно, меняет метод объект или создаёт новый: компилятор смотрит на сигнатуру. Ответ будет «Type parameter 'T' is declared as 'out' but occurs in 'in' position…». Предупреждением дело не ограничится: такой код нарушил бы обещание out, и его не соберут."
+      },
+      {
+        "prompt": "Функция fun <T> List<Any>.firstOfType(): T? = firstOrNull { it is T } as T? не компилируется. Какое исправление минимально и сработает?",
+        "options": [
+          "Дописать только reified: fun <reified T>",
+          "Добавить границу: fun <T : Any>",
+          "Дописать inline и reified: inline fun <reified T>"
+        ],
+        "correctIndex": 2,
+        "explain": "reified бывает только у inline-функций, без inline компилятор ответит «Only type parameters of inline functions can be reified». Граница T : Any ничего не меняет: T по-прежнему стирается, и is T не соберётся. С inline и reified тип подставится в место вызова, и вызов firstOfType<String>() вернёт первую строку списка."
+      },
+      {
+        "prompt": "Java-метод static <T> void copy(List<? super T> dest, List<? extends T> src) переписывают на Kotlin. Какая сигнатура — точный перевод без предупреждений компилятора?",
+        "options": [
+          "fun <T> copy(dest: MutableList<in T>, src: List<T>)",
+          "fun <T> copy(dest: MutableList<out T>, src: List<in T>)",
+          "fun <T> copy(dest: MutableList<in T>, src: List<out T>)"
+        ],
+        "correctIndex": 0,
+        "explain": "dest — приёмник, в него только пишут, и ? super T переводится как in T. src — источник, но List и так объявлен как List<out E>, поэтому out у него лишний, и компилятор предупредит «Projection is redundant». Вариант с перепутанными out и in не соберётся: в MutableList<out T> нельзя записывать, а List<in T> конфликтует с объявлением List."
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-errors",
+  "title": "Ошибки: понятия",
+  "description": "Вспомни, как в Kotlin бросают, проверяют и возвращают неудачи.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Почему Kotlin не заставляет ловить IOException, как Java?", "back": "В Kotlin все исключения непроверяемые: компилятор не требует ни catch, ни throws. По словам Брюса Эккеля, на больших проектах обязательные throws снижают продуктивность почти без выигрыша в качестве.", "hint": "Checked и unchecked" },
+      { "front": "Что вернёт try-выражение?", "back": "Последнее выражение блока try, если исключения не было, или блока catch, если его поймали. finally на значение не влияет." },
+      { "front": "Какой тип у выражения throw?", "back": "Nothing. У него нет значений, поэтому throw подходит туда, где ждут любой тип, например справа от ?:." },
+      { "front": "Чем функция с типом Nothing отличается от функции с Unit?", "back": "Функция с Unit возвращает управление, просто без полезного значения. Функция с Nothing не возвращает его никогда: например, всегда бросает." },
+      { "front": "Метод pay получил сумму -5. require или check?", "back": "require: плохой аргумент. Он бросит IllegalArgumentException.", "hint": "Что передали или в каком состоянии объект" },
+      { "front": "pay вызвали у заказа, который уже оплачен. require или check?", "back": "check: недопустимое состояние объекта. Он бросит IllegalStateException." },
+      { "front": "Что бросает error(«Неизвестный код»)?", "back": "IllegalStateException с этим сообщением. Тип вызова — Nothing, поэтому error годится для ветки else." },
+      { "front": "Чем val email = requireNotNull(user.email) удобнее проверки через !!?", "back": "Бросит IllegalArgumentException со своим сообщением или с текстом «Required value was null.», а !! — NPE без текста. Значение без ? возвращают оба." },
+      { "front": "Что ловит runCatching?", "back": "Любой Throwable из блока, включая баги и CancellationException корутин, и возвращает его внутри Result." },
+      { "front": "Когда вместо T? вернуть sealed-тип?", "back": "Когда причин неудачи несколько и вызывающий обрабатывает их по-разному: when без else проверит, что разобраны все." },
+      { "front": "Чем в Kotlin заменяют try-with-resources?", "back": "Функцией use у AutoCloseable: она выполнит блок и закроет ресурс, даже если блок бросил исключение." },
+      { "front": "Зачем Kotlin-функции @Throws(IOException::class)?", "back": "Чтобы в Java-сигнатуре появилось throws IOException и Java-код мог поймать это исключение." }
+    ]
+  }
+}

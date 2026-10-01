@@ -1,11 +1,11 @@
 {
   "title": "Kotlin",
   "subtitle": "Программирование",
-  "description": "Kotlin с нуля для тех, кто уже программирует: идиомы, null-безопасность, корутины, хороший код и командные соглашения — и свой сервис на Ktor в финале.",
+  "description": "Kotlin с нуля для тех, кто уже программирует: идиомы, null-безопасность, корутины, хороший код и командные соглашения — и свой сервис на Ktor с базой данных и тестами в финале.",
   "icon": "code",
   "gradient": "violet",
   "order": 2,
   "accent": "light",
-  "estimatedHours": 35,
-  "tags": ["JVM", "Backend", "Ktor"]
+  "estimatedHours": 40,
+  "tags": ["JVM", "Coroutines", "Backend", "Ktor"]
 }

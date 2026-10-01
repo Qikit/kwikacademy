@@ -4,10 +4,511 @@ order: 19
 phase: "Бэкенд на Ktor"
 title: "Gradle и Java-экосистема: сборка и зависимости"
 eyebrow: "Kotlin · Бэкенд на Ktor"
-readingMinutes: 15
-summary: "Собирать проект на Gradle Kotlin DSL, подключать библиотеки и вызывать Java-код из Kotlin."
+readingMinutes: 18
+summary: "Собрать проект на Gradle Kotlin DSL с каталогом версий, подключить библиотеку из Maven Central и вызывать Java-код из Kotlin и обратно."
 tags: [kotlin, backend]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Gradle и Java-экосистема: сборка и зависимости» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты собирал цепочки Flow и закрыл фазу про асинхронность, а весь код жил в редакторе урока. В этой фазе ты построишь сервис: сокращатель ссылок, который превращает `https://kotlinlang.org/docs/home.html` в `http://localhost:8080/HMUwIa`. Каждый урок добавит к проекту один этап: HTTP на Ktor, JSON, базу данных, тесты, статистику переходов. Первый этап — консольная программа и сборка. Ты открываешь проект в IntelliJ IDEA и видишь `gradlew`, `settings.gradle.kts`, `gradle/libs.versions.toml` и ни слова о том, какой Gradle ставить.
+
+Ставить его и не нужно. Кто считает Gradle внешней программой, качает его с сайта, собирает проект не той версией и обновляет раньше, чем это поддерживает плагин Kotlin. Вторая ошибка — ждать проблем от смеси Java и Kotlin: они компилируются в одном модуле и вызывают друг друга, а то, как Java видит Kotlin-код, настраивается аннотациями.
+
+После урока ты сможешь собрать проект на Gradle Kotlin DSL с каталогом версий, подключить библиотеку из Maven Central, запустить программу задачей `run` и вызывать Java-код из Kotlin и Kotlin-код из Java в одном модуле.
+
+## Ядро: сборку описывает сам проект
+
+<Callout type="purple" title="Суть">
+**Gradle** — система сборки: компилирует код, скачивает библиотеки, запускает программу и тесты. Всё, что ей нужно, лежит в репозитории: **обёртка** (wrapper) фиксирует версию Gradle, **каталог версий** — версии Kotlin и библиотек, `build.gradle.kts` — скрипт на Kotlin с плагинами и зависимостями. Поэтому проект собирается командой `./gradlew build` одинаково на любой машине.
+</Callout>
+
+От машины нужна только Java, чтобы запустить сам Gradle: версия 9.7.0 работает на JVM от 17 до 26. Вот первый файл сокращателя, генератор коротких кодов на библиотеке Apache Commons Lang, аннотации разберём ниже:
+
+```kotlin
+package shortener
+
+import org.apache.commons.lang3.RandomStringUtils
+
+object CodeGenerator {
+    const val DEFAULT_LENGTH = 6
+
+    @JvmStatic
+    @JvmOverloads
+    fun generate(length: Int = DEFAULT_LENGTH): String =
+        RandomStringUtils.secure().nextAlphanumeric(length)
+}
+```
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Ты вставил этот файл в редактор урока и нажал запуск. Среди ошибок (Kotlin 2.4.20) — «Unresolved reference 'apache'». В IntelliJ IDEA тот же файл собирается. Что сломалось?">
+Ничего: у редактора урока нет сборки. `RandomStringUtils` лежит в jar-файле библиотеки commons-lang3, и компилятор найдёт класс, только если этот jar есть в **classpath** — списке мест, где ищут классы. В проекте jar скачивает Gradle по строке `implementation(libs.commons.lang3)`. `import` только называет класс, библиотеку приносит сборка.
+</Reveal>
+
+## Как устроено: файлы проекта
+
+```text
+shortener/
+  settings.gradle.kts
+  build.gradle.kts
+  gradle.properties
+  .gitignore, .editorconfig
+  gradlew, gradlew.bat
+  gradle/libs.versions.toml
+  gradle/wrapper/gradle-wrapper.jar
+  gradle/wrapper/gradle-wrapper.properties
+  src/main/kotlin/shortener/Main.kt
+  src/main/kotlin/shortener/CodeGenerator.kt
+  src/main/java/shortener/ShortLink.java
+```
+
+**Файл настроек** `settings.gradle.kts` документация Gradle называет точкой входа проекта. В нём имя проекта, репозиторий Maven Central, откуда берутся библиотеки, и плагин foojay версии 1.0.0: он скачает JDK, если нужной на машине нет.
+
+```kotlin
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = "shortener"
+```
+
+**Каталог версий** `gradle/libs.versions.toml` Gradle подключает сам. В `[versions]` записаны номера, в `[libraries]` и `[plugins]` — библиотеки и плагины; каждая запись кончается `version.ref` с именем из `[versions]`:
+
+```toml
+[versions]
+kotlin = "2.4.20"
+commons-lang3 = "3.20.0"
+
+[libraries]
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+```
+
+Для каждого имени Gradle генерирует типобезопасный доступ, дефисы становятся точками: `libs.commons.lang3`, `libs.plugins.kotlin.jvm`. Ими пользуется **скрипт сборки** `build.gradle.kts`:
+
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    application
+}
+
+group = "shortener"
+version = "1.0.0"
+
+kotlin {
+    jvmToolchain(25)
+}
+
+dependencies {
+    implementation(libs.commons.lang3)
+}
+
+application {
+    mainClass = "shortener.MainKt"
+}
+```
+
+Это Kotlin DSL: как в уроке про лямбды с получателем, `plugins`, `kotlin` и `dependencies` здесь функции, а блоки в фигурных скобках — лямбды. Плагин Kotlin для JVM (`org.jetbrains.kotlin.jvm`) компилирует код, версии у него нумеруются как у языка. Мастер IDEA напишет `kotlin("jvm") version "…"`: это тот же плагин, только с версией в скрипте. `application` — встроенный плагин Gradle, поэтому стоит одним словом и без версии. Он добавляет задачу `run`, а класс с `main` берёт из свойства `mainClass`.
+
+`jvmToolchain(25)` выбирает **тулчейн** (toolchain), JDK для компиляции и запуска: байт-код будет под Java 25. Версию самого Gradle хранит **обёртка**: скрипты `gradlew` и `gradlew.bat`, `gradle-wrapper.jar` и `gradle-wrapper.properties` с адресом дистрибутива, а в нашем проекте ещё и с его контрольной суммой. При первом запуске обёртка скачает Gradle 9.7.0 в домашний каталог Gradle.
+
+<Callout type="blue" title="Почему не свежий Gradle 9.8.0">
+Gradle 9.8.0 вышел 24 сентября 2026 года. Но у плагина Kotlin (KGP) своя таблица совместимости: на 2026-10-02 KGP 2.4.20 поддерживает Gradle от 7.6.3 до 9.7.0, и 9.7.0 — последняя версия, которую он поддерживает полностью. С более новым возможны предупреждения, а часть функций может не заработать. Поэтому Gradle поднимают вслед за Kotlin, по таблице.
+</Callout>
+
+## Как устроено: зависимости и задачи
+
+Библиотеку в Maven Central находят по трём **координатам**: группа, имя артефакта, версия. Их можно написать и прямо в скрипте, `implementation("org.apache.commons:commons-lang3:3.20.0")`, но в проекте из нескольких модулей такие строки быстро расходятся, поэтому версии держит каталог. **Конфигурация** в `dependencies` говорит, кому нужна библиотека:
+
+- `implementation` — компиляции и работе модуля;
+- `testImplementation` — только тестам;
+- `runtimeOnly` — только работающей программе, так в следующем уроке подключат логирование;
+- `api` — ещё и модулям, которые подключают твой, приложению это не нужно.
+
+Библиотеки приносят свои, **транзитивные** зависимости. Дерево покажет команда:
+
+```bash
+./gradlew dependencies --configuration runtimeClasspath
+```
+
+<Reveal q="В dependencies одна строка — commons-lang3. Предскажи: сколько библиотек окажется в дереве runtimeClasspath и какие?">
+Три. `commons-lang3:3.20.0` из твоей строки, `kotlin-stdlib:2.4.20`, которую плагин Kotlin добавляет сам, той же версии, что плагин, и `org.jetbrains:annotations:13.0`, которую тянет стандартная библиотека. Дерево почти всегда шире того, что ты объявил.
+</Reveal>
+
+Работу Gradle делит на **задачи** (tasks): `build` собирает и проверяет проект, `run` запускает программу, `test` — тесты, `tasks` выводит список задач. В терминале Gradle по умолчанию не печатает строки задач, их включает флаг `--console=plain`. Вывод `./gradlew clean build --console=plain` первого этапа, сокращённый:
+
+```text
+> Task :clean
+…
+> Task :compileKotlin
+> Task :compileJava
+> Task :classes
+> Task :jar
+> Task :startScripts
+> Task :distTar
+> Task :distZip
+> Task :assemble
+> Task :compileTestKotlin NO-SOURCE
+…
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+
+BUILD SUCCESSFUL in 2s
+```
+
+`build` зависит от `assemble` (архивы) и `check` (проверки и тесты). `NO-SOURCE` — у задачи нет входных файлов: тестов пока нет. `UP-TO-DATE` — результат не изменился, повторять работу не нужно: у `check` своих действий нет, а тесты не запускались. Результаты лежат в `build/`: классы в `classes/kotlin/main` и `classes/java/main`, jar в `libs`, архивы в `distributions`.
+
+## Как устроено: Java из Kotlin
+
+Kotlin видит Java-классы как свои. Методы `getX()` и `isX()` он показывает **синтетическими свойствами**: `getHost()` читается как `host`, `isAbsolute()` — как `isAbsolute`. У результата Java-метода без аннотаций **платформенный тип** `String!` из урока про null: бывает ли там null, компилятор не знает. А лямбду Kotlin подставит туда, где Java ждёт интерфейс с одним методом (SAM-преобразование из урока про лямбды). Сначала предскажи, что напечатают `uri.query` и `clicks`, потом запускай.
+
+<KotlinPlayground>
+
+```kotlin
+import java.net.URI
+import java.util.concurrent.ConcurrentHashMap
+
+fun main() {
+    val uri = URI("https://ktor.io/docs/welcome.html")
+    println(uri.host)
+    println(uri.isAbsolute)
+    println(uri.query)
+
+    val clicks = ConcurrentHashMap<String, Int>()
+    repeat(2) {
+        clicks.merge(uri.host, 1) { old, one -> old + one }
+    }
+    println(clicks)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Что напечатали строки с uri.query и clicks? Сверь с предсказанием.">
+`null` и `{ktor.io=2}`. У адреса нет части после «?», и `getQuery()` по документации возвращает null. Тип платформенный, компилятор не возражает, и `println` печатает null. `merge` в первый раз кладёт 1, во второй вызывает лямбду, которую Kotlin превратил в Java-интерфейс `BiFunction`, и получается 2.
+</Reveal>
+
+Теперь замени `println(uri.query)` на `println(uri.query.length)`: программа упадёт с `NullPointerException`. `val query: String = uri.query` упадёт раньше, при присваивании: `getQuery(...) must not be null`. Надёжнее сразу объявить `val query: String? = uri.query`, тогда null проверяет компилятор.
+
+<Callout type="blue" title="Если знаешь Java — геттеры здесь свойства">
+Вызов `uri.getHost()` скомпилируется, но в Kotlin Java-геттер читают как свойство: `uri.host`. Пару `isActive()` и `setActive(…)` Kotlin покажет свойством `isActive`, и присваивание вызовет сеттер. Обратно так же: свойство `val code` Kotlin-класса Java видит как `getCode()`. Исключение — Java-свойство только с сеттером: его Kotlin свойством не покажет, вызывай `setX(…)`.
+</Callout>
+
+## Как устроено: Kotlin из Java
+
+Java и Kotlin живут в одном модуле: Java в `src/main/java`, Kotlin в `src/main/kotlin`. `compileKotlin` идёт раньше `compileJava` не случайно: компилятор Kotlin читает исходники Java, поэтому `Main.kt` вызывает `ShortLink.of(url)`, а javac видит Kotlin-классы только скомпилированными в `.class`. Вот как `ShortLink.java` вызывает генератор:
+
+```java
+public static ShortLink of(String url) {
+    return new ShortLink(CodeGenerator.generate(), url);
+}
+
+public static ShortLink of(String url, int codeLength) {
+    return new ShortLink(CodeGenerator.generate(codeLength), url);
+}
+```
+
+Java видит байт-код. `object` для неё — класс с единственным экземпляром в статическом поле `INSTANCE`, а функции объекта — методы этого экземпляра. Значений по умолчанию Java не понимает и видит одну полную сигнатуру, `generate(int)`. `@JvmStatic` делает функцию статическим методом, `@JvmOverloads` добавляет по перегрузке на каждый параметр с умолчанием.
+
+Проверим отражением (reflection): спросим у Java-класса объекта его методы. Commons Lang в редакторе урока нет, поэтому генератор здесь на `SecureRandom` из JDK. Сначала предскажи, сколько методов `generate` напечатает программа и какие из них `static`, потом запускай.
+
+<KotlinPlayground>
+
+```kotlin
+import java.security.SecureRandom
+
+object CodeGenerator {
+    const val DEFAULT_LENGTH = 6
+    private const val ALPHABET =
+        "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    private val random = SecureRandom()
+
+    @JvmStatic
+    @JvmOverloads
+    fun generate(length: Int = DEFAULT_LENGTH): String =
+        buildString {
+            repeat(length) {
+                val i = random.nextInt(ALPHABET.length)
+                append(ALPHABET[i])
+            }
+        }
+}
+
+fun main() {
+    println(CodeGenerator.generate())
+    CodeGenerator::class.java.declaredMethods
+        .filter { it.name == "generate" }
+        .sortedBy { it.parameterCount }
+        .forEach { println(it) }
+}
+```
+
+</KotlinPlayground>
+
+`CodeGenerator::class.java` — Java-класс объекта, `declaredMethods` — его геттер `getDeclaredMethods()`. Теперь убери `@JvmOverloads` и запусти снова, потом верни её и убери `@JvmStatic`.
+
+<Reveal q="Что печатает программа с обеими аннотациями, без @JvmOverloads и без @JvmStatic?">
+С обеими — два метода, `generate()` и `generate(int)`, оба `static`. Без `@JvmOverloads` остаётся один, `generate(int)`: перегрузку без параметра генерировала аннотация. Без `@JvmStatic` методов снова два, но слово `static` пропадает: теперь это методы экземпляра.
+</Reveal>
+
+`const val` Java видит статическим полем, но `const` бывает только у примитивов и строк. Другим типам поле даёт `@JvmField`:
+
+```kotlin
+object CodeRules {
+    const val MAX_LENGTH = 32
+
+    @JvmField
+    val RESERVED = setOf("links", "api")
+}
+```
+
+```java
+int max = CodeRules.MAX_LENGTH;
+boolean taken = CodeRules.RESERVED.contains("api");
+// без @JvmField: CodeRules.INSTANCE.getRESERVED()
+```
+
+Функции файла `Main.kt` попадают в класс `MainKt`, его и запускает `mainClass`. Строка `@file:JvmName("App")` в начале файла переименует класс в `App`.
+
+<Reveal q="Из CodeGenerator убрали @JvmStatic, а ShortLink.java не трогали. На какой задаче упадёт ./gradlew build и почему?">
+На `compileJava`. `compileKotlin` пройдёт: Kotlin-код вызывает `CodeGenerator.generate()` как раньше. А javac ответит «non-static method generate() cannot be referenced from a static context»: без аннотации метод принадлежит экземпляру, и Java пришлось бы писать `CodeGenerator.INSTANCE.generate()`. Такие аннотации меняют только то, что видит Java.
+</Reveal>
+
+## Как на практике
+
+- **Собирай через `./gradlew`.** Версию Gradle задаёт обёртка. В PowerShell команда та же, в cmd — `gradlew.bat build`.
+- **Держи версии в каталоге.** В скрипте только `libs.…`, обновление библиотеки — одна строка в `[versions]`.
+- **Не знаешь, откуда библиотека, — спроси Gradle.** `dependencies` покажет дерево, `dependencyInsight --dependency имя` — кто её притащил.
+
+<Callout type="teal" title="Как принято">
+Для приложения, которое не публикуют как библиотеку, документация Kotlin советует `implementation` вместо `api`, а Gradle объясняет выгоду: меньше classpath у модулей-потребителей и меньше перекомпиляций. Файлы обёртки, включая `gradle-wrapper.jar`, по документации Gradle коммитят в репозиторий.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Скрипт из `build/install` не стартует.**
+Задача `installDist` кладёт программу со скриптами запуска в `build/install/shortener`. Разработчик запускает скрипт из `bin` и получает: «UnsupportedClassVersionError: shortener/MainKt … (class file version 69.0) … only recognizes class file versions up to 68.0». Классы собраны тулчейном под Java 25 (версия 69), а скрипт взял JDK 24 из `JAVA_HOME` (68). `./gradlew run` работает: Gradle запускает программу на JDK тулчейна. Ход: поставить в `JAVA_HOME` JDK 25 или запускать через Gradle. Вывод: тулчейн действует внутри задач Gradle, снаружи программа работает на той Java, что найдёт.
+
+**Разбор 2. Откуда в проекте авторизация.**
+В уроке про JSON в проект добавят `ktor-server-content-negotiation` из Ktor 3.6.0, и в дереве появится `ktor-server-auth`, хотя авторизацию никто не подключал. Команда `dependencyInsight` с `--dependency ktor-server-auth-jvm` показывает цепочку: content-negotiation тянет `ktor-server-routing-openapi`, а тот — модули авторизации и сессий. Вывод: прежде чем гадать, откуда библиотека, посмотри дерево.
+
+**Разбор 3. Где аннотации лишние.**
+В следующем уроке проект станет сервисом на Ktor, `ShortLink.java` уйдёт, генератор останется. Из Java его больше никто не вызывает, и `@JvmStatic` с `@JvmOverloads` ты уберёшь: Kotlin вызывает `CodeGenerator.generate()` одинаково с ними и без них. Вывод: аннотации совместимости пишут под конкретный Java-код и убирают вместе с ним.
+
+## Сборка: как кажется и как есть
+
+<Compare leftLabel="Кажется" rightLabel="Есть" verdict="right">
+  <div slot="left">
+  • Gradle ставят на машину и зовут `gradle`<br/>
+  • Чем новее Gradle, тем лучше<br/>
+  • `object` для Java — класс со static-методами
+  </div>
+  <div slot="right">
+  • Собирают `./gradlew`, версия в обёртке<br/>
+  • Версию Gradle ограничивает плагин Kotlin<br/>
+  • Для Java это `INSTANCE`, static даёт `@JvmStatic`
+  </div>
+</Compare>
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| Собирать установленным `gradle` | Версия не та, что в проекте | `./gradlew build` |
+| `.java` в `src/main/kotlin` | Gradle их не скомпилирует | `src/main/java` |
+| `@file:JvmName("App")` без правки `mainClass` | `ClassNotFoundException: shortener.MainKt` | `mainClass = "shortener.App"` |
+| `val q: String = uri.query` | NPE при присваивании, если Java вернула null | `String?` и `?:` |
+
+## Практикум
+
+<Practice title="Собери первый этап сокращателя" checklist={["./gradlew --version показывает Gradle 9.7.0", "./gradlew clean build --console=plain заканчивается BUILD SUCCESSFUL, строка compileKotlin идёт раньше compileJava", "./gradlew run -q печатает две короткие ссылки http://localhost:8080/ с кодом из шести символов и строку «Code of length 10:» с кодом из десяти", "С аргументом https://example.com программа сокращает только этот адрес", "В дереве runtimeClasspath ровно kotlin-stdlib 2.4.20, annotations 13.0 и commons-lang3 3.20.0", "Версии Kotlin и commons-lang3 записаны только в libs.versions.toml"]}>
+1. Создай проект в IntelliJ IDEA (File | New | Project, слева Kotlin):
+   - имя `shortener`;
+   - Build system — Gradle, Gradle DSL — Kotlin;
+   - JDK 25 (если её нет — Download JDK), галочку Add sample code сними;
+   - в Advanced Settings: Gradle distribution — Wrapper, сними Auto-select, версия 9.7.0.
+2. Приведи `settings.gradle.kts`, `gradle/libs.versions.toml` и `build.gradle.kts` к виду из урока: из сгенерированного скрипта уйдут `repositories`, `testImplementation(kotlin("test"))` и `tasks.test`. В `gradle.properties` — `kotlin.code.style=official`, в `.gitignore` — `.gradle/`, `.kotlin/` и `build/`, в `.editorconfig` — `max_line_length = 80` для `*.{kt,kts}`.
+3. Создай `CodeGenerator.kt` из урока, `ShortLink.java` с методами `of(url)` и `of(url, codeLength)` и `Main.kt`. Аргументы командной строки приходят в `fun main(args: Array<String>)`: программа сокращает адреса из них (без аргументов — два адреса документации) и печатает код длины 10.
+4. Выполни по очереди:
+   ```bash
+   ./gradlew clean build --console=plain
+   ./gradlew run -q
+   ./gradlew run -q --args="https://example.com"
+   ./gradlew dependencies --configuration runtimeClasspath
+   ```
+
+Нет версии 9.7.0 в мастере — создай проект с предложенной и выполни `./gradlew wrapper --gradle-version 9.7.0`.
+
+<div slot="solution">
+Рабочий вариант первого этапа, с ним сверяй свой проект. `ShortLink.java`:
+
+```java
+package shortener;
+
+public final class ShortLink {
+    private final String code;
+    private final String url;
+
+    private ShortLink(String code, String url) {
+        this.code = code;
+        this.url = url;
+    }
+
+    public static ShortLink of(String url) {
+        return new ShortLink(CodeGenerator.generate(), url);
+    }
+
+    public static ShortLink of(String url, int codeLength) {
+        return new ShortLink(CodeGenerator.generate(codeLength), url);
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+}
+```
+
+`Main.kt`:
+
+```kotlin
+package shortener
+
+private const val BASE_URL = "http://localhost:8080"
+
+private val DEMO_URLS =
+    listOf(
+        "https://kotlinlang.org/docs/home.html",
+        "https://ktor.io/docs/welcome.html",
+    )
+
+fun main(args: Array<String>) {
+    val urls = args.toList().ifEmpty { DEMO_URLS }
+    for (url in urls) {
+        val link = ShortLink.of(url)
+        println("$BASE_URL/${link.code} -> ${link.url}")
+    }
+    val longCode = ShortLink.of(urls.first(), 10).code
+    println("Code of length 10: $longCode")
+}
+```
+
+Вывод `./gradlew run -q`, коды каждый раз новые:
+
+```text
+http://localhost:8080/HMUwIa -> https://kotlinlang.org/docs/home.html
+http://localhost:8080/EW8lOF -> https://ktor.io/docs/welcome.html
+Code of length 10: x5dGOlfIt3
+```
+
+`Main.kt` читает геттер `getCode()` как `link.code`, а `ShortLink.java` зовёт генератор без `INSTANCE` и без длины. `ifEmpty` возвращает сам список, если он не пуст, иначе результат лямбды: без аргументов это `DEMO_URLS`. Дерево `runtimeClasspath`:
+
+```text
++--- org.jetbrains.kotlin:kotlin-stdlib:2.4.20
+|    \--- org.jetbrains:annotations:13.0
+\--- org.apache.commons:commons-lang3:3.20.0
+```
+
+Строка «Consider enabling configuration cache…» в конце сборки — совет Gradle 9, не ошибка.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Открой файл сборки рабочего проекта, `build.gradle(.kts)` или `pom.xml`: сколько версий записано прямо в строках зависимостей? В Gradle-проекте выполни `./gradlew dependencies` и найди библиотеку, которую никто не объявлял. И проверь, что сокращатель собирается с нуля: `./gradlew clean build`.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Собрать и запустить | `./gradlew build` (задачи покажет `--console=plain`), `./gradlew run --args="…"` |
+| Задачи и зависимости | `./gradlew tasks`, `./gradlew dependencies` |
+| Версия Gradle | `distributionUrl` в `gradle-wrapper.properties` |
+| Версии библиотек | `gradle/libs.versions.toml`, доступ `libs.commons.lang3` |
+| JDK проекта | `kotlin { jvmToolchain(25) }` |
+| Точка входа | `mainClass = "shortener.MainKt"` |
+| Java из Kotlin | `getX()` читается как `x`, тип `T!` — проверь на null |
+| Static для Java | `@JvmStatic` в `object` и companion object, без неё — через `INSTANCE` |
+| Перегрузки для Java | `@JvmOverloads` на функции с умолчаниями |
+| Поле и имя класса | `const val`, `@JvmField`, `@file:JvmName` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Gradle", meaning: "Система сборки для JVM: компилирует код, скачивает библиотеки, запускает программу и тесты." },
+  { term: "Обёртка Gradle (Gradle Wrapper)", meaning: "Скрипты gradlew и файлы в gradle/wrapper, которые скачивают и запускают записанную в проекте версию Gradle." },
+  { term: "Скрипт сборки (build script)", meaning: "Файл build.gradle.kts на Kotlin DSL с плагинами, зависимостями и настройками проекта." },
+  { term: "Файл настроек (settings file)", meaning: "Файл settings.gradle.kts, с которого Gradle начинает чтение проекта: имя, модули, репозитории." },
+  { term: "Каталог версий (version catalog)", meaning: "Файл gradle/libs.versions.toml, где в одном месте записаны версии, библиотеки и плагины." },
+  { term: "Плагин Gradle", meaning: "Расширение сборки, которое добавляет задачи и настройки, например плагин Kotlin для JVM или application." },
+  { term: "Координаты (coordinates)", meaning: "Группа, имя артефакта и версия библиотеки, например org.apache.commons:commons-lang3:3.20.0." },
+  { term: "Maven Central", meaning: "Публичный репозиторий библиотек с открытым кодом для Java-проектов, откуда Gradle их скачивает." },
+  { term: "Конфигурация зависимости", meaning: "Слово вроде implementation или runtimeOnly, которое говорит, где нужна библиотека: при компиляции, при работе, в тестах." },
+  { term: "Транзитивная зависимость (transitive dependency)", meaning: "Библиотека, которую притащила другая библиотека, а не твой скрипт сборки." },
+  { term: "Classpath", meaning: "Список каталогов и jar-файлов, в которых компилятор и JVM ищут классы." },
+  { term: "Задача (task)", meaning: "Единица работы Gradle, например compileKotlin, build или run." },
+  { term: "Тулчейн (toolchain)", meaning: "JDK, на которой Gradle компилирует и запускает проект, независимо от JDK самого Gradle." },
+  { term: "Синтетическое свойство (synthetic property)", meaning: "Java-методы getX, isX и setX, которые Kotlin показывает как свойство." },
+  { term: "@JvmStatic", meaning: "Аннотация, которая делает функцию object или companion object статическим методом для Java." },
+  { term: "@JvmOverloads", meaning: "Аннотация, которая генерирует для Java перегрузки функции с параметрами по умолчанию." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день честнее видно, что запомнилось.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-gradle-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Gradle и Java: понятия</span>
+    <span class="kc-trainer-hint">Сборка, версии, совместимость</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-gradle-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что соберётся и что увидит Java</span>
+    <span class="kc-trainer-hint">Сборка и совместимость в сценариях</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-gradle-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери вызов Java</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-gradle-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши сборку</span>
+    <span class="kc-trainer-hint">Скрипты и аннотации</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Configure a Gradle project, Get started with Gradle, Configure a Maven project** ([kotlinlang.org/docs](https://kotlinlang.org/docs/gradle-configure-project.html), сверено 2026-10-02) — совместимость KGP и Gradle, тулчейн, stdlib, конфигурации, порядок компиляции.
+- **Kotlin — Calling Java from Kotlin, Calling Kotlin from Java** ([kotlinlang.org/docs](https://kotlinlang.org/docs/java-to-kotlin-interop.html), сверено 2026-09-28) — свойства, платформенные типы, SAM, аннотации `@Jvm…`.
+- **Gradle 9.7.0 User Manual** ([docs.gradle.org](https://docs.gradle.org/9.7.0/userguide/gradle_wrapper.html), сверено 2026-10-02) — обёртка, каталог версий, задачи, вывод консоли, тулчейны, совместимость с JVM.
+- **Oracle — Java SE 25 API: URI, ConcurrentHashMap** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URI.html), сверено 2026-09-28) — `getQuery()` и `merge`.

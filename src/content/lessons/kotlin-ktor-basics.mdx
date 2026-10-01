@@ -4,10 +4,570 @@ order: 20
 phase: "Бэкенд на Ktor"
 title: "Первый сервис на Ktor: маршруты, запросы, ответы"
 eyebrow: "Kotlin · Бэкенд на Ktor"
-readingMinutes: 15
-summary: "Поднять HTTP-сервис на Ktor и описать его маршруты."
+readingMinutes: 18
+summary: "Поднять HTTP-сервис на Ktor, описать его маршруты с параметрами и статусами ответа и не терять данные, которые делят параллельные запросы."
 tags: [kotlin, backend]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Первый сервис на Ktor: маршруты, запросы, ответы» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты собрал сокращатель ссылок на Gradle Kotlin DSL: каталог версий, commons-lang3 из Maven Central, Kotlin и Java в одном модуле. `./gradlew run -q` печатает строку вроде `http://localhost:8080/HMUwIa -> https://kotlinlang.org/docs/home.html`, но открой такую ссылку в браузере, и ничего не произойдёт: на порту 8080 никто не слушает. Сегодня она заработает.
+
+Java-разработчик, привыкший к Spring, ждёт аннотированных контроллеров и контейнера сервлетов. В Ktor сервер запускается из твоего `main`, а маршруты — вызовы функций в блоке `routing { }`. Код обработчика читается так, будто запрос один, но выполняется он сразу для десятков запросов, и словарь со ссылками у них общий. Обычный `mutableMapOf` проходит проверку руками и подводит под нагрузкой.
+
+После урока ты сможешь подключить Ktor к Gradle-проекту, запустить сервер через `EngineMain` и `application.yaml`, описать маршруты `GET` и `POST` с параметрами, ответить текстом, статусом или редиректом, выбрать хранилище для общих данных и проверить сервис через `curl -i`.
+
+## Ядро: маршрут — код, который вызывают параллельно
+
+<Callout type="purple" title="Суть">
+Ktor — асинхронный фреймворк JetBrains для веб-сервисов на Kotlin. Сервис на нём — обычная программа: `main` запускает **движок** (engine) Netty, движок слушает порт и на каждый запрос вызывает **обработчик** (route handler). Маршруты описывают в `routing { }`: `get("/{code}") { … }` связывает метод и путь с обработчиком. Обработчик — suspend-лямбда, в которой `call` читает запрос и отправляет ответ. Запросы обрабатываются **одновременно**, поэтому общие для обработчиков данные должны выдерживать параллельный доступ.
+</Callout>
+
+Код модуля выполняется один раз при старте: создаёт хранилище и объявляет маршруты. Код обработчиков выполняется на каждый запрос, часто на нескольких потоках сразу, и всё, что он берёт из модуля, общее.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Обработчик POST увидел пустое тело и вызвал call.respondText(«Request body must contain a URL», status = HttpStatusCode.BadRequest). Ниже в той же лямбде стоит сохранение ссылки. Выполнится ли оно?">
+Да. `respondText` — обычная suspend-функция: отправляет ответ и возвращает управление, а лямбда идёт дальше. Пустой адрес ляжет в хранилище, а следующий `respondText` в Ktor 3.6.0 ничего не отправит: ответ уже ушёл. Клиент видит 400, запись создана, ошибок в логе нет. Поэтому сразу после ответа с ошибкой пишут `return@post`: возврат по метке из урока про лямбды завершает только обработчик.
+</Reveal>
+
+## Подключаем Ktor к проекту
+
+Новый проект Ktor быстрее всего получить генератором start.ktor.io, плагином для IntelliJ IDEA Ultimate или Ktor CLI. На 2026-10-02 генератор по умолчанию выбирает Gradle, Netty, Ktor 3.6.0 (вышел 17 сентября, последний) и настройки в YAML. Мы добавим то же руками в проект из прошлого урока.
+
+В каталог версий добавляются Ktor и logback, в сборку — четыре зависимости:
+
+```toml
+[versions]
+kotlin = "2.4.20"
+ktor = "3.6.0"
+logback = "1.6.4"
+commons-lang3 = "3.20.0"
+
+[libraries]
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+# …
+```
+
+```kotlin
+dependencies {
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.config.yaml)
+    implementation(libs.commons.lang3)
+    runtimeOnly(libs.logback.classic)
+}
+
+application {
+    mainClass = "shortener.ApplicationKt"
+}
+```
+
+`ktor-server-core` — сервер и маршруты, `ktor-server-netty` — движок, а без `ktor-server-config-yaml` Ktor не прочитает `application.yaml`. Лог Ktor пишет через SLF4J, а logback реализует SLF4J и нужен только при запуске. Поэтому он в `runtimeOnly`: в classpath компиляции такой зависимости нет.
+
+Точка входа и модуль живут в `Application.kt`:
+
+```kotlin
+package shortener
+
+import io.ktor.server.application.Application
+import io.ktor.server.netty.EngineMain
+
+fun main(args: Array<String>) {
+    EngineMain.main(args)
+}
+
+fun Application.module() {
+    configureRouting()
+}
+```
+
+`EngineMain.main(args)` поднимает Netty и читает `application.yaml` из `src/main/resources`. **Модуль** (module) — функция-расширение `Application`, которая подключает маршруты и плагины Ktor. Плагины добавляют серверу общие возможности. Первый плагин, для разбора JSON, появится в следующем уроке. Функции файла `Application.kt` попадают в класс `ApplicationKt`, как в прошлом уроке `main` жила в `MainKt`. Отсюда новый `mainClass` и имя модуля в конфиге:
+
+```yaml
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - shortener.ApplicationKt.module
+```
+
+Имя складывается из пакета, класса файла и функции: переименуешь файл — поправь конфиг.
+
+Второй способ запуска — `embeddedServer(Netty, port = 8080) { … }` прямо в `main`. По документации Ktor у него порт задан в коде и при запуске не меняется, а `EngineMain` берёт настройки из файла и разрешает переопределить их аргументами. Запуск — прежняя задача `./gradlew run`, остановка — Ctrl+C:
+
+```text
+… INFO  Application - Application started in 0.298 seconds.
+… INFO  Application - Responding at http://127.0.0.1:8080
+```
+
+## Как устроено: маршрут, запрос, ответ
+
+Маршруты лежат в `Routing.kt`, в модуле `configureRouting()`:
+
+```kotlin
+fun Application.configureRouting() {
+    val links = LinkStore()
+    routing {
+        get("/") {
+            call.respondText("URL shortener: POST a URL to /links")
+        }
+        // …
+    }
+}
+```
+
+Внутри `routing { }` функции `get` и `post` принимают **шаблон пути** и обработчик с типом из урока про DSL: `RoutingHandler = suspend RoutingContext.() -> Unit`. Получатель даёт `call`, а `suspend` разрешает ждать: `call.receiveText()` приостанавливает обработчик, пока читается тело запроса, и поток тем временем работает на другие запросы.
+
+Создание ссылки:
+
+```kotlin
+post("/links") {
+    val url = call.receiveText().trim()
+    if (url.isEmpty()) {
+        call.respondText(
+            "Request body must contain a URL",
+            status = HttpStatusCode.BadRequest,
+        )
+        return@post
+    }
+    val alias = call.request.queryParameters["alias"]
+    if (alias != null && !links.addWithAlias(alias, url)) {
+        call.respondText(
+            "Alias '$alias' is already taken",
+            status = HttpStatusCode.Conflict,
+        )
+        return@post
+    }
+    val code = alias ?: links.add(url)
+    call.respondText(code, status = HttpStatusCode.Created)
+}
+```
+
+**Тело запроса** (request body) читает `receiveText()`. **Параметр запроса** (query parameter) — часть адреса после `?`, как в `/links?alias=kotlin`. `queryParameters["alias"]` вернёт `String?`, и `null` значит, что параметра нет. У alias три исхода: занят — ответ 409, свободен — он и станет кодом ссылки, не задан — код сгенерирует `links.add(url)`. `respondText` без статуса отвечает 200, со `status = HttpStatusCode.Created` — 201.
+
+Переход по короткой ссылке:
+
+```kotlin
+get("/{code}") {
+    val url = links.find(call.requirePathParameter("code"))
+    if (url == null) {
+        call.respond(HttpStatusCode.NotFound)
+    } else {
+        call.respondRedirect(url)
+    }
+}
+```
+
+**Параметр пути** (path parameter) `{code}` захватывает часть адреса, а `requirePathParameter("code")` отдаёт её как `String`. Если параметра нет, функция бросает исключение, и Ktor отвечает 400. В коде до Ktor 3.5 и в примерах документации параметр читают как `call.parameters["code"]` и получают `String?`. `respond(HttpStatusCode.NotFound)` отправляет пустой ответ 404. `respondRedirect(url)` по исходнику Ktor 3.6.0 ставит заголовок `Location` и статус 302 Found, с `permanent = true` — 301. Четвёртый маршрут, `get("/links/{code}")`, отвечает текстом `kotlin -> https://kotlinlang.org` или 404.
+
+<Reveal q="Сначала предскажи: какой обработчик ответит на запрос GET /links/kotlin — get(«/{code}») или get(«/links/{code}»)?">
+Второй. Параметр в фигурных скобках совпадает ровно с одним сегментом пути, а в `/links/kotlin` сегментов два, так что шаблон `/{code}` не подходит. Проверка через `curl` это подтверждает: `/kotlin` отвечает 302 на kotlinlang.org, а `/links/kotlin` — 200 и строкой `kotlin -> https://kotlinlang.org`. Правило: сравнивай шаблон и адрес по сегментам между косыми чертами.
+</Reveal>
+
+В `curl -i` видны строка статуса, заголовки и тело:
+
+```bash
+$ curl -i -X POST -H 'Content-Type: text/plain' \
+    -d https://kotlinlang.org \
+    'http://localhost:8080/links?alias=kotlin'
+HTTP/1.1 201 Created
+Content-Length: 6
+Content-Type: text/plain; charset=UTF-8
+
+kotlin
+
+$ curl -i http://localhost:8080/kotlin
+HTTP/1.1 302 Found
+Location: https://kotlinlang.org
+Content-Length: 0
+```
+
+<Callout type="blue" title="Если знаешь Java — потоков здесь мало">
+Обработчик в Spring MVC работает на потоке сервлетного контейнера и вправе его блокировать, поэтому, по документации Spring, контейнеры держат большой пул потоков. Netty в Ktor выполняет вызовы на пуле, где по умолчанию столько потоков, сколько процессоров (`callGroupSize`). `Thread.sleep`, JDBC-запрос или блокирующий HTTP-клиент держат поток целиком, и запросы на нём стоят. Ждать нужно через suspend-функции, а блокирующий код выносить в `withContext(Dispatchers.IO)` из урока про контекст корутин.
+</Callout>
+
+## Как устроено: общее хранилище при параллельных запросах
+
+`LinkStore` создаётся один раз в начале `configureRouting()`, и все обработчики работают с ним. Код ссылки он занимает так:
+
+```kotlin
+private val links = ConcurrentHashMap<String, String>()
+
+fun add(url: String): String =
+    generateSequence { CodeGenerator.generate() }
+        .first { code -> tryClaim(code, url) }
+
+// …
+
+private fun tryClaim(
+    code: String,
+    url: String,
+): Boolean = links.putIfAbsent(code, url) == null
+```
+
+`generateSequence { … }` — ленивая бесконечная последовательность кодов, `first` берёт первый, который удалось занять, и лишних не создаёт. `putIfAbsent` кладёт адрес, только если кода ещё нет, и тогда возвращает `null`. По Javadoc это «проверить и положить», выполненное **атомарно**, одним неделимым шагом: два запроса не займут один код.
+
+Зачем повторять генерацию, если шесть символов из 62 дают почти 57 миллиардов кодов? Сначала предскажи, какой шанс, что среди миллиона случайных кодов два совпадут.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlin.math.pow
+import kotlin.math.round
+
+val alphabet = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
+fun collisionChance(links: Int, codes: Double): Double {
+    var allDistinct = 1.0
+    for (i in 0 until links) {
+        allDistinct *= 1 - i / codes
+    }
+    return 1 - allDistinct
+}
+
+fun main() {
+    val codes = alphabet.size.toDouble().pow(6)
+    println("символов: ${alphabet.size}")
+    println("кодов: ${codes.toLong()}")
+    for (n in listOf(10_000, 100_000, 300_000, 1_000_000)) {
+        val percent = collisionChance(n, codes) * 100
+        println("$n ссылок: ${round(percent * 100) / 100}%")
+    }
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Какой шанс совпадения программа покажет для миллиона ссылок?">
+99,98 %. Вероятность, что все коды разные, — произведение множителей `1 - i / codes`, и на миллионе множителей оно тает быстро: 50 % набирается уже примерно на 280 тысячах ссылок. Совпадение почти неизбежно, поэтому `tryClaim` не перезаписывает занятый код, а `add` берёт следующий.
+</Reveal>
+
+Запусти, потом замени `pow(6)` на `pow(7)` и посмотри, насколько отодвинется совпадение.
+
+`mutableMapOf()` на JVM создаёт `LinkedHashMap`, и Javadoc требует синхронизировать его снаружи, если с ним одновременно работают несколько потоков и хоть один меняет состав. А в Ktor разные запросы идут на разных потоках. Документация Kotlin показывает цену на счётчике: 100 корутин на `Dispatchers.Default` прибавляют по 1000, и 100 000 почти никогда не выходит. Со словарём так же: то все записи на месте, то сотен нет, и обычно без исключения.
+
+Даже на одном потоке обработчики чередуются. Ниже два запроса. Первый отдаёт список ссылок и после каждой строки уступает поток: `yield()` из урока про отмену корутин изображает ожидание сети. Второй в это время создаёт ссылку.
+
+<KotlinPlayground>
+
+```kotlin
+import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.yield
+
+val links: MutableMap<String, String> = mutableMapOf()
+
+suspend fun listLinks() {
+    for ((code, url) in links) {
+        println("$code -> $url")
+        yield()
+    }
+    println("список отдан")
+}
+
+fun createLink(code: String, url: String) {
+    links[code] = url
+    println("создана $code")
+}
+
+fun main(): Unit = runBlocking {
+    createLink("kotlin", "https://kotlinlang.org")
+    createLink("ktor", "https://ktor.io")
+    launch { listLinks() }
+    launch { createLink("docs", "https://ktor.io/docs") }
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Сначала предскажи, что напечатает программа.">
+Четыре строки и исключение: `создана kotlin`, `создана ktor`, `kotlin -> https://kotlinlang.org`, `создана docs`, затем `ConcurrentModificationException`. Цикл `for` обходит `LinkedHashMap` итератором, и по Javadoc такой итератор, заметив изменение словаря после своего создания, бросает это исключение.
+</Reveal>
+
+Запусти, потом замени `mutableMapOf()` на `ConcurrentHashMap()`: список дойдёт до конца. Итераторы `ConcurrentHashMap` такого исключения не бросают и показывают словарь на какой-то момент после своего создания, поэтому `docs` в список может и не попасть.
+
+## Как на практике
+
+- **Проверяй каждый маршрут через `curl -i`.** У редиректа весь ответ в статусе и заголовках.
+- **Обязательное бери через `require…`, необязательное — через индекс.** `requirePathParameter` вернёт `String` или ответит 400, `queryParameters["alias"]` вернёт `null`.
+- **Ответил ошибкой — сразу `return@post`.** Иначе обработчик продолжит с данными, которые ты только что отверг.
+- **Общие данные держи в `ConcurrentHashMap` и меняй одной операцией.** `putIfAbsent` проверяет и кладёт за один шаг.
+
+<Callout type="teal" title="Как принято">
+Генератор Ktor кладёт маршруты в отдельный `Routing.kt` с модулем `configureRouting()`. Так и в сокращателе: `Application.kt` знает про запуск, `Routing.kt` — про HTTP. Когда маршрутов станет больше, страница Routing советует группировать их по пути через `route` или выносить в функции-расширения `Route`. В итоговом проекте JSON-маршруты сгруппированы так:
+
+```kotlin
+route("/api/links") {
+    post {
+        // …
+    }
+    get("/{code}") {
+        // …
+    }
+    // …
+}
+```
+
+Каждый `route` добавляет к пути сегмент, и `post` без аргумента отвечает на `POST /api/links`.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Постоянный редирект для короткой ссылки.**
+Коллега меняет `respondRedirect(url)` на `respondRedirect(url, permanent = true)`: ссылка ведь не меняется, пусть будет 301. По RFC 9110 ответ 301 кэшируется эвристически: браузер вправе запомнить его и в следующий раз пойти сразу на длинный адрес. Про 302 стандарт говорит обратное: клиенту стоит и дальше ходить по исходному адресу. В итоговом проекте сервис будет считать переходы, и закэшированные клики до него не дойдут. Ход: оставить 302 по умолчанию. Вывод: статус выбирают по тому, что сервису нужно от следующих запросов.
+
+**Разбор 2. Порт 8080 занят.**
+У коллеги на 8080 уже работает другой сервис, и сокращатель не может занять порт. Он задан в `ktor.deployment.port`, а документация Ktor разрешает переопределить его аргументом: `./gradlew run --args="-port=8081"`. Ход: разовый запуск — через аргумент, постоянная смена — в `application.yaml`. Вывод: параметры запуска держат вне кода.
+
+**Разбор 3. Две копии сервиса.**
+Нагрузка выросла, и за балансировщиком запустили две копии сокращателя. Ссылку создали на одной, переход попал на другую и получил 404: у каждого процесса свой словарь, а перезапуск стирает его целиком. Ход: память годится для прототипа и тестов, а живые ссылки хранят в базе данных. Она появится через урок. Вывод: `ConcurrentHashMap` защищает от гонок внутри процесса, но не хранит данные дольше него.
+
+## Какой ответ отправить
+
+<DecisionTree nodes={[
+  { q: "Запрос испорчен: пустое тело, неверный параметр?", yes: "400 Bad Request: respondText с status = HttpStatusCode.BadRequest", no: "к следующему вопросу" },
+  { q: "Ресурса с таким кодом нет?", yes: "404 Not Found: respond(HttpStatusCode.NotFound)", no: "к следующему вопросу" },
+  { q: "Запрос спорит с тем, что уже есть, например alias занят?", yes: "409 Conflict и текст, по которому человек поймёт причину", no: "к следующему вопросу" },
+  { q: "Запрос создал новый ресурс?", yes: "201 Created и код новой ссылки", no: "к следующему вопросу" },
+  { q: "Клиента нужно отправить на другой адрес?", yes: "302 Found: respondRedirect(url)", no: "200 OK: respondText" }
+]} />
+
+Значения статусов задаёт RFC 9110: 400 — ошибка клиента, 404 — ресурс не найден, 409 — конфликт с текущим состоянием ресурса, 201 — создан новый ресурс. Клиент ветвится по статусу, текст ошибки нужен человеку.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| Нет `return@post` после ответа с ошибкой | Код идёт дальше: данные сохранены, второй ответ молча пропадает | `return@post` сразу после ответа |
+| `mutableMapOf` для данных всех запросов | Под нагрузкой теряются записи, обход падает | `ConcurrentHashMap` |
+| «Проверить, потом положить» двумя вызовами | Два запроса займут один код | `putIfAbsent` |
+| `respondText(code, HttpStatusCode.Created)` | Второй параметр — тип содержимого, не скомпилируется | `status = HttpStatusCode.Created` |
+| `permanent = true` у короткой ссылки | Браузер может закэшировать 301 и ходить мимо сервиса | `respondRedirect(url)`, это 302 |
+| `Thread.sleep` или JDBC прямо в обработчике | Держит поток из небольшого пула | suspend-функции, `withContext(Dispatchers.IO)` |
+| `curl` в Windows PowerShell 5.1 | Это `Invoke-WebRequest`, флаги не те | `curl.exe` или Git Bash |
+
+## Практикум
+
+<Practice title="Подними сокращатель на Ktor" checklist={["GET / отвечает 200 и строкой «URL shortener: POST a URL to /links»", "POST /links с адресом в теле даёт 201 и код из шести символов", "Первый POST с ?alias=kotlin даёт 201 и kotlin, повторный — 409 и «Alias 'kotlin' is already taken»", "Тело из пробелов даёт 400 и «Request body must contain a URL»", "GET /kotlin — 302 и Location: https://kotlinlang.org; GET /links/kotlin — 200 и «kotlin -> https://kotlinlang.org»", "GET /nope42 и GET /links/nope42 — 404 с пустым телом", "Хранилище на ConcurrentHashMap, код занимается через putIfAbsent, после каждого ответа с ошибкой стоит return@post"]}>
+Продолжи проект с того места, где остановился в прошлом уроке.
+
+1. Добавь Ktor и logback в каталог версий и `build.gradle.kts`, смени `mainClass` на `shortener.ApplicationKt`.
+2. Удали консольные `Main.kt` и `ShortLink.java`, а из `CodeGenerator` убери `@JvmStatic` и `@JvmOverloads`: Java-кода больше нет.
+3. Создай `Application.kt`, `src/main/resources/application.yaml` и рядом с ним `logback.xml` из разбора.
+4. Допиши `LinkStore` в редакторе ниже: пока в функциях стоит `TODO()`, запуск падает с `NotImplementedError`. Когда программа напечатает `true`, `false`, `https://ktor.io`, `6 https://kotlinlang.org` и `null`, перенеси в `LinkStore.kt` только класс `LinkStore`: `CodeGenerator` на commons-lang3 в проекте уже есть.
+5. Напиши `Routing.kt` с маршрутами `GET /`, `POST /links` (адрес в теле, необязательный `?alias=`), `GET /{code}` и `GET /links/{code}`. Импорты возьми из разбора.
+6. Запусти `./gradlew run` и во втором терминале пройди команды ниже, в Windows — в Git Bash.
+
+<KotlinPlayground>
+
+```kotlin
+import java.util.concurrent.ConcurrentHashMap
+
+object CodeGenerator {
+    val alphabet = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
+    fun generate(): String =
+        (1..6).map { alphabet.random() }.joinToString("")
+}
+
+class LinkStore {
+    fun add(url: String): String = TODO()
+
+    fun addWithAlias(
+        alias: String,
+        url: String,
+    ): Boolean = TODO()
+
+    fun find(code: String): String? = TODO()
+}
+
+fun main() {
+    val links = LinkStore()
+    println(links.addWithAlias("ktor", "https://ktor.io"))
+    println(links.addWithAlias("ktor", "https://example.com"))
+    println(links.find("ktor"))
+    val code = links.add("https://kotlinlang.org")
+    println("${code.length} ${links.find(code)}")
+    println(links.find("nope42"))
+}
+```
+
+</KotlinPlayground>
+
+```bash
+curl -i http://localhost:8080/
+curl -i -X POST -H 'Content-Type: text/plain' \
+  -d https://kotlinlang.org/docs/home.html \
+  http://localhost:8080/links
+curl -i -X POST -H 'Content-Type: text/plain' \
+  -d https://kotlinlang.org \
+  'http://localhost:8080/links?alias=kotlin'
+curl -i -X POST -H 'Content-Type: text/plain' \
+  -d https://example.com \
+  'http://localhost:8080/links?alias=kotlin'
+curl -i -X POST -H 'Content-Type: text/plain' \
+  -d '   ' http://localhost:8080/links
+curl -i http://localhost:8080/kotlin
+curl -i http://localhost:8080/links/kotlin
+curl -i http://localhost:8080/nope42
+curl -i http://localhost:8080/links/nope42
+```
+
+<div slot="solution">
+Файл `LinkStore.kt` целиком. В редакторе от него нужен только класс:
+
+```kotlin
+package shortener
+
+import java.util.concurrent.ConcurrentHashMap
+
+class LinkStore {
+    private val links = ConcurrentHashMap<String, String>()
+
+    fun add(url: String): String =
+        generateSequence { CodeGenerator.generate() }
+            .first { code -> tryClaim(code, url) }
+
+    fun addWithAlias(
+        alias: String,
+        url: String,
+    ): Boolean = tryClaim(alias, url)
+
+    fun find(code: String): String? = links[code]
+
+    private fun tryClaim(
+        code: String,
+        url: String,
+    ): Boolean = links.putIfAbsent(code, url) == null
+}
+```
+
+`src/main/resources/logback.xml`:
+
+```xml
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
+```
+
+Начало `Routing.kt`:
+
+```kotlin
+package shortener
+
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
+import io.ktor.server.request.receiveText
+import io.ktor.server.request.requirePathParameter
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondRedirect
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
+```
+
+Функции Ktor здесь — расширения, и без импорта компилятор их не найдёт, а IDEA предложит импорт по Alt+Enter. Дальше идут фрагменты `Routing.kt` из урока, а четвёртый маршрут — по образцу `/{code}` с `respondText("$code -> $url")`. Если процесс сервера убить принудительно, например через `taskkill /F`, Gradle допишет «finished with non-zero exit value» и «BUILD FAILED». Это код возврата убитого процесса, сборка тут ни при чём.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Где ты применишь это до пятницы? Найди в своём сервисе общий для запросов объект с `HashMap`, списком или счётчиком внутри и проверь, чем его защищают от параллельного доступа. Пройди главные маршруты через `curl -i`: нет ли где 200 с текстом ошибки? Через неделю, перед уроком про JSON, вернись к шпаргалке.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Зависимости | `ktor-server-core`, `ktor-server-netty`, `ktor-server-config-yaml`, `runtimeOnly` logback |
+| Точка входа | `fun main(args: Array<String>) { EngineMain.main(args) }` |
+| Модуль в конфиге | `ktor.application.modules: - shortener.ApplicationKt.module` |
+| Маршруты | `get("/{code}") { … }`, `post("/links") { … }`, `route("/api/links") { … }` |
+| Параметры | `call.requirePathParameter("code")`, `call.request.queryParameters["alias"]` |
+| Тело | `call.receiveText()` |
+| Ответы | `respondText(text, status = …)`, `respond(HttpStatusCode.NotFound)`, `respondRedirect(url)` |
+| После ответа с ошибкой | `return@post` |
+| Общие данные | `ConcurrentHashMap` и `putIfAbsent` |
+| Проверка | `curl -i …`, в PowerShell 5.1 — `curl.exe` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Ktor", meaning: "Асинхронный фреймворк JetBrains для веб-сервисов на Kotlin; его API построено на корутинах." },
+  { term: "Движок (engine)", meaning: "Сервер, который слушает порт и передаёт запросы в приложение Ktor; в курсе это Netty." },
+  { term: "EngineMain", meaning: "Точка запуска движка, которая берёт порт и модули из application.yaml." },
+  { term: "embeddedServer", meaning: "Запуск сервера из кода, где порт и модуль заданы прямо в main." },
+  { term: "Модуль (module)", meaning: "Функция-расширение Application, которая подключает маршруты и плагины Ktor; в конфиге её называют полным именем." },
+  { term: "application.yaml", meaning: "Файл настроек в src/main/resources: порт в ktor.deployment, модули в ktor.application.modules." },
+  { term: "Маршрут (route)", meaning: "Пара из метода HTTP и шаблона пути, к которой привязан обработчик." },
+  { term: "Обработчик (route handler)", meaning: "Suspend-лямбда с получателем RoutingContext, которую Ktor вызывает на каждый подходящий запрос." },
+  { term: "call", meaning: "Свойство получателя в обработчике: через него читают запрос и отправляют ответ." },
+  { term: "Параметр пути (path parameter)", meaning: "Часть шаблона в фигурных скобках, которая совпадает с одним сегментом адреса." },
+  { term: "Параметр запроса (query parameter)", meaning: "Пара имя=значение после знака вопроса в адресе; в Ktor её читают как String или null." },
+  { term: "Тело запроса (request body)", meaning: "Данные, которые клиент отправляет после заголовков, например адрес для сокращения." },
+  { term: "Статус (status code)", meaning: "Трёхзначный код состояния в ответе HTTP, по которому клиент понимает исход: 200, 201, 302, 400, 404, 409." },
+  { term: "Редирект (redirect)", meaning: "Ответ 3xx с заголовком Location, который отправляет клиента на другой адрес." },
+  { term: "ConcurrentHashMap", meaning: "Словарь из JDK для одновременной работы нескольких потоков; его итераторы не бросают ConcurrentModificationException." },
+  { term: "Атомарная операция (atomic operation)", meaning: "Операция, которая выполняется одним неделимым шагом, например putIfAbsent у ConcurrentHashMap." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-basics-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Ktor: понятия</span>
+    <span class="kc-trainer-hint">Запуск, маршруты, ответы</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-basics-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что ответит сервис</span>
+    <span class="kc-trainer-hint">Маршруты, статусы, потоки</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-basics-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери обработчик</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-basics-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши маршрут</span>
+    <span class="kc-trainer-hint">Запрос, ответ, хранилище</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Ktor 3.6 — Create a new project, Server engines, Configuration in a file, Modules, Plugins, Releases** ([ktor.io/docs](https://ktor.io/docs/server-create-a-new-project.html), сверено 2026-10-02) — генератор, Netty, `EngineMain` и YAML, версия 3.6.0.
+- **Ktor 3.6 — Routing, Handling requests, Sending responses, API reference и исходники** ([ktor.io/docs](https://ktor.io/docs/server-routing.html), сверено 2026-10-02) — маршруты, параметры, ответы, пул `callGroupSize`.
+- **Oracle — Java SE 25 API: ConcurrentHashMap, LinkedHashMap** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html), сверено 2026-09-28) — атомарный `putIfAbsent`, синхронизация и итераторы.
+- **Kotlin — Shared mutable state and concurrency** ([kotlinlang.org/docs](https://kotlinlang.org/docs/shared-mutable-state-and-concurrency.html), сверено 2026-09-28) — гонки параллельных корутин.
+- **IETF — RFC 9110: HTTP Semantics** ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110.html), сверено 2026-09-28) — значения статусов.
+- **Spring Framework 7.0 — Concurrency Model** ([docs.spring.io](https://docs.spring.io/spring-framework/reference/web/webflux/new-framework.html), сверено 2026-09-28) — пулы потоков у сервлетов и неблокирующих серверов.

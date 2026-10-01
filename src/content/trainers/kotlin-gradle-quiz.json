@@ -1,0 +1,86 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-gradle",
+  "title": "Что соберётся и что увидит Java",
+  "description": "Разбери сценарии: какая версия соберёт проект, что значит вывод Gradle и как Java видит Kotlin-код.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "У тебя на машине старый Gradle 8, у коллеги — Gradle 9.8.0. В gradle-wrapper.properties проекта записана 9.7.0. Оба запускают ./gradlew build. Какой Gradle соберёт проект?",
+        "options": [
+          "Gradle 9.7.0 у обоих: обёртка скачает и запустит её",
+          "У каждого свой: обёртка берёт установленный Gradle",
+          "Gradle 9.8.0 у обоих: обёртка выбирает новейшую",
+          "Никакой: при разных установленных версиях сборка падает"
+        ],
+        "correctIndex": 0,
+        "explain": "gradlew читает версию из gradle-wrapper.properties, при первом запуске скачивает этот дистрибутив в домашний каталог Gradle и дальше собирает только им. Установленный на машине Gradle обёртка не использует, его взяла бы команда gradle без w. Новейшую версию обёртка сама не ищет, а разные установленные версии ей не мешают."
+      },
+      {
+        "prompt": "Java-класс Link объявляет getUrl(), isActive() и setActive(boolean). Какими свойствами Kotlin покажет эти методы?",
+        "options": [
+          "url и active: приставку is Kotlin отбрасывает",
+          "Никакими: Java-методы в Kotlin зовут только со скобками",
+          "url и isActive, а запись в isActive вызовет setActive",
+          "Только url: из is-геттера свойство не получится"
+        ],
+        "correctIndex": 2,
+        "explain": "Геттер getUrl() становится свойством url, а пара isActive() и setActive() — свойством с именем геттера, isActive: link.isActive = false вызывает setActive(false). Приставка is при этом сохраняется: свойства active у Link нет. Вызывать методы со скобками тоже можно, но Kotlin показывает их свойствами."
+      },
+      {
+        "prompt": "Сборка с флагом --console=plain напечатала «> Task :compileTestKotlin NO-SOURCE» и «> Task :test NO-SOURCE». Что это значит?",
+        "options": [
+          "Тесты упали, но Gradle не показал ошибку",
+          "Тестов в проекте нет, выполнять нечего",
+          "Тесты пропущены: результат прошлой сборки не изменился",
+          "Тесты отключены флагом в командной строке"
+        ],
+        "correctIndex": 1,
+        "explain": "NO-SOURCE ставится, когда у задачи нет входных файлов: в src/test нет исходников, компилировать и запускать нечего. Результат прошлой сборки, который можно не пересчитывать, Gradle помечает UP-TO-DATE, а задачу, исключённую флагом командной строки, — SKIPPED. Упавший тест Gradle не прячет, сборка закончится с ошибкой."
+      },
+      {
+        "prompt": "В Kotlin объявлен object Counter { var clicks = 0 } без аннотаций. Как Java-код прочитает счётчик?",
+        "options": [
+          "Counter.getClicks()",
+          "Counter.clicks",
+          "Counter.INSTANCE.clicks",
+          "Counter.INSTANCE.getClicks()"
+        ],
+        "correctIndex": 3,
+        "explain": "Для Java object — класс с единственным экземпляром в статическом поле INSTANCE, а свойство clicks превращается в методы getClicks() и setClicks() этого экземпляра. Counter.getClicks() javac отвергнет: метод не статический, таким его сделал бы @JvmStatic. Поле clicks существует, но оно private, поэтому ни Counter.clicks, ни Counter.INSTANCE.clicks не скомпилируются; открытым поле делает @JvmField."
+      },
+      {
+        "prompt": "Проект на Kotlin 2.4.20 собирается Gradle 9.7.0. Вчера вышел Gradle 9.8.0. Какой вывод вернее?",
+        "options": [
+          "Обновиться сразу: новый Gradle совместим с любым плагином",
+          "Остаться на 9.7.0, пока плагин Kotlin не поддержит 9.8.0",
+          "Обновиться нельзя: с KGP 2.4.20 Gradle 9.8.0 не запустит сборку"
+        ],
+        "correctIndex": 1,
+        "explain": "По таблице совместимости KGP 2.4.20 полностью поддерживает Gradle до 9.7.0. Более новый Gradle ставить можно, но тогда по документации возможны предупреждения об устаревшем API, а часть новых функций может не заработать. Так что «нельзя» слишком сильно, а «совместим с любым плагином» неверно: версию Gradle поднимают вслед за плагином Kotlin."
+      },
+      {
+        "prompt": "В object Shortener объявлена функция @JvmStatic @JvmOverloads fun shorten(url: String, length: Int = 6, secure: Boolean = true). Какие методы shorten увидит Java?",
+        "options": [
+          "Три: (String), (String, int) и (String, int, boolean)",
+          "Один полный: (String, int, boolean)",
+          "Четыре, включая (String, boolean)"
+        ],
+        "correctIndex": 0,
+        "explain": "@JvmOverloads добавляет по перегрузке на каждый параметр со значением по умолчанию: без secure, потом без length и secure. Перегрузка (String, boolean) не появится, ведь параметры отбрасываются только справа налево. Один полный метод Java видела бы без аннотации."
+      },
+      {
+        "prompt": "Сервис собран с jvmToolchain(25). Скрипт из build/install падает: «shortener/ApplicationKt has been compiled by a more recent version of the Java Runtime (class file version 69.0), this version of the Java Runtime only recognizes class file versions up to 68.0». Что случилось?",
+        "options": [
+          "Версия kotlin-stdlib не совпала с версией компилятора",
+          "Gradle 9.7.0 не работает с Java 25, тулчейн надо понизить",
+          "Скрипт запустил Java 24 на классах для Java 25",
+          "В mainClass указан класс, которого нет"
+        ],
+        "correctIndex": 2,
+        "explain": "Версия класса 69 — это Java 25, а 68 — Java 24. Тулчейн собрал байт-код под 25, а скрипт взял Java из JAVA_HOME, где стоит 24. Лечится JDK 25 в JAVA_HOME или запуском через ./gradlew run. Gradle 9.7.0 поддерживает Java 25 и для запуска, и для тулчейнов. Отсутствующий класс дал бы ClassNotFoundException, а stdlib здесь ни при чём."
+      }
+    ]
+  }
+}

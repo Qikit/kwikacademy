@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-gradle",
+  "title": "Gradle и Java: понятия",
+  "description": "Вспомни, как устроен Gradle-проект и как Java и Kotlin видят друг друга.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Зачем в проекте gradlew и папка gradle/wrapper?", "back": "Это обёртка: она фиксирует версию Gradle, при первом запуске скачивает её и дальше собирает только ею. Ставить Gradle на машину не нужно.", "hint": "Что будет, если Gradle на машине нет?" },
+      { "front": "Где лежит каталог версий и как Gradle его находит?", "back": "В gradle/libs.versions.toml. Файл с этим именем в папке gradle Gradle подключает сам." },
+      { "front": "Как в скрипте сборки обратиться к библиотеке commons-lang3 из каталога?", "back": "libs.commons.lang3: дефисы в имени становятся точками.", "hint": "Типобезопасный доступ" },
+      { "front": "Почему проект на Kotlin 2.4.20 собирают Gradle 9.7.0, хотя вышел 9.8.0?", "back": "9.7.0 — последняя версия Gradle, которую KGP 2.4.20 поддерживает полностью. С более новой возможны предупреждения и неработающие функции." },
+      { "front": "Чем implementation отличается от api?", "back": "Зависимость из implementation нужна модулю для компиляции и работы, но не видна модулям, которые его подключают. Из api — видна и им. Приложению хватает implementation." },
+      { "front": "Откуда в дереве зависимостей kotlin-stdlib, если её никто не объявлял?", "back": "Плагин Kotlin добавляет стандартную библиотеку сам, той же версии, что и плагин.", "hint": "Кто ещё пишет в dependencies?" },
+      { "front": "Что делает jvmToolchain(25)?", "back": "Выбирает JDK 25 для компиляции и запуска проекта, байт-код получается под Java 25. Нужную JDK Gradle найдёт на машине или скачает через плагин foojay." },
+      { "front": "Почему в сборке compileKotlin идёт раньше compileJava?", "back": "Компилятор Kotlin читает Java-исходники сам, а javac видит Kotlin-классы только готовыми .class-файлами." },
+      { "front": "Как Kotlin показывает Java-методы getHost() и isAbsolute()?", "back": "Свойствами: uri.host и uri.isAbsolute. Приставка is в имени свойства сохраняется." },
+      { "front": "Как Java вызовет функцию generate() из object CodeGenerator без @JvmStatic?", "back": "Через экземпляр: CodeGenerator.INSTANCE.generate(). С @JvmStatic — CodeGenerator.generate()." },
+      { "front": "Что делает @JvmOverloads?", "back": "Генерирует для Java перегрузки: по одной на каждый параметр со значением по умолчанию." },
+      { "front": "В каком классе Java найдёт функции из файла Main.kt?", "back": "В MainKt. Другое имя задаёт @file:JvmName в начале файла, и тогда mainClass нужно поменять.", "hint": "Имя файла и суффикс" }
+    ]
+  }
+}

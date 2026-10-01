@@ -1,0 +1,82 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-gradle",
+  "title": "Допиши сборку",
+  "description": "Впиши функцию сборки, имя или аннотацию. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "plugins { ___(libs.plugins.kotlin.jvm) }   // из каталога",
+        "answers": [
+          "alias"
+        ],
+        "explain": "Плагин из каталога подключают через alias: libs.plugins.kotlin.jvm — доступ к записи kotlin-jvm из раздела [plugins]."
+      },
+      {
+        "text": "implementation(libs.___)   // запись commons-lang3",
+        "answers": [
+          "commons.lang3"
+        ],
+        "explain": "Gradle генерирует доступ к каждой записи каталога, и дефисы в имени превращаются в точки: commons-lang3 даёт libs.commons.lang3."
+      },
+      {
+        "text": "kotlin { ___(25) }   // JDK 25 для компиляции и запуска",
+        "answers": [
+          "jvmToolchain"
+        ],
+        "explain": "jvmToolchain выбирает JDK проекта: Kotlin собирает байт-код под эту версию, а Gradle ищет JDK на машине или скачивает через плагин foojay."
+      },
+      {
+        "text": "mainClass = \"shortener.___\"   // main в файле Main.kt",
+        "answers": [
+          "MainKt"
+        ],
+        "explain": "Функции верхнего уровня из Main.kt попадают в класс MainKt, и плагин application запускает именно его."
+      },
+      {
+        "text": "./gradlew ___ --configuration runtimeClasspath",
+        "answers": [
+          "dependencies"
+        ],
+        "explain": "Задача dependencies печатает дерево зависимостей выбранной конфигурации вместе с транзитивными."
+      },
+      {
+        "text": "val query: ___ = uri.query   // «?» в адресе может не быть",
+        "answers": [
+          "String?"
+        ],
+        "explain": "getQuery() возвращает null, если query нет. Nullable-тип сразу превращает платформенный String! в тип, который компилятор проверяет на null."
+      },
+      {
+        "text": "CodeGenerator.___.generate(6);   // Java, object без static",
+        "answers": [
+          "INSTANCE"
+        ],
+        "explain": "Для Java object — класс с единственным экземпляром в статическом поле INSTANCE. Без @JvmStatic функция — метод этого экземпляра."
+      },
+      {
+        "text": "@___ fun generate(): String   // Java: без INSTANCE",
+        "answers": [
+          "JvmStatic"
+        ],
+        "explain": "@JvmStatic превращает функцию object в статический метод класса, и экземпляр в Java-вызове не нужен."
+      },
+      {
+        "text": "@___ fun generate(length: Int = 6)   // Java: и generate()",
+        "answers": [
+          "JvmOverloads"
+        ],
+        "explain": "Значения по умолчанию Java не понимает. @JvmOverloads добавляет перегрузку без параметра со значением по умолчанию."
+      },
+      {
+        "text": "@file:___(\"App\")   // функции файла — в классе App",
+        "answers": [
+          "JvmName"
+        ],
+        "explain": "@file:JvmName в начале файла задаёт имя класса, в который попадут его функции верхнего уровня. Тогда и mainClass меняют на shortener.App."
+      }
+    ]
+  }
+}

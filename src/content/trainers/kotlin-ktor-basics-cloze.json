@@ -1,0 +1,85 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-basics",
+  "title": "Допиши маршрут",
+  "description": "Впиши функцию, свойство или имя так, чтобы код сервиса компилировался и делал то, что сказано. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "val alias = call.request.___[\"alias\"]  // ?alias=kotlin",
+        "answers": [
+          "queryParameters"
+        ],
+        "explain": "Параметры после знака вопроса лежат в call.request.queryParameters. Результат — String?: null, если параметра нет."
+      },
+      {
+        "text": "val url = call.___().trim()  // адрес из тела запроса",
+        "answers": [
+          [
+            "receiveText",
+            "receive<String>"
+          ]
+        ],
+        "explain": "receiveText() и receive<String>() читают тело запроса текстом. Обе — suspend-функции: обработчик ждёт тело, не занимая поток."
+      },
+      {
+        "text": "get(\"/{code}\") { val url = links.find(call.___(\"code\")) }",
+        "answers": [
+          "requirePathParameter"
+        ],
+        "explain": "requirePathParameter возвращает значение параметра пути как String, а если его нет, бросает MissingRequestParameterException, и Ktor отвечает 400."
+      },
+      {
+        "text": "call.respondText(code, ___ = HttpStatusCode.Created)",
+        "answers": [
+          "status"
+        ],
+        "explain": "Статус передают по имени: второй по порядку параметр respondText — тип содержимого, и HttpStatusCode на его месте не скомпилируется."
+      },
+      {
+        "text": "call.respond(HttpStatusCode.___)  // кода нет в хранилище",
+        "answers": [
+          "NotFound"
+        ],
+        "explain": "HttpStatusCode.NotFound — 404: сервер не нашёл ресурс. respond со статусом отправляет пустой ответ."
+      },
+      {
+        "text": "else call.___(url)  // 302 и заголовок Location",
+        "answers": [
+          "respondRedirect"
+        ],
+        "explain": "respondRedirect ставит заголовок Location и по умолчанию отвечает 302 Found; с permanent = true — 301."
+      },
+      {
+        "text": "post(\"/links\") { …; return@___ }  // после ответа 400",
+        "answers": [
+          "post"
+        ],
+        "explain": "Метка по умолчанию совпадает с именем функции, которой передали лямбду. return@post завершает только обработчик, и код после ответа 400 не выполнится."
+      },
+      {
+        "text": "val links = ___<String, String>()  // для многих потоков",
+        "answers": [
+          "ConcurrentHashMap"
+        ],
+        "explain": "Обработчики работают на нескольких потоках одновременно, и общему словарю нужна потокобезопасная реализация. LinkedHashMap из mutableMapOf требует внешней синхронизации."
+      },
+      {
+        "text": "links.___(code, url) == null  // занять код одним шагом",
+        "answers": [
+          "putIfAbsent"
+        ],
+        "explain": "putIfAbsent кладёт значение, только если ключа нет, и делает это атомарно. null в ответе значит, что код был свободен и теперь занят."
+      },
+      {
+        "text": "___.main(args)  // Netty с настройками из application.yaml",
+        "answers": [
+          "EngineMain"
+        ],
+        "explain": "EngineMain.main запускает движок и читает порт и модули из application.yaml. embeddedServer задал бы их в коде."
+      }
+    ]
+  }
+}

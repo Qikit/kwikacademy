@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-basics",
+  "title": "Собери обработчик",
+  "description": "Расставь строки кода так, чтобы маршрут или функция делали то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери модуль маршрутов: на GET / сервис отвечает текстом «URL shortener».",
+        "words": ["        }", "    routing {", "}", "            call.respondText(\"URL shortener\")", "fun Application.configureRouting() {", "    }", "        get(\"/\") {"],
+        "answer": ["fun Application.configureRouting() {", "    routing {", "        get(\"/\") {", "            call.respondText(\"URL shortener\")", "        }", "    }", "}"],
+        "explain": "Модуль — функция-расширение Application. Внутри него routing { } открывает блок маршрутов, в нём get(\"/\") принимает обработчик, а call доступен в обработчике как свойство получателя. Каждый блок закрывается на своём уровне отступа."
+      },
+      {
+        "task": "Собери переход по короткой ссылке: найди адрес по коду из пути; нет адреса — 404, есть — редирект на него.",
+        "words": ["    } else {", "        call.respondRedirect(url)", "get(\"/{code}\") {", "    }", "        call.respond(HttpStatusCode.NotFound)", "}", "    if (url == null) {", "    val url = links.find(call.requirePathParameter(\"code\"))"],
+        "answer": ["get(\"/{code}\") {", "    val url = links.find(call.requirePathParameter(\"code\"))", "    if (url == null) {", "        call.respond(HttpStatusCode.NotFound)", "    } else {", "        call.respondRedirect(url)", "    }", "}"],
+        "explain": "Сначала адрес по коду, потом ветвление. Внутри url == null адрес ещё null, и respondRedirect(url) там не скомпилируется: среди причин компилятор назовёт «Argument type mismatch: actual type is 'Nothing?', but 'String' was expected». В ветке else компилятор уже знает, что url не null, и редирект уходит со статусом 302."
+      },
+      {
+        "task": "Собери создание ссылки: прочитай адрес из тела; пустой — ответь 400 и ничего не сохраняй; иначе сохрани и ответь 201 с кодом.",
+        "words": ["        return@post", "    val code = links.add(url)", "post(\"/links\") {", "    }", "        call.respond(HttpStatusCode.BadRequest)", "}", "    if (url.isEmpty()) {", "    call.respondText(code, status = HttpStatusCode.Created)", "    val url = call.receiveText().trim()"],
+        "answer": ["post(\"/links\") {", "    val url = call.receiveText().trim()", "    if (url.isEmpty()) {", "        call.respond(HttpStatusCode.BadRequest)", "        return@post", "    }", "    val code = links.add(url)", "    call.respondText(code, status = HttpStatusCode.Created)", "}"],
+        "explain": "Проверка стоит до сохранения, иначе пустой адрес попадёт в хранилище. return@post идёт сразу после ответа 400: respond не выходит из лямбды, и без возврата код дошёл бы до add. Статус 201 передан по имени, потому что второй параметр respondText — тип содержимого."
+      },
+      {
+        "task": "Собери просмотр ссылки: код из пути; нет адреса — 404, есть — 200 и текст «код -> адрес».",
+        "words": ["        call.respondText(\"$code -> $url\")", "    val url = links.find(code)", "}", "    if (url == null) {", "get(\"/links/{code}\") {", "    }", "        call.respond(HttpStatusCode.NotFound)", "    val code = call.requirePathParameter(\"code\")", "    } else {"],
+        "answer": ["get(\"/links/{code}\") {", "    val code = call.requirePathParameter(\"code\")", "    val url = links.find(code)", "    if (url == null) {", "        call.respond(HttpStatusCode.NotFound)", "    } else {", "        call.respondText(\"$code -> $url\")", "    }", "}"],
+        "explain": "Код нужен и для поиска, и для текста ответа, поэтому его сохраняют в переменную первым. respondText без статуса отвечает 200. Если переставить ветки, код скомпилируется, но несуществующая ссылка получит «nope42 -> null» с 200, а настоящая — 404."
+      },
+      {
+        "task": "Коды kotlin и ktor42 заняты. Генератор выдаёт коды из набора по очереди. Возьми первый свободный и напечатай его.",
+        "words": ["    val code = generateSequence { codes.next() }", "    println(code)", "fun main() {", "    val codes = (taken + \"Qp4xB9\").iterator()", "}", "        .first { it !in taken }", "    val taken = setOf(\"kotlin\", \"ktor42\")"],
+        "answer": ["fun main() {", "    val taken = setOf(\"kotlin\", \"ktor42\")", "    val codes = (taken + \"Qp4xB9\").iterator()", "    val code = generateSequence { codes.next() }", "        .first { it !in taken }", "    println(code)", "}"],
+        "explain": "Набор кодов строится из taken, поэтому taken объявлен первым. generateSequence лениво вызывает codes.next(), а first останавливается на первом коде не из taken. Программа напечатает Qp4xB9, так же LinkStore.add повторяет генерацию, пока код занят."
+      },
+      {
+        "task": "Собери функцию: шанс, что среди links случайных кодов из codes возможных хотя бы два совпадут.",
+        "words": ["    return 1 - allDistinct", "    }", "fun collisionChance(links: Int, codes: Double): Double {", "        allDistinct *= 1 - i / codes", "}", "    var allDistinct = 1.0", "    for (i in 0 until links) {"],
+        "answer": ["fun collisionChance(links: Int, codes: Double): Double {", "    var allDistinct = 1.0", "    for (i in 0 until links) {", "        allDistinct *= 1 - i / codes", "    }", "    return 1 - allDistinct", "}"],
+        "explain": "Вероятность, что все коды разные, — произведение множителей 1 - i / codes: i-й код должен разойтись с i уже выданными. Произведение копится в var до цикла, а ответ — дополнение до единицы после него. collisionChance(3, 4.0) даёт 0.625."
+      }
+    ]
+  }
+}

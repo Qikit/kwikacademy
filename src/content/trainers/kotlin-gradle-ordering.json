@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-gradle",
+  "title": "Собери вызов Java",
+  "description": "Расставь строки так, чтобы Kotlin-программа с Java-классами напечатала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Прочитай query адреса как String? и напечатай его длину или 0, если query нет. Импорт java.net.URI уже стоит выше.",
+        "words": ["    val length = query?.length ?: 0", "}", "    val query: String? = uri.query", "fun main() {", "    println(length)", "    val uri = URI(\"https://ktor.io/docs\")"],
+        "answer": ["fun main() {", "    val uri = URI(\"https://ktor.io/docs\")", "    val query: String? = uri.query", "    val length = query?.length ?: 0", "    println(length)", "}"],
+        "explain": "Каждая строка использует значение из предыдущей: адрес, потом его query, потом длина. getQuery() возвращает null, если части после «?» нет, поэтому query сразу объявлен как String?, и компилятор заставляет обработать null. Программа напечатает 0."
+      },
+      {
+        "task": "Посчитай переходы по кодам ktor, kotlin, ktor и один раз, в конце, напечатай счётчик. Следи за отступами: скобка цикла стоит глубже. Импорт ConcurrentHashMap уже стоит выше.",
+        "words": ["    }", "    println(clicks)", "        clicks.merge(code, 1) { old, one -> old + one }", "fun main() {", "}", "    for (code in listOf(\"ktor\", \"kotlin\", \"ktor\")) {", "    val clicks = ConcurrentHashMap<String, Int>()"],
+        "answer": ["fun main() {", "    val clicks = ConcurrentHashMap<String, Int>()", "    for (code in listOf(\"ktor\", \"kotlin\", \"ktor\")) {", "        clicks.merge(code, 1) { old, one -> old + one }", "    }", "    println(clicks)", "}"],
+        "explain": "merge — Java-метод, который ждёт BiFunction, и Kotlin подставляет туда лямбду: это SAM-преобразование. Первый вызов для кода кладёт 1, повторный складывает старое значение с новым. println стоит после цикла, поэтому печатает один раз: {kotlin=1, ktor=2}. Внутри цикла он напечатал бы счётчик трижды."
+      },
+      {
+        "task": "Запусти задачу в отдельном потоке, дождись её окончания и напечатай «готово». Вывод: «задача», потом «готово».",
+        "words": ["    thread.join()", "fun main() {", "    println(\"готово\")", "    val thread = Thread(task)", "}", "    thread.start()", "    val task = Runnable { println(\"задача\") }"],
+        "answer": ["fun main() {", "    val task = Runnable { println(\"задача\") }", "    val thread = Thread(task)", "    thread.start()", "    thread.join()", "    println(\"готово\")", "}"],
+        "explain": "Runnable — Java-интерфейс с одним методом, и Kotlin создаёт его из лямбды. start запускает поток, join ждёт его окончания, и только потом печатается «готово». Если поставить join до start, ждать будет нечего: «готово» может напечататься раньше «задача»."
+      },
+      {
+        "task": "Собери короткую ссылку из базы http://localhost:8080/ и кода HMUwIa, напечатай ссылку, затем её путь. Импорт java.net.URI уже стоит выше.",
+        "words": ["    println(link.path)", "}", "    val link = base.resolve(\"HMUwIa\")", "    println(link)", "fun main() {", "    val base = URI(\"http://localhost:8080/\")"],
+        "answer": ["fun main() {", "    val base = URI(\"http://localhost:8080/\")", "    val link = base.resolve(\"HMUwIa\")", "    println(link)", "    println(link.path)", "}"],
+        "explain": "resolve достраивает относительный адрес от базового, поэтому базу объявляют раньше. Геттер getPath() читается как свойство path. Программа напечатает http://localhost:8080/HMUwIa и /HMUwIa."
+      },
+      {
+        "task": "Сделай из 90 секунд отрицательную длительность, напечатай, отрицательна ли она, затем число её секунд. Импорт java.time.Duration уже стоит выше.",
+        "words": ["    println(back.seconds)", "    val back = timeout.negated()", "fun main() {", "}", "    println(back.isNegative)", "    val timeout = Duration.ofSeconds(90)"],
+        "answer": ["fun main() {", "    val timeout = Duration.ofSeconds(90)", "    val back = timeout.negated()", "    println(back.isNegative)", "    println(back.seconds)", "}"],
+        "explain": "negated() работает с уже созданной длительностью, поэтому она объявлена раньше. isNegative() и getSeconds() Kotlin показывает свойствами isNegative и seconds, у первого приставка is сохраняется. Программа напечатает true и -90."
+      },
+      {
+        "task": "Прибавь неделю к дате выхода Kotlin 2.4.20, 7 сентября 2026 года, и напечатай число месяца, затем день недели. Импорт java.time.LocalDate уже стоит выше.",
+        "words": ["    println(nextWeek.dayOfWeek)", "fun main() {", "    val nextWeek = release.plusDays(7)", "}", "    println(nextWeek.dayOfMonth)", "    val release = LocalDate.of(2026, 9, 7)"],
+        "answer": ["fun main() {", "    val release = LocalDate.of(2026, 9, 7)", "    val nextWeek = release.plusDays(7)", "    println(nextWeek.dayOfMonth)", "    println(nextWeek.dayOfWeek)", "}"],
+        "explain": "LocalDate неизменяемый: plusDays возвращает новую дату, и её кладут в отдельную переменную. getDayOfMonth() и getDayOfWeek() читаются как свойства dayOfMonth и dayOfWeek. Программа напечатает 14 и MONDAY."
+      }
+    ]
+  }
+}

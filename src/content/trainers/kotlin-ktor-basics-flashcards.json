@@ -1,0 +1,23 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-basics",
+  "title": "Ktor: понятия",
+  "description": "Вспомни, как запускается сервис на Ktor, как устроены маршруты и ответы и почему общим данным нужно особое хранилище.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Зачем сервису артефакт ktor-server-config-yaml?", "back": "Без него EngineMain не прочитает application.yaml: поддержка YAML в Ktor вынесена в отдельную зависимость." },
+      { "front": "Чем EngineMain отличается от embeddedServer?", "back": "У embeddedServer порт задан в коде и при запуске не меняется. EngineMain берёт настройки из application.yaml, и их можно переопределить аргументами.", "hint": "Где живёт порт" },
+      { "front": "Что такое модуль в Ktor?", "back": "Функция-расширение Application, которая подключает маршруты и плагины Ktor, например fun Application.module()." },
+      { "front": "Как назвать в application.yaml функцию module из файла Application.kt пакета shortener?", "back": "shortener.ApplicationKt.module: пакет, класс файла, имя функции.", "hint": "Как в mainClass" },
+      { "front": "Какой тип у лямбды в get(\"/\") { … }?", "back": "suspend RoutingContext.() -> Unit, он же RoutingHandler: suspend-лямбда с получателем, у которого есть свойство call." },
+      { "front": "Что вернёт call.request.queryParameters[\"alias\"], если в адресе нет ?alias=?", "back": "null: параметр запроса необязателен, тип результата String?." },
+      { "front": "Что делает call.requirePathParameter(\"code\"), если параметра нет?", "back": "Бросает MissingRequestParameterException, и Ktor отвечает 400. Если параметр есть, возвращает String без null." },
+      { "front": "Какой статус отправит call.respondRedirect(url)?", "back": "302 Found и заголовок Location; с permanent = true — 301.", "hint": "По умолчанию временный" },
+      { "front": "Завершает ли call.respondText(…) обработчик?", "back": "Нет, это обычная suspend-функция. После ответа с ошибкой пиши return@post, иначе код пойдёт дальше." },
+      { "front": "Почему общее хранилище сервиса — ConcurrentHashMap?", "back": "Запросы выполняются на нескольких потоках, а LinkedHashMap из mutableMapOf без внешней синхронизации к этому не готов." },
+      { "front": "Что делает putIfAbsent у ConcurrentHashMap?", "back": "Кладёт значение, только если ключа ещё нет, одним атомарным шагом, и тогда возвращает null." },
+      { "front": "Сколько потоков по умолчанию выполняют вызовы в Ktor на Netty?", "back": "Столько, сколько у машины процессоров (callGroupSize), поэтому Thread.sleep или JDBC в обработчике занимают заметную долю пула." }
+    ]
+  }
+}

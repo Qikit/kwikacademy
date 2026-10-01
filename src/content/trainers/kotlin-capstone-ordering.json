@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-capstone",
+  "title": "Собери канал и остановку",
+  "description": "Расставь строки кода так, чтобы программа делала то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Канал без буфера: send ждёт, пока воркер примет элемент. Собери программу, которая печатает ktor и завершается.",
+        "words": ["    clicks.close()", "}", "    clicks.send(\"ktor\")", "fun main() = runBlocking {", "    worker.join()", "    val worker = launch { for (c in clicks) println(c) }", "    val clicks = Channel<String>()"],
+        "answer": ["fun main() = runBlocking {", "    val clicks = Channel<String>()", "    val worker = launch { for (c in clicks) println(c) }", "    clicks.send(\"ktor\")", "    clicks.close()", "    worker.join()", "}"],
+        "explain": "Без буфера send приостанавливается, пока кто-то не вызовет receive, поэтому воркер запускают до отправки: иначе программа зависнет. Закрывают канал после отправки, иначе send бросит ClosedSendChannelException. join идёт последним: до close() цикл воркера ждал бы новых элементов вечно."
+      },
+      {
+        "task": "ClickCounter: record() кладёт клик в канал, close() закрывает канал и ждёт воркер, а воркер печатает каждый записанный клик. Собери остановку, при которой все пять кликов записаны до отмены корутин приложения.",
+        "words": ["    appJob.cancelAndJoin()", "    val counter = ClickCounter(app)", "}", "    counter.close()", "    val appJob = Job()", "fun main() = runBlocking {", "    repeat(5) { counter.record(\"ktor\") }", "    val app = CoroutineScope(coroutineContext + appJob)"],
+        "answer": ["fun main() = runBlocking {", "    val appJob = Job()", "    val app = CoroutineScope(coroutineContext + appJob)", "    val counter = ClickCounter(app)", "    repeat(5) { counter.record(\"ktor\") }", "    counter.close()", "    appJob.cancelAndJoin()", "}"],
+        "explain": "Сначала Job приложения и область видимости на нём, потом счётчик и клики. close() идёт до cancelAndJoin(), как ApplicationStopping до отмены корутин в Ktor: воркер успевает разобрать очередь. Если отменить раньше, воркер не запишет ни одного клика, а после close() новые клики в канал уже не попадут."
+      },
+      {
+        "task": "Собери маршрут статистики из итогового этапа: он отдаёт код ссылки и число переходов.",
+        "words": ["    val clicks = service.countClicks(code)", "}", "    call.respond(LinkStatsResponse(code, clicks))", "get(\"/{code}/stats\") {", "    val code = call.requirePathParameter(\"code\")"],
+        "answer": ["get(\"/{code}/stats\") {", "    val code = call.requirePathParameter(\"code\")", "    val clicks = service.countClicks(code)", "    call.respond(LinkStatsResponse(code, clicks))", "}"],
+        "explain": "Код берут из пути, по нему сервис считает клики, и только потом отвечают DTO. Для неизвестного кода countClicks бросит LinkNotFoundException, и StatusPages превратит её в 404."
+      },
+      {
+        "task": "Собери DTO ответа статистики: маршрут создаёт его вызовом LinkStatsResponse(code, clicks), а в JSON поля идут так же: сначала code, потом clicks.",
+        "words": ["    val clicks: Long,", ")", "data class LinkStatsResponse(", "@Serializable", "    val code: String,"],
+        "answer": ["@Serializable", "data class LinkStatsResponse(", "    val code: String,", "    val clicks: Long,", ")"],
+        "explain": "Аннотация стоит над классом. Порядок свойств задаёт порядок аргументов конструктора и полей в JSON: {\"code\":\"ktor\",\"clicks\":5}. Если поменять свойства местами, вызов LinkStatsResponse(code, clicks) не скомпилируется: String не подойдёт на место Long."
+      },
+      {
+        "task": "Остановка с ограниченным ожиданием: дай воркеру не больше 500 мс на остаток работы. Программа должна напечатать «дождались: true».",
+        "words": ["    val done = withTimeoutOrNull(500) { worker.join() }", "    for (n in 1..5) clicks.send(n)", "fun main() = runBlocking {", "    println(\"дождались: ${done != null}\")", "    val clicks = Channel<Int>()", "}", "    clicks.close()", "    val worker = launch { for (n in clicks) delay(100) }"],
+        "answer": ["fun main() = runBlocking {", "    val clicks = Channel<Int>()", "    val worker = launch { for (n in clicks) delay(100) }", "    for (n in 1..5) clicks.send(n)", "    clicks.close()", "    val done = withTimeoutOrNull(500) { worker.join() }", "    println(\"дождались: ${done != null}\")", "}"],
+        "explain": "Канал без буфера, поэтому воркер запускают до отправки. Ждать с таймаутом имеет смысл только после close(): по открытому каналу цикл не закончится, withTimeoutOrNull вернёт null, и программа напечатает «дождались: false»."
+      },
+      {
+        "task": "Проверь, что закрытие не выбрасывает уже отправленное: программа печатает «записан ktor», затем «очередь разобрана».",
+        "words": ["    for (code in clicks) println(\"записан $code\")", "}", "    clicks.close()", "    val clicks = Channel<String>(Channel.UNLIMITED)", "    println(\"очередь разобрана\")", "fun main() = runBlocking {", "    clicks.trySend(\"ktor\")"],
+        "answer": ["fun main() = runBlocking {", "    val clicks = Channel<String>(Channel.UNLIMITED)", "    clicks.trySend(\"ktor\")", "    clicks.close()", "    for (code in clicks) println(\"записан $code\")", "    println(\"очередь разобрана\")", "}"],
+        "explain": "После close() цикл for получает всё, что отправили до закрытия, и заканчивается. Если закрыть до trySend, клик в канал не попадёт. Если поставить цикл до close(), он будет вечно ждать новых элементов."
+      }
+    ]
+  }
+}

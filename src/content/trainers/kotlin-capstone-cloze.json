@@ -1,0 +1,22 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-capstone",
+  "title": "Допиши счётчик кликов",
+  "description": "Впиши имя функции, класса или константы из итогового проекта. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "Channel<String>(Channel.___) // без потерь, пока открыт", "answers": ["UNLIMITED"], "explain": "Channel.UNLIMITED даёт буфер без ограничения: отправитель не ждёт, и trySend не проваливается, пока канал открыт. У BUFFERED буфер конечный, а CONFLATED оставляет только последний элемент." },
+      { "text": "fun record(code: String) { clicks.___(code) } // не ждёт", "answers": ["trySend"], "explain": "trySend не приостанавливается и не бросает исключений. send — suspend-функция, из обычной функции record её не вызвать." },
+      { "text": "clicks.___() // запретить новые клики, сохранив очередь", "answers": ["close"], "explain": "close() запрещает новые элементы, а уже отправленные воркер всё равно получит. cancel() выбросил бы очередь." },
+      { "text": "runBlocking { worker.___() } // ждать, пока разберёт очередь", "answers": ["join"], "explain": "join() приостанавливает вызывающую корутину, пока воркер не завершится. runBlocking нужен, потому что close() из AutoCloseable не suspend-функция." },
+      { "text": "} catch (e: ___) { // ошибка базы, но не отмена", "answers": [["SQLException", "java.sql.SQLException"]], "explain": "Ловят ошибку базы при записи одного клика. Exception поймал бы и CancellationException, и воркер проглотил бы отмену." },
+      { "text": "val appScope: ___ = this // до блока dependencies { }", "answers": [["CoroutineScope", "Application"]], "explain": "Application реализует CoroutineScope, поэтому this подходит как область видимости воркера. В проекте тип написан как CoroutineScope: счётчику нужна только она." },
+      { "text": "provide { ClickCounter(___(), appScope) }", "answers": ["resolve"], "explain": "resolve() внутри provide просит у DI зависимость нужного типа, здесь — LinkRepository." },
+      { "text": "clicks.merge(code, 1, Long::___)", "answers": ["plus"], "explain": "merge у ConcurrentHashMap атомарно прибавляет единицу к старому значению или кладёт 1, если ключа ещё нет." },
+      { "text": "links[code]?.let { clicks[code] ___ 0 }", "answers": ["?:"], "explain": "Элвис-оператор: для ссылки без переходов вернётся 0. Для неизвестного кода ?.let вернёт null, и сервис ответит 404." },
+      { "text": "get(\"/{code}/___\") { … } // внутри route(\"/api/links\")", "answers": ["stats"], "explain": "Статистика живёт по адресу GET /api/links/{code}/stats и отвечает {\"code\":…,\"clicks\":N}." }
+    ]
+  }
+}

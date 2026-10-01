@@ -4,10 +4,579 @@ order: 24
 phase: "Бэкенд на Ktor"
 title: "Итоговый проект: сокращатель ссылок"
 eyebrow: "Kotlin · Бэкенд на Ktor"
-readingMinutes: 15
-summary: "Собрать сервис коротких ссылок: API, база, ошибки, статистика переходов и тесты."
+readingMinutes: 18
+summary: "Собрать сервис коротких ссылок целиком и добавить статистику переходов на канале и корутине, которая не теряет клики при остановке сервера."
 tags: [kotlin, backend]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Итоговый проект: сокращатель ссылок» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке ты покрыл маршруты и сервис тестами: приложение запускает `testApplication`, базу заменяет репозиторий в памяти. Осталась последняя задача курса. Продакт хочет видеть, сколько раз переходили по каждой короткой ссылке. Проще всего прибавлять клик в базе прямо в обработчике редиректа и только потом отвечать 302.
+
+Работать это будет, но переход начнёт зависеть от базы. Поэтому клики пишут в фоне. Что тогда станет с незаписанными кликами, когда сервер останавливают ради обновления? Кажется, что достаточно перестать принимать новые клики, а очередь как-нибудь допишется.
+
+После урока ты сможешь собрать сервис коротких ссылок целиком, с маршрутами, базой, ошибками, DI и тестами, и добавить к нему статистику переходов на корутинах, которая при штатной остановке сервера сохраняет все клики.
+
+## Ядро: сначала дочитать очередь, потом отменять
+
+<Callout type="purple" title="Суть">
+Редирект кладёт код ссылки в **канал** (channel) и сразу отвечает, а фоновая корутина-**воркер** (worker) достаёт коды по одному и пишет клики в базу. Воркер живёт в области видимости приложения, и при остановке Ktor её отменяет. Чтобы клики не пропали, до отмены канал закрывают и **дожидаются воркера**: сначала `close()`, потом `join()`.
+</Callout>
+
+Сам счётчик — один класс `ClickCounter` и две строки в DI.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Коллега предлагает обойтись без канала: вызвать repository.addClick(code) прямо в обработчике, перед respondRedirect. Что он выиграет и что потеряет?">
+Выиграет надёжность: клик записан до ответа, и остановка сервера его не потеряет. Потеряет скорость и устойчивость редиректа: каждый переход ждёт транзакцию, а сбой базы вместо перехода даст 500. Для сокращателя переход важнее счётчика, поэтому запись уходит в фон.
+</Reveal>
+
+## Проект целиком
+
+Итоговый этап добавляет статистику и переносит JSON-маршруты под `/api/links`: префикс отделяет адреса API от коротких кодов. Запрос идёт из маршрута в сервис и через репозиторий в базу:
+
+```text
+Routing.kt        маршруты /api/links и /{code}
+Dto.kt            JSON запросов и ответов
+LinkService.kt    проверка URL и alias, код
+LinkRepository    интерфейс хранилища
+  ExposedLink…    H2 через Exposed
+  InMemoryLink…   в памяти, для тестов
+StatusPages.kt    исключение → статус и JSON
+Dependencies.kt   DI: кто кого получает
+ClickCounter.kt   новое: клики в фоне
+```
+
+| Запрос | Ответ | Ошибки |
+| --- | --- | --- |
+| `POST /api/links` | 201, JSON и `Location` | 400, 409, 415 |
+| `GET /api/links/{code}` | 200, JSON ссылки | 404 |
+| `GET /api/links/{code}/stats` | 200, код и число кликов | 404 |
+| `GET /{code}` | 302 на исходный URL | 404 |
+
+Остальное пришло из прошлых уроков: sealed-иерархия ошибок, функция-расширение `Link.toResponse(baseUrl)`, лямбда вместо генератора кодов в тесте и `withContext(Dispatchers.IO)` вокруг транзакции.
+
+## Как устроено: канал и воркер
+
+**Канал** из kotlinx.coroutines — очередь между корутинами. Документация сравнивает его с `BlockingQueue`: вместо блокирующих `put` и `take` у него приостанавливающие `send` и `receive`, и его можно закрыть. В сокращателе канал стоит между редиректом и базой, а в сервисе рассылки встал бы между разбором загруженного файла и отправкой писем. Контрпример — холодный `Flow` из урока про Flow: он ничего не хранит и на каждый `collect` выполняет код внутри `flow { }` заново. Канал хранит отправленное, пока его не заберут.
+
+По умолчанию буфера у канала нет. Такой канал называют **rendezvous** (встреча), и `send` в нём ждёт, пока кто-то вызовет `receive`. **`Channel.UNLIMITED`** даёт буфер без ограничения, поэтому отправитель не ждёт никогда, а число элементов ограничено только памятью. Клик кладут через **`trySend`**: функция не приостанавливается, не бросает исключений и возвращает результат. Неудача бывает, когда буфер полон или канал закрыт, у неограниченного буфера — только второе.
+
+**Воркер** — фоновая корутина, которая читает канал циклом `for (code in clicks)`. Пока канал открыт, цикл ждёт новых кодов. После `close()` он получает всё, что отправили до закрытия, и заканчивается.
+
+В примере ниже `isSuccess` говорит, удалась ли отправка, а `merge` прибавляет единицу к счётчику кода или кладёт 1 для нового. Playground работает на Kotlin 2.4.20 с kotlinx.coroutines 1.7.3. С версией 1.11.0, на которой собран проект, вывод тот же. Предскажи, в каком порядке появятся строки:
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+
+fun main() = runBlocking {
+    val clicks = Channel<String>(Channel.UNLIMITED)
+    val counts = mutableMapOf<String, Int>()
+    val worker = launch {
+        for (code in clicks) {
+            counts.merge(code, 1, Int::plus)
+            println("записан клик $code")
+        }
+        println("воркер закончил")
+    }
+    for (code in listOf("ktor", "kotlin", "ktor")) {
+        val sent = clicks.trySend(code).isSuccess
+        println("редирект $code, в очереди: $sent")
+    }
+    clicks.close()
+    worker.join()
+    println(counts)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="В каком порядке программа напечатает строки про редиректы и клики?">
+Сначала три строки «редирект …, в очереди: true», потом три «записан клик …», «воркер закончил» и `{ktor=2, kotlin=1}`. `launch` только планирует запуск воркера, а `trySend` не приостанавливается, поэтому `main` отправляет все коды, не уступая поток выполнения (thread). Воркер стартует на `join()` и забирает накопленное. Так и редирект в сервисе отвечает, не дожидаясь записи.
+</Reveal>
+
+Запусти, потом замени `Channel<String>(Channel.UNLIMITED)` на `Channel<String>()` и предскажи вывод до запуска.
+
+## Как устроено: остановка без потерь
+
+Воркеру нужна область видимости, и Ktor даёт её сам: класс `Application` реализует `CoroutineScope`. По справочнику Ktor её отменяют при остановке приложения, и в ней удобно запускать фоновые корутины. Программа ниже моделирует остановку: `appJob` играет роль `Job` приложения, а запись клика изображает `delay(100)`. `coroutineContext` — контекст корутины `runBlocking`, а `+ appJob` подменяет в нём `Job`: воркер работает в том же потоке выполнения, но отменяется через `appJob`.
+
+<KotlinPlayground>
+
+```kotlin
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+
+class ClickCounter(scope: CoroutineScope) {
+    private val clicks = Channel<String>(Channel.UNLIMITED)
+    var saved = 0
+        private set
+    private val worker = scope.launch {
+        for (code in clicks) {
+            delay(100) // запись в базу
+            saved++
+        }
+    }
+
+    fun record(code: String) {
+        clicks.trySend(code)
+    }
+
+    suspend fun close() {
+        clicks.close()
+    }
+}
+
+fun main() = runBlocking {
+    val appJob = Job()
+    val app = CoroutineScope(coroutineContext + appJob)
+    val counter = ClickCounter(app)
+    repeat(5) { counter.record("ktor") }
+    delay(250) // сервер работает
+
+    counter.close() // ApplicationStopping
+    appJob.cancelAndJoin() // Ktor отменяет корутины
+    println("Сохранено ${counter.saved} из 5")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Сначала предскажи: сколько кликов из пяти сохранит программа?">
+Два: «Сохранено 2 из 5». За 250 мс воркер записал два клика и стоял в `delay` над третьим. `close()` только закрыл канал: три кода ещё лежали в очереди, когда `cancelAndJoin()` отменил воркер в точке приостановки. Закрытие запрещает новые элементы, но не ждёт, пока старые разберут.
+</Reveal>
+
+Допиши в `close()` вторую строку, `worker.join()`, и запусти снова: выйдет «Сохранено 5 из 5». В проекте класс устроен так же, только пишет в базу:
+
+```kotlin
+class ClickCounter(
+    private val repository: LinkRepository,
+    scope: CoroutineScope,
+) : AutoCloseable {
+    private val clicks = Channel<String>(Channel.UNLIMITED)
+    private val worker = scope.launch { saveClicks() }
+
+    fun record(code: String) {
+        clicks.trySend(code)
+    }
+
+    override fun close() {
+        clicks.close()
+        runBlocking { worker.join() }
+    }
+
+    private suspend fun saveClicks() {
+        for (code in clicks) {
+            try {
+                repository.addClick(code)
+            } catch (e: SQLException) {
+                log.warn("Click for '$code' was not saved", e)
+            }
+        }
+    }
+
+    private companion object {
+        val log = LoggerFactory.getLogger(ClickCounter::class.java)
+    }
+}
+```
+
+`close()` из `AutoCloseable` не suspend-функция, поэтому воркер ждут через `runBlocking`. `try` ловит ошибку записи одного клика: без него первая же `SQLException` завершит воркер, а `trySend` продолжит складывать клики в канал, который никто не читает. Широкий `catch (e: Exception)` проглотил бы и `CancellationException`, как в уроке про корутины под контролем: при отмене воркер записал бы остаток очереди в лог как ошибки базы. `log` — логгер SLF4J, новая зависимость ему не нужна: эта библиотека приходит с Ktor.
+
+Область видимости счётчик получает в DI, а редирект вызывает `record` перед ответом:
+
+```kotlin
+fun Application.configureDependencies() {
+    val appScope: CoroutineScope = this
+    dependencies {
+        provide(::connectDatabase)
+        provide<LinkRepository>(::ExposedLinkRepository)
+        provide<CodeGenerator> { RandomCodeGenerator() }
+        provide(::LinkService)
+        provide { ClickCounter(resolve(), appScope) }
+    }
+}
+
+// Routing.kt
+val clickCounter: ClickCounter = dependencies.resolve()
+// …
+get("/{code}") {
+    val link = service.resolve(call.requirePathParameter("code"))
+    clickCounter.record(link.code)
+    call.respondRedirect(link.url)
+}
+```
+
+`this` сохраняют в `appScope` до блока: внутри `dependencies { }` неявный получатель `Application` закрыт маркером DSL. При остановке DI сам закрывает зависимости с `AutoCloseable`, в порядке, обратном объявлению. Счётчик объявлен последним и закрывается первым, пока репозиторий и база ещё работают.
+
+<Reveal q="В документации Ktor пример освобождения ресурсов подписан на событие ApplicationStopped. Почему бы не закрыть счётчик там?">
+К `ApplicationStopped` воркера уже нет. Между `ApplicationStopping` и `ApplicationStopped` Ktor отменяет область видимости приложения, воркер получает отмену в ближайшей точке приостановки, и очередь читать некому. `ApplicationStopped` годится для закрытия соединений, а работу, которой нужны корутины приложения, заканчивают в `ApplicationStopping`.
+</Reveal>
+
+Порядок остановки в Ktor 3.6.0, по исходному коду сервера:
+
+1. Движок останавливается и даёт текущим запросам время доработать.
+2. `ApplicationStopping`: DI закрывает зависимости, `close()` счётчика ждёт воркер.
+3. Ktor отменяет область видимости приложения и ждёт её корутины.
+4. `ApplicationStopped`.
+
+Запускает остановку **обработчик завершения** JVM (shutdown hook), который Ktor регистрирует при старте сервера. Ctrl+C его запускает, а при `kill -9` или `taskkill /F` процесс убивает ОС: обработчик не запускается, и очередь пропадает.
+
+<Callout type="blue" title="Если знаешь Java — здесь иначе">
+В Java такую схему собирают из `BlockingQueue` и потока выполнения. Закрытия у `BlockingQueue` нет, и Javadoc называет обычным приёмом особый объект-маркер конца (poison object). Пул потоков выполнения останавливают в два шага: `shutdown()` не принимает новых задач, но старых не ждёт, дождаться их помогает `awaitTermination()`. С Java 19 оба шага делает `close()`. В Kotlin шаги те же, `close()` и `join()`, только закрытие встроено в сам канал.
+</Callout>
+
+## Как на практике
+
+- **Запускай воркер в области видимости приложения.** Передавай её параметром, как в `ClickCounter(repository, scope)`: корутину остановит владелец области.
+- **Закрывай в `ApplicationStopping`.** Проще всего через `AutoCloseable` и DI, объявив счётчик после того, что он использует.
+- **Сначала `close()`, потом `join()`.** В обратном порядке остановка зависнет: цикл по открытому каналу ждёт вечно.
+- **Считай атомарно, даже если пишет один воркер.** В памяти — `merge` у `ConcurrentHashMap`, в базе — `clicks + 1`, которое база вычисляет сама в одном `UPDATE`. Появится второй писатель, и клики не потеряются.
+
+<Callout type="teal" title="Как принято">
+Фоновые корутины не запускают в `GlobalScope`. Руководство Android по корутинам объясняет почему: такой код выполняется в неуправляемой области видимости, и тестировать его очень трудно. Внешнюю область видимости передают параметром, а создаёт её и управляет ею объект, который живёт дольше вызывающего кода. В Ktor это само `Application`, в тесте — приложение из `testApplication`.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Тест, который ловит потерю.**
+Тест `saves every click before the application stops` делает 50 переходов, а репозиторий-обёртка `SlowClicksRepository` добавляет `delay(10)` к каждой записи, так что к остановке в канале стоит очередь. `testApplication` в конце сам останавливает приложение, и тест проверяет, что сохранены все 50. Без `join()` в `close()` тест падает с `expected: <50> but was: <5>`: 45 кликов пропали. Вывод: тест на остановку должен создавать очередь, иначе он проверяет пустой канал.
+
+**Разбор 2. 500 переходов и Ctrl+C.**
+Мы проверили остановку на проекте урока с файловой базой H2. По ссылке сделали 500 переходов, по 25 одновременно, и сразу запросили `/stats`. В нашем прогоне ответ был 398: статистика отстаёт от переходов на длину очереди. Тут же нажали Ctrl+C, и процесс завершился секунд через пять: воркер дописывал очередь. После перезапуска на той же базе `/stats` показал 500. Вывод: редирект отвечает сразу, а воркер дописывает очередь позже, даже во время остановки.
+
+**Разбор 3. Где очередь в памяти не спасает.**
+Канал живёт в памяти процесса. Если процесс убьёт ОС, обработчик завершения не запустится, и очередь пропадёт. Для статистики переходов это терпимо, а клик, за который платит рекламодатель, пишут в базу до ответа, как предлагал коллега. Вывод: канал с воркером подходит там, где потерю при аварии можно пережить.
+
+## Как записывать клики
+
+<DecisionTree nodes={[
+  { q: "Клик стоит денег и не должен теряться даже при аварии процесса?", yes: "Пиши в базу в обработчике, до ответа 302", no: "к следующему вопросу" },
+  { q: "Трафик может надолго обогнать базу, а память под очередь ограничена?", yes: "Ограниченный канал: send, если редирект может подождать, или trySend, если лишние клики можно потерять", no: "к следующему вопросу" },
+  { q: "Остановка сервера должна укладываться в срок?", yes: "join внутри withTimeoutOrNull: что не успели записать, пропадёт", no: "Channel.UNLIMITED, trySend, close и join без таймаута, как в ClickCounter" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| `close()` без `join()` | Воркер отменят с неразобранной очередью: в тесте уцелело 5 кликов из 50 | После `close()` дождаться `worker.join()` |
+| `trySend` в канал без буфера | Клик проходит, только если воркер уже ждёт в `receive`: с `Channel<String>()` первый пример печатает три `false` и `{}` | `Channel.UNLIMITED` или ограниченный буфер |
+| Закрывать счётчик в `ApplicationStopped` | Воркер к этому моменту отменён | `ApplicationStopping` через `AutoCloseable` и DI |
+| Цикл воркера без `try` или с `catch (e: Exception)` | Ошибка базы убивает воркер, широкий `catch` глотает отмену | `catch (e: SQLException)` вокруг записи клика |
+| Счётчик через «прочитал, прибавил, записал» | Два писателя прочитают одно значение, и клик пропадёт | `merge(code, 1, Long::plus)` или `clicks + 1` в SQL |
+
+## Практикум
+
+<Practice title="Доведи свой сервис до итогового этапа" checklist={["./gradlew test заканчивается BUILD SUCCESSFUL, в отчёте build/reports/tests/test/index.html 10 тестов: 2 в LinkServiceTest, 5 в LinksApiTest и 3 в StatsApiTest", "POST /api/links с alias ktor отвечает 201 и Location: /api/links/ktor", "После пяти переходов GET /api/links/ktor/stats отвечает 200 с clicks: 5; если кликов меньше, воркер ещё пишет — повтори запрос", "Статистика неизвестного кода отвечает 404 с error: not_found", "Без join() в close() тест saves every click before the application stops падает, с ним проходит", "После 500 переходов, Ctrl+C сразу за нагрузкой и перезапуска на той же файловой базе /stats показывает clicks: 500"]}>
+Начни с проекта после урока про тестирование и пройди шаги:
+
+1. Перенеси JSON-маршруты под `route("/api/links")` и поправь адрес ещё в четырёх местах: `Location` и текст `GET /`, `createLink`, тест `creates a short link`.
+2. Добавь в `LinksTable` колонку `clicks = long("clicks").default(0)`.
+3. Дополни `LinkRepository` функциями `addClick` и `findClicks` и реализуй их в обоих репозиториях.
+4. Добавь `LinkService.countClicks`, DTO `LinkStatsResponse` и маршрут `get("/{code}/stats")`.
+5. Напиши `ClickCounter`, зарегистрируй в DI, получи в `configureRouting()` и вызови `record()` в редиректе.
+6. Напиши `StatsApiTest`: статистика, 404 и остановка с медленным репозиторием.
+
+Версии проекта: Kotlin 2.4.20, Ktor 3.6.0, Exposed 1.5.0, kotlinx.coroutines 1.11.0 (сверены 2026-10-02). Команды ниже — для bash, в Windows подойдёт Git Bash. Прогони тесты и запусти сервер:
+
+```bash
+./gradlew test
+./gradlew run
+```
+
+Проверь из второго терминала:
+
+```bash
+curl -i -X POST http://localhost:8080/api/links \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://ktor.io","alias":"ktor"}'
+for i in 1 2 3 4 5; do
+  curl -s -o /dev/null http://localhost:8080/ktor
+done
+curl -i http://localhost:8080/api/links/ktor/stats
+curl -i http://localhost:8080/api/links/nope42/stats
+```
+
+Остановку проверяй на собранном дистрибутиве: кнопка остановки в IDE завершает `./gradlew run` без обработчика завершения. Скрипт запускай в Git Bash: `shortener.bat` перечисляет 77 jar одной строкой и на длинном пути упирается в лимит cmd, 8191 символ. Файл базы возьми новый: в файле из урока про данные у таблицы `links` нет колонки `clicks`, `SchemaUtils.create` её не добавит, и запросы к ссылкам ответят 500.
+
+```bash
+./gradlew installDist
+# скрипт берёт Java из JAVA_HOME, нужна JDK 25
+build/install/shortener/bin/shortener \
+  -P:database.url=jdbc:h2:file:./build/demo-db2/shortener
+```
+
+Во втором терминале создай ссылку и дай нагрузку:
+
+```bash
+curl -s -X POST http://localhost:8080/api/links \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://ktor.io","alias":"ktor"}'
+# 500 переходов, по 25 одновременно
+seq 1 500 | xargs -P 25 -I{} \
+  curl -s -o /dev/null http://localhost:8080/ktor
+curl -s http://localhost:8080/api/links/ktor/stats
+```
+
+Сразу нажми Ctrl+C в консоли сервера, запусти его снова с тем же аргументом и повтори последний запрос: кликов должно быть 500. Потом ответь по своему коду:
+
+- Что будет с остановкой, если база перестанет отвечать?
+- Что вернёт `/stats` для ссылки без переходов и для неизвестного кода?
+
+<div slot="solution">
+Пример — проект после этого урока. `ClickCounter`, DI и редирект показаны выше, вот импорты:
+
+```kotlin
+// ClickCounter.kt
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.slf4j.LoggerFactory
+import java.sql.SQLException
+
+// Dependencies.kt, новые строки
+import io.ktor.server.plugins.di.resolve
+import kotlinx.coroutines.CoroutineScope
+
+// ExposedLinkRepository.kt, новые строки
+import org.jetbrains.exposed.v1.core.plus
+import org.jetbrains.exposed.v1.jdbc.update
+```
+
+Остальной код:
+
+```kotlin
+// LinkRepository.kt
+suspend fun addClick(code: String)
+
+suspend fun findClicks(code: String): Long?
+
+// ExposedLinkRepository.kt
+override suspend fun addClick(code: String) {
+    dbQuery {
+        LinksTable.update({ LinksTable.code eq code }) {
+            it[clicks] = clicks + 1
+        }
+    }
+}
+
+override suspend fun findClicks(code: String): Long? =
+    dbQuery {
+        selectByCode(code).singleOrNull()?.get(LinksTable.clicks)
+    }
+
+// InMemoryLinkRepository.kt
+private val clicks = ConcurrentHashMap<String, Long>()
+
+override suspend fun addClick(code: String) {
+    clicks.merge(code, 1, Long::plus)
+}
+
+override suspend fun findClicks(code: String): Long? =
+    links[code]?.let { clicks[code] ?: 0 }
+
+// LinkService.kt
+suspend fun countClicks(code: String): Long =
+    repository.findClicks(code) ?: throw LinkNotFoundException(code)
+
+// Dto.kt
+@Serializable
+data class LinkStatsResponse(
+    val code: String,
+    val clicks: Long,
+)
+
+// Routing.kt, внутри route("/api/links")
+get("/{code}/stats") {
+    val code = call.requirePathParameter("code")
+    val clicks = service.countClicks(code)
+    call.respond(LinkStatsResponse(code, clicks))
+}
+```
+
+Тесты статистики, файл `StatsApiTest.kt`:
+
+```kotlin
+package shortener
+
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.testApplication
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class StatsApiTest {
+    @Test
+    fun `returns click statistics`() =
+        testApplication {
+            val repository = InMemoryLinkRepository()
+            setUpShortener(repository)
+            val client = jsonClient()
+            client.createLink("https://ktor.io", alias = "ktor")
+            repeat(3) { repository.addClick("ktor") }
+
+            val response = client.get("/api/links/ktor/stats")
+
+            assertEquals(HttpStatusCode.OK, response.status)
+            assertEquals(LinkStatsResponse("ktor", 3), response.body())
+        }
+
+    @Test
+    fun `returns 404 for statistics of an unknown code`() =
+        testApplication {
+            setUpShortener()
+
+            val response = jsonClient().get("/api/links/nope42/stats")
+
+            assertEquals(HttpStatusCode.NotFound, response.status)
+        }
+
+    @Test
+    fun `saves every click before the application stops`() {
+        val repository = SlowClicksRepository(InMemoryLinkRepository())
+
+        testApplication {
+            setUpShortener(repository)
+            val client = jsonClient()
+            client.createLink("https://ktor.io", alias = "ktor")
+            repeat(CLICKS) { client.get("/ktor") }
+        }
+
+        runTest {
+            assertEquals(CLICKS.toLong(), repository.findClicks("ktor"))
+        }
+    }
+
+    private class SlowClicksRepository(
+        private val delegate: LinkRepository,
+    ) : LinkRepository by delegate {
+        override suspend fun addClick(code: String) {
+            delay(10)
+            delegate.addClick(code)
+        }
+    }
+
+    private companion object {
+        const val CLICKS = 50
+    }
+}
+```
+
+`LinkRepository by delegate` — делегирование: функции интерфейса компилятор создаёт сам и передаёт вызовы в `delegate`, а `addClick` переопределена. `testApplication` идёт в реальном времени, поэтому `delay(10)` не пропускается. Первый тест кладёт клики прямо в репозиторий, чтобы не зависеть от очереди.
+
+Так сервис отвечает на `curl -i` (заголовки сокращены):
+
+```text
+HTTP/1.1 201 Created
+Location: /api/links/ktor
+{"code":"ktor","shortUrl":"http://localhost:8080/ktor","url":"https://ktor.io"}
+
+HTTP/1.1 200 OK
+{"code":"ktor","clicks":5}
+
+HTTP/1.1 404 Not Found
+{"error":"not_found","message":"No link with code 'nope42'"}
+```
+
+Ответы на вопросы. Зависшая база подвесит остановку: воркер ждут без таймаута, защита — `withTimeoutOrNull` вокруг `join()`. Ссылка без переходов даст 0, неизвестный код — `null` и ответ 404.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в своём рабочем проекте фоновую работу: отправку писем, запись аудита, очередь уведомлений. Что с ней происходит при остановке сервиса — дописывается, отменяется или пропадает молча? До пятницы проверь это опытом, как в разборе с Ctrl+C. Через неделю вернись к шпаргалке и пройди тренажёры ещё раз.
+</Callout>
+
+## Что дальше
+
+Развивать сервис можно по документации Ktor: её учебник по Exposed заканчивается переходом на PostgreSQL, плагин Authentication закроет создание ссылок от чужих, а плагин RateLimit ограничит число запросов клиента и на лишние ответит 429.
+
+На этом курс закончен: от первой программы ты дошёл до сервиса с базой, тестами и корутинами. За самим языком возвращайся в документацию на kotlinlang.org.
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Очередь событий | `Channel<String>(Channel.UNLIMITED)` |
+| Отправить, не ожидая | `trySend(x)`: не приостанавливается, не бросает |
+| Воркер | `scope.launch { for (x in channel) … }` |
+| Остановка без потерь | `channel.close()`, затем `worker.join()` |
+| Где закрывать | `ApplicationStopping`: DI закрывает `AutoCloseable` в обратном порядке |
+| Фон в Ktor | область `Application`; `this` сохранить до `dependencies { }` |
+| Атомарный счётчик | `merge(code, 1, Long::plus)`; в Exposed `clicks + 1` |
+| Остановка сервера | Ctrl+C; при `kill -9` очередь пропадает |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Канал (channel)", meaning: "Очередь между корутинами из kotlinx.coroutines с приостанавливающими send и receive, которую можно закрыть." },
+  { term: "Rendezvous-канал", meaning: "Канал без буфера, его создаёт Channel() по умолчанию: send ждёт, пока кто-то вызовет receive." },
+  { term: "Channel.UNLIMITED", meaning: "Буфер без ограничения: отправитель никогда не ждёт, а число элементов ограничено только памятью." },
+  { term: "trySend", meaning: "Отправка в канал без приостановки и без исключений; результат говорит, удалась ли она." },
+  { term: "Закрытие канала (close)", meaning: "Запрет на новые элементы; уже отправленные получатель всё равно заберёт, и цикл for после них закончится." },
+  { term: "Воркер (worker)", meaning: "Фоновая корутина, которая по одному разбирает элементы канала." },
+  { term: "join", meaning: "Приостанавливает вызывающую корутину, пока Job не завершится." },
+  { term: "Область видимости приложения", meaning: "Application в Ktor как CoroutineScope: её корутины отменяются при остановке сервера." },
+  { term: "ApplicationStopping", meaning: "Событие Ktor в начале остановки, когда корутины приложения ещё работают; в нём DI закрывает зависимости." },
+  { term: "ApplicationStopped", meaning: "Событие Ktor после отмены корутин приложения." },
+  { term: "AutoCloseable", meaning: "Java-интерфейс с методом close(); DI Ktor закрывает такие зависимости при остановке." },
+  { term: "Обработчик завершения (shutdown hook)", meaning: "Поток выполнения, который JVM запускает при завершении, например по Ctrl+C; через него Ktor останавливает сервер." },
+  { term: "Штатная остановка", meaning: "Остановка, при которой сервер дорабатывает начатое: запросы, очередь, закрытие ресурсов." },
+  { term: "Атомарная операция", meaning: "Операция, которую другие потоки выполнения не могут застать наполовину, например merge у ConcurrentHashMap." },
+  { term: "Объект-маркер конца (poison object)", meaning: "Особый элемент, который кладут в BlockingQueue как знак конца данных, потому что закрытия у неё нет." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что действительно запомнилось.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-capstone-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Итоговый проект: понятия</span>
+    <span class="kc-trainer-hint">Канал, воркер, остановка</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-capstone-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что сохранится при остановке</span>
+    <span class="kc-trainer-hint">Сценарии с фоновой работой</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-capstone-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери канал и остановку</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-capstone-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши счётчик кликов</span>
+    <span class="kc-trainer-hint">Точные имена из API</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Kotlin — Channels, Cancellation and timeouts, Delegation, справочник kotlinx.coroutines 1.11.0** ([kotlinlang.org/docs](https://kotlinlang.org/docs/channels.html), сверено 2026-10-02) — каналы, отмена, делегирование.
+- **Ktor 3.6.0 — документация и исходники: Application, события, DI, логирование** ([ktor.io/docs](https://ktor.io/docs/server-di-resource-lifecycle-management.html), [GitHub](https://github.com/ktorio/ktor/blob/3.6.0/ktor-server/ktor-server-core/jvm/src/io/ktor/server/engine/EmbeddedServerJvm.kt), сверено 2026-10-02) — область видимости приложения, порядок остановки, закрытие `AutoCloseable`.
+- **Ktor 3.6.0 — Integrate a database, Authentication, Rate limiting** ([ktor.io/docs](https://ktor.io/docs/server-rate-limit.html), сверено 2026-10-02) — куда развивать сервис.
+- **Oracle — Java SE 25 API: BlockingQueue, ExecutorService, ConcurrentHashMap, Runtime** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/BlockingQueue.html), сверено 2026-10-02) — Java-аналоги и запуск обработчиков завершения.
+- **Linux man-pages — signal(7)** ([man7.org](https://man7.org/linux/man-pages/man7/signal.7.html), сверено 2026-10-02) — `kill -9` нельзя перехватить.
+- **Android Developers — Best practices for coroutines** ([developer.android.com](https://developer.android.com/kotlin/coroutines/coroutines-best-practices), сверено 2026-10-02) — область видимости вместо `GlobalScope`.

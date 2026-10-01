@@ -1,0 +1,20 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-clean-code",
+  "title": "Допиши отрефакторенный код",
+  "description": "Впиши ключевое слово или имя аргумента в код после рефакторинга. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "sealed ___ Delivery { fun cost(base: Int): Int }", "answers": ["interface"], "explain": "Функция без тела в интерфейсе объявляется просто так. В sealed class её пришлось бы пометить abstract, иначе ошибка «Function 'cost' without a body must be abstract»." },
+      { "text": "data ___ Pickup : Delivery   // вариант без данных", "answers": ["object"], "explain": "Вариант без данных — data object. data class без параметров не скомпилируется: «Data class must have at least one primary constructor parameter»." },
+      { "text": "___ fun cost(base: Int) = base / 2   // в data object Pickup", "answers": ["override"], "explain": "Реализация метода из интерфейса Delivery помечается override. Так ветка when переезжает в сам вариант: Replace Conditional with Polymorphism." },
+      { "text": "when (delivery) { ___ Courier -> delivery.floor * 50", "answers": ["is"], "explain": "Courier — класс с данными, поэтому ветка проверяет тип через is. После проверки срабатывает smart cast, и delivery.floor читается без приведения." },
+      { "text": "return if (vip) vipDiscount(price) ___ price", "answers": ["else"], "explain": "if как выражение требует else. Вместо var, которую переприсваивают, — одно выражение, которое сразу возвращает результат." },
+      { "text": "fun ping(to: String, loud: Boolean) … ping(to, ___ = true)", "answers": ["loud"], "explain": "Именованный аргумент повторяет имя параметра. Соглашения Kotlin советуют так передавать Boolean: голое true в вызове ничего не говорит." },
+      { "text": "___ class Parcel(val kg: Int, val zone: Int)  // с equals", "answers": ["data"], "explain": "Объект-параметр удобно объявить data class: equals, hashCode, toString и copy компилятор сгенерирует сам. Это Introduce Parameter Object." },
+      { "text": "___ price = basePrice(shipment)   // дальше не меняется", "answers": ["val"], "explain": "Значение не переприсваивают, значит val. Цепочка val с понятными именами заменяет одну var, которую меняют по ходу функции." }
+    ]
+  }
+}

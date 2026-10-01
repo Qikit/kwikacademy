@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-clean-code",
+  "title": "Собери после рефакторинга",
+  "description": "Расставь строки отрефакторенного кода так, чтобы он делал то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Выдели расчёт базовой цены и цены самовывоза (половина базовой) в локальные функции и напечатай цену самовывоза для 2 кг в зону 3.",
+        "words": ["        basePrice(weightKg, zone) / 2", "    println(pickupPrice(weightKg = 2, zone = 3))", "fun main() {", "    fun pickupPrice(weightKg: Int, zone: Int) =", "}", "        weightKg * 30 + zone * 150", "    fun basePrice(weightKg: Int, zone: Int) ="],
+        "answer": ["fun main() {", "    fun basePrice(weightKg: Int, zone: Int) =", "        weightKg * 30 + zone * 150", "    fun pickupPrice(weightKg: Int, zone: Int) =", "        basePrice(weightKg, zone) / 2", "    println(pickupPrice(weightKg = 2, zone = 3))", "}"],
+        "explain": "Локальную функцию можно вызвать только после объявления, поэтому basePrice идёт раньше pickupPrice. Иначе будет «Unresolved reference 'basePrice'». Программа напечатает 255."
+      },
+      {
+        "task": "Срок доставки: экспресс — всегда 1 день, зона дальше 5 — 7 дней, дальше 2 — 4 дня, остальные — 2 дня.",
+        "words": ["    zone > 2 -> 4", "}", "    express -> 1", "fun deliveryDays(zone: Int, express: Boolean): Int = when {", "    else -> 2", "    zone > 5 -> 7"],
+        "answer": ["fun deliveryDays(zone: Int, express: Boolean): Int = when {", "    express -> 1", "    zone > 5 -> 7", "    zone > 2 -> 4", "    else -> 2", "}"],
+        "explain": "when без аргумента берёт первую истинную ветку. Экспресс проверяют первым, иначе экспресс в зону 7 получит неделю. zone > 5 стоит раньше zone > 2, иначе дальняя зона получит 4 дня. else обязан быть последним."
+      },
+      {
+        "task": "Enum Seat(val title: String, val price: Int) уже объявлен. Посчитай билет ребёнку-студенту на Seat.STANDARD: сначала детская скидка (половина), потом студенческая (минус 100), и напечатай «обычное место: 100».",
+        "words": ["    println(\"${seat.title}: $ticketPrice\")", "    val ticketPrice = childPrice - 100", "}", "fun main() {", "    val seat = Seat.STANDARD", "    val childPrice = seat.price / 2"],
+        "answer": ["fun main() {", "    val seat = Seat.STANDARD", "    val childPrice = seat.price / 2", "    val ticketPrice = childPrice - 100", "    println(\"${seat.title}: $ticketPrice\")", "}"],
+        "explain": "Каждая строка использует результат предыдущей, и порядок скидок совпадает с исходным: 400 / 2 = 200, потом 200 - 100 = 100. В обратном порядке вышло бы (400 - 100) / 2 = 150."
+      },
+      {
+        "task": "Цена самовывоза с VIP-скидкой 10%: база — 30 ₽ за кг и 150 ₽ за зону, самовывоз — половина базы, а заказам дешевле 100 ₽ скидки нет.",
+        "words": ["    return pickup * 90 / 100", "    val pickup = base / 2", "}", "    if (pickup < 100) return pickup", "fun pickupVipPrice(weightKg: Int, zone: Int): Int {", "    val base = weightKg * 30 + zone * 150"],
+        "answer": ["fun pickupVipPrice(weightKg: Int, zone: Int): Int {", "    val base = weightKg * 30 + zone * 150", "    val pickup = base / 2", "    if (pickup < 100) return pickup", "    return pickup * 90 / 100", "}"],
+        "explain": "Вместо одной var, которую переприсваивают, — цепочка val с именами шагов. Проверка на 100 ₽ стоит до строки со скидкой: после return она стала бы недостижимой, и скидку получил бы любой заказ. Для 2 кг в зону 3 функция вернёт 229."
+      },
+      {
+        "task": "Enum Seat уже объявлен. Преврати строку-код места в Seat на входе и верни подпись места, а для неизвестного кода — «неизвестное место».",
+        "words": ["    if (seat == null) return \"неизвестное место\"", "}", "    return seat.title", "fun seatTitle(code: String): String {", "    val seat = Seat.entries.firstOrNull { it.name == code }"],
+        "answer": ["fun seatTitle(code: String): String {", "    val seat = Seat.entries.firstOrNull { it.name == code }", "    if (seat == null) return \"неизвестное место\"", "    return seat.title", "}"],
+        "explain": "Строку превращают в тип один раз, на входе, и дальше работают с Seat. После проверки на null срабатывает smart cast, и seat.title читается без безопасного вызова. seatTitle(\"SOFA\") вернёт «диван»."
+      },
+      {
+        "task": "Sealed-интерфейс Delivery с методом days и варианты Courier(floor), Pickup и Post уже объявлены. Напечатай срок доставки в зону 2 для каждого варианта.",
+        "words": ["        println(\"$delivery: $days дн.\")", "    }", "fun main() {", "        val days = delivery.days(zone = 2)", "}", "    for (delivery in options) {", "    val options = listOf(Courier(floor = 1), Pickup, Post)"],
+        "answer": ["fun main() {", "    val options = listOf(Courier(floor = 1), Pickup, Post)", "    for (delivery in options) {", "        val days = delivery.days(zone = 2)", "        println(\"$delivery: $days дн.\")", "    }", "}"],
+        "explain": "Ветки when больше не нужны: каждый вариант сам знает свой срок. Программа напечатает «Courier(floor=1): 3 дн.», «Pickup: 5 дн.» и «Post: 7 дн.»."
+      }
+    ]
+  }
+}

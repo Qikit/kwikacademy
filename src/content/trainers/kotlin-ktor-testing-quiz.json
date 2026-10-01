@@ -1,0 +1,81 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-testing",
+  "title": "Что проверяет этот тест",
+  "description": "Разберись, когда тест зелёный, когда красный и почему — на коде, которого не было в уроке.",
+  "data": {
+    "type": "quiz",
+    "questions": [
+      {
+        "prompt": "Функция вернула 3 клика, а тест написан так: assertEquals(clicks, 5). Что скажет сообщение об ошибке?",
+        "options": [
+          "Что ожидалось 5, а получено 3",
+          "Что ожидалось 3, а получено 5",
+          "Ничего: assertEquals вернёт false, а тест останется зелёным"
+        ],
+        "correctIndex": 1,
+        "explain": "assertEquals считает первый аргумент ожидаемым, второй — полученным. Здесь первым стоит clicks, поэтому сообщение скажет, что ожидалось 3, а получено 5, и введёт в заблуждение: будто код вернул 5, а тест ждёт 3. Честное «ожидалось 5, получено 3» было бы при assertEquals(5, clicks). Зелёным тест не останется: assertEquals ничего не возвращает, при несовпадении он бросает AssertionError."
+      },
+      {
+        "prompt": "В тесте сервиса заказов написано: application { module(); dependencies.provide<OrderRepository> { FakeOrders() } }. Какую реализацию OrderRepository получит сервис?",
+        "options": [
+          "FakeOrders: последняя регистрация перекрывает прежние",
+          "Никакую: тест упадёт из-за двойной регистрации",
+          "Боевую из module(): тестовая пришла второй"
+        ],
+        "correctIndex": 2,
+        "explain": "В тестовом движке у DI политика IgnoreConflicts: повторная регистрация того же типа игнорируется, остаётся первая. Здесь первым отработал module() с боевой реализацией, а FakeOrders пришёл вторым и ничего не перекрыл. Ошибку о двойной регистрации DI бросает при боевом запуске, в тестах её нет. Подмену ставят раньше module()."
+      },
+      {
+        "prompt": "Тест проверяет, что пустой промокод отклоняется: assertFailsWith<Exception> { cart.applyPromo(\"\") }. Он зелёный. В чём риск?",
+        "options": [
+          "Никакого: assertFailsWith проверяет сам факт исключения",
+          "Тест пройдёт от любого исключения в блоке, даже от NullPointerException",
+          "Покраснеет, если бросят IllegalArgumentException"
+        ],
+        "correctIndex": 1,
+        "explain": "assertFailsWith<T> принимает T и всех его наследников, а под Exception подходит почти любое исключение. Тест останется зелёным, даже если внутри блока сломалось что-то постороннее: вылетел NullPointerException или кончились данные в заглушке-итераторе. Поэтому тип исключения важен: пиши самый узкий. IllegalArgumentException — наследник Exception, так что на нём тест как раз не покраснеет."
+      },
+      {
+        "prompt": "Сервис уведомлений перед повторной отправкой вызывает delay(30_000) прямо в своей suspend-функции. Тест вызывает сервис внутри runTest. Сколько будет идти тест?",
+        "options": [
+          "Почти нисколько: runTest пропускает delay",
+          "Около 30 секунд, как и в проде",
+          "Упадёт: runTest ждёт тело теста не дольше 10 секунд"
+        ],
+        "correctIndex": 0,
+        "explain": "На JVM runTest работает как runBlocking, но пропускает delay, и тридцатисекундное ожидание проходит сразу. Настоящие 30 секунд ушли бы при runBlocking. Упасть по времени тесту тоже не с чего: ждать ему нечего."
+      },
+      {
+        "prompt": "Маршрут GET /go/docs отвечает 302 с Location: https://example.com/docs. Клиент в тесте создан через createClient { install(ContentNegotiation) { json() } }. Чем кончится проверка статуса 302?",
+        "options": [
+          "Пройдёт: тестовый клиент не ходит по Location",
+          "Статус будет 200: клиент откроет example.com",
+          "Тест упадёт раньше: клиент пойдёт по Location наружу"
+        ],
+        "correctIndex": 2,
+        "explain": "Клиент Ktor по умолчанию переходит по адресу из Location, и тестовый клиент не исключение. Внешних адресов тестовый движок не знает, поэтому запрос кончится исключением InvalidTestRequestException ещё до assertEquals. До example.com клиент не доберётся, так что и статуса 200 не будет. Чтобы увидеть сам 302, в createClient ставят followRedirects = false."
+      },
+      {
+        "prompt": "Коллега убрал из setUpShortener блок environment: «пусть тест возьмёт baseUrl из application.yaml». Что будет с тестами API?",
+        "options": [
+          "Упадут: конфиг тестового приложения пустой",
+          "Пройдут: тестовое приложение само читает application.yaml",
+          "Пройдут все, кроме проверки shortUrl с адресом http://sho.rt"
+        ],
+        "correctIndex": 0,
+        "explain": "Без environment конфиг тестового приложения пустой, и чтение shortener.baseUrl в модуле упадёт с «Property shortener.baseUrl not found». Сам application.yaml тестовое приложение не читает. «Всё, кроме shortUrl» было бы, если загрузить конфиг и модули через configure(): тогда адрес придёт из application.yaml, а не http://sho.rt."
+      },
+      {
+        "prompt": "Нужно проверить, что LinkService отклоняет alias короче трёх символов. Какой тест проще и точнее?",
+        "options": [
+          "Тест на testApplication: POST с alias «ab», ждать 400 и invalid_alias",
+          "Тест LinkService на runTest: alias «ab» и assertFailsWith",
+          "Тест InMemoryLinkRepository: addIfAbsent со ссылкой «ab» вернёт false"
+        ],
+        "correctIndex": 1,
+        "explain": "Правило живёт в сервисе, поэтому его проверяют тестом сервиса: фейковый репозиторий, shorten с alias «ab» и assertFailsWith<InvalidAliasException>. Через testApplication оно тоже проверяется (400 и invalid_alias), но ради одного правила тест поднимает приложение, клиент и JSON. Репозиторий alias не проверяет: свободный код «ab» он примет, и addIfAbsent вернёт true."
+      }
+    ]
+  }
+}

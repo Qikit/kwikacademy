@@ -1,0 +1,21 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-data",
+  "title": "База и DI: понятия",
+  "description": "Вспомни, как устроены таблица и транзакции в Exposed, репозиторий и встроенный DI Ktor.",
+  "data": {
+    "type": "flashcards",
+    "cards": [
+      { "front": "Почему параметр LinkService имеет тип LinkRepository, а не ExposedLinkRepository?", "back": "Так в сервис можно подставить любую реализацию: базу в проекте, словарь в памяти в тесте. Выбирают её снаружи, в DI." },
+      { "front": "Что делает provide<LinkRepository>(::ExposedLinkRepository)?", "back": "Регистрирует в DI конструктор ExposedLinkRepository под типом LinkRepository. Параметр Database DI подберёт по типу.", "hint": "Конструктор под типом интерфейса" },
+      { "front": "Почему module() и configureRouting() объявлены suspend?", "back": "В них вызывается dependencies.resolve(), а это suspend-функция: вызвать её можно только из другой suspend-функции. Ktor поддерживает такие модули с версии 3.2." },
+      { "front": "Что делает @Property(\"database\") на параметре connectDatabase?", "back": "Велит DI разобрать секцию database из application.yaml в @Serializable-класс DatabaseSettings." },
+      { "front": "Зачем dbQuery оборачивает suspendTransaction в withContext(Dispatchers.IO)?", "back": "Операции JDBC блокируют поток выполнения. Dispatchers.IO уводит их в пул для блокирующего ввода-вывода.", "hint": "JDBC блокирует" },
+      { "front": "Когда Database.connect открывает соединение?", "back": "Не сразу: connect возвращает описание базы, соединение появляется с первой транзакцией. Вызывают его один раз на базу." },
+      { "front": "Зачем в адресе H2 параметр DB_CLOSE_DELAY=-1?", "back": "Без него H2 закроет базу в памяти вместе с последним соединением и потеряет данные. С ним база живёт, пока жива JVM." },
+      { "front": "Что остановит два одинаковых alias, пришедших в одну миллисекунду?", "back": "Первичный ключ таблицы: вторая вставка упадёт, Exposed повторит транзакцию, и повтор увидит строку.", "hint": "Не проверка в коде" },
+      { "front": "Чем putIfAbsent лучше пары containsKey и запись?", "back": "Проверка и запись идут одним атомарным шагом, и чужой запрос не вклинится между ними." },
+      { "front": "В каких пакетах лежат Table и Database в Exposed 1.x?", "back": "Table — в org.jetbrains.exposed.v1.core, Database — в org.jetbrains.exposed.v1.jdbc, модуль exposed-jdbc." }
+    ]
+  }
+}

@@ -4,10 +4,724 @@ order: 22
 phase: "Бэкенд на Ktor"
 title: "Данные и зависимости: база через Exposed и DI"
 eyebrow: "Kotlin · Бэкенд на Ktor"
-readingMinutes: 15
-summary: "Хранить данные в базе через Exposed и собирать сервис через встроенный DI Ktor."
+readingMinutes: 18
+summary: "Хранить ссылки в базе через Exposed, спрятать её за интерфейсом репозитория, собрать сервис встроенным DI Ktor и объяснить, почему один код не запишется дважды."
 tags: [kotlin, backend]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Данные и зависимости: база через Exposed и DI» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import Compare from '../../components/lesson/Compare.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке сокращатель заговорил на JSON: `@Serializable`-классы, `call.receive<CreateLinkRequest>()`, а `StatusPages` превращал исключения домена в ответы 400, 404 и 409. Хранилище по-прежнему живёт в памяти: `LinkStore` на `ConcurrentHashMap`, и `configureRouting()` создаёт его сам. Представь демо. Ты разослал коллегам десяток коротких ссылок, выкатил исправление опечатки, сервер перезапустился, и каждая ссылка отвечает `404 not_found`. Ссылки жили в памяти процесса и умерли вместе с ним.
+
+Первое желание — написать запросы к базе прямо в обработчике `POST /links`. Работать будет, но маршрут начнёт знать сразу про HTTP, SQL и правила выдачи кодов, а проверить его получится только с настоящей базой. Появится и вопрос, который в памяти закрывал `putIfAbsent`: что будет, если в одну миллисекунду придут два запроса за одним alias.
+
+После урока ты сможешь описать таблицу и запросы на Exposed 1.5.0, спрятать хранилище за интерфейсом репозитория, собрать сервис встроенным DI Ktor и объяснить, почему один код не попадёт в базу дважды.
+
+## Ядро: сервис знает интерфейс, реализацию выбирает DI
+
+<Callout type="purple" title="Суть">
+Маршрут переводит HTTP в вызовы **сервиса** `LinkService`, где живут правила: проверка URL, выдача кода, повтор, если код занят. Сервис хранит ссылки через **репозиторий** (repository) и знает только интерфейс `LinkRepository`. Какую реализацию подставить, базу на Exposed или словарь в памяти, решает одно место — блок `dependencies { }` встроенного **DI** (dependency injection, внедрение зависимостей).
+</Callout>
+
+В <a href={withBase('/learn/kotlin/kotlin-clean-code')}>уроке про хороший код</a> Роберт Мартин объяснял единственную ответственность через тех, кто просит изменений. Здесь их трое: формат ответов меняют ради клиентов API, правила кодов — ради продукта, хранилище — когда меняется база. У каждого свой слой, и смена базы не заденет ни маршруты, ни правила.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Сервис объявили так: LinkService(private val repository: ExposedLinkRepository, …) — вместо интерфейса класс реализации. Всё работает. Что сломается, когда понадобится сервис без базы?">
+Компиляция. `InMemoryLinkRepository` в такой конструктор не передать: «Argument type mismatch: actual type is 'InMemoryLinkRepository', but 'ExposedLinkRepository' was expected» (Kotlin 2.4.20). Чтобы сменить хранилище, придётся править класс с правилами. Параметр с типом интерфейса принимает любую реализацию, а выбирают её снаружи.
+</Reveal>
+
+## Как устроено: репозиторий и сервис
+
+Интерфейс репозитория обещает две операции:
+
+```kotlin
+interface LinkRepository {
+    suspend fun addIfAbsent(link: Link): Boolean
+
+    suspend fun find(code: String): Link?
+}
+```
+
+`addIfAbsent` значит «запиши, если такого кода ещё нет, и скажи, получилось ли». Функции `suspend`, потому что реализация на базе будет ждать ввода-вывода. Первая реализация хранит ссылки в памяти, на том же `ConcurrentHashMap`, что и `LinkStore`. Запусти её, потом замени `putIfAbsent` на `put` и сравни третью строку вывода:
+
+<KotlinPlayground>
+
+```kotlin
+import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.runBlocking
+
+data class Link(
+    val code: String,
+    val url: String,
+)
+
+interface LinkRepository {
+    suspend fun addIfAbsent(link: Link): Boolean
+
+    suspend fun find(code: String): Link?
+}
+
+class InMemoryLinkRepository : LinkRepository {
+    private val links = ConcurrentHashMap<String, Link>()
+
+    override suspend fun addIfAbsent(link: Link): Boolean =
+        links.putIfAbsent(link.code, link) == null
+
+    override suspend fun find(code: String): Link? =
+        links[code]
+}
+
+fun main() = runBlocking {
+    val repository: LinkRepository =
+        InMemoryLinkRepository()
+    val first = Link("ktor", "https://ktor.io")
+    val second = Link("ktor", "https://example.com")
+    println(repository.addIfAbsent(first))
+    println(repository.addIfAbsent(second))
+    println(repository.find("ktor"))
+    println(repository.find("nope42"))
+}
+```
+
+</KotlinPlayground>
+
+С `put` второй вызов всё так же вернёт `false`, но перезапишет первую ссылку: `put` возвращает старое значение, а новое кладёт в любом случае.
+
+`LinkService` забирает из маршрута всё, что не про HTTP: проверяет URL и alias функциями из прошлого урока (в примере ниже проверки опущены) и выдаёт код. Занятый alias он превращает в `AliasTakenException`, который `StatusPages` отдаёт как 409. Генератор стал `fun interface CodeGenerator`: в проекте его реализует `RandomCodeGenerator`, в примере — лямбда с заготовленными кодами.
+
+<KotlinPlayground>
+
+```kotlin
+import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.runBlocking
+
+data class Link(
+    val code: String,
+    val url: String,
+)
+
+interface LinkRepository {
+    suspend fun addIfAbsent(link: Link): Boolean
+
+    suspend fun find(code: String): Link?
+}
+
+class InMemoryLinkRepository : LinkRepository {
+    private val links = ConcurrentHashMap<String, Link>()
+
+    override suspend fun addIfAbsent(link: Link): Boolean =
+        links.putIfAbsent(link.code, link) == null
+
+    override suspend fun find(code: String): Link? =
+        links[code]
+}
+
+fun interface CodeGenerator {
+    fun generate(): String
+}
+
+class AliasTakenException(
+    alias: String,
+) : RuntimeException("Alias '$alias' is already taken")
+
+class LinkService(
+    private val repository: LinkRepository,
+    private val codes: CodeGenerator,
+) {
+    suspend fun shorten(
+        url: String,
+        alias: String? = null,
+    ): Link =
+        if (alias == null) {
+            addWithRandomCode(url)
+        } else {
+            addWithAlias(alias, url)
+        }
+
+    private suspend fun addWithRandomCode(url: String): Link {
+        repeat(MAX_ATTEMPTS) {
+            val link = Link(codes.generate(), url)
+            if (repository.addIfAbsent(link)) return link
+        }
+        error("No free code after $MAX_ATTEMPTS attempts")
+    }
+
+    private suspend fun addWithAlias(
+        alias: String,
+        url: String,
+    ): Link {
+        val link = Link(alias, url)
+        if (!repository.addIfAbsent(link)) {
+            throw AliasTakenException(alias)
+        }
+        return link
+    }
+
+    private companion object {
+        const val MAX_ATTEMPTS = 5
+    }
+}
+
+fun main() = runBlocking {
+    val codes = listOf("aaa111", "aaa111", "bbb222")
+        .iterator()
+    val service = LinkService(InMemoryLinkRepository()) {
+        codes.next()
+    }
+    println(service.shorten("https://kotlinlang.org").code)
+    println(service.shorten("https://ktor.io").code)
+    println(service.shorten("https://ktor.io", "ktor").code)
+    val result = try {
+        service.shorten("https://example.com", "ktor").code
+    } catch (e: AliasTakenException) {
+        e.message
+    }
+    println(result)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Сначала предскажи, что напечатают четыре println, и только потом запусти.">
+`aaa111`, `bbb222`, `ktor` и «Alias 'ktor' is already taken». Второй вызов получил занятый `aaa111`, `addIfAbsent` вернул `false`, и цикл взял следующий код. Alias выбрал пользователь, поэтому занятый alias сразу даёт исключение. Замени `codes.next()` на `"aaa111"`: после пяти попыток `error` бросит `IllegalStateException`. `StatusPages` его не ловит, и на сервере клиент получил бы 500.
+</Reveal>
+
+## Как устроено: таблица и транзакции в Exposed
+
+**Exposed** — библиотека JetBrains для работы с SQL из Kotlin поверх JDBC-драйвера. У неё два стиля: DSL, где таблица — объект, а запрос — вызов функций, и DAO (Data Access Object), похожий на Hibernate. Сокращатель берёт DSL и базу **H2**, которая работает внутри того же процесса JVM. В каталоге версий восемь новых строк (сверено 2026-10-02; у H2 уже вышла 2.5.252, проект собран на 2.5.250):
+
+```toml
+[versions]
+# …
+kotlinx-coroutines = "1.11.0"
+exposed = "1.5.0"
+h2 = "2.5.250"
+# …
+
+[libraries]
+# …
+ktor-server-di = { module = "io.ktor:ktor-server-di", version.ref = "ktor" }
+# …
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+# …
+```
+
+В `build.gradle.kts` пять новых строк:
+
+```kotlin
+dependencies {
+    // …
+    implementation(libs.ktor.server.di)
+    // …
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
+    // …
+    runtimeOnly(libs.h2)
+    // …
+}
+```
+
+Модулей Exposed два: в `exposed-core` — `Table`, колонки и `eq`, в `exposed-jdbc` — `Database`, `SchemaUtils`, запросы и транзакции, которые в 1.x переехали туда из core. `exposed-core` и `kotlinx-coroutines-core` приходят и транзитивно, с `exposed-jdbc` и Ktor, но код теперь импортирует из них сам, поэтому они объявлены явно. Драйвер H2 код не импортирует, и он `runtimeOnly`. Настройки, таблица и подключение лежат в `Database.kt`:
+
+```kotlin
+@Serializable
+data class DatabaseSettings(
+    val url: String,
+    val driver: String,
+)
+
+object LinksTable : Table("links") {
+    val code = varchar("code", length = MAX_CODE_LENGTH)
+    val url = varchar("url", length = MAX_URL_LENGTH)
+
+    override val primaryKey = PrimaryKey(code)
+}
+
+fun connectDatabase(
+    @Property("database") settings: DatabaseSettings,
+): Database {
+    val database = Database.connect(settings.url, driver = settings.driver)
+    transaction(database) {
+        SchemaUtils.create(LinksTable)
+    }
+    return database
+}
+```
+
+**Первичный ключ** (primary key) — колонка, значение которой у каждой строки своё. Здесь это код ссылки: вторую строку с тем же `code` база не примет.
+
+`Database.connect` соединения не открывает, а возвращает описание базы. Соединение появится с первой **транзакцией** (transaction) — блоком операций, который база применяет целиком или не применяет вовсе. Запросы Exposed выполняет только внутри транзакций, поэтому и `SchemaUtils.create`, который создаёт недостающие таблицы, стоит в блоке `transaction`.
+
+`DatabaseSettings` заполняет секция `application.yaml`:
+
+```yaml
+database:
+  url: "jdbc:h2:mem:shortener;DB_CLOSE_DELAY=-1"
+  driver: "org.h2.Driver"
+```
+
+H2 закрывает базу в памяти (`mem:`) вместе с последним соединением и теряет содержимое, а `DB_CLOSE_DELAY=-1` держит её, пока жива JVM. Для файловой базы код не трогают: флаг `-P` переопределяет свойство конфига при запуске.
+
+```bash
+./gradlew run --args="-P:database.url=jdbc:h2:file:./build/demo-db/shortener"
+```
+
+Вторая реализация, `ExposedLinkRepository`, ходит в базу:
+
+```kotlin
+class ExposedLinkRepository(
+    private val database: Database,
+) : LinkRepository {
+    override suspend fun addIfAbsent(link: Link): Boolean =
+        dbQuery {
+            val taken = !selectByCode(link.code).empty()
+            if (!taken) {
+                LinksTable.insert {
+                    it[code] = link.code
+                    it[url] = link.url
+                }
+            }
+            !taken
+        }
+
+    override suspend fun find(code: String): Link? =
+        dbQuery {
+            selectByCode(code).singleOrNull()?.toLink()
+        }
+
+    private fun selectByCode(code: String): Query =
+        LinksTable.selectAll().where { LinksTable.code eq code }
+
+    private suspend fun <T> dbQuery(block: JdbcTransaction.() -> T): T =
+        withContext(Dispatchers.IO) {
+            suspendTransaction(database) { block() }
+        }
+}
+```
+
+`suspendTransaction` — suspend-версия `transaction`, но операции с базой в ней остаются блокирующими: так устроен JDBC. Поэтому `dbQuery` уводит работу в `Dispatchers.IO`: это пул потоков выполнения (threads) для блокирующего ввода-вывода, знакомый по уроку про корутины под контролем. Расширение `toLink()` собирает `Link` из строки результата `ResultRow`, его код — в решении практикума.
+
+<Reveal q="Сервис запустили с файловой базой через флаг -P, создали alias kotlin и остановили. Потом запустили обычной командой ./gradlew run. Что ответит GET /kotlin?">
+404 и `not_found`. Файл со ссылкой лежит на диске, но без `-P` сервис берёт адрес базы из `application.yaml`, то есть пустую базу в памяти. Запуск с тем же `-P` вернул бы 302.
+</Reveal>
+
+## Как устроено: гонка «проверил — вставил»
+
+**Гонка** (race condition) — ошибка, при которой результат зависит от порядка, в котором параллельные операции дошли до общих данных. В `addIfAbsent` у `ExposedLinkRepository` сначала `select`, потом `insert`. Ниже та же схема на словаре. `yield()` изображает паузу между проверкой и записью: корутина уступает поток выполнения другим корутинам, как запрос, который ждёт ответа базы.
+
+<KotlinPlayground>
+
+```kotlin
+import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.yield
+
+val links = ConcurrentHashMap<String, String>()
+
+suspend fun addChecked(code: String, url: String): Int {
+    val taken = links.containsKey(code)
+    yield()
+    if (taken) return 409
+    links[code] = url
+    return 201
+}
+
+fun main() = runBlocking {
+    val urls = listOf(
+        "https://ktor.io",
+        "https://example.com",
+    )
+    coroutineScope {
+        for (url in urls) {
+            launch { println(addChecked("ktor", url)) }
+        }
+    }
+    println(links)
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Две корутины просят alias ktor для разных адресов. Сначала предскажи: какие статусы они получат и какой адрес останется в словаре?">
+Обе получат 201, а в словаре останется `https://example.com`. Первая корутина проверила ключ и уступила поток выполнения, вторая проверила тот же пустой словарь. Обе решили, что код свободен, и вторая молча перезаписала первую. Потокобезопасный `ConcurrentHashMap` не спас: гонка сидит между двумя его вызовами.
+</Reveal>
+
+Теперь замени тело функции тремя строками:
+
+```kotlin
+yield()
+val previous = links.putIfAbsent(code, url)
+return if (previous == null) 201 else 409
+```
+
+Вывод станет `201`, `409` и `{ktor=https://ktor.io}`. Документация Java описывает `putIfAbsent` как ту же пару «проверить и положить», только выполненную **атомарно**, одним неделимым шагом. (В редакторе урока kotlinx.coroutines старше, 1.7.3; эти функции там те же.)
+
+В базе атомарную проверку делает первичный ключ. Две транзакции могут одновременно не найти код в таблице, но вторая вставка упадёт с «Unique index or primary key violation». Exposed повторяет транзакцию при `SQLException`, по умолчанию до трёх попыток. Повтор уже видит строку, и `addIfAbsent` возвращает `false`.
+
+## Как устроено: встроенный DI Ktor
+
+Плагин `ktor-server-di` — **DI-контейнер**: он хранит **провайдеры**, правила, как создать объект нужного типа. Зависимости сокращателя описаны в `Dependencies.kt`:
+
+```kotlin
+fun Application.configureDependencies() {
+    dependencies {
+        provide(::connectDatabase)
+        provide<LinkRepository>(::ExposedLinkRepository)
+        provide<CodeGenerator> { RandomCodeGenerator() }
+        provide(::LinkService)
+    }
+}
+```
+
+Здесь три формы регистрации: ссылка на функцию (`connectDatabase` вернёт `Database`), ссылка на конструктор под типом интерфейса (в Java это `ExposedLinkRepository::new`) и лямбда. Параметры функций и конструкторов DI подбирает по типу: `ExposedLinkRepository` получит `Database`, `LinkService` — репозиторий и генератор. `@Property("database")` велит DI разобрать секцию `database` конфига в `DatabaseSettings`.
+
+Объект создаётся один раз, при первом обращении к зависимости, поэтому `connect` выполнится однажды. У нас это происходит при старте, до первого HTTP-запроса, когда `configureRouting()` просит сервис:
+
+```kotlin
+suspend fun Application.configureRouting() {
+    val baseUrl: String = property("shortener.baseUrl")
+    val service: LinkService = dependencies.resolve()
+    routing {
+        // …
+    }
+}
+```
+
+`resolve()` — suspend-функция, поэтому `configureRouting()` и `module()` стали `suspend`: Ktor поддерживает такие модули с версии 3.2. Регистрацию ниже по коду `resolve()` не ждёт, и `configureDependencies()` идёт первой строкой `module()`:
+
+```kotlin
+suspend fun Application.module() {
+    configureDependencies()
+    configureSerialization()
+    configureStatusPages()
+    configureRouting()
+}
+```
+
+Переставь `configureRouting()` выше, и сервис не стартует: `MissingDependencyException: Could not resolve dependency for 'shortener.LinkService'`.
+
+<Callout type="blue" title="Если знаешь Java — контейнер здесь ничего не ищет сам">
+В Spring на класс вешают `@Service` или `@Repository`, и контейнер находит его, сканируя classpath (`@ComponentScan`). В Ktor DI каждую зависимость называют явно: в блоке `dependencies { }` или списком в `application.yaml`. Две регистрации одного типа вне тестов по умолчанию дают исключение, а не тихую замену.
+</Callout>
+
+<Reveal q="Почему базу не зарегистрировали короче: provide с типом Database и лямбдой, которая сама читает секцию database через property и передаёт её в connectDatabase?">
+Так не компилируется: «`'fun <reified E> Application.property(key: String): E' cannot be called in this context with an implicit receiver.`» Блоки DI помечены DSL-маркером, как строители из урока про DSL, и неявный `Application` внутри `provide` недоступен. `@Property` на параметре решает задачу без него.
+</Reveal>
+
+## Как на практике
+
+- **Держи SQL в репозитории**: маршруты и `LinkService` ничего не импортируют из Exposed.
+- **Уникальность доверяй базе**: первичному ключу или уникальному индексу.
+- **Блокирующий JDBC уводи в `Dispatchers.IO`** одной функцией вроде `dbQuery`: забыть обёртку негде.
+- **Адрес базы держи в конфиге**: флаг `-P` сменит его без правки кода.
+
+<Callout type="teal" title="Как принято">
+Учебник Ktor по базам данных устроен так же: репозиторий реализует интерфейс, чтобы его легко было заменить, а транзакции идут внутри `withContext(Dispatchers.IO)`. По документации Spring, класс с внедрением через конструктор проще тестировать, когда зависимости — интерфейсы и тест заменяет их заглушками.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Сорок одинаковых alias.**
+Перед демо ты шлёшь 40 параллельных `POST` с alias `race`. Итог: один ответ 201, 39 ответов 409 и ни одного 500. Везение или защита? Ход: поднять в `logback.xml` логгер `Exposed` до уровня DEBUG и повторить. В нашем прогоне восемь транзакций прошли проверку одновременно и упали на вставке, а повтор вернул им `false`. Вывод: уникальность кода держит база, а проверке в коде остаётся понятный ответ 409.
+
+**Разбор 2. Пример из старой статьи.**
+Коллега вставил код из статьи: `import org.jetbrains.exposed.sql.*` и `newSuspendedTransaction(Dispatchers.IO) { … }`. С Exposed 1.5.0 импорты не находятся. Ход: по руководству миграции на 1.0 поменять пакеты на `org.jetbrains.exposed.v1.core` и `v1.jdbc`, импортировать `eq` отдельно, а вместо `newSuspendedTransaction` вызвать `suspendTransaction` внутри `withContext`. Вывод: у кода из интернета сначала проверяй версию библиотеки.
+
+**Разбор 3. Где контейнер лишний.**
+В примерах урока сервис собран руками: `LinkService(InMemoryLinkRepository()) { … }`. Это тоже внедрение зависимостей: объект получает их через конструктор. Утилите или прототипу из пары классов такой сборки в `main` хватит. Вывод: контейнер окупается, когда зависимостей много и их подменяют в тестах.
+
+## Кажется и есть
+
+<Compare leftLabel="Кажется" rightLabel="Есть" verdict="right">
+  <div slot="left">
+  • Провайдер создаёт новый объект при каждом `resolve()`<br/>
+  • `suspendTransaction` не блокирует поток выполнения<br/>
+  • DI находит классы сам, как Spring<br/>
+  • Интерфейс ради одной реализации — лишний слой
+  </div>
+  <div slot="right">
+  • Объект создаётся один раз и переиспользуется<br/>
+  • JDBC блокирует, поэтому `withContext(Dispatchers.IO)`<br/>
+  • Каждую зависимость регистрируют явно<br/>
+  • Реализаций две: база и память для тестов
+  </div>
+</Compare>
+
+Справа — поведение Exposed 1.5.0 и Ktor 3.6.0.
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| SQL в обработчике маршрута | Без базы маршрут не проверить | Репозиторий за интерфейсом |
+| «Проверил — вставил» без уникального ключа | Два параллельных запроса оба проходят проверку | Первичный ключ или уникальный индекс |
+| `Database.connect` на каждый запрос | Документация Exposed предупреждает об утечках | Один раз, в провайдере DI |
+| `jdbc:h2:mem:` без `DB_CLOSE_DELAY=-1` | H2 закроет базу с последним соединением, данные пропадут | Добавить `;DB_CLOSE_DELAY=-1` |
+| `property()` внутри `provide { }` | Не компилируется: неявный `Application` недоступен | `@Property("database")` на параметре |
+
+## Практикум
+
+<Practice title="Переведи сокращатель на базу и DI" checklist={["POST с alias ktor — 201 и Location: /links/ktor", "Тот же alias ещё раз — 409 и alias_taken", "GET /ktor — 302 на https://ktor.io, GET /links/nope42 — 404 not_found", "С файловой базой ссылка kotlin переживает перезапуск: 302", "40 параллельных POST с alias race: один 201 и 39 ответов 409", "Команды из практикума прошлого урока дают те же ответы", "Маршруты и LinkService не создают репозиторий и базу сами"]}>
+Продолжи проект с того места, где остановился в прошлом уроке:
+
+1. Добавь в каталог версий и `build.gradle.kts` строки из раздела про Exposed, а в `application.yaml` — секцию `database`.
+2. Создай `Database.kt`, `LinkRepository.kt`, `ExposedLinkRepository.kt`, `InMemoryLinkRepository.kt` и `LinkService.kt`, перенеси проверки URL и alias из маршрута в `shorten`.
+3. Сделай `CodeGenerator` интерфейсом `fun interface` с реализацией `RandomCodeGenerator`, удали `LinkStore` и его расширение `require`.
+4. Напиши `configureDependencies()`, вызови его первым в `module()`, в `configureRouting()` получи сервис через `dependencies.resolve()` и замени им `links` в маршрутах.
+5. Запусти `./gradlew run` и пройди команды в Git Bash (в PowerShell нет `seq` и `xargs`), под каждой — ожидаемый ответ:
+
+```bash
+curl -i -X POST http://localhost:8080/links \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://ktor.io","alias":"ktor"}'
+# 201, Location: /links/ktor
+curl -i http://localhost:8080/ktor
+# 302, Location: https://ktor.io
+curl -i http://localhost:8080/links/nope42
+# 404 {"error":"not_found",
+#      "message":"No link with code 'nope42'"}
+seq 1 40 | xargs -P 40 -I{} curl -s -o /dev/null \
+  -w "%{http_code}\n" -X POST http://localhost:8080/links \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://example.com","alias":"race"}' \
+  | sort | uniq -c
+#       1 201
+#      39 409
+```
+
+`uniq -c` считает одинаковые строки: слева число ответов, справа статус. Повтори первый запрос с адресом `https://example.com` и получишь 409 с `alias_taken`. Перезапусти сервер, чтобы база опустела, и пройди команды прошлого практикума: ответы те же.
+
+Потом запусти сервер с флагом `-P` из раздела про Exposed, создай alias `kotlin`, останови сервер через Ctrl+C, запусти так же и открой `/kotlin`.
+
+<div slot="solution">
+Интерфейс и репозиторий в памяти — из первого примера. Начало `Database.kt`:
+
+```kotlin
+package shortener
+
+import io.ktor.server.plugins.di.annotations.Property
+import kotlinx.serialization.Serializable
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+
+// … DatabaseSettings, LinksTable, connectDatabase
+```
+
+Константы в `Validation.kt`, `MAX_CODE_LENGTH` новая:
+
+```kotlin
+const val MAX_URL_LENGTH = 2048
+const val MAX_CODE_LENGTH = 32
+const val ALIAS_RULE = "[A-Za-z0-9_-]{3,$MAX_CODE_LENGTH}"
+```
+
+Импорты `ExposedLinkRepository.kt` и расширение `toLink()`:
+
+```kotlin
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.Query
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.transactions.suspendTransaction
+
+class ExposedLinkRepository(
+    private val database: Database,
+) : LinkRepository {
+    // … как в разделе про Exposed
+}
+
+private fun ResultRow.toLink(): Link =
+    Link(code = this[LinksTable.code], url = this[LinksTable.url])
+```
+
+`CodeGenerator.kt` целиком:
+
+```kotlin
+package shortener
+
+import org.apache.commons.lang3.RandomStringUtils
+
+fun interface CodeGenerator {
+    fun generate(): String
+}
+
+class RandomCodeGenerator(
+    private val length: Int = DEFAULT_LENGTH,
+) : CodeGenerator {
+    override fun generate(): String =
+        RandomStringUtils.secure().nextAlphanumeric(length)
+
+    companion object {
+        const val DEFAULT_LENGTH = 6
+    }
+}
+```
+
+Импорты `Dependencies.kt`:
+
+```kotlin
+import io.ktor.server.application.Application
+import io.ktor.server.plugins.di.dependencies
+import io.ktor.server.plugins.di.provide
+```
+
+Сервис с проверками из прошлого урока:
+
+```kotlin
+class LinkService(
+    private val repository: LinkRepository,
+    private val codes: CodeGenerator,
+) {
+    suspend fun shorten(
+        url: String,
+        alias: String? = null,
+    ): Link {
+        val target = requireWebUrl(url)
+        return if (alias == null) {
+            addWithRandomCode(target)
+        } else {
+            addWithAlias(requireValidAlias(alias), target)
+        }
+    }
+
+    suspend fun resolve(code: String): Link =
+        repository.find(code) ?: throw LinkNotFoundException(code)
+
+    // … addWithRandomCode, addWithAlias — из примера
+}
+```
+
+Обработчики маршрутов сжались до вызова сервиса:
+
+```kotlin
+import io.ktor.server.plugins.di.dependencies
+// …
+
+suspend fun Application.configureRouting() {
+    val baseUrl: String = property("shortener.baseUrl")
+    val service: LinkService = dependencies.resolve()
+    routing {
+        // …
+        route("/links") {
+            post {
+                val request = call.receive<CreateLinkRequest>()
+                val link = service.shorten(request.url, request.alias)
+                val location = "/links/${link.code}"
+                call.response.header(HttpHeaders.Location, location)
+                call.respond(HttpStatusCode.Created, link.toResponse(baseUrl))
+            }
+            get("/{code}") {
+                val link = service.resolve(call.requirePathParameter("code"))
+                call.respond(link.toResponse(baseUrl))
+            }
+        }
+        get("/{code}") {
+            val link = service.resolve(call.requirePathParameter("code"))
+            call.respondRedirect(link.url)
+        }
+    }
+}
+```
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Найди в своём проекте класс, который сам создаёт своё хранилище или клиент внешнего сервиса. Какой интерфейс ему нужен и кто подставит реализацию? До конца недели вынеси создание наружу, в `main` или в DI. Зачем это тестам, покажет следующий урок: там `LinkRepository` подменят одной строкой и проверят сервис без H2.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Таблица | `object LinksTable : Table("links")`, `primaryKey` |
+| Запросы | `selectAll().where { … eq … }`, `insert { it[code] = … }` |
+| Транзакция в suspend | `withContext(Dispatchers.IO) { suspendTransaction(db) { … } }` |
+| H2 в памяти | `jdbc:h2:mem:имя;DB_CLOSE_DELAY=-1` |
+| Файловая база | `-P:database.url=jdbc:h2:file:путь` |
+| Регистрация | `provide<LinkRepository>(::ExposedLinkRepository)` |
+| Получение | `dependencies.resolve()` в suspend-модуле |
+| Секция конфига | `@Property("database")` на параметре провайдера |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Exposed", meaning: "Библиотека JetBrains для работы с SQL из Kotlin поверх JDBC-драйвера, со стилями DSL и DAO." },
+  { term: "JDBC", meaning: "Стандартный Java-интерфейс к реляционным базам; его вызовы блокируют поток выполнения." },
+  { term: "H2", meaning: "Встраиваемая база данных, которая работает в том же процессе JVM, в памяти или в файле." },
+  { term: "Таблица (Table)", meaning: "Объект Exposed, который описывает таблицу базы и её колонки." },
+  { term: "Первичный ключ (primary key)", meaning: "Колонка, значение которой уникально для каждой строки таблицы; дубль база не примет." },
+  { term: "Транзакция (transaction)", meaning: "Блок операций, который база применяет целиком или не применяет вовсе; запросы Exposed выполняются только внутри него." },
+  { term: "suspendTransaction", meaning: "Транзакция Exposed 1.x для JDBC, которую вызывают из suspend-функции внутри withContext." },
+  { term: "Репозиторий (repository)", meaning: "Класс за интерфейсом, который сохраняет и находит объекты предметной области." },
+  { term: "Сервис (service)", meaning: "Слой с правилами предметной области между маршрутами и репозиторием." },
+  { term: "Внедрение зависимостей (dependency injection)", meaning: "Объект получает зависимости снаружи, через конструктор, а не создаёт их сам." },
+  { term: "DI-контейнер", meaning: "Объект, который по зарегистрированным правилам создаёт зависимости и отдаёт их по типу." },
+  { term: "Провайдер (provider)", meaning: "Зарегистрированное в DI правило, как создать объект нужного типа." },
+  { term: "resolve", meaning: "Suspend-функция DI Ktor, которая возвращает зависимость нужного типа. Регистрация должна стоять выше по коду, иначе будет MissingDependencyException." },
+  { term: "@Property", meaning: "Аннотация DI Ktor: взять значение или секцию из файла конфигурации." },
+  { term: "Гонка (race condition)", meaning: "Ошибка, при которой результат зависит от порядка, в котором параллельные операции дошли до общих данных." },
+  { term: "Атомарная операция", meaning: "Операция, которую другие потоки выполнения видят либо целиком выполненной, либо не начатой." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что осталось в памяти.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-data-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">База и DI: понятия</span>
+    <span class="kc-trainer-hint">Exposed, репозиторий, DI</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-data-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Слои, гонки и DI</span>
+    <span class="kc-trainer-hint">Что случится на сервере</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-data-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери слой данных</span>
+    <span class="kc-trainer-hint">Строки кода по порядку</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-data-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши Exposed и DI</span>
+    <span class="kc-trainer-hint">Функции, типы, аннотации</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Exposed 1.5.0 — документация и Migration guide 1.0.0** ([jetbrains.com/help/exposed](https://www.jetbrains.com/help/exposed/migration-guide-1-0-0.html), [github.com](https://github.com/JetBrains/Exposed/tree/1.5.0), сверено 2026-10-02) — пакеты `v1`, транзакции, подключение, таблицы, запросы; три попытки — `DatabaseConfig.kt`.
+- **Ktor 3.6.0 — Dependency injection** ([ktor.io/docs](https://ktor.io/docs/server-dependency-injection.html), [github.com](https://github.com/ktorio/ktor/tree/3.6.0), сверено 2026-10-02) — `provide`, `resolve`, `@Property`, конфликты регистраций; объект создаётся один раз — `DependencyInitializer.kt`.
+- **Ktor — Integrate a database, Configuration in a file** ([ktor.io/docs](https://ktor.io/docs/server-integrate-database.html), сверено 2026-10-02) — репозиторий за интерфейсом, `Dispatchers.IO`, флаг `-P`.
+- **H2 — Features** ([h2database.com](https://www.h2database.com/html/features.html), сверено 2026-10-02) — базы в памяти и в файле.
+- **Java SE 25 — ConcurrentMap** ([docs.oracle.com](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/ConcurrentMap.html), сверено 2026-10-02) — атомарный `putIfAbsent`.
+- **Spring Framework 7.0.9 — Dependency Injection, Classpath Scanning** ([docs.spring.io](https://docs.spring.io/spring-framework/reference/core/beans/dependencies/factory-collaborators.html), [docs.spring.io](https://docs.spring.io/spring-framework/reference/core/beans/classpath-scanning.html), сверено 2026-10-02) — внедрение через конструктор, сканирование classpath.
+- **Maven Central** ([repo.maven.apache.org](https://repo.maven.apache.org/maven2/com/h2database/h2/maven-metadata.xml), сверено 2026-10-02) — версии библиотек.

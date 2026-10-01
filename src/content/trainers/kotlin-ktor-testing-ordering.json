@@ -1,0 +1,166 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-testing",
+  "title": "Собери тест",
+  "description": "Расставь строки теста по порядку: подготовка, действие, проверка.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери тест API: неизвестный код /nope42 даёт ошибку not_found.",
+        "words": [
+          "        assertEquals(\"not_found\", error)",
+          "    testApplication {",
+          "@Test",
+          "        val error = response.body<ErrorResponse>().error",
+          "        val response = jsonClient().get(\"/nope42\")",
+          "    }",
+          "fun `reports not_found for an unknown code`() =",
+          "        setUpShortener()"
+        ],
+        "answer": [
+          "@Test",
+          "fun `reports not_found for an unknown code`() =",
+          "    testApplication {",
+          "        setUpShortener()",
+          "        val response = jsonClient().get(\"/nope42\")",
+          "        val error = response.body<ErrorResponse>().error",
+          "        assertEquals(\"not_found\", error)",
+          "    }"
+        ],
+        "explain": "Настройка приложения идёт раньше запроса: тестовое приложение стартует при первом запросе клиента. Дальше каждая строка берёт значение из предыдущей. Одного статуса 404 такому тесту мало, потому что его вернёт и приложение без единого маршрута. Код not_found отдаёт только сам сервис."
+      },
+      {
+        "task": "Собери функцию, которая подменяет репозиторий в тестовом приложении (блок environment с конфигом здесь опущен).",
+        "words": [
+          "        module()",
+          "    application {",
+          ") {",
+          "}",
+          "        dependencies.provide<LinkRepository> { repository }",
+          "fun ApplicationTestBuilder.setUpShortener(",
+          "    }",
+          "    repository: LinkRepository = InMemoryLinkRepository(),"
+        ],
+        "answer": [
+          "fun ApplicationTestBuilder.setUpShortener(",
+          "    repository: LinkRepository = InMemoryLinkRepository(),",
+          ") {",
+          "    application {",
+          "        dependencies.provide<LinkRepository> { repository }",
+          "        module()",
+          "    }",
+          "}"
+        ],
+        "explain": "Тестовая регистрация должна прийти раньше module(): в тестовом движке DI игнорирует повторные регистрации того же типа и оставляет первую. Если поставить module() выше, останется боевой ExposedLinkRepository."
+      },
+      {
+        "task": "Собери тест сервиса: генератор всегда выдаёт один код, и вторая ссылка кончается IllegalStateException.",
+        "words": [
+          "            service.shorten(first.url)",
+          "        val first = service.shorten(\"https://a.example\")",
+          "    runTest {",
+          "        val service = LinkService(repository) { \"same\" }",
+          "@Test",
+          "        }",
+          "    }",
+          "        assertFailsWith<IllegalStateException> {",
+          "fun `gives up on the second link`() =",
+          "        val repository = InMemoryLinkRepository()"
+        ],
+        "answer": [
+          "@Test",
+          "fun `gives up on the second link`() =",
+          "    runTest {",
+          "        val repository = InMemoryLinkRepository()",
+          "        val service = LinkService(repository) { \"same\" }",
+          "        val first = service.shorten(\"https://a.example\")",
+          "        assertFailsWith<IllegalStateException> {",
+          "            service.shorten(first.url)",
+          "        }",
+          "    }"
+        ],
+        "explain": "Первый shorten занимает код «same» — это подготовка, и его результат нужен дальше: второй вызов берёт first.url. Внутри assertFailsWith сервис пять раз получает тот же занятый код и вызывает error(...), а она бросает IllegalStateException."
+      },
+      {
+        "task": "Собери тест сервиса: resolve неизвестного кода бросает LinkNotFoundException.",
+        "words": [
+          "    }",
+          "        assertFailsWith<LinkNotFoundException> {",
+          "fun `fails for an unknown code`() =",
+          "        val service = LinkService(repository) { \"abc123\" }",
+          "            service.resolve(\"nope42\")",
+          "@Test",
+          "        }",
+          "    runTest {",
+          "        val repository = InMemoryLinkRepository()"
+        ],
+        "answer": [
+          "@Test",
+          "fun `fails for an unknown code`() =",
+          "    runTest {",
+          "        val repository = InMemoryLinkRepository()",
+          "        val service = LinkService(repository) { \"abc123\" }",
+          "        assertFailsWith<LinkNotFoundException> {",
+          "            service.resolve(\"nope42\")",
+          "        }",
+          "    }"
+        ],
+        "explain": "resolve — suspend-функция, поэтому тело теста в runTest. Сервису нужен репозиторий, значит, сначала репозиторий, потом сервис. Вызов, который должен упасть, — внутри assertFailsWith с самым узким типом исключения."
+      },
+      {
+        "task": "Собери тест сервиса: созданную ссылку можно найти по её коду.",
+        "words": [
+          "        val found = service.resolve(created.code)",
+          "@Test",
+          "        val service = LinkService(repository) { \"abc123\" }",
+          "    }",
+          "        assertEquals(created, found)",
+          "fun `resolves a created link`() =",
+          "        val created = service.shorten(\"https://ktor.io\")",
+          "    runTest {",
+          "        val repository = InMemoryLinkRepository()"
+        ],
+        "answer": [
+          "@Test",
+          "fun `resolves a created link`() =",
+          "    runTest {",
+          "        val repository = InMemoryLinkRepository()",
+          "        val service = LinkService(repository) { \"abc123\" }",
+          "        val created = service.shorten(\"https://ktor.io\")",
+          "        val found = service.resolve(created.code)",
+          "        assertEquals(created, found)",
+          "    }"
+        ],
+        "explain": "Каждая строка берёт значение из предыдущей: сервис — репозиторий, поиск — код созданной ссылки. Link — data class, поэтому assertEquals сравнивает код и адрес, а не ссылки на объекты."
+      },
+      {
+        "task": "Собери тест API: короткий адрес собран из тестового конфига.",
+        "words": [
+          "        val link = response.body<LinkResponse>()",
+          "    }",
+          "fun `returns the short url`() =",
+          "        assertEquals(expected, link.shortUrl)",
+          "    testApplication {",
+          "        val response = jsonClient().createLink(\"https://ktor.io\")",
+          "        val expected = \"$TEST_BASE_URL/${link.code}\"",
+          "@Test",
+          "        setUpShortener()"
+        ],
+        "answer": [
+          "@Test",
+          "fun `returns the short url`() =",
+          "    testApplication {",
+          "        setUpShortener()",
+          "        val response = jsonClient().createLink(\"https://ktor.io\")",
+          "        val link = response.body<LinkResponse>()",
+          "        val expected = \"$TEST_BASE_URL/${link.code}\"",
+          "        assertEquals(expected, link.shortUrl)",
+          "    }"
+        ],
+        "explain": "Сначала настройка приложения с тестовым конфигом, потом запрос и разбор JSON в LinkResponse. Ожидаемый адрес собирается из TEST_BASE_URL и кода ссылки и стоит первым аргументом assertEquals."
+      }
+    ]
+  }
+}

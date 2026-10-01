@@ -1,0 +1,48 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-data",
+  "title": "Собери слой данных",
+  "description": "Расставь строки кода так, чтобы сервис, репозиторий и подключение к базе делали то, что сказано в задании.",
+  "data": {
+    "type": "ordering",
+    "code": true,
+    "items": [
+      {
+        "task": "Собери метод LinkService, который пробует до MAX_ATTEMPTS случайных кодов и сдаётся, если все заняты.",
+        "words": ["    }", "        if (repository.addIfAbsent(link)) return link", "private suspend fun addWithRandomCode(url: String): Link {", "    error(\"No free code after $MAX_ATTEMPTS attempts\")", "        val link = Link(codes.generate(), url)", "}", "    repeat(MAX_ATTEMPTS) {"],
+        "answer": ["private suspend fun addWithRandomCode(url: String): Link {", "    repeat(MAX_ATTEMPTS) {", "        val link = Link(codes.generate(), url)", "        if (repository.addIfAbsent(link)) return link", "    }", "    error(\"No free code after $MAX_ATTEMPTS attempts\")", "}"],
+        "explain": "Внутри repeat создаём ссылку со свежим кодом и возвращаем её, как только addIfAbsent ответил true. error стоит после цикла: до него доходим, только если все попытки заняты. Внутри цикла error сломал бы повтор, а компилятор к тому же потребовал бы return."
+      },
+      {
+        "task": "Собери функцию-провайдер: она подключается к базе из настроек конфига, создаёт таблицу ссылок и возвращает базу.",
+        "words": ["    return database", "    transaction(database) {", "fun connectDatabase(", "    }", "    val database = Database.connect(settings.url, driver = settings.driver)", "}", "        SchemaUtils.create(LinksTable)", "    @Property(\"database\") settings: DatabaseSettings,", "): Database {"],
+        "answer": ["fun connectDatabase(", "    @Property(\"database\") settings: DatabaseSettings,", "): Database {", "    val database = Database.connect(settings.url, driver = settings.driver)", "    transaction(database) {", "        SchemaUtils.create(LinksTable)", "    }", "    return database", "}"],
+        "explain": "Параметр с @Property DI заполнит секцией database из конфига. Сначала описание базы через Database.connect, потом транзакция: SchemaUtils.create, как любая операция Exposed, работает только внутри неё. return последним, иначе таблица не создастся."
+      },
+      {
+        "task": "Собери программу: сервис с репозиторием в памяти и генератором-лямбдой сокращает ссылку и печатает адрес, найденный по её коду.",
+        "words": ["    println(service.resolve(link.code).url)", "        \"abc123\"", "}", "    val link = service.shorten(\"https://ktor.io\")", "fun main() = runBlocking {", "    }", "    val service = LinkService(InMemoryLinkRepository()) {"],
+        "answer": ["fun main() = runBlocking {", "    val service = LinkService(InMemoryLinkRepository()) {", "        \"abc123\"", "    }", "    val link = service.shorten(\"https://ktor.io\")", "    println(service.resolve(link.code).url)", "}"],
+        "explain": "Зависимости переданы через конструктор руками: репозиторий в памяти и лямбда вместо fun interface CodeGenerator. Это то же внедрение зависимостей, только без контейнера. Программа напечатает https://ktor.io."
+      },
+      {
+        "task": "Собери обработчик POST /links: он передаёт запрос сервису и отвечает 201 с заголовком Location и JSON-телом.",
+        "words": ["    call.respond(HttpStatusCode.Created, link.toResponse(baseUrl))", "    val location = \"/links/${link.code}\"", "}", "    val request = call.receive<CreateLinkRequest>()", "    call.response.header(HttpHeaders.Location, location)", "post {", "    val link = service.shorten(request.url, request.alias)"],
+        "answer": ["post {", "    val request = call.receive<CreateLinkRequest>()", "    val link = service.shorten(request.url, request.alias)", "    val location = \"/links/${link.code}\"", "    call.response.header(HttpHeaders.Location, location)", "    call.respond(HttpStatusCode.Created, link.toResponse(baseUrl))", "}"],
+        "explain": "Каждая строка берёт результат предыдущей: тело запроса нужно сервису, код ссылки — адресу для Location. Заголовок ставят до call.respond, потому что respond отправляет ответ. Проверки URL и выдача кода — в сервисе, маршрут про них не знает."
+      },
+      {
+        "task": "Собери функцию, которая сохраняет новый код и отвечает 201, а на занятый отвечает 409. В ней есть гонка: между проверкой и записью корутина уступает поток выполнения, и два одновременных вызова с новым кодом оба получают 201.",
+        "words": ["    links[code] = url", "}", "    yield()", "suspend fun addChecked(code: String, url: String): Int {", "    return 201", "    if (links.containsKey(code)) return 409"],
+        "answer": ["suspend fun addChecked(code: String, url: String): Int {", "    if (links.containsKey(code)) return 409", "    yield()", "    links[code] = url", "    return 201", "}"],
+        "explain": "Гонка появляется, когда пауза стоит между проверкой и записью: обе корутины успевают проверить пустой словарь, и обе пишут. yield до проверки или после записи убирает окно, и одна из корутин получает 409. А если return 201 поставить раньше проверки, 409 функция не ответит никогда."
+      },
+      {
+        "task": "Собери метод shorten: без alias сервис выдаёт случайный код, с alias — проверенный alias. URL проверяется в любом случае.",
+        "words": ["        addWithAlias(requireValidAlias(alias), target)", "    } else {", "}", "    val target = requireWebUrl(url)", "    }", "suspend fun shorten(url: String, alias: String?): Link {", "        addWithRandomCode(target)", "    return if (alias == null) {"],
+        "answer": ["suspend fun shorten(url: String, alias: String?): Link {", "    val target = requireWebUrl(url)", "    return if (alias == null) {", "        addWithRandomCode(target)", "    } else {", "        addWithAlias(requireValidAlias(alias), target)", "    }", "}"],
+        "explain": "URL проверяется первой строкой, до выбора ветки. В ветке alias == null alias ещё null, и requireValidAlias его не примет: компилятор скажет, что ждал String. Поэтому случайный код — в первой ветке, alias — в else."
+      }
+    ]
+  }
+}

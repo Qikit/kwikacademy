@@ -1,0 +1,85 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-testing",
+  "title": "Допиши тест",
+  "description": "Впиши функцию, аннотацию, тип или настройку из тестов сокращателя. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      {
+        "text": "@___ fun `trims spaces around the url`() {",
+        "answers": [
+          "Test"
+        ],
+        "explain": "Тестовую функцию помечают аннотацией @Test из kotlin.test."
+      },
+      {
+        "text": "fun `creates a short link`() = ___ {   // Ktor без сервера",
+        "answers": [
+          "testApplication"
+        ],
+        "explain": "testApplication запускает приложение Ktor в тесте, запросы идут без настоящего сервера и сокетов."
+      },
+      {
+        "text": "fun `gives up`() = ___ {   // delay пропускается",
+        "answers": [
+          "runTest"
+        ],
+        "explain": "runTest из kotlinx-coroutines-test запускает suspend-код в тесте и пропускает delay."
+      },
+      {
+        "text": "assertFailsWith<___> { service.shorten(url) }",
+        "answers": [
+          "IllegalStateException"
+        ],
+        "explain": "error(...) бросает IllegalStateException. Более широкий тип вроде Exception сделает тест зелёным и от посторонней ошибки.",
+        "hint": "Сервис сдался через error(...), нужен самый узкий тип"
+      },
+      {
+        "text": "dependencies.___<LinkRepository> { repository }",
+        "answers": [
+          "provide"
+        ],
+        "explain": "provide регистрирует зависимость в DI Ktor. В тесте это делают раньше module()."
+      },
+      {
+        "text": "config = ___(\"shortener.baseUrl\" to TEST_BASE_URL)",
+        "answers": [
+          "MapApplicationConfig"
+        ],
+        "explain": "MapApplicationConfig собирает конфиг тестового приложения из пар «ключ — значение»."
+      },
+      {
+        "text": "___ = false   // тестовый клиент не переходит по Location",
+        "answers": [
+          "followRedirects"
+        ],
+        "explain": "Клиент Ktor по умолчанию идёт по адресу из Location. Для проверки самого редиректа переход выключают."
+      },
+      {
+        "text": "assertEquals(HttpStatusCode.___, response.status)",
+        "answers": [
+          "Found"
+        ],
+        "explain": "302 в Ktor — HttpStatusCode.Found, его и отдаёт respondRedirect по умолчанию.",
+        "hint": "Статус 302"
+      },
+      {
+        "text": "val link = response.___<LinkResponse>()   // JSON в DTO",
+        "answers": [
+          "body"
+        ],
+        "explain": "body<T>() разбирает тело ответа в объект; для JSON у клиента должен стоять ContentNegotiation."
+      },
+      {
+        "text": "val header = response.headers[HttpHeaders.___]",
+        "answers": [
+          "Location"
+        ],
+        "explain": "Вместе с 201 сервис отдаёт заголовок Location с адресом созданной ссылки, тест проверяет его наравне со статусом и телом.",
+        "hint": "Адрес созданной ссылки после 201"
+      }
+    ]
+  }
+}

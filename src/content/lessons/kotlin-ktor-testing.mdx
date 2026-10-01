@@ -4,10 +4,562 @@ order: 23
 phase: "Бэкенд на Ktor"
 title: "Тестирование сервиса: testApplication"
 eyebrow: "Kotlin · Бэкенд на Ktor"
-readingMinutes: 15
-summary: "Проверять маршруты сервиса тестами без запуска настоящего сервера."
+readingMinutes: 18
+summary: "Проверять маршруты и сервис сокращателя тестами на testApplication и runTest без настоящего сервера и базы — и следить, чтобы тест падал на сломанном коде."
 tags: [kotlin, backend]
-placeholder: true
 ---
 
-Этот урок ещё в работе. Скоро здесь появится разбор темы «Тестирование сервиса: testApplication» — с примерами, которые можно запустить, практикумом и тренажёрами.
+import Callout from '../../components/lesson/Callout.astro';
+import DecisionTree from '../../components/lesson/DecisionTree.astro';
+import Reveal from '../../components/lesson/Reveal.astro';
+import Practice from '../../components/lesson/Practice.astro';
+import Vocab from '../../components/lesson/Vocab.astro';
+import KotlinPlayground from '../../components/lesson/KotlinPlayground.astro';
+import { withBase } from '../../lib/url';
+
+## Зачем это
+
+В прошлом уроке сокращатель переехал в базу: `ExposedLinkRepository` пишет ссылки в H2, `LinkService` повторяет попытку, если случайный код занят, а собирает всё встроенный DI Ktor. Рядом лежит вторая реализация `LinkRepository`, `InMemoryLinkRepository`, и сам сервис ею не пользуется. Теперь представь, что ты переименовал пару функций в `Routing.kt`. Чтобы убедиться, что ничего не сломалось, нужно запустить `./gradlew run`, повторить в соседнем терминале десяток с лишним команд `curl` и сверить статусы глазами.
+
+Так проверяют раз, от силы два. На пятый ты пропустишь команду про занятый alias, и 409 незаметно превратится в 400. В уроке про хороший код мы сверяли вывод программы после каждого шага рефакторинга и договорились, что в проекте эту работу делают автотесты. Кажется, что для теста HTTP-сервиса нужны сервер на порту и настоящая база. Ktor обходится без того и другого.
+
+После урока ты сможешь покрыть маршруты сокращателя тестами на `testApplication`: подменить репозиторий через DI, проверить статус, тело и заголовок `Location`, протестировать сервис на `runTest` и убедиться, что тест падает, если сломать код.
+
+## Ядро: сервис в тесте без сервера и базы
+
+<Callout type="purple" title="Суть">
+**`testApplication`** запускает приложение Ktor прямо в тесте: запросы тестового клиента обрабатываются без настоящего сервера и сокетов. Базу ты подменяешь через DI реализацией в памяти, а маршруты, JSON, `StatusPages` и сервис работают настоящие. Проверяешь то, что видит клиент: статус, тело, заголовки. И каждый тест хоть раз видишь **красным**: тест, который не падает на сломанном коде, ничего не проверяет.
+</Callout>
+
+Проверку в тесте делает **утверждение** (assertion): `assertEquals`, `assertFailsWith` и другие функции библиотеки `kotlin.test`. Если результат не совпал с ожидаемым, утверждение бросает `AssertionError`, и тест считается упавшим.
+
+Прежде чем раскрыть ответ, ответь сам, хотя бы про себя.
+
+<Reveal q="Коллега написал тест на занятый alias: создал ссылку, отправил второй запрос с тем же alias и в конце напечатал response.status. При каком статусе второго ответа этот тест покраснеет?">
+Ни при каком. Утверждения в тесте нет, а без него тест падает только от исключения. Клиент Ktor по умолчанию не бросает исключений из-за статуса ответа, поэтому тест зелёный и при 409, и при 201, и при 400: напечатанное никто не сверяет. Проверку делает `assertEquals(HttpStatusCode.Conflict, response.status)`, и только с ней тест способен упасть.
+</Reveal>
+
+## Как устроено: тест на kotlin.test
+
+**Тест** — функция, которая готовит данные, вызывает проверяемый код и сверяет результат утверждениями. Билл Уэйк назвал эти три части Arrange, Act, Assert: подготовка, действие, проверка. В тестах проекта их разделяют пустыми строками. Функцию-тест помечают аннотацией `@Test` из `kotlin.test`, а запускает тесты JUnit 5 по команде `./gradlew test`.
+
+Вот два теста `LinkService` из проекта, ужатые до запускаемой программы. Генератор кодов подставлен лямбдой: `CodeGenerator` — `fun interface`, и лямбда превращается в него SAM-преобразованием. Первый тест сравнивает ожидаемое значение с полученным через `assertEquals`. Второй ждёт исключения через `assertFailsWith`: после пяти занятых кодов сервис вызывает `error(...)`, а она бросает `IllegalStateException`.
+
+<KotlinPlayground>
+
+```kotlin
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlinx.coroutines.runBlocking
+
+data class Link(val code: String, val url: String)
+
+interface LinkRepository {
+    suspend fun addIfAbsent(link: Link): Boolean
+}
+
+class InMemoryLinkRepository : LinkRepository {
+    private val links = ConcurrentHashMap<String, Link>()
+
+    override suspend fun addIfAbsent(link: Link): Boolean =
+        links.putIfAbsent(link.code, link) == null
+}
+
+fun interface CodeGenerator {
+    fun generate(): String
+}
+
+class LinkService(
+    private val repository: LinkRepository,
+    private val codes: CodeGenerator,
+) {
+    suspend fun shorten(url: String): Link {
+        repeat(MAX_ATTEMPTS) {
+            val link = Link(codes.generate(), url)
+            if (repository.addIfAbsent(link)) return link
+        }
+        error("No free code after $MAX_ATTEMPTS attempts")
+    }
+
+    private companion object {
+        const val MAX_ATTEMPTS = 5
+    }
+}
+
+suspend fun `retries when the generated code is taken`() {
+    val repository = InMemoryLinkRepository()
+    repository.addIfAbsent(Link("taken", "https://a.io"))
+    val codes = listOf("taken", "free").iterator()
+    val service = LinkService(repository) { codes.next() }
+
+    val link = service.shorten("https://b.io")
+
+    assertEquals("free", link.code)
+}
+
+suspend fun `gives up when every code is taken`() {
+    val repository = InMemoryLinkRepository()
+    repository.addIfAbsent(Link("same", "https://a.io"))
+    val service = LinkService(repository) { "same" }
+
+    assertFailsWith<IllegalStateException> {
+        service.shorten("https://b.io")
+    }
+}
+
+fun main() = runBlocking {
+    `retries when the generated code is taken`()
+    `gives up when every code is taken`()
+    println("Оба теста прошли")
+}
+```
+
+</KotlinPlayground>
+
+Запусти: программа напечатает «Оба теста прошли». Теперь сломай сервис: замени строку `if (repository.addIfAbsent(link)) return link` на `return link`, чтобы он перестал проверять, свободен ли код. Первый тест упадёт: `expected:<[free]> but was:<[taken]>`. Верни строку и поставь `MAX_ATTEMPTS = 1`. Тест опять красный, но уже от исключения `No free code after 1 attempts`.
+
+В редакторе урока нет JUnit 5 и Ktor, а `runTest` из старой `kotlinx-coroutines-test` 1.6.4 выдаёт предупреждение. Поэтому тесты здесь — обычные suspend-функции, и вызывает их `main` через `runBlocking`. `kotlin.test` здесь работает поверх JUnit 4, отсюда квадратные скобки в сообщении. В проекте те же тесты выглядят так:
+
+```kotlin
+class LinkServiceTest {
+    @Test
+    fun `retries when the generated code is taken`() =
+        runTest {
+            val repository = InMemoryLinkRepository()
+            repository.addIfAbsent(Link("taken", "https://a.example"))
+            val codes = listOf("taken", "free").iterator()
+            val service = LinkService(repository) { codes.next() }
+
+            val link = service.shorten("https://b.example")
+
+            assertEquals("free", link.code)
+        }
+
+    // …
+}
+```
+
+Вместо `runBlocking` в проекте стоит **`runTest`** из библиотеки `kotlinx-coroutines-test`: он запускает suspend-код в тесте. По документации на JVM он работает так же, как `runBlocking`, только пропускает `delay`, и тест, который ждёт тридцать секунд, проходит сразу.
+
+Часть объектов в этих тестах ненастоящая. **Тестовый двойник** (test double) — объект, который на время теста подменяет боевой. Термин придумал Джерард Месарош, виды двойников пересказал Мартин Фаулер. `InMemoryLinkRepository` — **фейк** (fake): рабочая реализация с упрощением, которое не годится для прода, и в примере Фаулера это как раз база в памяти. Лежит он в `src/main` с прошлого урока. Лямбда `{ "same" }` — **заглушка** (stub), она отдаёт заранее заданный ответ. Со случайным генератором коллизию кодов не повторить.
+
+У `assertEquals` есть ловушка. Предскажи, что напечатает эта программа, и только потом запусти:
+
+<KotlinPlayground>
+
+```kotlin
+import kotlin.test.assertEquals
+
+fun statusFor(error: String): Int =
+    when (error) {
+        "invalid_url" -> 400
+        "not_found" -> 404
+        "alias_taken" -> 490
+        else -> 500
+    }
+
+fun main() {
+    val status = statusFor("alias_taken")
+
+    assertEquals(status, 409)
+    println("Тест прошёл")
+}
+```
+
+</KotlinPlayground>
+
+<Reveal q="Какое сообщение выдаст проверка и как его поймёт коллега, который не видел statusFor?">
+`AssertionError: expected:<490> but was:<409>`. Коллега прочитает, что код вернул правильный 409, а тест почему-то ждёт 490, и «починит» тест. Всё наоборот: `assertEquals` принимает сначала ожидаемое значение, потом полученное, а здесь их перепутали. Поменяй аргументы местами, прочитай честное сообщение и исправь 490 на 409 в `statusFor`.
+</Reveal>
+
+## Как устроено: testApplication и подмена через DI
+
+Для тестов нужны четыре зависимости: `kotlin-test`, `kotlinx-coroutines-test`, `ktor-server-test-host` с **тестовым движком** Ktor (он обрабатывает запросы без сервера) и `ktor-client-content-negotiation` — клиентская половина `ContentNegotiation`. Без `useJUnitPlatform()` Gradle подключил бы `kotlin-test` в варианте для JUnit 4. С этой строкой плагин Kotlin берёт вариант `kotlin-test-junit5`, и тот приводит JUnit Jupiter 5.10.1. Версии в проекте: Kotlin 2.4.20, Ktor 3.6.0, kotlinx-coroutines 1.11.0 (сверено 2026-10-02).
+
+```kotlin
+dependencies {
+    // …
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.ktor.server.test.host)
+    testImplementation(libs.ktor.client.content.negotiation)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+```
+
+Тесты лежат в `src/test/kotlin/shortener`, в том же пакете, что и сервис, поэтому `module()` и классы проекта доступны без импортов. Общую подготовку тестов API собирает файл `TestSupport.kt`:
+
+```kotlin
+const val TEST_BASE_URL = "http://sho.rt"
+
+fun ApplicationTestBuilder.setUpShortener(
+    repository: LinkRepository = InMemoryLinkRepository(),
+) {
+    environment {
+        config = MapApplicationConfig("shortener.baseUrl" to TEST_BASE_URL)
+    }
+    application {
+        dependencies.provide<LinkRepository> { repository }
+        module()
+    }
+}
+
+fun ApplicationTestBuilder.jsonClient(): HttpClient =
+    createClient {
+        install(ContentNegotiation) {
+            json()
+        }
+        followRedirects = false
+    }
+
+suspend fun HttpClient.createLink(
+    url: String,
+    alias: String? = null,
+): HttpResponse =
+    post("/links") {
+        contentType(ContentType.Application.Json)
+        setBody(CreateLinkRequest(url, alias))
+    }
+```
+
+Блок `testApplication { … }` — лямбда с получателем `ApplicationTestBuilder`, такая же, как в уроке про DSL. Поэтому `setUpShortener` и `jsonClient` объявлены расширениями этого типа.
+
+- **`environment { config = … }`** задаёт конфиг. `MapApplicationConfig` собирает его из пар «ключ — значение». Сам `application.yaml` тестовое приложение не читает: без этого блока конфиг пустой, и тест падает с `ApplicationConfigurationException: Property shortener.baseUrl not found.` Генератор Ktor пишет тест через `configure()`: тот читает `application.yaml` вместе со списком модулей. Адрес `http://sho.rt` нарочно другой, чем в `application.yaml`: так тест видит, что `shortUrl` собран из тестового конфига.
+- **`application { … }`** загружает модули. Сначала регистрируется тестовый репозиторий, потом вызывается тот же `module()`, что в проде. Внутри него сработает `provide<LinkRepository>(::ExposedLinkRepository)`, но в тестовом движке у DI политика конфликтов **IgnoreConflicts**: повторную регистрацию того же типа он игнорирует и оставляет первую, тестовую.
+- **`createClient { … }`** строит тестовый клиент, который шлёт запросы в тестовое приложение, а `ContentNegotiation` с `json()` превращает DTO в JSON и обратно. Зачем `followRedirects = false`, покажет второй разбор.
+- **`createLink`** — расширение клиента: `post` шлёт запрос, `contentType` ставит заголовок `Content-Type`, а `setBody` принимает DTO.
+
+Сам тест читается как сценарий:
+
+```kotlin
+@Test
+fun `creates a short link`() =
+    testApplication {
+        setUpShortener()
+
+        val response = jsonClient().createLink("https://kotlinlang.org")
+
+        assertEquals(HttpStatusCode.Created, response.status)
+        val link = response.body<LinkResponse>()
+        assertEquals("https://kotlinlang.org", link.url)
+        assertEquals("$TEST_BASE_URL/${link.code}", link.shortUrl)
+        val location = response.headers[HttpHeaders.Location]
+        assertEquals("/links/${link.code}", location)
+    }
+```
+
+`response.status` — статус ответа, `body<LinkResponse>()` разбирает JSON в DTO, `headers[HttpHeaders.Location]` достаёт заголовок. Тестовое приложение стартует при первом запросе клиента, поэтому настройка идёт до него.
+
+<Reveal q="Что будет, если удалить из setUpShortener строку с dependencies.provide и оставить в блоке application только module()?">
+Тесты API упадут с `MissingDependencyException: Could not resolve dependency for shortener.DatabaseSettings("database")`. Без тестовой регистрации остаётся боевая: `ExposedLinkRepository` просит `Database`, функция `connectDatabase` — секцию `database` из конфига, а в тестовом конфиге её нет. Правило: подменённую зависимость регистрируй в тесте раньше `module()`.
+</Reveal>
+
+<Callout type="blue" title="Если знаешь Java — приложение в тест само не приходит">
+В Spring Boot `@SpringBootTest` сам находит класс с `@SpringBootApplication`, собирает из него контекст и по умолчанию не запускает сервер, а даёт мок-окружение для MockMvc. Тестовый движок Ktor тоже работает без сервера, но ничего не ищет. Модули ты загружаешь сам в `application { }` или через конфиг, конфиг по умолчанию пустой, а зависимость подменяешь вызовом `provide` до `module()`, без аннотаций вроде `@MockitoBean`.
+</Callout>
+
+## Как на практике
+
+- **Одна ситуация — один тест.** У каждого теста свой `testApplication` и свой репозиторий: параметр по умолчанию в `setUpShortener` создаёт новый. JUnit 5 выбирает порядок тестов «детерминированный, но намеренно неочевидный», в отчёте проекта они и шли не в том порядке, что в файле. Поэтому тест не рассчитывает на данные соседа.
+- **Проверяй то, что видит клиент.** Статус, поля тела, заголовок `Location` и машинный код ошибки вроде `invalid_url`: по нему программы-клиенты различают ошибки, а текст сообщения написан для людей.
+- **Подменяй медленное и случайное.** Базу — фейком, генератор кодов — заглушкой. Остальное в тестах API боевое, иначе тест проверит подмену.
+- **Сломай код под каждым тестом.** Это **контрольный опыт**: намеренно портишь код, видишь тест красным и возвращаешь как было. Документация Kotlin по JUnit советует то же: поменяй значение и убедись, что тест упал.
+- **Запускай тесты до и после рефакторинга.** В шляпе рефакторинга из урока про хороший код поведение не меняется, и теперь это подтверждает зелёный `./gradlew test`.
+
+<Callout type="teal" title="Как принято">
+Имя теста в Kotlin пишут фразой в обратных кавычках: ``fun `returns 404 for an unknown code`()``. Соглашения Kotlin разрешают пробелы в именах только в тестах и предупреждают, что Android понимает такие имена с API 30. Тест на корутинах пишут телом-выражением `= runTest { … }`: так выглядит типичный вызов в README `kotlinx-coroutines-test`, результат `runTest` сразу возвращается из теста. Саму библиотеку подключают только через `testImplementation`, в основном коде README зависеть от неё запрещает.
+</Callout>
+
+## Три разбора
+
+**Разбор 1. Тест, зелёный по ошибке.**
+Коллега проверяет отказ после пяти попыток и подсовывает генератору итератор из одного кода:
+
+```kotlin
+// … репозиторий, где код same уже занят
+val codes = listOf("same").iterator()
+val service = LinkService(repository) { codes.next() }
+
+assertFailsWith<Exception> {
+    service.shorten("https://b.example")
+}
+```
+
+Тест зелёный, но `shorten` до `error(...)` не дошёл: на второй попытке у итератора кончились элементы, и вылетело `NoSuchElementException`, которое `assertFailsWith<Exception>` тоже принимает. Ход — сузить тип до `IllegalStateException`. Тест краснеет с сообщением `… but was java.util.NoSuchElementException`, и видно, что сломан сам тест. Чинится он заглушкой `{ "same" }`: она отвечает одним кодом сколько угодно раз. Вывод: жди самое узкое исключение и проверяй, почему тест зелёный.
+
+**Разбор 2. Тест редиректа без одной строки.**
+Тест создаёт ссылку с alias `ktor` и запрашивает `/ktor`:
+
+```kotlin
+val client = jsonClient()
+client.createLink("https://ktor.io", alias = "ktor")
+
+val response = client.get("/ktor")
+
+assertEquals(HttpStatusCode.Found, response.status)
+```
+
+<Reveal q="Как думаешь, чем кончится этот тест, если из jsonClient убрать строку followRedirects = false?">
+Он упадёт с `InvalidTestRequestException: Can not resolve request to https://ktor.io. …`. Клиент Ktor по умолчанию идёт по адресу из `Location`, а тестовый клиент в настоящую сеть не ходит. Сервис ответил правильным 302, но до проверки статуса дело не дошло.
+</Reveal>
+
+Ход — выключить переходы в клиенте, как описано в документации Ktor: `followRedirects = false`. Вывод: тестовый клиент — обычный клиент Ktor со своими умолчаниями, и проверять нужно ответ своего сервиса, а не сайт по ссылке.
+
+**Разбор 3. Где testApplication лишний.**
+Правило «после пяти занятых кодов сдаться» живёт в `LinkService`. Через HTTP пришлось бы подменять ещё и генератор, поднимать приложение и разбирать JSON. Тест сервиса на `runTest` проверяет правило напрямую. Есть и обратная граница: ни один из семи тестов не касается `ExposedLinkRepository`, и SQL остаётся непроверенным. Вывод: правило проверяют там, где оно живёт, а зелёные тесты говорят только о коде, который выполнился.
+
+## Каким тестом проверить правило
+
+<DecisionTree nodes={[
+  { q: "Правило видно клиенту: маршрут, статус, JSON, заголовок, код ошибки?", yes: "Тест на testApplication с репозиторием в памяти", no: "к следующему вопросу" },
+  { q: "Правило живёт внутри сервиса: повтор кода, отказ после пяти попыток?", yes: "Тест LinkService на runTest с фейком и заглушкой", no: "к следующему вопросу" },
+  { q: "Правило про SQL и транзакции Exposed?", yes: "Отдельный тест репозитория с настоящей базой, в проекте курса его нет", no: "Запуск и curl: тестовый конфиг не читает application.yaml" }
+]} />
+
+## Типовые ошибки
+
+| Ошибка | Почему вредит | Что вместо |
+| --- | --- | --- |
+| Тест без утверждений, только `println` | Зелёный при любом статусе ответа | `assertEquals` для статуса и тела |
+| `assertEquals(status, 409)` | Сообщение меняет местами ожидаемое и полученное | Ожидаемое первым: `assertEquals(409, status)` |
+| `assertFailsWith<Exception>` | Тест зелёный от любой ошибки, даже от ошибки в самом тесте | Самый узкий тип: `IllegalStateException` |
+| Не подменить репозиторий | DI собирает боевой граф: `MissingDependencyException` | `dependencies.provide` до `module()` |
+| Вызвать `configure()` и следом `module()` | Модули загружаются второй раз: `DuplicatePluginException` | `environment` и `application`, как в `setUpShortener` |
+| Клиент с настройками по умолчанию | Идёт по `Location` наружу: `InvalidTestRequestException` | `followRedirects = false` |
+
+## Практикум
+
+<Practice title="Добавь тесты в свой сокращатель" checklist={["./gradlew test заканчивается BUILD SUCCESSFUL, в отчёте build/reports/tests/test/index.html 5 тестов в LinksApiTest и 2 в LinkServiceTest, упавших нет", "Репозиторий в памяти зарегистрирован через provide раньше module()", "В тестовом конфиге только shortener.baseUrl, секции database нет", "Клиент ставит ContentNegotiation с json() и followRedirects = false", "В каждом тесте подготовка, действие и проверка, имя в обратных кавычках", "Без строки с provide падают все пять тестов API с MissingDependencyException, с ней снова зелёные", "С OK вместо Created падает один тест, creates a short link; после опыта Created возвращён"]}>
+Начни с проекта, каким он стал в прошлом уроке.
+
+1. Добавь в `gradle/libs.versions.toml` четыре библиотеки, а в `build.gradle.kts` — зависимости и `useJUnitPlatform()`.
+2. Создай `src/test/kotlin/shortener/TestSupport.kt` с `setUpShortener`, `jsonClient` и `createLink`.
+3. В `LinksApiTest.kt` напиши пять тестов: создание (201, тело, `Location`), редирект (302 и `Location`), код `/nope42` (404 и `not_found`), адрес `ftp://example.com` (400 и `invalid_url`), занятый alias (409 и `alias_taken`).
+4. В `LinkServiceTest.kt` — два теста сервиса на `runTest`: повтор при занятом коде и отказ после пяти попыток.
+5. Запусти `./gradlew test` (в PowerShell команда та же, в cmd — `gradlew.bat test`). При успехе Gradle числа тестов не печатает, они в отчёте `build/reports/tests/test/index.html`.
+6. Контрольные опыты: закомментируй строку с `dependencies.provide`, запусти тесты и верни строку. Потом поменяй в `Routing.kt` `HttpStatusCode.Created` на `HttpStatusCode.OK`, запусти, найди упавший тест и верни `Created`.
+
+<div slot="solution">
+В каталог версий добавляются четыре строки:
+
+```toml
+[libraries]
+# …
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+```
+
+`TestSupport.kt` — как в уроке, вот его импорты:
+
+```kotlin
+package shortener
+
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.config.MapApplicationConfig
+import io.ktor.server.plugins.di.dependencies
+import io.ktor.server.testing.ApplicationTestBuilder
+```
+
+Тесты API, кроме `creates a short link` из урока:
+
+```kotlin
+package shortener
+
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.testApplication
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class LinksApiTest {
+    // … creates a short link
+
+    @Test
+    fun `redirects to the original url`() =
+        testApplication {
+            setUpShortener()
+            val client = jsonClient()
+            client.createLink("https://ktor.io", alias = "ktor")
+
+            val response = client.get("/ktor")
+
+            assertEquals(HttpStatusCode.Found, response.status)
+            val location = response.headers[HttpHeaders.Location]
+            assertEquals("https://ktor.io", location)
+        }
+
+    @Test
+    fun `returns 404 for an unknown code`() =
+        testApplication {
+            setUpShortener()
+
+            val response = jsonClient().get("/nope42")
+
+            assertEquals(HttpStatusCode.NotFound, response.status)
+            assertEquals("not_found", response.body<ErrorResponse>().error)
+        }
+
+    @Test
+    fun `returns 400 for an invalid url`() =
+        testApplication {
+            setUpShortener()
+
+            val response = jsonClient().createLink("ftp://example.com")
+
+            assertEquals(HttpStatusCode.BadRequest, response.status)
+            assertEquals("invalid_url", response.body<ErrorResponse>().error)
+        }
+
+    @Test
+    fun `returns 409 when the alias is taken`() =
+        testApplication {
+            setUpShortener()
+            val client = jsonClient()
+            client.createLink("https://ktor.io", alias = "ktor")
+
+            val response = client.createLink("https://example.com", "ktor")
+
+            assertEquals(HttpStatusCode.Conflict, response.status)
+            assertEquals("alias_taken", response.body<ErrorResponse>().error)
+        }
+}
+```
+
+Тесты сервиса, кроме первого из урока:
+
+```kotlin
+package shortener
+
+import kotlinx.coroutines.test.runTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+
+class LinkServiceTest {
+    // … retries when the generated code is taken
+
+    @Test
+    fun `gives up when every code is taken`() =
+        runTest {
+            val repository = InMemoryLinkRepository()
+            repository.addIfAbsent(Link("same", "https://a.example"))
+            val service = LinkService(repository) { "same" }
+
+            assertFailsWith<IllegalStateException> {
+                service.shorten("https://b.example")
+            }
+        }
+}
+```
+
+В нашем проекте `./gradlew test` заканчивается `BUILD SUCCESSFUL`, а XML в `build/test-results/test` показывает `tests="5" failures="0"` у `LinksApiTest` и `tests="2" failures="0"` у `LinkServiceTest`. Без строки с `provide` Gradle перечисляет упавшие тесты:
+
+```text
+> Task :test FAILED
+
+LinksApiTest > returns 400 for an invalid url() FAILED
+    io.ktor.server.plugins.di.MissingDependencyException at DependencyResolution.kt:215
+
+…
+
+7 tests completed, 5 failed
+```
+
+Тесты сервиса DI не касается, поэтому упали только пять тестов API. В конце вывода — ссылка на отчёт и `BUILD FAILED`. С `OK` вместо `Created` упавший тест один, `LinksApiTest > creates a short link() FAILED`, и итог — `7 tests completed, 1 failed`.
+</div>
+</Practice>
+
+<Callout type="teal" title="В работу">
+Какую проверку в своём рабочем проекте ты до сих пор делаешь руками после каждой правки? Напиши на неё один тест до пятницы и сломай код, чтобы увидеть тест красным. Через неделю, перед ближайшим рефакторингом, запусти тесты до первого шага и после последнего.
+</Callout>
+
+## Шпаргалка
+
+| Что | Коротко |
+| --- | --- |
+| Тест | функция с `@Test`, имя в обратных кавычках |
+| Проверка значения | `assertEquals(ожидаемое, полученное)` |
+| Проверка исключения | `assertFailsWith<IllegalStateException> { … }` |
+| Suspend-код в тесте | `= runTest { … }` |
+| Приложение в тесте | `testApplication { … }` |
+| Конфиг | `environment { config = MapApplicationConfig(…) }` |
+| Подмена зависимости | `dependencies.provide<T> { … }` до `module()` |
+| Клиент с JSON | `createClient { install(ContentNegotiation) { json() } }` |
+| Редирект без перехода | `followRedirects = false` |
+| Запуск и отчёт | `./gradlew test`, отчёт — `build/reports/tests/test/index.html` |
+
+## Словарь урока
+
+<Vocab items={[
+  { term: "Тест (test)", meaning: "Функция с аннотацией @Test, которая готовит данные, вызывает код и сверяет результат утверждениями." },
+  { term: "Утверждение (assertion)", meaning: "Проверка вроде assertEquals: если результат не совпал с ожидаемым, она бросает AssertionError." },
+  { term: "kotlin.test", meaning: "Библиотека Kotlin с аннотацией Test и утверждениями; в проекте работает поверх JUnit 5." },
+  { term: "JUnit 5", meaning: "Фреймворк, который находит и запускает тесты; Gradle включает его вызовом useJUnitPlatform()." },
+  { term: "Arrange, Act, Assert", meaning: "Три части теста по Биллу Уэйку: подготовка, действие, проверка." },
+  { term: "runTest", meaning: "Функция из kotlinx-coroutines-test: запускает suspend-код в тесте, как runBlocking, но пропускает delay." },
+  { term: "testApplication", meaning: "Функция Ktor, которая запускает приложение внутри теста без настоящего сервера." },
+  { term: "Тестовый движок (testing engine)", meaning: "Часть Ktor из ktor-server-test-host, которая обрабатывает запросы без сервера и сокетов." },
+  { term: "Тестовый клиент", meaning: "HTTP-клиент, который шлёт запросы в тестовое приложение; настраивается через createClient." },
+  { term: "MapApplicationConfig", meaning: "Конфиг приложения из пар «ключ — значение», заданный прямо в коде теста." },
+  { term: "IgnoreConflicts", meaning: "Политика DI в тестовом движке Ktor: повторная регистрация того же типа игнорируется, остаётся первая." },
+  { term: "Тестовый двойник (test double)", meaning: "Объект, который на время теста подменяет боевой." },
+  { term: "Фейк (fake)", meaning: "Двойник с рабочей упрощённой реализацией, например репозиторий в памяти вместо базы." },
+  { term: "Заглушка (stub)", meaning: "Двойник с заранее заданными ответами, например генератор, который всегда возвращает один код." },
+  { term: "Контрольный опыт", meaning: "Намеренно сломать код и убедиться, что тест упал, а потом вернуть как было." }
+]} />
+
+## Закрепи
+
+Тренажёры лучше пройти завтра: через день видно, что действительно запомнилось.
+
+<div class="kc-trainer-grid">
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-testing-flashcards')}>
+    <span class="kc-trainer-kind">Карточки</span>
+    <span class="kc-trainer-title">Тесты сервиса: понятия</span>
+    <span class="kc-trainer-hint">Утверждения, двойники, testApplication</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-testing-quiz')}>
+    <span class="kc-trainer-kind">Тест</span>
+    <span class="kc-trainer-title">Что проверяет этот тест</span>
+    <span class="kc-trainer-hint">Зелёный, красный и почему</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-testing-ordering')}>
+    <span class="kc-trainer-kind">Порядок</span>
+    <span class="kc-trainer-title">Собери тест</span>
+    <span class="kc-trainer-hint">Подготовка, действие, проверка</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="kc-trainer-card" href={withBase('/practice/kotlin/kotlin-ktor-testing-cloze')}>
+    <span class="kc-trainer-kind">Пропуски</span>
+    <span class="kc-trainer-title">Допиши тест</span>
+    <span class="kc-trainer-hint">Функции и настройки тестов</span>
+    <span class="kc-trainer-arrow" aria-hidden="true">→</span>
+  </a>
+</div>
+
+## Источники
+
+- **Ktor — Testing in Ktor Server, Testing with dependency injection, Configure the DI plugin** ([ktor.io/docs](https://ktor.io/docs/server-testing.html), сверено 2026-09-28) — `testApplication`, подмена зависимостей, `IgnoreConflicts`.
+- **Ktor — Redirect, Response validation, Receiving responses** ([ktor.io/docs](https://ktor.io/docs/client-redirect.html), сверено 2026-09-28) — редиректы и статус в клиенте.
+- **Kotlin — Coding conventions, Configure a Gradle project, Test Java code using Kotlin and JUnit** ([kotlinlang.org/docs](https://kotlinlang.org/docs/coding-conventions.html), сверено 2026-10-02) — имена тестов, `useJUnitPlatform()`, проверка упавшим тестом (учебник уже на JUnit 6).
+- **kotlin.test, kotlinx-coroutines-test 1.11.0, JUnit 5 User Guide** ([kotlinlang.org/api](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-test/kotlinx.coroutines.test/run-test.html), [docs.junit.org](https://docs.junit.org/5.10.1/user-guide/), сверено 2026-10-02) — утверждения, `runTest`, порядок тестов.
+- **Martin Fowler — Test Double (2006)** ([martinfowler.com](https://martinfowler.com/bliki/TestDouble.html), сверено 2026-09-28) — фейк и заглушка.
+- **Bill Wake — 3A: Arrange, Act, Assert (2011)** ([xp123.com](https://xp123.com/3a-arrange-act-assert/), сверено 2026-09-28) — три части теста.
+- **Spring Boot — Testing Spring Boot Applications** ([docs.spring.io](https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html), сверено 2026-09-28) — как тестирует `@SpringBootTest`.

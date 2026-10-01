@@ -1,0 +1,22 @@
+{
+  "course": "kotlin",
+  "lesson": "kotlin-ktor-data",
+  "title": "Допиши Exposed и DI",
+  "description": "Впиши функцию, тип или аннотацию из кода сокращателя. Регистр важен, как в коде.",
+  "data": {
+    "type": "cloze",
+    "caseSensitive": true,
+    "items": [
+      { "text": "provide<___>(::ExposedLinkRepository) // интерфейс", "answers": ["LinkRepository"], "explain": "Конструктор реализации регистрируют под типом интерфейса: LinkService просит LinkRepository и получит ExposedLinkRepository." },
+      { "text": "val service: LinkService = dependencies.___()", "answers": ["resolve"], "explain": "resolve() достаёт зависимость из DI. Это suspend-функция, поэтому configureRouting() объявлен suspend." },
+      { "text": "___ fun Application.configureRouting() { // resolve()", "answers": ["suspend"], "explain": "resolve() — suspend-функция, и вызвать её можно только из suspend-функции. Ktor поддерживает такие модули с версии 3.2." },
+      { "text": "withContext(Dispatchers.___) { // блокирующий JDBC", "answers": ["IO"], "explain": "Dispatchers.IO — пул потоков выполнения для блокирующего ввода-вывода. Внутри него вызывают suspendTransaction." },
+      { "text": "LinksTable.selectAll().___ { LinksTable.code eq code }", "answers": ["where"], "explain": "В Exposed 1.x условие выборки задают через selectAll().where { … }, а eq импортируют из org.jetbrains.exposed.v1.core." },
+      { "text": "override val primaryKey = ___(code)", "answers": ["PrimaryKey"], "explain": "Первичный ключ таблицы — код ссылки. Второй строки с тем же кодом база не примет." },
+      { "text": "SchemaUtils.___(LinksTable)   // таблица, если её ещё нет", "answers": [["create", "createMissingTablesAndColumns"]], "explain": "SchemaUtils.create создаёт таблицы, которых в базе ещё нет, и вызывается внутри транзакции. createMissingTablesAndColumns тоже сработает, но в Exposed 1.5.0 она помечена устаревшей." },
+      { "text": "@___(\"database\") settings: DatabaseSettings, // конфиг", "answers": ["Property"], "explain": "@Property на параметре провайдера велит DI разобрать секцию конфига в @Serializable-класс." },
+      { "text": "url: \"jdbc:h2:mem:shortener;DB_CLOSE_DELAY=___\"", "answers": ["-1"], "explain": "DB_CLOSE_DELAY=-1 держит базу в памяти открытой, пока жива JVM. Без него H2 закроет её с последним соединением." },
+      { "text": "links.___(link.code, link) == null // занятый код не тронет", "answers": ["putIfAbsent"], "explain": "putIfAbsent у ConcurrentHashMap проверяет ключ и кладёт значение атомарно и возвращает null, если ключа не было. put вернул бы на новом ключе тот же null, но занятый код перезаписал бы." }
+    ]
+  }
+}

@@ -25,7 +25,7 @@ export default function TryParam({ label, min, max, step, default: def, unit, ba
       <div className="kc-tp-head">
         <span className="kc-tp-label">{label}</span>
         <span className="kc-tp-val">
-          {value}
+          {String(value).replace('.', ',')}
           {unit ? ` ${unit}` : ''}
         </span>
       </div>

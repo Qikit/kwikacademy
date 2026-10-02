@@ -14,7 +14,8 @@ interface Props {
   unit?: string;
 }
 const { items, caption, max = 1, unit } = Astro.props;
-const fmt = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(2));
+const numberFormat = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
+const fmt = (v: number) => numberFormat.format(v);
 ---
 
 <figure class="bm">

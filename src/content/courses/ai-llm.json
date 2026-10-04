@@ -1,11 +1,11 @@
 {
   "title": "ИИ и LLM",
   "subtitle": "Технологии",
-  "description": "Как работают большие языковые модели: токены, контекст, семплинг, промптинг, инструменты, RAG, агенты. Без магии — по сути.",
+  "description": "Как работают большие языковые модели и как строить на них системы: от токенов и промпта до инструментов, MCP, RAG и агентов, с замером качества, ценой и защитой от инъекций. Без магии — по сути.",
   "icon": "sparkles",
   "gradient": "indigo",
   "order": 6,
   "accent": "dark",
-  "estimatedHours": 22,
-  "tags": ["LLM", "Prompting", "RAG", "Agents"]
+  "estimatedHours": 28,
+  "tags": ["LLM", "Prompting", "RAG", "Agents", "MCP", "Evals"]
 }

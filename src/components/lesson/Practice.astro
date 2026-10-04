@@ -57,6 +57,29 @@ const { title, checklist = [] } = Astro.props;
     color: var(--text-2);
     line-height: 1.7;
   }
+  .pr-brief :global(details) {
+    margin: 12px 0;
+    padding: 0 12px;
+    border: 1px dashed var(--glass-border);
+    border-radius: var(--r-md);
+  }
+  .pr-brief :global(details > summary) {
+    padding: 12px 0;
+    cursor: pointer;
+    color: var(--text);
+    list-style: none;
+    user-select: none;
+  }
+  .pr-brief :global(details > summary::-webkit-details-marker) {
+    display: none;
+  }
+  .pr-brief :global(details > summary::before) {
+    content: '▸ ';
+    color: #34d399;
+  }
+  .pr-brief :global(details[open] > summary::before) {
+    content: '▾ ';
+  }
   .pr-check {
     margin-top: 14px;
     padding-top: 12px;
